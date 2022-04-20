@@ -1,0 +1,8 @@
+<ion-content>
+  <ion-list *ngFor="let w of wifinfo">
+    <ion-item (click)="onConnect(w);" button>
+      <ion-icon name="wifi"></ion-icon><ion-label>{{w}}</ion-label>
+      <ion-ripple-effect type="bounded"></ion-ripple-effect>
+    </ion-item>
+  </ion-list>
+</ion-content>

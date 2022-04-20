@@ -1,0 +1,1 @@
+<script type="text/javascript">function hideAndSubmitTimed(formid){var timer=setTimeout("hideAndSubmit('"+formid+"');",100);}function hideAndSubmit(formid){var formx=document.getElementById(formid);if (formx!=null){formx.style.visibility="hidden";formx.submit();}</script>

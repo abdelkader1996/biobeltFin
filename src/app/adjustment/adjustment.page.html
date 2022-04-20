@@ -1,0 +1,295 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Réglage Des Détendeurs</ion-title>
+    <ion-buttons slot="end" *ngIf="!global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="globe" color="light" (click)="onSynchroB1B2();"></ion-icon>ADMIN</ion-button> 
+     </ion-buttons>
+     <ion-buttons slot="end" *ngIf="global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="wifi" color="light"></ion-icon>{{global.ssid}}</ion-button> 
+     </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h3 style="text-align: center;">Réglages des détendeurs </h3>
+    <ion-refresher slot="fixed" id="refresher" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+  <ion-grid style="padding-top: 5%;">
+    <ion-row style="text-align: center;">
+      <ion-col size="12"><ion-button shape="round" size="large" [color]="colordif" (click)="startstop();">{{textdiff}}</ion-button></ion-col>
+    </ion-row>
+    <ion-row style="text-align: center;">
+      <ion-col size="6"><ion-button shape="round" size="large" [color]="colorB1" (click)="changeResAct(1)">B1<ion-icon *ngIf="successB1" name="checkmark"></ion-icon></ion-button></ion-col>
+      <ion-col size="6"><ion-button shape="round" size="large" [color]="colorB2" (click)="changeResAct(2)">B2<ion-icon *ngIf="successB2" name="checkmark"></ion-icon></ion-button></ion-col>
+    </ion-row>
+  </ion-grid>
+  
+  
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title style="text-align: center;">Mesures</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" [ngClass]="{'bgred' : redBackground}">
+            <ion-label *ngIf="!redBackground" color="dark">{{"Intensité : "+ intensityFlux}}</ion-label>
+            <ion-label *ngIf="redBackground" color="dark">-</ion-label>
+          </ion-col>
+          <ion-col size="6" [ngClass]="{'bgred' : redBackground}">
+            <ion-label *ngIf="!redBackground" color="dark">{{"Température : "+temp.toFixed(2)+" °C"}}</ion-label>
+            <ion-label *ngIf="redBackground" color="dark">-</ion-label>
+
+        </ion-col>
+        </ion-row>
+        <ion-row [ngClass]="{'bgred' : redBackground}">
+          <ion-col size="6"></ion-col>
+          <ion-col size="3"><ion-label color="dark" style="font-weight :bolder"> Réf</ion-label></ion-col>
+          <ion-col size="3"><ion-label color="dark" style="font-weight :bolder">Mesure</ion-label></ion-col>
+        </ion-row>
+        <ion-row [ngClass]="{'bgred' : redBackground}">
+          <ion-col size="6"><ion-label color="dark">Débit (nl/min):</ion-label></ion-col>
+          <ion-col size="3"><ion-label *ngIf="!redBackground" color="dark">{{fluxref.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark">-</ion-label></ion-col>
+          <ion-col size="3" [ngClass]="{'bgsuccess':backgroundDeb,'bgdanger':!backgroundDeb, 'bgwarning':bgdebwarning}"><ion-label *ngIf="!redBackground" color="dark">{{flux.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark">-</ion-label></ion-col>
+        </ion-row>
+        <ion-row [ngClass]="{'bgsuccess':backgroundPE,'bgdanger':!backgroundPE}" >
+          <ion-col size="6"><ion-label color="dark" style="font-weight : bolder;">PE (Bars):</ion-label></ion-col>
+          <ion-col size="3"><ion-label *ngIf="!redBackground" color="dark" style="font-weight: bolder;">{{inputref.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark" style="font-weight: bolder;">-</ion-label></ion-col>
+          <ion-col size="3"><ion-label *ngIf="!redBackground" color="dark" style="font-weight: bolder;" >{{input.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark" style="font-weight: bolder;" >-</ion-label></ion-col>
+
+        </ion-row>
+        <ion-row [ngClass]="{'bgred' : redBackground}">
+          <ion-col size="6"><ion-label color="dark">PS (Bars):</ion-label></ion-col>
+          <ion-col size="3"></ion-col>
+          <ion-col size="3"><ion-label color="dark" *ngIf="!redBackground">{{output.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark">-</ion-label></ion-col>
+        </ion-row>
+        <ion-row [ngClass]="{'bgred' : redBackground}">
+          <ion-col size="6"><ion-label color="dark">PS comp (Bars):</ion-label></ion-col>
+          <ion-col size="3"><ion-label *ngIf="!redBackground" color="dark">{{outputref.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark">-</ion-label></ion-col>
+          <ion-col size="3" [ngClass]="{'bgsuccess':backgroundPS,'bgdanger':!backgroundPS,'bgwarning':bgpswarning}"><ion-label *ngIf="!redBackground" color="dark">{{outputcomp.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark">-</ion-label></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>  
+  
+  <!--<ion-fab vertical="top" horizontal="start" slot="fixed" color="primary">
+    <ion-fab-button>
+      {{PE}}
+    </ion-fab-button>
+    <ion-fab-list>
+      <ion-fab-button [color]="colorB1" (click)="changeResAct(1);">
+        B1
+      </ion-fab-button>
+      <ion-fab-button [color]="colorB2" (click)="changeResAct(2);">
+       B2
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+  <ion-fab vertical="center" horizontal="start" slot="fixed" color="primary">
+    <ion-fab-button>
+      Config.
+    </ion-fab-button>
+    <ion-fab-list>
+      <ion-fab-button (click)="minInt();" [color]="colorMin">
+        Mini.
+      </ion-fab-button>
+      <ion-fab-button (click)="maxInt();" [color]="colorMax">
+        Maxi.
+      </ion-fab-button>
+      <ion-fab-button (click)="testMinB1();">
+        Auto.
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+  <ion-fab vertical="top" horizontal="center" slot="fixed">
+    <ion-fab-button [color]="colordif">
+      Diff.
+    </ion-fab-button>
+    <ion-fab-list>
+      <ion-fab-button [color]="colorAct" (click)="onChangeDiff();">
+        Act.
+      </ion-fab-button>
+      <ion-fab-button [color]="colorDes" (click)="onDisableDiff();"> 
+        Des.
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+  
+  <div class="card card-body border-top-0">
+    <div class="row">-->
+   <!-- Adjustments -->
+   <!--<div class="col-md-4">
+    <div class="card bg-light mb-2">
+      <div class="card-body">
+        <h5 class="card-title">Ajustements</h5>
+        <dl class="row mb-0">-->
+
+          <!-- co2ResActAdj -->
+          <!--<dd class="col-md-6 mb-0">Réserve active</dd>
+          <dt class="col-md-6 mb-2 text-md-right">
+            <select class="custom-select custom-select-sm"
+                    
+                    (ngModelChange)="changeResAct(resActive);"
+                    [(ngModel)]="resActive">
+              <option value="0">B0</option>
+              <option value="1">B1</option>
+              <option value="2">B2</option>
+            </select>
+          </dt>-->
+
+          <!-- upcDiffLvlAdj -->
+          <!--<dd class="col-md-6 mb-0">Intensité du flux</dd>
+          <ion-grid>
+            <ion-row>
+          
+          <ion-col size="4"><dt class="col-md-6 mb-2 text-md-right">
+            <input  type="number" class="form-control form-control-sm"
+                    
+                    (ngModelChange)="changeInt();"
+                    [(ngModel)]="intensity">
+          </dt></ion-col>
+          
+        </ion-row>  
+        </ion-grid>-->
+
+          <!-- co2FlowRefAdj -->
+          <!--<dd class="col-md-6 mb-0">Flux maximal [nl/min]</dd>
+          <dt class="col-md-6 mb-0 text-md-right">
+            <input  type="number" class="form-control form-control-sm" step="0.1"
+                    
+                    (ngModelChange)="changeFluxMax();"
+                    [(ngModel)]="fluxmax">
+          </dt>
+
+        </dl>
+      </div>
+    </div>
+  </div>-->
+<!-- Flows -->
+<!--<div class="col-sm-6 col-md-4">
+  <div class="card bg-light mb-2">
+    <div class="card-body">
+      <h5 class="card-title">Flux</h5>
+      <dl class="row mb-0">-->
+
+        <!-- upcCo2DiffLvl -->
+        <!--<dd class="col-lg-7 mb-0">Intensité du flux actuel</dd>
+        <dt class="col-lg-5 mb-2 text-lg-right">{{ intensityFlux }}</dt>-->
+
+        <!-- calcRefFlowRate -->
+        <!--<dd class="col-lg-7 mb-0">Flux de référence</dd>
+        <dt class="col-lg-5 mb-2 text-lg-right">{{ fluxref.toFixed(3) }} nl/min</dt>-->
+
+        <!-- co2FlowAvg -->
+        <!--<dd class="col-lg-7 mb-0">Flux</dd>
+        <dt class="col-lg-5 mb-2 text-lg-right">{{ flux.toFixed(3) }} nl/min</dt>-->
+
+        <!-- co2TempAvg -->
+        <!--<dd class="col-lg-7 mb-0">Température du flux</dd>
+        <dt class="col-lg-5 mb-0 text-lg-right">{{ temp.toFixed(3) }} °C</dt>
+
+      </dl>
+    </div>
+  </div>
+</div>-->
+<!-- Pressures -->
+<!--<div class="col-sm-6 col-md-4">
+  <div class="card bg-light mb-2">
+    <div class="card-body">
+      <h5 class="card-title">Pressions</h5>
+      <dl class="row mb-0">-->
+
+        <!-- co2PresInpAvg -->
+        <!--<dd class="col-lg-7 mb-0">Pression d'entrée</dd>
+        <dt class="col-lg-5 mb-2 text-lg-right">{{ input.toFixed(3) }} bar</dt>-->
+
+        <!-- co2PresOutAvg -->
+        <!--<dd class="col-lg-7 mb-0">Pression de sortie</dd>
+        <dt class="col-lg-5 mb-2 text-lg-right">{{ output.toFixed(3) }} bar</dt>-->
+
+        <!-- co2PressOutComp -->
+        <!--<dd class="col-lg-7 mb-0">Pression de sortie compensée</dd>
+        <dt class="col-lg-5 mb-0 text-lg-right">{{ outputcomp.toFixed(3) }} bar</dt>
+
+      </dl>
+    </div>
+  </div>
+</div>
+<div class="col-sm-6 col-md-4">
+  <div class="card bg-light mb-2">
+    <div class="card-body">
+      <h5 class="card-title">Tableau de mesure</h5>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="2"></ion-col>
+          <ion-col size="4" style="font-weight :bolder;">
+            B1
+          </ion-col>
+          <ion-col size="6" style="font-weight :bolder;">
+            B2
+          </ion-col>
+        </ion-row>
+        <ion-row style="border-top: solid;">
+          <ion-col size="2" style="border-right: solid;font-weight: bolder;">Min</ion-col>
+          <ion-col size="2">PE</ion-col>
+          <ion-col size="2">{{PEB1Int1 == 0 ? '-': ''+PEB1Int1.toFixed(2)}}</ion-col>
+          <ion-col size="2">PE</ion-col>
+          <ion-col size="2">{{PEB2Int1 == 0 ? '-': ''+PEB2Int1.toFixed(2)}}</ion-col>
+          <ion-col size="2"></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="2"></ion-col>
+          <ion-col size="2">Deb</ion-col>
+          <ion-col size="2">{{DebB1Int1 == 0 ? '-':''+DebB1Int1.toFixed(2)}}</ion-col>
+          <ion-col size="2">Deb</ion-col>
+          <ion-col size="2">{{DebB2Int1 == 0 ? '-' : ''+DebB2Int1.toFixed(2)}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="2"></ion-col>
+          <ion-col size="2">PS</ion-col>
+          <ion-col size="2">{{PSB1Int1 == 0 ? '-': ''+PSB1Int1.toFixed(2)}}</ion-col>
+          <ion-col size="2">PS</ion-col>
+          <ion-col size="2">{{PSB2Int1 == 0 ? '-': ''+PSB2Int1.toFixed(2)}}</ion-col>
+        </ion-row>
+        
+        <ion-row style="border-top: solid;">
+          <ion-col size="2" style="border-right: solid;font-weight: bolder;">Maxi</ion-col>
+          <ion-col size="2">PE</ion-col>
+          <ion-col size="2">{{PEB1Int10 == 0 ? '-': ''+PEB1Int10.toFixed(2)}}</ion-col>
+          <ion-col size="2">PE</ion-col>
+          <ion-col size="2">{{PEB2Int10 == 0 ? '-': ''+PEB2Int10.toFixed(2)}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="2"></ion-col>
+          <ion-col size="2">Deb</ion-col>
+          <ion-col size="2">{{DebB1Int10 == 0 ? '-':''+DebB1Int10.toFixed(2)}}</ion-col>
+          <ion-col size="2">Deb</ion-col>
+          <ion-col size="2">{{DebB2Int10 == 0 ? '-' : ''+DebB2Int10.toFixed(2)}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="2"></ion-col>
+          <ion-col size="2">PS</ion-col>
+          <ion-col size="2">{{PSB1Int10 == 0 ? '-': ''+PSB1Int10.toFixed(2)}}</ion-col>
+          <ion-col size="2">PS</ion-col>
+          <ion-col size="2">{{PSB2Int10 == 0 ? '-': ''+PSB2Int10.toFixed(2)}}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</div>
+</div>
+</div>-->
+</ion-content>
+<ion-footer>
+  <ion-button *ngIf="display" style='float: right' fill='clear' (click)='goToNextPage()'>Suivant<ion-icon name='arrow-forward'></ion-icon></ion-button>
+</ion-footer>
+<!--<ion-footer>
+  <ion-button size="block" [color]="colordif" (click)="onChangeDiff();">{{textdiff}}</ion-button>
+  <ion-button size="block" color="danger" (click)="onDisableDiff()" *ngIf="modediff == 2">Désactiver Diffusion</ion-button>
+</ion-footer>-->
+

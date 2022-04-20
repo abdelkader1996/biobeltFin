@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-toolbar color="primary">    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>    
+  <ion-grid>  
+    <ion-row style="display: flex; justify-content: center;">
+      <ion-col size="8" text-center style="padding-top: 5%;">
+        <h4>Intervention sur une ceinture</h4>
+      </ion-col>
+    </ion-row>  
+    <ion-row>        
+        <ion-col size="12">
+          <fieldset>
+            <legend>Objet de l'intervention</legend>                 
+            <ng-multiselect-dropdown *ngIf="display" name="obj" placeholder="Select One" [data]="motiveOptions" (onSelect)="onSelectMotive($event)" (onDeSelect)="onRemoveMotive($event)" [(ngModel)]="selectedMotive" [disabled]="disabled" [settings]="dropdownSettings"></ng-multiselect-dropdown>  
+            <ul id="motiveList"></ul>   
+          </fieldset>
+          <div *ngIf="motive.includes('Autre')" id="other"> <ion-item><ion-label>Autre :</ion-label><ion-input [(ngModel)]='otherObj' placeholder='objet intervention' type='text'></ion-input><ion-button color='tertiary' style='font-size:small' (click)='other();'><span style='text-transform:none!important;'>Valider</span></ion-button></ion-item></div>
+        </ion-col>        
+        <ion-col size="12">
+          <fieldset>
+            <legend>Intervenants</legend>            
+            <ng-multiselect-dropdown *ngIf="display" name="intervenant" placeholder="Select One" [data]="intervenants" (onSelect)="onSelectIntervenant($event)" (onDeSelect)="onRemoveIntervenant($event)" [(ngModel)]="selectedIntervenants" [disabled]="disabled" [settings]="dropdownSettings"></ng-multiselect-dropdown>
+            <ul id="intervenantsList"></ul>
+          </fieldset>
+        </ion-col>
+        <ion-col size="12">
+          <fieldset>
+            <legend>Sélection ceinture</legend>
+              <ng-multiselect-dropdown *ngIf="display" name="ceinture" placeholder="Select One" [data]="nearUPCList" (onSelect)="onSelectedCeinture($event)" (onDeSelect)="onRemoveCeinture($event)" [(ngModel)]="selectedItems" [disabled]="disabled" [settings]="dropdownSettings2"></ng-multiselect-dropdown>
+          </fieldset>
+        </ion-col>
+        <ion-col *ngIf="displayCommentaire" size="12">
+          <fieldset>
+            <legend>A Faire</legend>
+            <div>
+              <ul id="commentairesList"></ul>
+            </div>
+            <!--<p style="margin-left: 4%; margin-bottom: 4%;">{{commentaire}}</p>-->
+          </fieldset>
+        </ion-col>
+        <ion-col size="12" *ngIf="isCeintureSelected" id="infosCeintureCol">
+
+         <fieldset id="ceintureFieldSet">
+            <fieldset style="background-color: #2E7117; color:  white;  margin-left: 4%; margin-right: 4%; margin-top: 4%;">
+              <p style="float: left; margin-top: 4%; margin-left: 4%;">{{selectedCeintureName}}</p>
+              <p style="float: right; margin-top: 4%; margin-right: 4%;">{{selectedUpcSsid}}</p>
+            </fieldset> 
+            <div style="margin-top: 2%;">
+              <ul id="upcInfosLabelsList" style="float: left;">
+                <li>Mode de diffusion</li>
+                <li>Nombre de pièges</li>
+                <li>Mode de connexion</li>
+                <li>Niveau de connexion</li>
+                <li>Version FW</li> 
+              </ul>
+              <ul id="upcInfosList" style="float: right; text-align: center;">
+                <li>{{modeOperation}}</li>
+                <li>{{nbPieges}}</li>
+                <li>{{modeConnexion}}</li>
+                <li>{{niveauConnexion}}</li>
+                <li>{{versionFw}}</li>
+              </ul>
+            </div>            
+            
+          </fieldset>
+          
+        </ion-col>
+        <ion-col *ngIf="needToLoadData" style="text-align: center; margin-top: 4%;"><ion-spinner></ion-spinner></ion-col>
+        <ion-col *ngIf="displayNoDataMessage">
+          <h6>Les données n'ont pas pu être récupérées. Rechargez la page pour réessayer.</h6>
+          <ion-row style="display: flex; justify-content: center;">
+            <ion-button (click)="reload()">Réessayer</ion-button>
+          </ion-row>
+        </ion-col>
+
+      
+       
+      
+    </ion-row>
+    
+  </ion-grid>
+  
+  
+ 
+</ion-content>
+<ion-footer style="display: inline-block">
+  <ion-button *ngIf="!global.displayLoading" style="float: left" fill="clear" (click)="global.onReadStatiqueEnable()">    
+    <ion-icon name="refresh"></ion-icon>
+  </ion-button>
+  <ion-button *ngIf="global.displayLoading" style="float: left;" fill="clear" color="primary">
+    <ion-spinner></ion-spinner>
+  </ion-button>
+  <ion-button style="float: right" fill="clear" (click)="goNext()">
+    Continuer
+    <ion-icon name="arrow-forward"></ion-icon>
+  </ion-button>
+
+</ion-footer>

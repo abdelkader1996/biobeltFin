@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    
+    <ion-title>Bouteilles</ion-title>
+    <ion-buttons slot="end"><ion-button fill="clear" size="default" (click)="onDismiss();"><ion-label>Finis</ion-label></ion-button></ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  <ion-list>
+    <ion-item *ngFor="let bottle of listBottles;let i=index;"><ion-label>{{bottle.brand+" "+bottle.designation.toFixed(2)+" kg"}}</ion-label><ion-label color="danger" [innerHtml]="onChange(i)"></ion-label><ion-input slot="end" type="tel" placeholder="Quantité" [(ngModel)]="bouteilles[i].qty"></ion-input><ion-button color="primary" fill="clear" size="default" slot="end" (click)="onBottleScan(i);"><ion-icon name="barcode"></ion-icon></ion-button></ion-item>
+  </ion-list>
+  
+</ion-content>

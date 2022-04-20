@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Bouteilles</ion-title>
+    <ion-buttons slot="end" *ngIf="!global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="globe" color="light"></ion-icon>ADMIN</ion-button> 
+     </ion-buttons>
+     <ion-buttons slot="end" *ngIf="global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="wifi" color="light"></ion-icon>{{global.ssid}}</ion-button> 
+     </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-list>
+  <ion-item (click)="onChooseStock(0);">
+    <ion-icon name="albums" color="primary"></ion-icon>
+    <ion-label>Réception de Bouteilles</ion-label>
+  </ion-item>
+  <ion-item (click)="onChooseStock(1);">
+    <ion-icon name="remove" color="primary"></ion-icon>
+    <ion-label>Retrait de Bouteilles</ion-label>
+  </ion-item>
+  
+  <ion-item (click)="onChooseStock(4);">
+    <ion-icon name="exit" color="primary"></ion-icon>
+    Retour au dépôt
+  </ion-item>
+  <ion-item (click)="onChooseStock(3);">
+    <ion-icon name="train" color="primary"></ion-icon>
+    Retour au fournisseur
+  </ion-item>
+  
+</ion-list>
+</ion-content>

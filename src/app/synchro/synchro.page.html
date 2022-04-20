@@ -1,0 +1,657 @@
+<head> 
+  <style>
+    .bar {fill: #3498db;}    
+    .bar:hover {fill: #2ecc71;}
+  
+    .axis {font: 10px sans-serif;}
+  
+    .axis path, .axis line {fill: none; stroke: #000; shape-rendering: crispEdges;}
+  
+  .legend {padding: 5px; font: 10px sans-serif; background: yellow; box-shadow: 2px 2px 1px #888;}
+  
+  .tooltip {background: #eee; box-shadow: 0 0 5px #999999; color: #333; font-size: 12px; left: 130px; padding: 10px; position: absolute; text-align: center; top: 95px; z-index: 10; display: block; opacity: 0;
+  }</style>
+</head>
+<ion-header>
+<ion-toolbar color="primary">
+  <ion-buttons slot="start">
+    <ion-menu-button></ion-menu-button>
+    <ion-back-button defaultHref="home"></ion-back-button>
+  </ion-buttons>
+  <ion-title>Programmes</ion-title>
+  <ion-buttons slot="end" *ngIf="!global.isBBAM">
+    <ion-button fill="clear"> <ion-icon name="globe" color="light" (click)="onSynchroB1B2();"></ion-icon>ADMIN</ion-button> 
+   </ion-buttons>
+   <ion-buttons slot="end" *ngIf="global.isBBAM">
+    <ion-button fill="clear"> <ion-icon name="wifi" color="light"></ion-icon>{{global.ssid}}</ion-button> 
+   </ion-buttons>
+</ion-toolbar>  
+</ion-header>
+
+<ion-content class ="ion-padding">
+  <ion-refresher slot="fixed" id="refresher" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <h3 style="text-align: center;">Programmation </h3>
+
+<!--<ion-row style="text-align: center;padding-top: 5%;"><ion-col><ion-button [color]="colordif" size="large" shape="round" (click)="onDiff();">Diffusion</ion-button></ion-col></ion-row>-->
+<ion-row style="text-align: center;">
+  <ion-col size="12"><ion-button shape="round" expand="block" [color]="diffcolor" disabled="true">{{typediff}}</ion-button></ion-col>
+</ion-row>
+<ion-row style="text-align: center;">
+  <ion-col size="6"><ion-button shape="round" size="small" color="danger" (click)="onDisableDiff();">OFF</ion-button></ion-col>
+  <ion-col size="6"><ion-button shape="round" size="small" color="primary" (click)="onEnableDiff();">DIFF</ion-button></ion-col>  
+</ion-row>
+
+<ion-card class="ion-padding">   							
+  <ion-card-header>							
+  <ion-card-title>Programmes Aube / Crépuscule</ion-card-title>							
+  </ion-card-header>
+  <ion-grid>
+    <ion-row class="landscaperow" [ngClass]="{'bgred' : redBackground}"><ion-col size="2"></ion-col><ion-col size="2.75"><p style="margin-left: 10%;">Décalage Début</p></ion-col><ion-col size="1.8"><p>Durée</p></ion-col><ion-col size="1.5"><p style="margin-left: 14%;">Intensité</p></ion-col></ion-row>	
+    <ion-row [ngClass]="{'bgred' : redBackground}">
+      
+      <ion-col size="12" size-sm="2">						
+        <p>Aube</p>
+      </ion-col>
+      <ion-col size="12" size-sm="2.75">
+        <div class="form">
+          <div class="infosformhours">Décalage début:</div>	            						
+          <ion-select *ngIf="!redBackground" [(ngModel)]="sign[0]" (ngModelChange)="onEditSunrise(correspondancesRegistres.diffCo2SunriseDelay,'offset',paDelay[0])">							
+            <ion-select-option *ngFor="let signOption of signOptions" [value]="signOption">{{signOption}}</ion-select-option>	           							
+          </ion-select> 
+          <ion-label *ngIf="redBackground">-</ion-label>
+          <ion-item>							
+            <ion-datetime *ngIf="!redBackground" displayFormat="HH:mm" [(ngModel)]="paDelay[0]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEditSunrise(correspondancesRegistres.diffCo2SunriseDelay,'offset',paDelay[0])"></ion-datetime>							
+            <ion-label *ngIf="redBackground">-</ion-label>
+          </ion-item>		
+        </div>
+      </ion-col>
+      <ion-col size="12" size-sm="1.8">
+        <div class="form">
+          <div class="infosformhours">Durée :</div>   							
+          <ion-item>							
+            <ion-datetime *ngIf="!redBackground" value="00:00" displayFormat="HH:mm" [(ngModel)]="paDuration[0]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEditSunrise(correspondancesRegistres.diffCo2SunriseDuration,'duration',paDuration[0])"></ion-datetime>							
+            <ion-label *ngIf="redBackground">-</ion-label>
+          </ion-item>		
+        </div>
+        <p *ngIf="pAubeStart[0] && pAubeEnd[0] && !redBackground">{{pAubeStart[0]}}-{{pAubeEnd[0]}}</p>
+        <ion-label *ngIf="redBackground">-</ion-label>
+      </ion-col>
+      <ion-col size="12" size-sm="1.25">
+        <div class="form">
+          <div class="infosform">Intensité :</div>
+          <ion-select *ngIf="!redBackground" [(ngModel)]="intensity[10]" (ngModelChange)="onEditSunrise(correspondancesRegistres.diffCo2SunriseIntensity,'intensity',intensity[10])">
+            <ion-select-option *ngFor="let intensityOption of intensityOptions" [value]="intensityOption">{{intensityOption}}</ion-select-option>
+          </ion-select>
+          <ion-label *ngIf="redBackground">-</ion-label>
+        </div>
+      </ion-col>
+      <ion-col size="12" class="portraitrow"><br></ion-col>		   				
+    
+    </ion-row>		
+    <ion-row [ngClass]="{'bgred' : redBackground}">		
+  
+    <ion-col size="12" size-sm="2">						
+     <p>Crépuscule</p>	
+    </ion-col>
+    <ion-col size="12" size-sm="2.75">
+      <div class="form">
+        <div class="infosformhours">Décalage début :</div>						
+        <ion-select *ngIf="!redBackground" [(ngModel)]="sign[1]" (ngModelChange)="onEditSunset(correspondancesRegistres.diffCo2SunsetDelay,'offset',pcDelay[0])">							
+          <ion-select-option *ngFor="let signOption of signOptions" [value]="signOption">{{signOption}}</ion-select-option>	           							
+        </ion-select> 
+        <ion-label *ngIf="redBackground">-</ion-label>
+        <ion-item>							
+          <ion-datetime *ngIf="!redBackground" value="00:00" displayFormat="HH:mm" [(ngModel)]="pcDelay[0]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEditSunset(correspondancesRegistres.diffCo2SunsetDelay,'offset',pcDelay[0])"></ion-datetime>							
+          <ion-label *ngIf="redBackground">-</ion-label>
+        </ion-item>	
+      </div>
+    </ion-col>
+    <ion-col size="12" size-sm="1.8">
+      <div class="form">
+        <div class="infosformhours">Durée :</div>	   					
+        <ion-item>							
+          <ion-datetime *ngIf="!redBackground" value="00:00" displayFormat="HH:mm" [(ngModel)]="pcDuration[0]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEditSunset(correspondancesRegistres.diffCo2SunsetDuration,'duration',pcDuration[0])"></ion-datetime>							
+          <ion-label *ngIf="redBackground">-</ion-label>
+        </ion-item>		
+      </div>
+      <p *ngIf="pCrepusculeStart[0] && pCrepusculeEnd[0] && !redBackground">{{pCrepusculeStart[0]}}-{{pCrepusculeEnd[0]}}</p>
+      <ion-label *ngIf="redBackground">-</ion-label>
+    </ion-col>
+    <ion-col size="12" size-sm="1.25">
+      <div class="form">
+        <div class="infosform">Intensité :</div>					
+        <ion-select *ngIf="!redBackground" [(ngModel)]="intensity[11]" (ngModelChange)="onEditSunset(correspondancesRegistres.diffCo2SunsetIntensity,'intensity',intensity[10])">
+          <ion-select-option *ngFor="let intensityOption of intensityOptions" [value]="intensityOption">{{intensityOption}}</ion-select-option>
+        </ion-select>	
+        <ion-label *ngIf="redBackground">-</ion-label>
+      </div>
+    </ion-col>
+    <ion-col size="12" class="portraitrow"><br></ion-col>					
+    
+  </ion-row>		   	
+  </ion-grid>						
+  </ion-card>							
+  <ion-card class="ion-padding">							
+  <ion-card-header>							
+    <ion-card-title>Programmes de diffusion</ion-card-title>							
+  </ion-card-header>	
+  <ion-grid [fixed]="true">		
+    <ion-row class="landscaperow" [ngClass]="{'bgred' : redBackground}"><ion-col size="1"></ion-col><ion-col size="3.15"><p style="margin-left: 10%;">Fréquence</p></ion-col><ion-col size="2.5"><p style="margin-left:24%;">Début</p></ion-col><ion-col size="0.5"></ion-col><ion-col size="2.5"><p style="margin-left:24%;">Fin</p></ion-col><ion-col size="2"><p style="margin-left:14%;">Intensité</p></ion-col></ion-row>
+    <ion-row class="rowDisplay" [ngClass]="{'bgred' : redBackground}">
+        
+        <ion-col size="12" size-sm="1">				
+          <p>P1</p>				
+        </ion-col>	
+        <ion-col size="12" size-sm="3.15">		
+          <div class="form">	
+            <div class="infosform">Fréquence :</div>		
+            <ion-select *ngIf="!redBackground" [(ngModel)]="frequency2[0]" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program1Frequency,'frequency',frequency2[0])">
+              <ion-select-option *ngFor="let frequencyOption of frequencyOptions" [value]="frequencyOption">{{frequencyOption}}</ion-select-option>
+            </ion-select>
+            <ion-label *ngIf="redBackground">-</ion-label>	
+          </div>
+        </ion-col>
+        <ion-col size="12" size-sm="2.5">	
+          <div class="form">	
+            <div class="infosformhours"><p>Début :</p></div>				
+            <ion-item>							
+              <ion-datetime *ngIf="!redBackground" displayFormat="HH:mm" [(ngModel)]="pStart[0]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program1Start,'start',pStart[0])"></ion-datetime>						
+              <ion-label *ngIf="redBackground">-</ion-label>
+            </ion-item>	
+          </div>
+        </ion-col>
+      <ion-col size="12" size-sm="0.5">
+        <p class="hoursrange">-</p>	
+      </ion-col>
+      <ion-col size="12" size-sm="2.5">	
+        <div class="form"	>
+          <div class="infosformhours">Fin :</div>	
+          <ion-item>							
+            <ion-datetime *ngIf="!redBackground" value="00:00" displayFormat="HH:mm" [(ngModel)]="pEnd[0]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program1End,'end',pEnd[0])"></ion-datetime>							
+            <ion-label *ngIf="redBackground">-</ion-label>
+          </ion-item>	
+        </div>          
+      </ion-col>
+      <ion-col size="12" size-sm="2">
+        <div class="form">
+          <div class="infosform">Intensité :</div>
+          <ion-select *ngIf="!redBackground" [(ngModel)]="intensity[0]" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program1Intensity,'intensity',intensity[0])">
+             <ion-select-option *ngFor="let intensityOption of intensityOptions" [value]="intensityOption">{{intensityOption}}</ion-select-option>
+          </ion-select> 
+          <ion-label *ngIf="redBackground">-</ion-label>
+        </div>
+      </ion-col>
+      <ion-col size="12" class="portraitrow"><br></ion-col>   					
+      
+    </ion-row>	
+    <ion-row class="rowDisplay" [ngClass]="{'bgred' : redBackground}">
+      
+        <ion-col size="12" size-sm="1">							
+          <p>P2</p>				
+        </ion-col>	
+        <ion-col size="12" size-sm="3.15">		
+          <div class="form">	
+            <div class="infosform">Fréquence :</div>		
+            <ion-select *ngIf="!redBackground" [(ngModel)]="frequency2[1]" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program2Frequency,'frequency',frequency2[1])">
+              <ion-select-option *ngFor="let frequencyOption of frequencyOptions" [value]="frequencyOption">{{frequencyOption}}</ion-select-option>
+            </ion-select>	
+            <ion-label *ngIf="redBackground">-</ion-label>
+          </div>
+        </ion-col>
+        <ion-col size="12" size-sm="2.5">
+          <div class="form">	
+            <div class="infosformhours">Début :</div>				
+            <ion-item>							
+              <ion-datetime *ngIf="!redBackground" displayFormat="HH:mm" [(ngModel)]="pStart[1]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program2Start,'start',pStart[1])"></ion-datetime>						
+            </ion-item>	
+            <ion-label *ngIf="redBackground">-</ion-label>
+          </div>
+        </ion-col>
+      <ion-col size="12" size-sm="0.5">
+        <p class="hoursrange">-</p>	
+      </ion-col>
+      <ion-col size="12" size-sm="2.5">	
+        <div class="form"	>
+          <div class="infosformhours">Fin :</div>	
+          <ion-item>							
+            <ion-datetime *ngIf="!redBackground" value="00:00" displayFormat="HH:mm" [(ngModel)]="pEnd[1]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program2End,'end',pEnd[1])"></ion-datetime>							
+          </ion-item>	
+          <ion-label *ngIf="redBackground">-</ion-label>
+        </div>
+      </ion-col>
+      <ion-col size="12" size-sm="2">	
+        <div class="form">
+          <div class="infosform">Intensité :</div>
+          <ion-select *ngIf="!redBackground" [(ngModel)]="intensity[1]" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program2Intensity,'intensity',intensity[1])">
+             <ion-select-option *ngFor="let intensityOption of intensityOptions" [value]="intensityOption">{{intensityOption}}</ion-select-option>
+          </ion-select> 
+          <ion-label *ngIf="redBackground">-</ion-label>
+        </div>
+      </ion-col>
+      <ion-col size="12" class="portraitrow"><br></ion-col>   					
+     
+    </ion-row>
+    <ion-row class="rowDisplay" [ngClass]="{'bgred' : redBackground}">
+      
+        <ion-col size="12" size-sm="1">						
+          <p>P3</p>				
+        </ion-col>	
+        <ion-col size="12" size-sm="3.15">		
+          <div class="form">	
+            <div class="infosform">Fréquence :</div>		
+            <ion-select *ngIf='frequency2[2] && !redBackground' [(ngModel)]="frequency2[2]" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program3Frequency,'frequency',frequency2[2])">
+              <ion-select-option *ngFor="let frequencyOption of frequencyOptions" [value]="frequencyOption">{{frequencyOption}}</ion-select-option>
+            </ion-select>	
+            <ion-label *ngIf="redBackground">-</ion-label>
+          </div>
+        </ion-col>
+        <ion-col size="12" size-sm="2.5">	
+          <div class="form">	
+            <div class="infosformhours">Début :</div>				
+            <ion-item>							
+              <ion-datetime *ngIf="!redBackground" displayFormat="HH:mm" [(ngModel)]="pStart[2]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program3Start,'start',pStart[2])"></ion-datetime>						
+              <ion-label *ngIf="redBackground">-</ion-label>
+            </ion-item>	
+          </div>
+        </ion-col>
+        <ion-col size="12" size-sm="0.5">
+        <p class="hoursrange">-</p>	
+      </ion-col>
+      <ion-col size="12" size-sm="2.5">		
+        <div class="form"	>
+          <div class="infosformhours">Fin :</div>	
+          <ion-item>							
+            <ion-datetime *ngIf="!redBackground" value="00:00" displayFormat="HH:mm" [(ngModel)]="pEnd[2]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program3End,'end',pEnd[2])"></ion-datetime>							
+            <ion-label *ngIf="redBackground">-</ion-label>
+          </ion-item>	
+        </div>
+      </ion-col>
+      <ion-col size="12" size-sm="2">	
+        <div class="form">
+          <div class="infosform">Intensité :</div>
+          <ion-select *ngIf="!redBackground" [(ngModel)]="intensity[2]" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program3Intensity,'intensity',intensity[2])">
+             <ion-select-option *ngFor="let intensityOption of intensityOptions" [value]="intensityOption">{{intensityOption}}</ion-select-option>
+          </ion-select> 
+          <ion-label *ngIf="redBackground">-</ion-label>
+        </div>
+      </ion-col> 
+      <ion-col size="12" class="portraitrow"><br></ion-col>  					
+      
+    </ion-row>
+    <ion-row class="rowDisplay" [ngClass]="{'bgred' : redBackground}">
+      
+        <ion-col size="12" size-sm="1">					
+          <p>P4</p>				
+        </ion-col>	
+        <ion-col size="12" size-sm="3.15">		
+          <div class="form">	
+            <div class="infosform">Fréquence :</div>		
+            <ion-select *ngIf='frequency2[3] && !redBackground' [(ngModel)]="frequency2[3]" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program4Frequency,'frequency',frequency2[3])">
+              <ion-select-option *ngFor="let frequencyOption of frequencyOptions" [value]="frequencyOption">{{frequencyOption}}</ion-select-option>
+            </ion-select>	
+            <ion-label *ngIf="redBackground">-</ion-label>
+          </div>
+        </ion-col>
+        <ion-col size="12" size-sm="2.5">	
+          <div class="form">	
+            <div class="infosformhours">Début :</div>				
+            <ion-item>							
+              <ion-datetime *ngIf="!redBackground" displayFormat="HH:mm" [(ngModel)]="pStart[3]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program4Start,'start',pStart[3])"></ion-datetime>						
+              <ion-label *ngIf="redBackground">-</ion-label>
+            </ion-item>	
+          </div>
+        </ion-col>
+      <ion-col size="12" size-sm="0.5">
+        <p class="hoursrange">-</p>	
+      </ion-col>
+      <ion-col size="12" size-sm="2.5">	
+        <div class="form"	>
+          <div class="infosformhours">Fin :</div>	
+          <ion-item>							
+            <ion-datetime *ngIf="!redBackground" value="00:00" displayFormat="HH:mm" [(ngModel)]="pEnd[3]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program4End,'end',pEnd[3])"></ion-datetime>							
+            <ion-label *ngIf="redBackground">-</ion-label>
+          </ion-item>	
+        </div>
+      </ion-col>
+      <ion-col size="12" size-sm="2">	
+        <div class="form">
+          <div class="infosform">Intensité :</div>
+          <ion-select *ngIf="!redBackground" [(ngModel)]="intensity[3]" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program4Intensity,'intensity',intensity[3])">
+             <ion-select-option *ngFor="let intensityOption of intensityOptions" [value]="intensityOption">{{intensityOption}}</ion-select-option>
+          </ion-select> 
+          <ion-label *ngIf="redBackground">-</ion-label>
+        </div>
+      </ion-col>
+      <ion-col size="12" class="portraitrow"><br></ion-col>   					
+      
+    </ion-row>
+    <ion-row class="rowDisplay" [ngClass]="{'bgred' : redBackground}">
+      
+        <ion-col size="12" size-sm="1">					
+          <p>P5</p>				
+        </ion-col>	
+        <ion-col size="12" size-sm="3.15">		
+          <div class="form">	
+            <div class="infosform">Fréquence :</div>		
+            <ion-select *ngIf='frequency2[4] && !redBackground' [(ngModel)]="frequency2[4]" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program5Frequency,'frequency',frequency2[4])">
+              <ion-select-option *ngFor="let frequencyOption of frequencyOptions" [value]="frequencyOption">{{frequencyOption}}</ion-select-option>
+            </ion-select>	
+            <ion-label *ngIf="redBackground">-</ion-label>
+          </div>
+        </ion-col>
+        <ion-col size="12" size-sm="2.5">	
+          <div class="form">	
+            <div class="infosformhours">Début :</div>				
+            <ion-item>							
+              <ion-datetime *ngIf="!redBackground" displayFormat="HH:mm" [(ngModel)]="pStart[4]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program5Start,'start',pStart[4])"></ion-datetime>						
+              <ion-label *ngIf="redBackground">-</ion-label>
+            </ion-item>	
+          </div>
+        </ion-col>
+      <ion-col size="12" size-sm="0.5">
+        <p class="hoursrange">-</p>	
+      </ion-col>
+      <ion-col size="12" size-sm="2.5">	
+        <div class="form"	>
+          <div class="infosformhours">Fin :</div>	
+          <ion-item>							
+            <ion-datetime *ngIf="!redBackground" value="00:00" displayFormat="HH:mm" [(ngModel)]="pEnd[4]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program5End,'end',pEnd[4])"></ion-datetime>							
+            <ion-label *ngIf="redBackground">-</ion-label>
+          </ion-item>	
+        </div>
+      </ion-col>
+      <ion-col size="12" size-sm="2">	
+        <div class="form">
+          <div class="infosform">Intensité :</div>
+          <ion-select *ngIf="!redBackground" [(ngModel)]="intensity[4]" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program5Intensity,'intensity',intensity[4])">
+             <ion-select-option *ngFor="let intensityOption of intensityOptions" [value]="intensityOption">{{intensityOption}}</ion-select-option>
+          </ion-select> 
+          <ion-label *ngIf="redBackground">-</ion-label>
+        </div>
+      </ion-col>
+      <ion-col size="12" class="portraitrow"><br></ion-col>   					
+      
+    </ion-row>
+    <ion-row class="rowDisplay" [ngClass]="{'bgred' : redBackground}">
+      
+        <ion-col size="12" size-sm="1">					
+          <p>P6</p>				
+        </ion-col>	
+        <ion-col size="12" size-sm="3.15">		
+          <div class="form">	
+            <div class="infosform">Fréquence :</div>		
+            <ion-select *ngIf='frequency2[5] && !redBackground' [(ngModel)]="frequency2[5]" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program6Frequency,'frequency',frequency2[5])">
+              <ion-select-option *ngFor="let frequencyOption of frequencyOptions" [value]="frequencyOption">{{frequencyOption}}</ion-select-option>
+            </ion-select>	
+            <ion-label *ngIf="redBackground">-</ion-label>
+          </div>
+        </ion-col>
+        <ion-col size="12" size-sm="2.5">	
+          <div class="form">	
+            <div class="infosformhours">Début :</div>				
+            <ion-item>							
+              <ion-datetime *ngIf="!redBackground" displayFormat="HH:mm" [(ngModel)]="pStart[5]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program6Start,'start',pStart[5])"></ion-datetime>						
+              <ion-label *ngIf="redBackground">-</ion-label>
+            </ion-item>	
+          </div>
+        </ion-col>
+      <ion-col size="12" size-sm="0.5">
+        <p class="hoursrange">-</p>	
+      </ion-col>
+      <ion-col size="12" size-sm="2.5">		
+        <div class="form"	>
+          <div class="infosformhours">Fin :</div>	
+          <ion-item>							
+            <ion-datetime *ngIf="!redBackground" value="00:00" displayFormat="HH:mm" [(ngModel)]="pEnd[5]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program6End,'end',pEnd[5])"></ion-datetime>							
+            <ion-label *ngIf="redBackground">-</ion-label>
+          </ion-item>	
+        </div>
+      </ion-col>
+      <ion-col size="12" size-sm="2">	
+        <div class="form">
+          <div class="infosform">Intensité :</div>
+          <ion-select *ngIf="!redBackground" [(ngModel)]="intensity[5]" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program6Intensity,'intensity',intensity[5])">
+             <ion-select-option *ngFor="let intensityOption of intensityOptions" [value]="intensityOption">{{intensityOption}}</ion-select-option>
+          </ion-select> 
+          <ion-label *ngIf="redBackground">-</ion-label>
+        </div>
+      </ion-col>
+      <ion-col size="12" class="portraitrow"><br></ion-col>   					
+      
+    </ion-row>
+    <ion-row class="rowDisplay" [ngClass]="{'bgred' : redBackground}">
+        
+        <ion-col size="12" size-sm="1">					
+          <p>P7</p>				
+        </ion-col>	
+        <ion-col size="12" size-sm="3.15">		
+          <div class="form">	
+            <div class="infosform">Fréquence :</div>		
+            <ion-select *ngIf='frequency2[6] && !redBackground' [(ngModel)]="frequency2[6]" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program7Frequency,'frequency',frequency2[6])">
+              <ion-select-option *ngFor="let frequencyOption of frequencyOptions" [value]="frequencyOption">{{frequencyOption}}</ion-select-option>
+            </ion-select>
+            <ion-label *ngIf="redBackground">-</ion-label>	
+          </div>
+        </ion-col>
+        <ion-col size="12" size-sm="2.5">	
+          <div class="form">	
+            <div class="infosformhours">Début :</div>				
+            <ion-item>							
+              <ion-datetime *ngIf="!redBackground" displayFormat="HH:mm" [(ngModel)]="pStart[6]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program7Start,'start',pStart[6])"></ion-datetime>						
+              <ion-label *ngIf="redBackground">-</ion-label>
+            </ion-item>	
+          </div>
+        </ion-col>
+      <ion-col size="12" size-sm="0.5">
+        <p class="hoursrange">-</p>	
+      </ion-col>
+      <ion-col size="12" size-sm="2.5">		
+        <div class="form"	>
+          <div class="infosformhours">Fin :</div>	
+          <ion-item>							
+            <ion-datetime *ngIf="!redBackground" value="00:00" displayFormat="HH:mm" [(ngModel)]="pEnd[6]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program7End,'end',pEnd[6])"></ion-datetime>							
+            <ion-label *ngIf="redBackground">-</ion-label>
+          </ion-item>	
+        </div>
+      </ion-col>
+      <ion-col size="12" size-sm="2">	
+        <div class="form">
+          <div class="infosform">Intensité :</div>
+          <ion-select *ngIf="!redBackground" [(ngModel)]="intensity[6]" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program7Intensity,'intensity',intensity[6])">
+             <ion-select-option *ngFor="let intensityOption of intensityOptions" [value]="intensityOption">{{intensityOption}}</ion-select-option>
+          </ion-select> 
+          <ion-label *ngIf="redBackground">-</ion-label>
+        </div>
+      </ion-col>
+      <ion-col size="12" class="portraitrow"><br></ion-col>   					
+      
+    </ion-row>
+    <ion-row class="rowDisplay" [ngClass]="{'bgred' : redBackground}">
+      
+        <ion-col size="12" size-sm="1">					
+          <p>P8</p>				
+        </ion-col>	
+        <ion-col size="12" size-sm="3.15">		
+          <div class="form">	
+            <div class="infosform">Fréquence :</div>		
+            <ion-select *ngIf='frequency2[7] && !redBackground' [(ngModel)]="frequency2[7]" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program8Frequency,'frequency',frequency2[7])">
+              <ion-select-option *ngFor="let frequencyOption of frequencyOptions" [value]="frequencyOption">{{frequencyOption}}</ion-select-option>
+            </ion-select>	
+            <ion-label *ngIf="redBackground">-</ion-label>
+          </div>
+        </ion-col>
+        <ion-col size="12" size-sm="2.5">	
+          <div class="form">	
+            <div class="infosformhours">Début :</div>				
+            <ion-item>							
+              <ion-datetime *ngIf="!redBackground" displayFormat="HH:mm" [(ngModel)]="pStart[7]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program8Start,'start',pStart[7])"></ion-datetime>						
+              <ion-label *ngIf="redBackground">-</ion-label>
+            </ion-item>	
+          </div>
+        </ion-col>
+      <ion-col size="12" size-sm="0.5">
+        <p class="hoursrange">-</p>	
+      </ion-col>
+      <ion-col size="12" size-sm="2.5">		
+        <div class="form"	>
+          <div class="infosformhours">Fin :</div>	
+          <ion-item>							
+            <ion-datetime *ngIf="!redBackground" value="00:00" displayFormat="HH:mm" [(ngModel)]="pEnd[7]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program8End,'end',pEnd[7])"></ion-datetime>							
+            <ion-label *ngIf="redBackground">-</ion-label>
+          </ion-item>	
+        </div>
+      </ion-col>
+      <ion-col size="12" size-sm="2">	
+        <div class="form">
+          <div class="infosform">Intensité :</div>
+          <ion-select *ngIf="!redBackground" [(ngModel)]="intensity[7]" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program8Intensity,'intensity',intensity[7])">
+             <ion-select-option *ngFor="let intensityOption of intensityOptions" [value]="intensityOption">{{intensityOption}}</ion-select-option>
+          </ion-select> 
+          <ion-label *ngIf="redBackground">-</ion-label>
+        </div>
+      </ion-col>
+      <ion-col size="12" class="portraitrow"><br></ion-col>   					
+     
+    </ion-row>
+    <ion-row class="rowDisplay" [ngClass]="{'bgred' : redBackground}">
+      
+        <ion-col size="12" size-sm="1">					
+          <p>P9</p>				
+        </ion-col>	
+        <ion-col size="12" size-sm="3.15">		
+          <div class="form">	
+            <div class="infosform">Fréquence :</div>		
+            <ion-select *ngIf='frequency2[8] && !redBackground' [(ngModel)]="frequency2[8]" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program9Frequency,'frequency',frequency2[8])">
+              <ion-select-option *ngFor="let frequencyOption of frequencyOptions" [value]="frequencyOption">{{frequencyOption}}</ion-select-option>
+            </ion-select>	
+            <ion-label *ngIf="redBackground">-</ion-label>
+          </div>
+        </ion-col>
+        <ion-col size="12" size-sm="2.5">	
+          <div class="form">	
+            <div class="infosformhours">Début :</div>				
+            <ion-item>							
+              <ion-datetime *ngIf="!redBackground" displayFormat="HH:mm" [(ngModel)]="pStart[8]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program9Start,'start',pStart[8])"></ion-datetime>						
+              <ion-label *ngIf="redBackground">-</ion-label>
+            </ion-item>	
+          </div>
+        </ion-col>
+      <ion-col size="12" size-sm="0.5">
+        <p class="hoursrange">-</p>	
+      </ion-col>
+      <ion-col size="12" size-sm="2.5">	
+        <div class="form"	>
+          <div class="infosformhours">Fin :</div>	
+          <ion-item>							
+            <ion-datetime *ngIf="!redBackground" value="00:00" displayFormat="HH:mm" [(ngModel)]="pEnd[8]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program9End,'end',pEnd[8])"></ion-datetime>							
+            <ion-label *ngIf="redBackground">-</ion-label>
+          </ion-item>	
+        </div>
+      </ion-col>
+      <ion-col size="12" size-sm="2">	
+        <div class="form">
+          <div class="infosform">Intensité :</div>
+          <ion-select *ngIf="!redBackground" [(ngModel)]="intensity[8]" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program9Intensity,'intensity',intensity[8])">
+             <ion-select-option *ngFor="let intensityOption of intensityOptions" [value]="intensityOption">{{intensityOption}}</ion-select-option>
+          </ion-select> 
+          <ion-label *ngIf="redBackground">-</ion-label>
+        </div>
+      </ion-col>
+      <ion-col size="12" class="portraitrow"><br></ion-col>   					
+      
+    </ion-row>
+    <ion-row class="rowDisplay" height="100%" [ngClass]="{'bgred' : redBackground}">
+      
+        <ion-col size="12" size-sm="1">					
+          <p>P10</p>				
+        </ion-col>	
+        <ion-col size="12" size-sm="3.15">		
+          <div class="form">	
+            <div class="infosform">Fréquence :</div>		
+            <ion-select *ngIf='frequency2[9] && !redBackground' [(ngModel)]="frequency2[9]" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program10Frequency,'frequency',frequency2[9])">
+              <ion-select-option *ngFor="let frequencyOption of frequencyOptions" [value]="frequencyOption">{{frequencyOption}}</ion-select-option>
+            </ion-select>	
+          </div>
+        </ion-col>
+        <ion-col size="12" size-sm="2.5">	
+          <div class="form">	
+            <div class="infosformhours"><p>Début :</p></div>				
+            <ion-item>							
+              <ion-datetime *ngIf="!redBackground" displayFormat="HH:mm" [(ngModel)]="pStart[9]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program10Start,'start',pStart[9])"></ion-datetime>						
+              <ion-label *ngIf="redBackground">-</ion-label>
+            </ion-item>	
+          </div>
+        </ion-col>
+      <ion-col size="12" size-sm="0.5">
+        <p class="hoursrange">-</p>	
+      </ion-col>
+      <ion-col size="12" size-sm="2.5">	
+        <div class="form"	>
+          <div class="infosformhours">Fin :</div>	
+          <ion-item>							
+            <ion-datetime *ngIf="!redBackground" value="00:00" displayFormat="HH:mm" [(ngModel)]="pEnd[9]" [ngModelOptions]="{standalone: true}" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program10End,'end',pEnd[9])"></ion-datetime>							
+            <ion-label *ngIf="redBackground">-</ion-label>
+          </ion-item>	
+        </div>
+      </ion-col>
+      <ion-col size="12" size-sm="2">	
+        <div class="form">
+          <div class="infosform">Intensité :</div>
+          <ion-select *ngIf="!redBackground" [(ngModel)]="intensity[9]" (ngModelChange)="onEdit(correspondancesRegistres.diffCo2Program10Intensity,'intensity',intensity[9])">
+             <ion-select-option *ngFor="let intensityOption of intensityOptions" [value]="intensityOption">{{intensityOption}}</ion-select-option>
+          </ion-select>
+          <ion-label *ngIf="redBackground">-</ion-label> 
+        </div>
+      </ion-col>
+      <ion-col size="12" class="portraitrow"><br></ion-col>   					
+      
+    </ion-row>     							
+  
+</ion-grid>							
+</ion-card>		
+
+<ion-card class="ion-padding">
+  <ion-card-header>
+    <ion-card-title>Graphique</ion-card-title>
+  </ion-card-header>
+
+  <canvas id="myChart"></canvas>
+</ion-card>
+
+<!--<ion-card class="ion-padding">
+  <ion-card-header>
+    <ion-card-title>Consommations théoriques</ion-card-title>
+  </ion-card-header>
+  <ion-row class="colDisplay">
+    <ion-col size="12"><br></ion-col>  
+    <ion-col>
+      <p style="float: left;">Par jour</p>
+      <p style="font-weight: bold; float: right;">val1</p>
+    </ion-col>
+    <ion-col size="12"><br></ion-col>  
+    <ion-col>
+      <p style="float: left;">Par semaine</p>
+      <p style="font-weight: bold; float: right;">val2</p>
+    </ion-col>
+    <ion-col size="12"><br></ion-col>  
+    <ion-col>
+      <p style="float: left;">Par mois</p>
+      <p style="font-weight: bold; float: right;">val3</p>
+    </ion-col> 
+    <ion-col size="12"><br></ion-col>      
+  </ion-row>
+</ion-card>-->
+</ion-content>
+<ion-footer>
+  <ion-button *ngIf="!global.displayLoading" style="float: left" fill="clear" (click)="global.onReadStatiqueEnable()">    
+    <ion-icon name="refresh"></ion-icon>
+  </ion-button>
+  <ion-button *ngIf="global.displayLoading" style="float: left;" fill="clear" color="primary">
+    <ion-spinner></ion-spinner>
+  </ion-button>
+  <ion-button *ngIf="display" style='float: right' fill='clear' (click)='goToNextPage()'>Suivant<ion-icon name='arrow-forward'></ion-icon></ion-button>
+</ion-footer>
+
+

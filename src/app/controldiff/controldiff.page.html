@@ -1,0 +1,122 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Contrôle Mini/Maxi</ion-title>
+    <ion-buttons slot="end" *ngIf="!global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="globe" color="light" (click)="onSynchroB1B2();"></ion-icon>ADMIN</ion-button> 
+     </ion-buttons>
+     <ion-buttons slot="end" *ngIf="global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="wifi" color="light"></ion-icon>{{global.ssid}}</ion-button> 
+     </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h3 style="text-align: center;">Contrôle Mini/Maxi </h3>
+
+  <ion-refresher slot="fixed" id="refresher" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-grid style="padding-top: 5%;">
+    <ion-row style="text-align: center;">
+      
+      <ion-col size="12"><ion-button shape="round" size="large" [color]="colordif" (click)="startstop();">{{textdiff}}</ion-button></ion-col>
+    </ion-row>
+
+  </ion-grid>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title style="text-align: center;">Mesures</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row [ngClass]="{'bgred' : redBackground}">
+          <ion-col size="6">
+            <ion-label *ngIf="!redBackground" color="dark">{{"Intensité : "+ intensity}}</ion-label>
+            <ion-label *ngIf="redBackground">-</ion-label>
+          </ion-col>
+          <ion-col size="6">
+            <ion-label *ngIf="!redBackground" color="dark">{{"Température : "+temp.toFixed(2)+" °C"}}</ion-label>
+            <ion-label *ngIf="redBackground">-</ion-label>
+        </ion-col>
+        </ion-row>
+        
+      </ion-grid>
+    </ion-card-content>
+  </ion-card> 
+  <ion-card>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row [ngClass]="{'bgred' : redBackground}">
+          <ion-col size="6"></ion-col>
+          <ion-col size="3" [ngClass]="{'highlight' : highlightB1I1}"><ion-label color="dark">B1</ion-label></ion-col>
+          <ion-col size="3" [ngClass]="{'highlight' : highlightB2I1}"><ion-label color="dark">B2</ion-label></ion-col>
+        </ion-row>
+        <ion-row [ngClass]="{'bgred' : redBackground}">
+          <ion-col size="3"></ion-col>
+          <ion-col size="3"><ion-label color="dark">ref</ion-label></ion-col>
+          <ion-col size="3" [ngClass]="{'highlight' : highlightB1I1}"><ion-label *ngIf="!redBackground" color="dark">mes</ion-label><ion-label color="dark" *ngIf="redBackground">-</ion-label></ion-col>
+          <ion-col size="3" [ngClass]="{'highlight' : highlightB2I1}"><ion-label *ngIf="!redBackground" color="dark">mes</ion-label><ion-label *ngIf="redBackground">-</ion-label></ion-col>
+        </ion-row>
+        <ion-row [ngClass]="{'bgred' : redBackground}">
+          <ion-col size="3">PE (bar)</ion-col>
+          <ion-col size="3"><ion-label color="dark" *ngIf="!redBackground">{{inputref.toFixed(3)}}</ion-label><ion-label color="dark" *ngIf="redBackground">-</ion-label></ion-col>
+          <ion-col size="3" [ngClass]="{'highlight' : highlightB1I1,'bgsuccess':backgroundPEB1Int1,'bgdanger':!backgroundPEB1Int1}"><ion-label *ngIf="!redBackground" color="dark">{{PEB1Int1.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground">-</ion-label></ion-col>
+          <ion-col size="3" [ngClass]="{'highlight' : highlightB2I1,'bgsuccess':backgroundPEB2Int1,'bgdanger':!backgroundPEB2Int1}"><ion-label *ngIf="!redBackground" color="dark">{{PEB2Int1.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground">-</ion-label></ion-col>
+        </ion-row>
+        <ion-row [ngClass]="{'bgred' : redBackground}">
+          <ion-col size="3">PSc (bar)</ion-col>
+          <ion-col size="3"><ion-label *ngIf="!redBackground" color="dark">{{outputref.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark">-</ion-label></ion-col>
+          <ion-col size="3" [ngClass]="{'highlight' : highlightB1I1,'bgsuccess':backgroundPSB1Int1,'bgdanger':!backgroundPSB1Int1,'bgwarning':bgpswarningB1Int1}"><ion-label *ngIf="!redBackground" color="dark">{{PSB1Int1.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark">-</ion-label></ion-col>
+          <ion-col size="3" [ngClass]="{'highlight' : highlightB2I1,'bgsuccess':backgroundPSB2Int1,'bgdanger':!backgroundPSB2Int1,'bgwarning':bgpswarningB2Int1}"><ion-label *ngIf="!redBackground" color="dark">{{PSB2Int1.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark">-</ion-label></ion-col>
+        </ion-row>
+        <ion-row [ngClass]="{'bgred' : redBackground}">
+          <ion-col size="3">Deb (l/mn)</ion-col>
+          <ion-col size="3"><ion-label *ngIf="!redBackground" color="dark">{{fluxref.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark">-</ion-label></ion-col>
+          <ion-col size="3" [ngClass]="{'highlight' : highlightB1I1,'bgsuccess':backgroundDebB1Int1,'bgdanger':!backgroundDebB1Int1, 'bgwarning':bgdebwarningB1Int1}"><ion-label *ngIf="!redBackground" color="dark">{{DebB1Int1.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark">-</ion-label></ion-col>
+          <ion-col size="3" [ngClass]="{'highlight' : highlightB2I1,'bgsuccess':backgroundDebB2Int1,'bgdanger':!backgroundDebB2Int1, 'bgwarning':bgdebwarningB2Int1}"><ion-label *ngIf="!redBackground" color="dark">{{DebB2Int1.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark">-</ion-label></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card> 
+  <ion-card>
+    <ion-card-content>
+      <ion-row [ngClass]="{'bgred' : redBackground}">
+        <ion-col size="6"></ion-col>
+        <ion-col size="3" [ngClass]="{'highlight' : highlightB1I10}"><ion-label color="dark">B1</ion-label></ion-col>
+        <ion-col size="3" [ngClass]="{'highlight' : highlightB2I10}"><ion-label color="dark">B2</ion-label></ion-col>
+      </ion-row>
+      <ion-row [ngClass]="{'bgred' : redBackground}">
+        <ion-col size="3"></ion-col>
+        <ion-col size="3"><ion-label color="dark">ref</ion-label></ion-col>
+        <ion-col size="3" [ngClass]="{'highlight' : highlightB1I10}"><ion-label color="dark">mes</ion-label></ion-col>
+        <ion-col size="3" [ngClass]="{'highlight' : highlightB2I10}"><ion-label color="dark">mes</ion-label></ion-col>
+      </ion-row>
+      <ion-row [ngClass]="{'bgred' : redBackground}">
+        <ion-col size="3">PE (bar)</ion-col>
+        <ion-col size="3"><ion-label color="dark" *ngIf="!redBackground">{{inputref.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark">-</ion-label></ion-col>
+        <ion-col size="3" [ngClass]="{'highlight' : highlightB1I10,'bgsuccess':backgroundPEB1Int10,'bgdanger':!backgroundPEB1Int10}"><ion-label *ngIf="!redBackground" color="dark">{{PEB1Int10.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark">-</ion-label></ion-col>
+        <ion-col size="3" [ngClass]="{'highlight' : highlightB2I10,'bgsuccess':backgroundPEB2Int10,'bgdanger':!backgroundPEB2Int10}"><ion-label *ngIf="!redBackground" color="dark">{{PEB2Int10.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark">-</ion-label></ion-col>
+      </ion-row>
+      <ion-row [ngClass]="{'bgred' : redBackground}">
+        <ion-col size="3">PSc (bar)</ion-col>
+        <ion-col size="3"><ion-label *ngIf="!redBackground" color="dark">{{outputref10.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark">-</ion-label></ion-col>
+        <ion-col size="3" [ngClass]="{'highlight' : highlightB1I10,'bgsuccess':backgroundPSB1Int10,'bgdanger':!backgroundPSB1Int10,'bgwarning':bgpswarningB1Int10}"><ion-label *ngIf="!redBackground" color="dark">{{PSB1Int10.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark">-</ion-label></ion-col>
+        <ion-col size="3" [ngClass]="{'highlight' : highlightB2I10,'bgsuccess':backgroundPSB2Int10,'bgdanger':!backgroundPSB2Int10,'bgwarning':bgpswarningB2Int10}"><ion-label *ngIf="!redBackground" color="dark">{{PSB2Int10.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark">-</ion-label></ion-col>
+      </ion-row>
+      <ion-row [ngClass]="{'bgred' : redBackground}">
+        <ion-col size="3">Deb (l/mn)</ion-col>
+        <ion-col size="3"><ion-label *ngIf="!redBackground" color="dark">{{fluxref10.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark">-</ion-label></ion-col>
+        <ion-col size="3" [ngClass]="{'highlight' : highlightB1I10,'bgsuccess':backgroundDebB1Int10,'bgdanger':!backgroundDebB1Int10, 'bgwarning':bgdebwarningB1Int10}"><ion-label *ngIf="!redBackground" color="dark">{{DebB1Int10.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark">-</ion-label></ion-col>
+        <ion-col size="3" [ngClass]="{'highlight' : highlightB2I10,'bgsuccess':backgroundDebB2Int10,'bgdanger':!backgroundDebB2Int10, 'bgwarning':bgdebwarningB2Int10}"><ion-label *ngIf="!redBackground" color="dark">{{DebB2Int10.toFixed(3)}}</ion-label><ion-label *ngIf="redBackground" color="dark">-</ion-label></ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<ion-footer>
+  <ion-button *ngIf="display" style='float: right' fill='clear' (click)='goToNextPage()'>Suivant<ion-icon name='arrow-forward'></ion-icon></ion-button>
+</ion-footer>
+

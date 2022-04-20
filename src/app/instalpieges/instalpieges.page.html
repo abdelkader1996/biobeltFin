@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Installation</ion-title>
+    <ion-buttons slot="end" *ngIf="!global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="globe" color="light"></ion-icon>ADMIN</ion-button> 
+     </ion-buttons>
+     <ion-buttons slot="end" *ngIf="global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="wifi" color="light"></ion-icon>{{global.ssid}}</ion-button> 
+     </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [forceOverscroll]="false">
+  <ion-row>
+    <ion-col size="12">
+      <h1 style="text-align: center;"> {{"Vous avez "+nbpiege+" Pièges dans la ceinture "+upc3.upcNameId}} </h1>
+    </ion-col>
+    <ion-col size="12">
+      <h2>Souhaitez vous modifier le nombre de pièges ?</h2>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-input [(ngModel)]="nbpiege" placeholder="Si oui combien ?" type="tel"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <cad-canvas></cad-canvas>
+  <ion-button (click)="onEdit();" size="block"> Modifier</ion-button>
+  <ion-button (click)="onContinue();" size="block" color="secondary">Continuer</ion-button>
+</ion-content>

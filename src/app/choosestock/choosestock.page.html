@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
+    <ion-title>Choisir un dépôt</ion-title>
+    <ion-buttons slot="end" *ngIf="!global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="globe" color="light" (click)="onSynchroB1B2();"></ion-icon>ADMIN</ion-button> 
+     </ion-buttons>
+     <ion-buttons slot="end" *ngIf="global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="wifi" color="light"></ion-icon>{{global.ssid}}</ion-button> 
+     </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="this.stock.length==0"> pas de Stock .</div>
+  <ion-list *ngIf="!(stock.length==0)">
+    <ion-item *ngFor="let s of stock" (click)="goToStock(s);">
+        {{s.name}}
+    </ion-item>
+  </ion-list>
+</ion-content>

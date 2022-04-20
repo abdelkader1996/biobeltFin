@@ -1,0 +1,164 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{name.name}}</ion-title>
+    <ion-buttons slot="end" *ngIf="!global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="globe" color="light"></ion-icon>ADMIN</ion-button> 
+     </ion-buttons>
+     <ion-buttons slot="end" *ngIf="global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="wifi" color="light"></ion-icon>{{global.ssid}}</ion-button> 
+     </ion-buttons>
+  </ion-toolbar>
+  
+</ion-header>
+
+<ion-content>
+
+  <ion-item>
+    <ion-label>Stock : </ion-label>
+      <ion-label >{{this.stockName}}</ion-label>
+  </ion-item>
+
+  
+  
+      <ion-button *ngIf="retfourn" expand="block"  color="secondary" (click)="scanRack();">
+        Scanner un Rack 
+        <ion-icon ios="ios-camera" md="md-camera"></ion-icon>
+
+      </ion-button>
+
+
+  <ion-item *ngIf="addStock">
+    <ion-label>Rack : </ion-label>
+      <ion-label *ngIf="selectedRack==='null'" (click)="selectRack();">Rack non selectioné</ion-label>
+      <ion-label *ngIf="!(selectedRack==='null')" (click)="selectRack();" >{{selectedRack}}</ion-label>
+  </ion-item>
+
+  <ion-item *ngIf="addStock">
+    <ion-label>type de bouteille </ion-label>
+    <ion-select placeholder="Selectionner un type " [(ngModel)]="currentBotlleType" >
+      <ion-select-option  *ngFor="let bt of bottleTypedb" value="{{bt.id}}">{{bt.brand+"-"+bt.designation+" kg"}}</ion-select-option>
+     </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label color="primary">boutteilles scannées : </ion-label>
+  </ion-item>
+  <ion-item *ngIf="bottleBarcodes.length==0 ">
+    <ion-label>aucune   </ion-label>
+  </ion-item>
+  
+  <div *ngIf="!retbouteille">
+    <ion-item *ngFor="let barcode of bottleBarcodes; let indexOfelement=index;" >
+      <ion-label>{{barcode}} </ion-label>
+      <ion-label>  <ion-icon name="trash" color="danger" (click)="removeElementFromBarcodes(indexOfelement)"></ion-icon>
+      </ion-label>
+  
+    </ion-item>
+  </div>
+
+  
+  <div *ngIf="retbouteille && botteilleRet">
+     <ion-item>
+      <ion-label>bouteille :  </ion-label>
+     </ion-item>
+     <ion-item (click)="showRadio()">
+      <ion-label>codebar : {{botteilleRet.barcode}}</ion-label><ion-label> | {{botteilleRet.state}} |</ion-label>
+     </ion-item>
+
+    <ion-item *ngIf="retNotExistBottle">
+      <ion-list>
+        <ion-list-header>
+          <ion-label>ajouter une bouteille  :</ion-label>
+        </ion-list-header>
+        <ion-item >
+          <ion-label>type de bouteille </ion-label>
+          <ion-select placeholder="Selectionner un type " [(ngModel)]="botteilleRet.bottleType" >
+            <ion-select-option  *ngFor="let bt of bottleTypedb" value="{{bt.id}}">{{bt.brand+"-"+bt.designation+" kg"}}</ion-select-option>
+           </ion-select>
+        </ion-item>
+
+      </ion-list>
+    </ion-item>
+     <ion-item *ngIf="showRadioTF">
+      <ion-list>
+        <ion-radio-group [value]="botteilleRet.state" (ionChange)="radioGroupChange($event)">
+          <ion-list-header>
+            <ion-label>etat : </ion-label>
+          </ion-list-header>
+      
+          <ion-item>
+            <ion-label>EMPTY</ion-label>
+            <ion-radio slot="start" value="EMPTY"></ion-radio>
+          </ion-item>
+      
+          <ion-item>
+            <ion-label>IN_USE</ion-label>
+            <ion-radio slot="start" value="IN_USE"></ion-radio>
+          </ion-item>
+      
+          <ion-item>
+            <ion-label>FULL </ion-label>
+            <ion-radio slot="start" value="FULL"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>    
+     </ion-item>
+
+     
+     
+      
+  </div>
+  
+  
+  <ion-list>
+
+    <ion-item *ngFor="let s of stock"> 
+      <ion-label>{{s.bottleString+"Rack:"+s.rack}}</ion-label>
+      <ion-badge color="success" *ngIf="s.state === 'FULL'">Plein</ion-badge>
+      <ion-badge color="secondary" *ngIf="s.state === 'IN_USE'">Entamée</ion-badge>
+      <ion-badge color="danger" *ngIf="s.state === 'EMPTY'">Vide</ion-badge>
+    </ion-item>
+    
+  </ion-list>
+
+
+   
+  <ion-list>
+    <ion-list-header>Historique :</ion-list-header>
+    
+    <ion-item *ngFor="let log of logs"> 
+      <ion-label>{{log}}</ion-label>
+    </ion-item>
+    
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-button  [attr.disabled]="!currentBotlleType && addStock" *ngIf="addStock || retbouteille || retfourn" expand="block" (click)="scanBottle();" color="secondary" >
+    Scanner une bouteille 
+    <ion-icon ios="ios-camera" md="md-camera"></ion-icon>
+
+ </ion-button>
+
+  <ion-button  [attr.disabled]="bottleBarcodes.length==0 && addStock " *ngIf="addStock" expand="block" (click)="addBottle();">
+    enregistrer 
+  </ion-button>
+  <ion-button *ngIf="retStock" expand="block" (click)="retBottles();">
+    Retour au dépôt
+  </ion-button>
+
+  <ion-button *ngIf="retbouteille" expand="block" (click)="retraitdebouteille();">
+    {{retourStock?"retour au stock":"retrait de bouteille" }}
+  </ion-button>
+  <ion-button *ngIf="retfourn" color="danger" expand="block" (click)="delBottle();">
+    Retour au fournisseur 
+</ion-button>
+<ion-button *ngIf="retStock" expand="block" (click)="retRack();">
+  Sélectionner un Rack
+</ion-button>
+
+</ion-footer>
+

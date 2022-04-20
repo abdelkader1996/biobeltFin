@@ -1,0 +1,16 @@
+<div style="text-align: center;"><ion-button color="danger" size="small" (click)="clear();">Tout effacer</ion-button></div>
+<canvas #backgroundImageCanvas id="background-image-canvas" (mousedown)="startDrawing($event);" 
+ (mousemove)="moved($event);" (mouseup)="endDrawing();" (touchstart)="startDrawing($event);" (touchmove)="moved($event);"></canvas>
+
+ 
+ <!--<canvas #protectedAreasCanvas id="protected-areas-canvas"></canvas>
+
+<canvas #beltsCanvas id="belts-canvas"></canvas>
+
+<canvas #electricCanvas id="electric-canvas"></canvas>
+
+<canvas #drawingCanvas id="drawing-canvas"
+        (mousedown)="onMouseDown($event)"
+        (mousemove)="onMouseMove($event)"
+        (contextmenu)="onContextMenu($event)">
+</canvas> -->

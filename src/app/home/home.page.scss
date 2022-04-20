@@ -1,0 +1,24 @@
+.welcome-card img {
+  max-height: 35vh;
+  overflow: hidden;
+}
+fieldset {
+  padding-left: 2%;
+  padding-right: 2%; 
+  padding-bottom: 2%;
+  border: 1px #2E7117 solid;
+  border-radius: 1em;
+}
+legend {  
+  width:fit-content; 
+  font-size:larger;
+  color: #2E7117;
+  font-style: italic;
+  padding-left: 1%;
+  padding-right: 2%;
+}
+
+ion-select{
+  margin-top: -4%;
+}
+

@@ -1,0 +1,171 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="home"></ion-back-button>
+   
+    </ion-buttons>
+    
+    <ion-title>{{stockRet}}</ion-title>
+    <ion-buttons slot="end" *ngIf="!global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="globe" color="light"></ion-icon>ADMIN</ion-button> 
+     </ion-buttons>
+     <ion-buttons slot="end" *ngIf="global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="wifi" color="light"></ion-icon>{{global.ssid}}</ion-button> 
+     </ion-buttons>
+     
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h3 style="text-align: center;">Changement de bouteilles </h3>
+  <ion-button (click)="onSynchro()">Synchroniser</ion-button>
+  <!--<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>-->
+  <ion-grid style="padding-top: 5%;">
+    <ion-row>
+      <ion-col size="6" style="border-right: solid 3px green;">
+        <!--<ion-select placeholder="Type de bouteilles">
+          <ion-select-option *ngFor="let bottle of listBottles">
+            {{bottle.brand+" "+bottle.designation.toFixed(2)+" kg"}}
+          </ion-select-option>
+        </ion-select>-->
+      <h1 style="text-align: center;" (click)="changeRes(1);" [ngClass]="{'bgreen' : highlightB1, 'bgblank' : redBackground}">
+        B1
+      </h1>
+      
+      </ion-col>
+      
+      <ion-col size="6">
+        <h1 style="text-align: center;" (click)="changeRes(2);" [ngClass]="{'bgreen' : highlightB2, 'bgblank' : redBackground}">
+          B2
+        </h1>  
+      </ion-col>
+      <!--<ion-col size="12" style="border-top-right-radius: 80px 80px;border-top-left-radius: 80px 80px;">
+        <div style="text-align: center;">Contenant</div>
+      </ion-col>-->
+      <!--<ion-col size="6">
+        <div id="one" style="font-size :x-large;text-align: center;"><div id="two" style="display:inline-block;"><ion-input *ngIf="!redBackground" type="number" enterkeyhint="enter" [(ngModel)]="contenantB1" (ngModelChange)="changeContenantB1();"></ion-input><ion-label *ngIf="redBackground">-</ion-label></div><span id="three">kg</span></div>
+      </ion-col>
+      <ion-col size="6">
+        <div id="one" style="font-size :x-large;text-align: center;"><div id="two" style="display:inline-block;"><ion-input *ngIf="!redBackground" type="number" enterkeyhint="enter" [(ngModel)]="contenantB2" (ngModelChange)="changeContenantB2();"></ion-input><ion-label *ngIf="redBackground">-</ion-label></div><span id="three">kg</span></div>
+
+      </ion-col>-->
+      <ion-col size="12" style="border-top-right-radius: 80px 80px;border-top-left-radius: 80px 80px;">
+          <div style="text-align: center;">Etat du Contenu</div>
+      </ion-col>
+      <ion-col size="6" style="border-bottom-left-radius: 80px 80px;" [ngClass]="{'bgred' : redBackground}">
+        
+        <ion-select *ngIf="!redBackground" [(ngModel)]="statusB1" (ngModelChange)="changeContentStatus('B1');">
+          <ion-select-option value="0">VIDE</ion-select-option>
+          <ion-select-option value="1">RESIDUEL</ion-select-option>
+          <ion-select-option value="2">DISPONIBLE</ion-select-option>
+        </ion-select>
+        <ion-label *ngIf="redBackground" style="text-align: center;">-</ion-label>
+      </ion-col>
+      <ion-col size="6" style="border-bottom-left-radius: 80px 80px;" [ngClass]="{'bgred' : redBackground}">
+        
+        <ion-select *ngIf="!redBackground" [(ngModel)]="statusB2" (ngModelChange)="changeContentStatus('B2');">
+          <ion-select-option value="0">VIDE</ion-select-option>
+          <ion-select-option value="1">RESIDUEL</ion-select-option>
+          <ion-select-option value="2">DISPONIBLE</ion-select-option>
+        </ion-select>
+        <ion-label *ngIf="redBackground" style="text-align: center;">-</ion-label>
+      </ion-col>
+
+      <ion-col size="12" style="border-top-right-radius: 80px 80px;border-top-left-radius: 80px 80px;background-color:green;">
+        <div style="text-align: center;">Contenu Mesuré</div>
+      </ion-col>
+      <ion-col size="6" class="contenuegreen" >
+      <div id="one" style="font-size :x-large;text-align: center;"><div id="two" style="display:inline-block;"><ion-input *ngIf="!redBackground" type="number" enterkeyhint="enter" [(ngModel)]="global.contenuB1"></ion-input><ion-label *ngIf="redBackground">-</ion-label></div><span id="three">kg</span></div>
+      </ion-col>
+      <ion-col size="6" class="contenuegreen2">
+        <div id="one" class="ion-float-right" style="font-size :x-large;text-align: center;"><ion-input  *ngIf="!redBackground" id="two" type="number" enterkeyhint="enter" [(ngModel)]="global.contenuB2"></ion-input> <ion-label *ngIf="redBackground">-</ion-label><span id="three">kg</span></div>
+      </ion-col>
+      <ion-col id="rmv" size="12"><ion-button (click)="onRemove();" color="danger" size="block">
+        Enlever une bouteille 
+      </ion-button></ion-col>
+
+        <ion-col size="12" *ngIf="removedBottleUnknown.length > 0" class="ion-align-self-center" style="background-color: yellow;"><div style="text-align : center">Bouteilles enlevées Inconnu</div> </ion-col>
+        <ion-col size="12" style="background-color: yellow;" *ngFor="let rmb of removedBottleUnknown"><div style="text-align : center">{{"Bouteille code barre : "+rmb}}</div></ion-col>
+      
+      <ion-col size="6" style="border-right: solid 3px green;">
+        <ion-list>          
+          <ion-item>Capacité : <ion-input type="number" enterkeyhint="enter" [(ngModel)]="global.contenantB1" (ionFocus)="unsubscribeRefresh()" (focusout)="onChangeContenant('B1');"></ion-input> kg</ion-item>
+          <div *ngFor="let b1 of global.stringsB1;let i = index;">
+          <ion-item>
+            <ion-label style="font-size: small!important;" class="ion-text-wrap" [ngClass]="{'added': global.isAddedB1[i]}">{{b1}}</ion-label>
+            <div id = "{{'b1'+i}}" *ngIf="global.contenusB1.length > 0" [ngClass]="{'added': global.isAddedB1[i]}">
+          
+          </div>
+          
+            
+            <!--<ion-badge color="primary" slot="end">{{'x'+b1.qty}}</ion-badge>-->
+          </ion-item>
+          
+        </div>
+        <!--<div *ngFor="let rmb1 of removedBottleStringB1">
+          <ion-item>
+           <div class="removed"> {{rmb1}} </div>
+          </ion-item>
+        </div>-->
+        
+        <ion-item (click)="onAddBottle('B1');">
+          <ion-icon color="primary" name="add-circle"></ion-icon>  Ajouter une Bouteille à B1
+        </ion-item>  
+        
+        </ion-list>
+        <!--<ion-button color="danger" (click)="deleteB1();" size="block">
+          Tout Effacer
+        </ion-button>-->
+      </ion-col>
+
+      <ion-col size="6" style="border-right: solid 3px green;">
+        <ion-list>
+          <ion-item>Capacité : <ion-input type="number" enterkeyhint="enter" [(ngModel)]="global.contenantB2" (ionFocus)="unsubscribeRefresh()" (focusout)="onChangeContenant('B2');"></ion-input> kg</ion-item>
+          <div *ngFor="let b2 of global.stringsB2;let i = index;">
+          <ion-item>
+            <ion-label style="font-size: small!important;" class="ion-text-wrap" [ngClass]="{'added': global.isAddedB2[i]}">{{b2}}</ion-label>
+            <div *ngIf="global.contenusB2.length > 0" [ngClass]="{'added': global.isAddedB2[i]}"></div>            
+            <!--<ion-badge color="primary" slot="end">{{'x'+b1.qty}}</ion-badge>-->
+          </ion-item>
+          
+        </div>
+        <div *ngFor="let rmb2 of removedBottleStringB2">
+          <ion-item>
+            <div class="removed">{{rmb2}}</div>
+          </ion-item>
+        </div>
+        
+        <ion-item (click)="onAddBottle('B2');">
+          <ion-icon color="primary" name="add-circle"></ion-icon>  Ajouter une Bouteille à B2
+        </ion-item>
+        
+        </ion-list>
+        <!--<ion-button color="danger" (click)="deleteB1();" size="block">
+          Tout Effacer
+        </ion-button>-->
+      </ion-col>
+     
+
+    </ion-row>
+  </ion-grid>
+  
+</ion-content>
+<ion-footer>
+  <ion-button *ngIf="!global.displayLoading" style="float: left" fill="clear" (click)="global.onReadStatiqueEnable()">    
+    <ion-icon name="refresh"></ion-icon>
+  </ion-button>
+  <ion-button *ngIf="global.displayLoading" style="float: left;" fill="clear" color="primary">
+    <ion-spinner></ion-spinner>
+  </ion-button>
+  <ion-button *ngIf="display" style='float: right' fill='clear' (click)='goToNextPage()'>
+    Suivant<ion-icon name='arrow-forward'></ion-icon>
+  </ion-button>  
+</ion-footer>
+
+<!--<ion-footer>
+  <ion-button (click)="onSynchroCeint();" expand="block" > Synchroniser avec le serveur </ion-button>
+
+</ion-footer>-->

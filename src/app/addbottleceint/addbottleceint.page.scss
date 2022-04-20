@@ -1,0 +1,60 @@
+.item.item-trns {
+	border-color: rgba(0, 0, 0, 0);
+	background-color: rgba(0, 0, 0, 0);
+	color: white; 
+}
+.bgreen {
+	background-color: green;
+}
+/*.bgred {
+	background-color: red;
+}*/
+.bgblank {
+	background-color: white;
+}
+.contenuegreen {
+	border-bottom-left-radius: 80px 80px;
+	background-color:green;
+}
+.contenuered {
+	border-bottom-left-radius: 80px 80px;
+	background-color:red;
+}
+.contenuegreen2 {
+	border-bottom-right-radius: 80px 80px;
+	background-color:green;
+}
+.contenuered2 {
+	border-bottom-right-radius: 80px 80px;
+	background-color:red;
+}
+#one {
+	width: 200px;
+	//background: #ccc;
+}
+
+#two {
+	display: inline-block;
+	//background: blue;
+	position: relative;
+	left: 0;
+	width: 100px; height: 100px;
+}
+
+#three {
+	display: inline-block;
+	//background: red;
+	position: relative;
+	left: 0;
+	width: 100px; height: 100px;
+}
+
+.removed {
+	background-color: yellow !important;
+}
+
+
+.added {
+	background-color: yellowgreen !important;
+}
+

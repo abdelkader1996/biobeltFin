@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>commentaires</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>  
+    <ion-row style="display: flex; justify-content: center;">
+      <ion-col size="8" text-center style="padding-top: 5%;">
+        <h4>Commentaires</h4>
+      </ion-col>
+    </ion-row> 
+    <ion-row style="padding-top:70%; justify-content: center;">
+      <h6>Page en cours de développement</h6>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer>
+  <ion-button *ngIf="display" style='float: right' fill='clear' (click)='goToNextPage()'>Suivant<ion-icon name='arrow-forward'></ion-icon></ion-button>
+</ion-footer>
+

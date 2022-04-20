@@ -1,0 +1,66 @@
+<ion-header>
+  <!--<ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Paramètres de Communication</ion-title>
+    <ion-buttons slot="end" *ngIf="!global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="globe" color="light" (click)="onSynchroB1B2();"></ion-icon>ADMIN</ion-button> 
+     </ion-buttons>
+     <ion-buttons slot="end" *ngIf="global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="wifi" color="light"></ion-icon>{{global.currentssid}}</ion-button> 
+     </ion-buttons>
+  </ion-toolbar>-->
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" id="refresher" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <h3 style="text-align: center;">Paramètres de Communication </h3>
+  <ion-card>
+    <ion-card-title style="text-align: center;">Serveur</ion-card-title>
+    <ion-card-content>
+      <ion-row ><ion-col size="6">URL</ion-col><ion-col size="6"><ion-input  [(ngModel)]="url" enterkeyhint="enter" (ionFocus)="unsubscribeRefresh()" (focusout)="onChangeURL();"></ion-input></ion-col></ion-row>
+      <ion-row ><ion-col size="6">IP</ion-col><ion-col size="6">{{adIp}}</ion-col></ion-row>
+
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-title style="text-align: center;">Modem</ion-card-title>
+    <ion-card-content>
+      <ion-row ><ion-col size="6">Identifiant</ion-col> <ion-col size="6"><ion-input  [(ngModel)]="modemGSM" enterkeyhint="enter" (ionFocus)="unsubscribeRefresh()" (focusout)="onChangeMDMGSM();"></ion-input></ion-col></ion-row>
+      <ion-row ><ion-col size="6">MdP</ion-col><ion-col size="6"><ion-input  [(ngModel)]="modemGSMpass" enterkeyhint="enter" (ionFocus)="unsubscribeRefresh()" (focusout)="onChangeMDMGSMPass();"></ion-input></ion-col></ion-row>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-title style="text-align: center;">WiFi</ion-card-title>
+    <ion-card-content>
+      <ion-row ><ion-col size="6">SSID</ion-col><ion-col size="6"><ion-input [(ngModel)]="ssid" enterkeyhint="enter" (ionFocus)="unsubscribeRefresh()" (focusout)="onChangeSSID();"></ion-input></ion-col></ion-row>
+      <ion-row ><ion-col size="6">MdP</ion-col><ion-col size="6"><ion-input  [(ngModel)]="password" enterkeyhint="enter" (ionFocus)="unsubscribeRefresh()" (focusout)="onChangeMDP();"></ion-input></ion-col></ion-row>
+      <ion-row ><ion-col size="6">Canal RF</ion-col><ion-col size="6"><ion-input [(ngModel)]="channel" enterkeyhint="enter" (ionFocus)="unsubscribeRefresh()" (focusout)="onChangeChannel();"></ion-input></ion-col></ion-row>
+    </ion-card-content>
+  </ion-card>
+  
+  <ion-card>
+    <ion-card-title style="text-align: center;">APN</ion-card-title>
+    <ion-card-content>
+      <ion-row ><ion-col size="6">Identifiant</ion-col><ion-col size="6"><ion-input  [(ngModel)]="apn" enterkeyhint="enter"></ion-input></ion-col></ion-row>
+      <ion-row ><ion-col size="6">Utilisateur</ion-col><ion-col size="6"><ion-input  [(ngModel)]="apnuser" enterkeyhint="enter" (ionFocus)="unsubscribeRefresh()" (focusout)="onChangeAPNUS()"></ion-input></ion-col></ion-row>
+      <ion-row ><ion-col size="6">MdP</ion-col><ion-col size="6"><ion-input  [(ngModel)]="apnpass" enterkeyhint="enter" (ionFocus)="unsubscribeRefresh()" (focusout)="onChangeAPNPass();"></ion-input></ion-col></ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer style="display: inline-block">
+  <ion-button *ngIf="!global.displayLoading" style="float: left" fill="clear" (click)="global.onReadStatiqueEnable()">    
+    <ion-icon name="refresh"></ion-icon>
+  </ion-button>
+  <ion-button *ngIf="global.displayLoading" style="float: left;" fill="clear" color="primary">
+    <ion-spinner></ion-spinner>
+  </ion-button> 
+  
+
+</ion-footer>
+

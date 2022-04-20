@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Etat de la connexion au réseau</ion-title>
+    <ion-buttons slot="end" *ngIf="!global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="globe" color="light" (click)="onSynchroB1B2();"></ion-icon>ADMIN</ion-button> 
+     </ion-buttons>
+     <ion-buttons slot="end" *ngIf="global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="wifi" color="light"></ion-icon>{{global.ssid}}</ion-button> 
+     </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" id="refresher" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <h3 style="text-align: center;">Etat de la connexion au réseau </h3>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title style="text-align: center;">Etat Instantané</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row [ngClass]="{'bgred' : redBackground}">
+          <ion-col size="8">Mode</ion-col>
+          <ion-col size="4" *ngIf="!redBackground">{{mode}}</ion-col>
+          <ion-col size="4" *ngIf="redBackground">-</ion-col>
+        </ion-row>
+        <ion-row [ngClass]="{'bgred' : redBackground}">
+          <ion-col size="2">Niv.</ion-col>
+          <ion-col size="6"><ion-range style="pointer-events: none;" color="danger" [value]="level" max="100"></ion-range></ion-col>
+          <ion-col size="4" *ngIf="level < 500 && !redBackground">{{level}}</ion-col><ion-col *ngIf="redBackground" size="4" >-</ion-col>
+          <ion-col size="4" *ngIf="level >= 500 && !redBackground">Non Connecté</ion-col><ion-col *ngIf="redBackground" size="4">-</ion-col>
+        </ion-row>
+        <!--<ion-row>
+          <ion-col size="10">BER</ion-col>
+          <ion-col size="2">{{ber}}</ion-col>
+        </ion-row> -->
+        
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title style="text-align: center;">Statistiques dernière 24 h</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row [ngClass]="{'bgred' : redBackground}">
+          <ion-col size="2">Mode</ion-col>
+          <ion-col size="2">-</ion-col>
+          <ion-col size="2">2G</ion-col>
+          <ion-col size="2">3G</ion-col>
+          <ion-col size="2">4G</ion-col>
+        </ion-row>
+        <ion-row [ngClass]="{'bgred' : redBackground}">
+          <ion-col size="2">Durée</ion-col>
+          <ion-col *ngIf="!redBackground" size="2">{{dureTab[3]+" %"}}</ion-col><ion-col size="2" *ngIf="redBackground">-</ion-col>
+          <ion-col *ngIf="!redBackground" size="2">{{dureTab[0]+" %"}}</ion-col><ion-col size="2" *ngIf="redBackground">-</ion-col>
+          <ion-col *ngIf="!redBackground" size="2">{{dureTab[1]+" %"}}</ion-col><ion-col size="2" *ngIf="redBackground">-</ion-col>
+          <ion-col *ngIf="!redBackground" size="2">{{dureTab[2]+" %"}}</ion-col><ion-col size="2" *ngIf="redBackground">-</ion-col>
+        </ion-row>
+        <ion-row [ngClass]="{'bgred' : redBackground}">
+          <ion-col size="2">Niveau</ion-col>
+          <ion-col size="2">-</ion-col>
+          <ion-col size="2" *ngFor="let l of levelTab"><ion-label *ngIf="!redBackground">{{l}}</ion-label><ion-label *ngIf="redBackground">-</ion-label></ion-col>
+        </ion-row>
+        <ion-row [ngClass]="{'bgred' : redBackground}">
+          <ion-col size="2">BER</ion-col>
+          <ion-col size="2">-</ion-col>
+          <ion-col size="2" *ngFor="let b of bertab"><ion-label *ngIf="!redBackground">{{b == 0 ? '-' : b}}</ion-label><ion-label *ngIf="redBackground">-</ion-label></ion-col>
+
+        </ion-row>
+        
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<ion-footer>
+  <ion-button *ngIf="display" style='float: right' fill='clear' (click)='goToNextPage()'>Suivant<ion-icon name='arrow-forward'></ion-icon></ion-button>
+</ion-footer>

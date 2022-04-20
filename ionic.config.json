@@ -1,0 +1,7 @@
+{
+  "name": "biobeltMobile",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

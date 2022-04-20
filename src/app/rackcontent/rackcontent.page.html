@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons>
+      <ion-button fill="clear" (click)="onClose();">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Enlever bouteilles du Rack</ion-title>
+    <ion-buttons slot="end" *ngIf="!global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="globe" color="light"></ion-icon>ADMIN</ion-button> 
+     </ion-buttons>
+     <ion-buttons slot="end" *ngIf="global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="wifi" color="light"></ion-icon>{{global.ssid}}</ion-button> 
+     </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let r of rackContent;let i = index;">
+      <ion-label>{{r.bottleString}}</ion-label>
+      <ion-badge color="success" *ngIf="r.state === 'FULL'">Plein</ion-badge>
+      <ion-badge color="secondary" *ngIf="r.state === 'IN_USE'">Entamée</ion-badge>
+      <ion-badge color="danger" *ngIf="r.state === 'EMPTY'">Vide</ion-badge>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-button size="block" (click)="onRetourFourn();">Retour Au Fournisseur</ion-button>
+</ion-footer>

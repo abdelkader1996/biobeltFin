@@ -1,0 +1,64 @@
+@media (orientation: landscape) {
+    .rowDisplay {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .rowDisplay p{
+        margin-top: 10%;
+    }
+   
+    .infosform{
+        display: none !important;
+    }
+    .infosformhours{
+        display: none !important;
+    }    
+    
+    .form {
+        display: flex;
+        flex-direction: row;
+    }
+    .portraitrow {
+        display: none;
+     }
+
+     .colDisplay {
+        display: flex;
+        flex-direction: column;
+    }
+  } 
+@media (orientation: portrait){
+ .form{
+    display: flex;
+    flex-direction: row;   
+ }
+
+ .infosform{
+     margin-top:3%;
+ }
+
+ .infosformhours{
+     margin-top: 3.7%;       
+ } 
+
+ .hoursrange{
+     display: none;
+ }
+.landscaperow {
+    display: none;
+ }
+
+ .colDisplay {
+    display: flex;
+    flex-direction: column;
+}
+
+
+} 
+
+/*.bgred {
+
+	background-color: red;
+    color : black;
+}*/

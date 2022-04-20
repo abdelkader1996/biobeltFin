@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>check</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" id="refresher" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <h3 style="text-align: center;">Mesure des pressions de sortie </h3>
+  <ion-refresher slot="fixed" id="refresher" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-grid style="padding-top: 5%;">
+    <ion-row style="text-align: center;">
+      <ion-col size="12"><ion-button shape="round" size="large" [color]="colordif" (click)="startstop();">{{textdiff}}</ion-button></ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-row [ngClass]="{'bgred' : redBackground}">
+      <ion-col>Intensité</ion-col>
+      <ion-col>PE-B1</ion-col>
+      <ion-col>PE-B2</ion-col>
+      <ion-col>PS</ion-col>
+      <ion-col>PS-Ref</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let p of pres" [ngClass]="{'bgred' : redBackground}">
+      <ion-col *ngIf="!redBackground">{{p.id}}</ion-col><ion-col *ngIf="redBackground">-</ion-col>
+      <ion-col *ngIf="!redBackground">{{p.peb1.toFixed(2)}}</ion-col><ion-col *ngIf="redBackground">-</ion-col>
+      <ion-col *ngIf="!redBackground">{{p.peb2.toFixed(2)}}</ion-col><ion-col *ngIf="redBackground">-</ion-col>
+      <ion-col *ngIf="!redBackground" >{{p.ps.toFixed(2)}}</ion-col><ion-col *ngIf="redBackground">-</ion-col>
+      <ion-col *ngIf="!redBackground">{{p.psref.toFixed(2)}}</ion-col><ion-col *ngIf="redBackground">-</ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer>
+  <ion-button *ngIf="display" style='float: right' fill='clear' (click)='goToNextPage()'>Suivant<ion-icon name='arrow-forward'></ion-icon></ion-button>
+</ion-footer>
+

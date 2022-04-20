@@ -1,0 +1,208 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Visite Technique
+    </ion-title>
+    <ion-buttons slot="end" *ngIf="!global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="globe" color="light"></ion-icon>ADMIN</ion-button> 
+     </ion-buttons>
+     <ion-buttons slot="end" *ngIf="global.isBBAM">
+      <ion-button fill="clear"> <ion-icon name="wifi" color="light"></ion-icon>{{global.ssid}}</ion-button> 
+     </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event);" pullFactor="0.5" pullMin="100" pullMax="200">
+    <ion-refresher-content>
+    </ion-refresher-content>
+
+  </ion-refresher>
+  <ion-list>
+    <ion-item>
+      Prog 1 Début :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program1.start" ></ion-input>
+    </ion-item>
+    <ion-item>
+      Prog 1 Fin :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program1.end" ></ion-input>
+
+    </ion-item>
+    <ion-item>
+      Prog 1 DaysCode :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program1.daysCode"></ion-input>
+    </ion-item>
+    <ion-item>
+      Prog 1 Intensité :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program1.intensity"></ion-input>
+
+    </ion-item>
+    <ion-item>
+      Prog 2 Début :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program2.start" ></ion-input>
+    </ion-item>
+    <ion-item>
+      Prog 2 Fin :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program2.end" ></ion-input>
+
+    </ion-item>
+    <ion-item>
+      Prog 2 DaysCode :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program2.daysCode"></ion-input>
+    </ion-item>
+    <ion-item>
+      Prog 2 Intensité :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program2.intensity"></ion-input>
+
+    </ion-item>
+    <ion-item>
+      Prog 3 Début :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program3.start" ></ion-input>
+    </ion-item>
+    <ion-item>
+      Prog 3 Fin :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program3.end" ></ion-input>
+
+    </ion-item>
+    <ion-item>
+      Prog 3 DaysCode :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program3.daysCode"></ion-input>
+    </ion-item>
+    <ion-item>
+      Prog 3 Intensité :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program3.intensity"></ion-input>
+
+    </ion-item>
+    <ion-item>
+      Prog 4 Début :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program4.start" ></ion-input>
+    </ion-item>
+    <ion-item>
+      Prog 4 Fin :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program4.end" ></ion-input>
+
+    </ion-item>
+    <ion-item>
+      Prog 4 DaysCode :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program4.daysCode"></ion-input>
+    </ion-item>
+    <ion-item>
+      Prog 4 Intensité :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program4.intensity"></ion-input>
+
+    </ion-item>
+    <ion-item>
+      Prog 5 Début :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program5.start" ></ion-input>
+    </ion-item>
+    <ion-item>
+      Prog 5 Fin :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program5.end" ></ion-input>
+
+    </ion-item>
+    <ion-item>
+      Prog 5 DaysCode :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program5.daysCode"></ion-input>
+    </ion-item>
+    <ion-item>
+      Prog 5 Intensité :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program5.intensity"></ion-input>
+
+    </ion-item>
+    <ion-item>
+      Prog 6 Début :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program6.start" ></ion-input>
+    </ion-item>
+    <ion-item>
+      Prog 6 Fin :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program6.end" ></ion-input>
+
+    </ion-item>
+    <ion-item>
+      Prog 6 DaysCode :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program6.daysCode"></ion-input>
+    </ion-item>
+    <ion-item>
+      Prog 6 Intensité :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program6.intensity"></ion-input>
+
+    </ion-item>
+    <ion-item>
+      Prog 7 Début :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program7.start" ></ion-input>
+    </ion-item>
+    <ion-item>
+      Prog 7 Fin :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program7.end" ></ion-input>
+
+    </ion-item>
+    <ion-item>
+      Prog 7 DaysCode :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program7.daysCode"></ion-input>
+    </ion-item>
+    <ion-item>
+      Prog 7 Intensité :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program7.intensity"></ion-input>
+
+    </ion-item>
+    <ion-item>
+      Prog 8 Début :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program8.start" ></ion-input>
+    </ion-item>
+    <ion-item>
+      Prog 8 Fin :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program8.end" ></ion-input>
+
+    </ion-item>
+    <ion-item>
+      Prog 8 DaysCode :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program8.daysCode"></ion-input>
+    </ion-item>
+    <ion-item>
+      Prog 8 Intensité :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program8.intensity"></ion-input>
+
+    </ion-item>
+    <ion-item>
+      Prog 9 Début :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program9.start" ></ion-input>
+    </ion-item>
+    <ion-item>
+      Prog 9 Fin :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program9.end" ></ion-input>
+
+    </ion-item>
+    <ion-item>
+      Prog 9 DaysCode :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program9.daysCode"></ion-input>
+    </ion-item>
+    <ion-item>
+      Prog 9 Intensité :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program9.intensity"></ion-input>
+
+    </ion-item>
+    <ion-item>
+      Prog 10 Début :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program10.start" ></ion-input>
+    </ion-item>
+    <ion-item>
+      Prog 10 Fin :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program10.end" ></ion-input>
+
+    </ion-item>
+    <ion-item>
+      Prog 10 DaysCode :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program10.daysCode"></ion-input>
+    </ion-item>
+    <ion-item>
+      Prog 10 Intensité :
+      <ion-input *ngIf="upc" [(ngModel)]="upc.diffusions.diffCo2Program10.intensity"></ion-input>
+
+    </ion-item>
+  </ion-list>
+  
+</ion-content>
+

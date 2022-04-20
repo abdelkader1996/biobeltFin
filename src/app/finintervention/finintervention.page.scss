@@ -1,0 +1,22 @@
+fieldset {
+    padding-left: 2%;
+    padding-right: 2%; 
+    border: 1px black solid;
+    border-radius: 1em;
+  }
+  legend {  
+    width:fit-content; 
+    font-size:larger;
+    color: #4682B4;
+    font-style: italic;
+    padding-left: 1%;
+    padding-right: 2%;
+  }
+  
+  ul {
+    list-style:none;
+    padding-left: 4%;
+  }
+  .item.sc-ion-label-md-h, .item .sc-ion-label-md-h{
+    white-space: normal !important;
+}
