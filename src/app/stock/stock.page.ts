@@ -2,31 +2,40 @@ import { Component, OnInit } from '@angular/core';
 import {Storage} from "@ionic/storage";
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Upcv3serviceService } from '../api/upcv3service.service';
-import { State } from '../model/site';
 import { ModalController } from '@ionic/angular';
-import { AddbottlemodalPage } from '../addbottlemodal/addbottlemodal.page';
-import { RackcontentPage } from '../rackcontent/rackcontent.page';
 import { GlobalService } from '../api/global.service';
 import { AlertController } from '@ionic/angular';
 import { Code } from '../api/ApiResponse';
-import { element } from 'protractor';
-import { Branch } from '../model/project/branch';
-
 @Component({
   selector: 'app-stock',
   templateUrl: './stock.page.html',
   styleUrls: ['./stock.page.scss'],
 })
-export class StockPage implements OnInit {        
+export class StockPage implements OnInit {  
+
+  //pour enregistrer l historique des bouteilles       
   logs=[];  
+
   stock;
   stockName=""
   token;
+
+
+  //modes:
+  //reception de boutilles :
   addStock = false;
-  remStock = false;
-  retStock = false;
+
+  //retour au founisseur  :
   retfourn=false;
+   
+  // retour au stock :
+  retourStock=false;
+
+
+  //retrait de bouteille 
   retbouteille=false;
+
+
   showRadioTF=false;
   retNotExistBottle=false;
   name = {name : "",id : 0};
@@ -45,27 +54,28 @@ export class StockPage implements OnInit {
   //bouteille a retirer 
    botteilleRet=undefined;
 
-   retourStock=false;
 
   
   constructor(private storage : Storage,private barcode : BarcodeScanner,private upcv3Service : Upcv3serviceService,private modalService : ModalController,private global : GlobalService, private alertController : AlertController) { }
 
   ngOnInit() {
+
+    //on charge depuis le storage l ID du stock , une fois l ecran apparait :
     this.storage.get("stockid").then(val=>{
       this.stock = JSON.parse(val);
       this.stockName=this.stock.name;
     })
 
-    
+    // on met a jour les variable en fonction du  mode  +++++++ ( a revoir ) !!!++++++
     if(localStorage.getItem("adds") == "0"){
         this.addStock = true;
-    }// 30 € livraison LS MCB 2,5 € 120 unité MCB triphasé 6 A MCCB
+    }
+
     else if (localStorage.getItem("adds") == "1"){
       this.retbouteille = true;
-    } else if (localStorage.getItem("adds") == "2") {
-      this.retStock = true;
     }
     else if (localStorage.getItem("adds") == "3") {
+      //retour au founisseur 
       this.retfourn = true;
     }
 
@@ -74,7 +84,7 @@ export class StockPage implements OnInit {
         this.retourStock=true;
 
       }
-
+    // on charge le token de l utilisateur :
     this.storage.get("token").then(val=>{
       this.token = val;
 
@@ -82,88 +92,14 @@ export class StockPage implements OnInit {
       this.upcv3Service.getAllBottleTypes(val).subscribe(res=>{
         if(res.code === Code.BOTTLE_TYPE_RECOVERED){
             this.bottleTypedb = res.result;
-            console.log("bottle types")
-            console.log(this.bottleTypedb)
         }
       });
-      
-    /*  this.storage.get("stockid").then(val=>{
-        this.name = JSON.parse(val);
         
-        this.upcv3Service.getBottlesByStockId(this.name.id,this.token).subscribe(res=>{
-          this.stock = res.result;
-
-          this.stock.sort((a,b)=>{
-            if (a.rack < b.rack) return -1;
-            if (a.rack > b.rack) return 1;
-            return 0;
-          });
-          
-          this.stock.forEach(item=>{
-            if(!this.header.includes(item.rack)){
-              this.header.push(item.rack);
-            }
-          })
-
-        })
-       
-    })*/
 
     })
 
-  
-    console.log("debug ::::::")
-    console.log(this.retourStock);
   }
-  remRack() {
-    this.barcode.scan().then(async res=>{
-      if(res.text != ''){
-        
-        var text = res.text;
-        this.upcv3Service.getBottleFromRack(this.token,res.text).subscribe(async res=>{
-          if(res.result.length> 0){
-            var modal = await this.modalService.create({
-              component : RackcontentPage,
-              componentProps : {
-                rack : text
-              }
-            })
-            modal.present();
-          } else {
-            alert("Aucune bouteille est associée à ce Rack !");
-          }
-        })
-        
-        
-      }
-      
-    })
-  }
-  addRack() {
-    this.barcode.scan().then(async res=>{
-      if(res.text != ""){
-        var text = res.text;
-        this.upcv3Service.getBottleFromRack(this.token,res.text).subscribe(async res=>{
-            if(res.result.length == 0){
-              this.presentAlertRack(text);
-            }else {
-              localStorage.setItem("rack",text);
-              const modal = await this.modalService.create({
-                component : AddbottlemodalPage,
-                componentProps : {
-                  barcode : "",
-                  stockRet : this.name,
-                  mode : 1
-                }
-              })
-              modal.present();
-            }
-        })
-        
-      }
-    })
-  }
-
+ 
 
 // scanner un rack 
   selectRack() {
@@ -176,6 +112,8 @@ export class StockPage implements OnInit {
       }
     })
   }
+
+
 //scanner un rack et charger les bouteilles associées 
   scanRack(){    
     this.barcode.scan().then(async res=>{
@@ -196,9 +134,6 @@ export class StockPage implements OnInit {
 
   //scanner une bouteille:
   scanBottle() {
-   
-
-
     let barecode="";
     this.barcode.scan().then(async res=>{
       if(res.text != ""){
@@ -212,15 +147,13 @@ export class StockPage implements OnInit {
 
        await this.upcv3Service.getBottleByBarCode(res.text,this.token).subscribe(res=>{
 
+        //si la bouteille est presente dans la base de donnée 
         if(res.code===Code.BOTTLE_RECOVERED){
-
-          //si la bouteille est presente dans la base de donnée 
           var bottle=res.result;
           bottle.bottleType=res.result.bottleType.id;
         
-
+         //on met a jour les donné de la bouteille  qu'on va envoyé a la base donnée :
           this.botteilleRet = {
-      
           barcode:barecode,
           bottleType:res.result.bottleType,
           state:res.result.state,
@@ -236,31 +169,28 @@ export class StockPage implements OnInit {
         }else{
         // si elle n existe pas , on demande de la creer :
         alert("la bouteille scannée n existe pas dans la base de donnée  ")
+        //on se met en mode rajout de bouteille 
         this.retNotExistBottle=true;
+
+        //on met a jour les donné de la bouteille  qu'on va envoyé a la base donnée :
         this.botteilleRet = {
           barcode:barecode,
           bottleType:"",
           state:"FULL",
           stock:"hjh",
           rack:"null",
+          //si on est en mode retour au stock on met  l ID du stock , sinon on met un ID 000-000 (TRANSIT)
           localisationId:this.retourStock?this.stock.id:"00000000-0000-0000-0000-000000000000",
           status: this.retourStock?"ENTREPOSE":"TRANSIT",
           localisationType: this.retourStock?"STOCK":"TRANSIT"
         
       }
-
-        }
-      
-      })
-  
-
-    }
-      }
-    })
- 
-
+   }
+  })
+} }
+})
   }
-
+  // pour changer l ' etat de bouteille >  EMPTY | FULL | IN-USE
   radioGroupChange(event) {
     console.log("radioGroupChange",event.detail.value);
     this.botteilleRet.state = event.detail.value;
@@ -269,9 +199,8 @@ export class StockPage implements OnInit {
     showRadio(){
       this.showRadioTF=!this.showRadioTF;
     }
-
+ // fonction utilitaire qui permet de supprimer un barcode d'une liste 
   removeElementFromBarcodes(indexOfelement){
-
     this.bottleBarcodes.splice(indexOfelement, 1);
   }
 
@@ -281,7 +210,8 @@ export class StockPage implements OnInit {
           // mettre a jour la bouteille  dans la base de données :
       this.upcv3Service.addBottleMobile(JSON.stringify(this.botteilleRet),this.token).subscribe(res=>{
         alert(this.retourStock?"retour au stock !":"retrait de bouteille !");
-        this.logs.push(this.retourStock?"( retour au stock  )":"( retrait de bouteille )"+" - "+this.botteilleRet.barcode+" | "+res.result.bottleType.brand+" "+res.result.bottleType.designation)
+        this.logs.push((this.retourStock?"( retour au stock  )":"( retrait de bouteille )")+" - "+this.botteilleRet.barcode+" | "+res.result.bottleType.brand+" "+res.result.bottleType.designation)
+        //remettre les flags a false : 
         this.showRadioTF=false;
         this.retNotExistBottle=false;
       
@@ -290,60 +220,11 @@ export class StockPage implements OnInit {
       
   }
 
-
-
-
-  async presentAlertRack(text) {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Nouveau Rack',
-      subHeader: '',
-      message: 'Vous avez ajouter un nouveau rack ?',
-      buttons: [{text : 'Annuler', handler : ()=>{}},{text:'Confirmer',
-                  handler : async ()=>{
-                    localStorage.setItem("rack",text);
-              const modal = await this.modalService.create({
-                component : AddbottlemodalPage,
-                componentProps : {
-                  barcode : "",
-                  stockRet : this.name,
-                  mode : 1
-                }
-              })
-              modal.present();
-                  }
-    }],
-      
-    });
-
-    await alert.present();
-  }
-
-  retRack() {
-    this.barcode.scan().then(async res=>{
-      if(res.text != ""){
-        localStorage.setItem("rack",res.text);
-        var modal = await this.modalService.create({
-          component : AddbottlemodalPage,
-          componentProps : {
-            barcode : "",
-            stockRet : this.name,
-            mode : 2
-          }
-        })
-        modal.present();
-      }
-    })
-  }
+  //retour au fournisseur des botteilles scanner 
   async delBottle() {
-    
-    var bottleList = {
-     
-      barcodes : this.bottleBarcodes,
-     
-    }
-    console.log(JSON.stringify(bottleList))
-    
+    //creer l'object qui contient la liste des barecodes des bouteilles  a supprimer 
+    var bottleList = { barcodes : this.bottleBarcodes, }
+    //envoyer l'objet a l'API :
     this.upcv3Service.returnFourn(JSON.stringify(bottleList),this.token).subscribe(res=>{
       this.bottleBarcodes=[]
     })
@@ -352,26 +233,19 @@ export class StockPage implements OnInit {
   }
 
 
+
+  //ajouter des bouteilles au stock :(reception de bouteilles)
   async addBottle() {
-    /*
-    var bottleList = {
-      bottleType : this.bottleTypeIDs,
-      stock : this.stock.id,
-      //date : date,
-      barcodes : this.bottleBarcodes,
-      rack : this.selectedRack,
-      empty : 0
-    }
 
-    this.upcv3Service.addToStockMob(JSON.stringify(bottleList),this.token).subscribe(res=>{
-      this.bottleBarcodes=[]
-    })
-    */
-
+    //garder une copie de la liste des bouteilles a rajouter 
     var bottleToAdd=[...this.bottleBarcodes];
+    //mettre la liste des barcode a affiher a 0 
     this.bottleBarcodes=[];
-
+    
+    //parcourir la liste et les rajouter a la base de donné 
     bottleToAdd.map((item,index)=>{
+
+    //creer l objet bottle qu'on va envoyé a la base de donnée :
           var bottle = {
       
             barcode:item,
@@ -391,24 +265,6 @@ export class StockPage implements OnInit {
     })
     
 
-  }
-
-
-  async retBottles() {
-    this.barcode.scan().then(async code=>{
-      if(code.text != ''){
-        localStorage.setItem("rack",null);
-        var modal = await this.modalService.create({
-          component : AddbottlemodalPage,
-          componentProps : {
-            barcode : code.text,
-            stockRet : this.name,
-            mode : 2
-          }
-        })
-        modal.present();
-      }
-    })
   }
 
 }
