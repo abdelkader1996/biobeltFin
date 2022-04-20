@@ -19,23 +19,13 @@ export class StockPage implements OnInit {
   stock;
   stockName=""
   token;
-
-
-  //modes:
-  //reception de boutilles :
   addStock = false;
-
-  //retour au founisseur  :
+  remStock = false;
+  retStock = false;
   retfourn=false;
-   
-  // retour au stock :
-  retourStock=false;
-
-
-  //retrait de bouteille 
   retbouteille=false;
 
-
+  
   showRadioTF=false;
   retNotExistBottle=false;
   name = {name : "",id : 0};
@@ -54,6 +44,7 @@ export class StockPage implements OnInit {
   //bouteille a retirer 
    botteilleRet=undefined;
 
+   retourStock=false;
 
   
   constructor(private storage : Storage,private barcode : BarcodeScanner,private upcv3Service : Upcv3serviceService,private modalService : ModalController,private global : GlobalService, private alertController : AlertController) { }
@@ -73,9 +64,10 @@ export class StockPage implements OnInit {
 
     else if (localStorage.getItem("adds") == "1"){
       this.retbouteille = true;
+    } else if (localStorage.getItem("adds") == "2") {
+      this.retStock = true;
     }
     else if (localStorage.getItem("adds") == "3") {
-      //retour au founisseur 
       this.retfourn = true;
     }
 
@@ -152,8 +144,9 @@ export class StockPage implements OnInit {
           var bottle=res.result;
           bottle.bottleType=res.result.bottleType.id;
         
-         //on met a jour les donné de la bouteille  qu'on va envoyé a la base donnée :
+
           this.botteilleRet = {
+      
           barcode:barecode,
           bottleType:res.result.bottleType,
           state:res.result.state,

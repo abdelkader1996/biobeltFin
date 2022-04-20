@@ -146,18 +146,13 @@
   <ion-button  [attr.disabled]="bottleBarcodes.length==0 && addStock " *ngIf="addStock" expand="block" (click)="addBottle();">
     enregistrer 
   </ion-button>
-  <ion-button *ngIf="retStock" expand="block" (click)="retBottles();">
-    Retour au dépôt
-  </ion-button>
+  
 
   <ion-button *ngIf="retbouteille" expand="block" (click)="retraitdebouteille();">
     {{retourStock?"retour au stock":"retrait de bouteille" }}
   </ion-button>
   <ion-button *ngIf="retfourn" color="danger" expand="block" (click)="delBottle();">
     Retour au fournisseur 
-</ion-button>
-<ion-button *ngIf="retStock" expand="block" (click)="retRack();">
-  Sélectionner un Rack
 </ion-button>
 
 </ion-footer>
