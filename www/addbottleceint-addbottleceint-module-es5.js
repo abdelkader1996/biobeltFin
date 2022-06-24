@@ -216,7 +216,7 @@ var AddbottleceintPage = /** @class */ (function () {
         });
         this.storage.get("stockBottleTypes").then(function (res) { _this.stockBottleTypes = res; });
         this.storage.get("stockBottleTypesModeTest").then(function (res) { _this.stockBottleTypesModeTest = res; });
-        this.storage.get("bottlesInTransit").then(function (res) { _this.bottlesInTransit = res; alert(JSON.stringify(res)); });
+        this.storage.get("bottlesInTransit").then(function (res) { _this.bottlesInTransit = res; alert("Boutillees Transit :" + JSON.stringify(res)); });
         this.storage.get("ceintureChoisieBottles").then(function (res) { _this.ceintureChoisieBottles = res; });
         this.storage.get("addedBottlesB1").then(function (res) {
             if (res == undefined || res == null) {
@@ -375,12 +375,10 @@ var AddbottleceintPage = /** @class */ (function () {
                 //if(text != "" && text !="\0\0\0\0\0\0\0\0\0\0"){
                 var letterNumber = /^[0-9a-zA-Z]+$/;
                 if (text2[0].match(letterNumber)) { //c'est à priori un codebar
-                    //alert("c'est à priori un codebar")
                     text2 = text2.replace(/[^\w\s]/gi, '');
                     var indexBottleType2;
                     this.stockBottleTypes.forEach(function (element, index) {
                         if (text2.charAt(text2.length - 1) == element.codeUpc.toString()) { //c'est bien un codebar
-                            //alert("c'est bien un codebar")
                             indexBottleType2 = index;
                             _this.global.contenusB2.push(_this.stockBottleTypes[indexBottleType2].designation);
                             _this.global.stringsB2.push(_this.stockBottleTypes[indexBottleType2].brand + " (" + text2 + ") " + _this.stockBottleTypes[indexBottleType2].contenue);
@@ -398,7 +396,6 @@ var AddbottleceintPage = /** @class */ (function () {
                 }
             }
         }
-        //alert(this.global.codebarsB2SansCodeUpc)
         if (this.addedBottlesStringsB2.length != 0) {
             this.addedBottlesStringsB2.forEach(function (string) {
                 _this.global.stringsB2.push(string);
@@ -416,14 +413,6 @@ var AddbottleceintPage = /** @class */ (function () {
             this.global.isAddedB2 = JSON.parse(localStorage.getItem("isAddedB2"));
         }
         this.isLoaded = true;
-        //this.global.onWriteEnable(this.correspondancesRegistres.co2Res1ActVol, 34/0.001974)
-        //this.global.onWriteEnable(this.correspondancesRegistres.co2Res2ActVol, 0)
-        //alert("1")
-        //var thstyle12 = (<HTMLInputElement> document.getElementById("b10")).style.backgroundColor = "blue"
-        //alert("2")
-        //var thstyle2 = (<HTMLInputElement> document.getElementById("b11")).style.border = "1px solid black";
-        //var thstyle2 = (<HTMLInputElement> document.getElementById("rmv")).style.border = "1px solid black";
-        //alert("3")
         alert("contenus B1 : " + this.global.contenusB1);
         alert("contenus B2 : " + this.global.contenusB2);
     };
@@ -494,20 +483,15 @@ var AddbottleceintPage = /** @class */ (function () {
                         indexB2front = -1;
                         indexB1Ad = -1;
                         indexB2Ad = -1;
-                        //alert(res.text)
-                        //alert(this.global.codebarsB1SansCodeUpc)
-                        //alert(this.global.codebarsB2SansCodeUpc)
                         if (this.global.codebarsB1SansCodeUpc.includes(res.text)) {
                             scanned = true;
                             reserve = "B1";
                             indexB1 = this.global.codebarsB1SansCodeUpc.indexOf(res.text);
-                            //alert("scanned in B1")
                         }
                         if (this.global.codebarsB2SansCodeUpc.includes(res.text)) {
                             scanned = true;
                             reserve = "B2";
                             indexB2 = this.global.codebarsB2SansCodeUpc.indexOf(res.text);
-                            //alert("scanned in B2")
                         }
                         if (!scanned) return [3 /*break*/, 1];
                         this.removedBottle.barcodes.push(res.text);
@@ -537,7 +521,6 @@ var AddbottleceintPage = /** @class */ (function () {
                             this.calcContenant("B1");
                         }
                         else if (reserve == "B2") { //la bouteille à enlever est en B2  
-                            //alert(indexB2)     
                             if (this.isAddedB2[indexB2] == true) {
                                 this.global.upcmodbus.reserves.co2Res2ActVol -= parseFloat(this.global.contenusB2[indexB2]);
                                 this.global.contenuEnleveEnB2 += this.global.contenusB2[indexB2];
@@ -710,7 +693,6 @@ var AddbottleceintPage = /** @class */ (function () {
                                     _this.transitBottlesBarcodes.push(element.barcode);
                                 });
                             }
-                            //alert(transitBottlesBarcodes)
                             alert("pre");
                             this.ceintureChoisieBottlesBarcodes = [];
                             if (this.ceintureChoisieBottles.length != 0) {
@@ -997,7 +979,6 @@ var AddbottleceintPage = /** @class */ (function () {
                         _a.label = 6;
                     case 6:
                         //écriture codebars B1
-                        //alert("code bars b1 :"+this.global.codebarsB1) 
                         if (this.global.codebarsB1.length != 9) {
                             length = this.global.codebarsB1.length;
                             for (i = length + 1; i <= 9; i++) {
@@ -1011,7 +992,6 @@ var AddbottleceintPage = /** @class */ (function () {
                         _a.sent();
                         this.global.resetListeCodebarsB1 = false;
                         //écritures codebars B2
-                        //alert("code bars b2 :"+this.global.codebarsB2)    
                         if (this.global.codebarsB2.length != 9) {
                             length = this.global.codebarsB2.length;
                             for (i = length + 1; i <= 9; i++) {

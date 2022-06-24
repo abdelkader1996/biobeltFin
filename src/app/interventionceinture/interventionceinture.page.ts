@@ -224,8 +224,9 @@ export class InterventionceinturePage implements OnInit {
 
   ngOnInit() {  
 
-    
-    this.global.connexionRequise="Aucune"
+    console.log("===================== page  : intervention sur ceinture  =============================")
+
+    this.global.connexionRequise="Serveur"
     this.storage.get("token").then((res)=>{
       this.global.token = res;     
       this.storage.get("dataAlreadyLoaded").then(res=>{             
@@ -835,9 +836,18 @@ export class InterventionceinturePage implements OnInit {
       this.selectedUpcPass = item.item_id.communicationParameters.comWiFiPass     
       
       await this.storage.set("ssid", this.selectedUpcSsid)
+      await this.storage.set("ssid_upc", this.selectedUpcSsid)
+
+      //debug 
+      console.log("ssid:"+this.selectedUpcSsid)
       await this.storage.set("password", this.selectedUpcPass)
+      //debug 
+      console.log("password:"+this.selectedUpcPass)
+
       await this.storage.set("ceintureId", this.ceintureId)
+      //
       await this.storage.set("upcname", this.ceintureChoisieObject.upcNameId)
+      console.log("upc name ::"+this.ceintureChoisieObject.upcNameId)
 
       /*Récupération commentaires "à faire" dans la base de données*/
       this.getCommentaires(item)          

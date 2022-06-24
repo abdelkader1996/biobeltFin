@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <!--<ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n      <ion-back-button defaultHref=\"home\"></ion-back-button>\n    </ion-buttons>\n    <ion-title>Paramètres UPC</ion-title>\n    <ion-buttons slot=\"end\" *ngIf=\"!global.isBBAM\">\n      <ion-button fill=\"clear\"> <ion-icon name=\"globe\" color=\"light\" (click)=\"onSynchroB1B2();\"></ion-icon>ADMIN</ion-button> \n     </ion-buttons>\n     <ion-buttons slot=\"end\" *ngIf=\"global.isBBAM\">\n      <ion-button fill=\"clear\"> <ion-icon name=\"wifi\" color=\"light\"></ion-icon>{{global.ssid}}</ion-button> \n     </ion-buttons>\n  </ion-toolbar>-->  \n  </ion-header>\n\n<ion-content>\n  <ion-refresher slot=\"fixed\" id=\"refresher\" (ionRefresh)=\"doRefresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n  <h3 style=\"text-align: center;\">Paramètres Généraux UPC</h3>\n  <ion-card>\n    <ion-card-content>\n      <ion-row><ion-col size=\"6\">Nom de l'UPC</ion-col><ion-col size=\"6\"><ion-input [(ngModel)]=\"name\" enterkeyhint=\"enter\" placeholder=\"Nom de l'UPC...\" (ionFocus)=\"unsubscribeRefresh()\" (focusout)=\"onChangeName();\"></ion-input></ion-col></ion-row>\n      <ion-row><ion-col size=\"6\">Nombre de pièges</ion-col><ion-col size=\"6\"><ion-input [(ngModel)]=\"nbpiege\" enterkeyhint=\"enter\" placeholder=\"Nombre de pièges...\" (ionFocus)=\"unsubscribeRefresh()\" (focusout)=\"onChangePieges();\"></ion-input></ion-col></ion-row>\n      <ion-row><ion-col size=\"6\">UUID</ion-col><ion-col size=\"6\">{{uuid}}</ion-col></ion-row>\n      <ion-row><ion-col size=\"6\">Fuseau Horaire (h)</ion-col><ion-col size=\"6\"><ion-input [(ngModel)]=\"fusehor\" enterkeyhint=\"enter\" type=\"number\" (ionFocus)=\"unsubscribeRefresh()\" (focusout)=\"onChangeFusHor()\"></ion-input></ion-col></ion-row>\n      <ion-row><ion-col size=\"6\">Horloge</ion-col><ion-col size=\"6\">{{horloge}}</ion-col></ion-row>\n      <ion-row><ion-col size=\"6\">Firmware</ion-col><ion-col size=\"6\">{{\"v\"+firm}}</ion-col></ion-row>\n    </ion-card-content>\n  </ion-card>\n  \n\n  <div style=\"text-align: center;\">\n  <ion-button color=\"danger\" (click)=\"onWipe();\">\n    WIPE\n  </ion-button>\n  <ion-button color=\"warning\" (click)=\"onReset();\">RESET</ion-button>\n</div>\n</ion-content>\n<ion-footer style=\"display: inline-block\">\n  <ion-button *ngIf=\"!global.displayLoading\" style=\"float: left\" fill=\"clear\" (click)=\"global.onReadStatiqueEnable()\">    \n    <ion-icon name=\"refresh\"></ion-icon>\n  </ion-button>\n  <ion-button *ngIf=\"global.displayLoading\" style=\"float: left;\" fill=\"clear\" color=\"primary\">\n    <ion-spinner></ion-spinner>\n  </ion-button>\n</ion-footer>\n"
+module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n      <ion-back-button defaultHref=\"home\"></ion-back-button>\n    </ion-buttons>\n    \n     <ion-buttons>\n      <ion-button fill=\"clear\"> <ion-icon name=\"wifi\" color=\"light\"></ion-icon> connecté a : {{this.current_ssid}}</ion-button> \n     </ion-buttons>\n  </ion-toolbar>\n  </ion-header>\n\n<ion-content>\n  <ion-refresher slot=\"fixed\" id=\"refresher\" (ionRefresh)=\"doRefresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n  <h3 style=\"text-align: center;\">Paramètres Généraux UPC</h3>\n  <ion-card>\n    <ion-card-content>\n      <ion-row><ion-col size=\"6\">Nom de l'UPC</ion-col><ion-col size=\"6\"><ion-input [(ngModel)]=\"name\" enterkeyhint=\"enter\" placeholder=\"Nom de l'UPC...\" (ionFocus)=\"unsubscribeRefresh()\" (focusout)=\"onChangeName();\"></ion-input></ion-col></ion-row>\n      <ion-row><ion-col size=\"6\">Nombre de pièges</ion-col><ion-col size=\"6\"><ion-input [(ngModel)]=\"nbpiege\" enterkeyhint=\"enter\" placeholder=\"Nombre de pièges...\" (ionFocus)=\"unsubscribeRefresh()\" (focusout)=\"onChangePieges();\"></ion-input></ion-col></ion-row>\n      <ion-row><ion-col size=\"6\">UUID</ion-col><ion-col size=\"6\">{{uuid}}</ion-col></ion-row>\n      <ion-row><ion-col size=\"6\">Fuseau Horaire (h)</ion-col><ion-col size=\"6\"><ion-input [(ngModel)]=\"fusehor\" enterkeyhint=\"enter\" type=\"number\" (ionFocus)=\"unsubscribeRefresh()\" (focusout)=\"onChangeFusHor()\"></ion-input></ion-col></ion-row>\n      <ion-row><ion-col size=\"6\">Horloge</ion-col><ion-col size=\"6\">{{horloge}}</ion-col></ion-row>\n      <ion-row><ion-col size=\"6\">Firmware</ion-col><ion-col size=\"6\">{{\"v\"+firm}}</ion-col></ion-row>\n    </ion-card-content>\n  </ion-card>\n  \n\n  <div style=\"text-align: center;\">\n  <ion-button color=\"danger\" (click)=\"onWipe();\">\n    WIPE\n  </ion-button>\n  <ion-button color=\"warning\" (click)=\"onReset();\">RESET</ion-button>\n</div>\n</ion-content>\n<ion-footer style=\"display: inline-block\">\n  <ion-button *ngIf=\"!this.isLoading\" style=\"float: left\" fill=\"clear\" (click)=\"this.ionViewWillEnter()\">    \n    <ion-icon name=\"refresh\"></ion-icon>\n    hhhh\n  </ion-button>\n  <ion-button *ngIf=\"this.isLoading\" style=\"float: left;\" fill=\"clear\" color=\"primary\">\n    <ion-spinner></ion-spinner>\n  </ion-button>\n</ion-footer>\n"
 
 /***/ }),
 
@@ -120,8 +120,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _api_global_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../api/global.service */ "./src/app/api/global.service.ts");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
-/* harmony import */ var _model_upcv3_correspondancesRegistres__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../model/upcv3/correspondancesRegistres */ "./src/app/model/upcv3/correspondancesRegistres.ts");
+/* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm5/ionic-storage.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _model_upcv3_correspondancesRegistres__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../model/upcv3/correspondancesRegistres */ "./src/app/model/upcv3/correspondancesRegistres.ts");
+
 
 
 
@@ -129,13 +131,17 @@ __webpack_require__.r(__webpack_exports__);
 
 var NamepiegePage = /** @class */ (function () {
     // Pièges sauvegardes plan
-    function NamepiegePage(global, platform, ngZone, cd, alertCTRL, events) {
+    function NamepiegePage(global, storage, events) {
         this.global = global;
-        this.platform = platform;
-        this.ngZone = ngZone;
-        this.cd = cd;
-        this.alertCTRL = alertCTRL;
+        this.storage = storage;
         this.events = events;
+        this.check = false;
+        this.current_ssid = "NO WIFI";
+        this.stored_ssid = "NO WIFI";
+        this.password_ssid = "";
+        this.connection_modbus = false;
+        this.isLoading = false;
+        this.tryToRead = false;
         this.name = "";
         this.nbpiege = 0;
         this.uuid = "";
@@ -145,13 +151,147 @@ var NamepiegePage = /** @class */ (function () {
         this.global.checkMode();
     }
     NamepiegePage.prototype.ionViewWillEnter = function () {
-        var _this = this;
+        this.tryToRead = true;
+        console.log("=========================================================================");
+        console.log("========================== page  accueil :===============================");
+        console.log("=========================================================================");
         this.global.connexionRequise = "UPC";
-        this.correspondancesRegistres = new _model_upcv3_correspondancesRegistres__WEBPACK_IMPORTED_MODULE_4__["CorrespondancesRegistres"]();
-        this.global.onReadStatiqueEnable().then(function () {
-            _this.subscribeRefresh();
-        });
+        console.log(" - Connexion requise :" + this.global.connexionRequise);
+        console.log(" - Connexion  actuel  (avant on read statique) :" + this.global.statutConnexion);
+        this.ConnecterUPC();
+        this.Read();
+        this.correspondancesRegistres = new _model_upcv3_correspondancesRegistres__WEBPACK_IMPORTED_MODULE_5__["CorrespondancesRegistres"]();
         this.horloge = this.global.upcmodbus.general.upcClock;
+    };
+    NamepiegePage.prototype.ConnecterUPC = function () {
+        var _this = this;
+        //connection a l 'UPC :
+        console.log("> try  connecter a l upc ");
+        if (this.global.mode != "modeTest") {
+            this.isLoading = true;
+            this.storage.get("ssid_upc").then(function (stored_ssid) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                var _this = this;
+                return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                    this.storage.get("password").then(function (password) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                        var wifi;
+                        var _this = this;
+                        return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    this.stored_ssid = stored_ssid;
+                                    this.password_ssid = password;
+                                    //recuperer l ssid  +password 
+                                    console.log("acceuil , stored password" + password);
+                                    console.log("acceuil , stored ssid" + stored_ssid);
+                                    return [4 /*yield*/, WifiWizard2.getConnectedSSID()];
+                                case 1:
+                                    wifi = _a.sent();
+                                    console.log("connected ssid: " + wifi);
+                                    if (wifi != stored_ssid) {
+                                        console.log("wifi diffrents :");
+                                        WifiWizard2.connect(stored_ssid, password).then(function () {
+                                            //connexion reussi a l UPC  :
+                                            console.log("connexion wifi up reussie :");
+                                            _this.check = true;
+                                            _this.global.statutConnexion = "UPC";
+                                            _this.global.onConnectModbus().then(function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                                                return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                                                    console.log("accueil , connexion modbus reussie >> ");
+                                                    this.connection_modbus = true;
+                                                    this.isLoading = false;
+                                                    //on peut lire 
+                                                    this.tryToRead = true;
+                                                    return [2 /*return*/];
+                                                });
+                                            }); }).catch(function (err) {
+                                                console.log("accueil + connexion modbus échouée  ");
+                                                _this.isLoading = false;
+                                                _this.connection_modbus = false;
+                                            });
+                                        }).catch(function () {
+                                            console.log("connexion impossible a l'UPC");
+                                        });
+                                    }
+                                    else {
+                                        this.global.onConnectModbus().then(function () {
+                                            //connexion modbus réussie : c'est un upc
+                                            console.log("accueil + connexion modbus reussie ");
+                                            _this.connection_modbus = true;
+                                            _this.isLoading = false;
+                                        }).catch(function (err) {
+                                            console.log("accueil + connexion modbus échouée  ");
+                                            _this.isLoading = false;
+                                            _this.connection_modbus = false;
+                                        });
+                                    }
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }); });
+                    return [2 /*return*/];
+                });
+            }); });
+        }
+    };
+    NamepiegePage.prototype.Read = function () {
+        var _this = this;
+        this.do = setInterval(function () {
+            console.log("======================== cycle ================================");
+            _this.checkConnectionWifi();
+            // en cas de perte de connexion 
+            if (_this.current_ssid != _this.stored_ssid && _this.check) {
+                console.log("wifi diff >>>> ");
+                console.log("reconnexion  >>>> ");
+                //connecter au wifi 
+                _this.ConnecterUPC();
+            }
+            if (_this.tryToRead) {
+                console.log("Try to read >");
+                // lecture statique :
+                _this.isLoading = true;
+                _this.global.upcmodbus.onReadStatique(_this.global.upcname, _this.global.mode, "namepiege").then(function (res) {
+                    if (res == true) {
+                        _this.isLoading = false;
+                        console.log(">  lecture reussi ");
+                        _this.subscribeRefresh();
+                        _this.events.publish("loadParameters");
+                        _this.global.lectureStatiqueEnCours = false;
+                        _this.global.displayLoading = false;
+                        _this.tryToRead = false;
+                    }
+                    else {
+                        console.log(">  lecture echouée  ");
+                        _this.isLoading = false;
+                        _this.tryToRead = true;
+                        _this.global.statutConnexion = "Aucune";
+                        _this.global.lectureStatiqueEnCours = false;
+                        _this.global.displayLoading = false;
+                    }
+                }).catch(function (err) {
+                    _this.tryToRead = true;
+                    _this.isLoading = false;
+                    console.log("acceuil::erreur lecture");
+                    console.log(err);
+                });
+                //fin de lecture statique :
+            }
+        }, 500);
+    };
+    NamepiegePage.prototype.ngOnInit = function () {
+    };
+    NamepiegePage.prototype.checkConnectionWifi = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var wifi;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, WifiWizard2.getConnectedSSID()];
+                    case 1:
+                        wifi = _a.sent();
+                        this.current_ssid = wifi;
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     NamepiegePage.prototype.doRefresh = function (event) {
         this.ionViewWillEnter();
@@ -161,14 +301,79 @@ var NamepiegePage = /** @class */ (function () {
         return ("0000" + (+d).toString(16)).substr(-4);
     };
     NamepiegePage.prototype.onChangeName = function () {
-        var d = new Date();
-        this.global.logs.push(this.global.msToTime(d.getTime()) + " - appel on change upcname");
-        this.global.onWriteEnable(this.correspondancesRegistres.upcNameId, this.name);
+        console.log(" Accueil :: ecrir : nome upc  ");
+        this.ecrir(this.correspondancesRegistres.upcNameId, this.name);
     };
     NamepiegePage.prototype.onChangePieges = function () {
-        var d = new Date();
-        this.global.logs.push(this.global.msToTime(d.getTime()) + " - appel on change nbpiege");
-        this.global.onWriteEnable(this.correspondancesRegistres.upcTrapNum, this.nbpiege);
+        console.log(" Accueil :: ecrir : num piege ");
+        this.ecrir(this.correspondancesRegistres.upcTrapNum, this.nbpiege);
+    };
+    NamepiegePage.prototype.ecrir = function (variable, value) {
+        var _this = this;
+        if (variable.type == "int") {
+            this.isLoading = true;
+            this.global.upcmodbus.client.setIntInHoldingRegister(variable.adr, variable.dim, value).then(function () {
+                console.log("accueil ::  ecriture reussie");
+                // lecture statique :
+                _this.global.upcmodbus.onReadStatique(_this.global.upcname, _this.global.mode, "namepiege").then(function (res) {
+                    if (res == true) {
+                        _this.isLoading = false;
+                        console.log("accueil:  lecture reussi ");
+                        _this.subscribeRefresh();
+                        _this.events.publish("loadParameters");
+                        _this.global.lectureStatiqueEnCours = false;
+                        _this.global.displayLoading = false;
+                        _this.tryToRead = false;
+                    }
+                    else {
+                        _this.isLoading = false;
+                        _this.global.statutConnexion = "Aucune";
+                        _this.global.lectureStatiqueEnCours = false;
+                        _this.global.displayLoading = false;
+                    }
+                }).catch(function (err) {
+                    _this.isLoading = false;
+                    console.log("acceuil::erreur lecture");
+                    console.log(err);
+                });
+                //fin de lecture statique :
+            }).catch(function () {
+                _this.isLoading = false;
+                console.log("num piege ::écriture impossible");
+            });
+        }
+        else {
+            this.isLoading = true;
+            this.global.upcmodbus.client.setStringArrayInHoldingResgisters(variable.adr, value).then(function () {
+                console.log("accueil ::  ecriture reussie");
+                // lecture statique :
+                _this.global.upcmodbus.onReadStatique(_this.global.upcname, _this.global.mode, "namepiege").then(function (res) {
+                    if (res == true) {
+                        _this.isLoading = false;
+                        console.log("accueil:  lecture reussi ");
+                        _this.subscribeRefresh();
+                        _this.events.publish("loadParameters");
+                        _this.global.lectureStatiqueEnCours = false;
+                        _this.global.displayLoading = false;
+                        _this.tryToRead = false;
+                    }
+                    else {
+                        _this.isLoading = false;
+                        _this.global.statutConnexion = "Aucune";
+                        _this.global.lectureStatiqueEnCours = false;
+                        _this.global.displayLoading = false;
+                    }
+                }).catch(function (err) {
+                    _this.isLoading = false;
+                    console.log("acceuil::erreur lecture");
+                    console.log(err);
+                });
+                //fin de lecture statique :
+            }).catch(function () {
+                _this.isLoading = false;
+                console.log("num piege ::écriture impossible");
+            });
+        }
     };
     /*async onWipe() {
       let alert = await this.alertCTRL.create({message : "Êtes vous sûr d'effectuer un Wipe ?",
@@ -242,13 +447,14 @@ var NamepiegePage = /** @class */ (function () {
             _this.horloge = _this.global.upcmodbus.general.upcClock;
         });
     };
+    NamepiegePage.prototype.ionViewWillLeave = function () {
+        console.log("quitter la page  :");
+        clearInterval(this.do);
+    };
     NamepiegePage.ctorParameters = function () { return [
         { type: _api_global_service__WEBPACK_IMPORTED_MODULE_2__["GlobalService"] },
-        { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["Platform"] },
-        { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"] },
-        { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"] },
-        { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["AlertController"] },
-        { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["Events"] }
+        { type: _ionic_storage__WEBPACK_IMPORTED_MODULE_3__["Storage"] },
+        { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["Events"] }
     ]; };
     NamepiegePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -257,11 +463,8 @@ var NamepiegePage = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./namepiege.page.scss */ "./src/app/namepiege/namepiege.page.scss")]
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_api_global_service__WEBPACK_IMPORTED_MODULE_2__["GlobalService"],
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["Platform"],
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"],
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"],
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["AlertController"],
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["Events"]])
+            _ionic_storage__WEBPACK_IMPORTED_MODULE_3__["Storage"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["Events"]])
     ], NamepiegePage);
     return NamepiegePage;
 }());

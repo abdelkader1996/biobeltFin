@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-content class=\"bg-light\" *ngIf=\"needToLog\">\n  <ion-row justify-content-center align-items-center>\n    <ion-col col-12 col-sm-10 col-md-6 col-lg-5 col-xl-4>\n\n      <ion-card>\n\n        <!-- Image -->\n        <img src=\"assets/bg_logo.png\"/>  \n\n        <!-- Content -->\n        <ion-card-content>\n\n          <!-- Title -->\n          <ion-card-title>Se connecter</ion-card-title>\n\n          <!-- Login form -->\n          <form #loginForm=\"ngForm\" (ngSubmit)=\"login()\" autocomplete=\"off\">\n\n            <ion-list inset>\n\n              <ion-item>\n                <ion-input placeholder=\"Email\" name=\"username\" type=\"email\" required [(ngModel)]=\"username\" #email></ion-input>\n              </ion-item>\n\n              <ion-item>\n                <ion-input placeholder=\"Mot de passe\" name=\"password\" type=\"password\" required [(ngModel)]=\"password\"></ion-input>\n              </ion-item>\n\n            </ion-list>\n\n            <ion-button class=\"submit-btn\" color=\"primary\" full type=\"submit\" [disabled]=\"!loginForm.form.valid\" margin-top>Se connecter</ion-button>\n            <!--<ion-button class=\"submit-btn\" color=\"primary\" full margin-top (click)=\"onBBAM();\">Hors Connexion</ion-button>-->\n          </form>\n        </ion-card-content>\n\n      </ion-card>\n\n    </ion-col>\n  </ion-row>\n</ion-content>\n"
+module.exports = "<ion-content class=\"bg-light\" *ngIf=\"needToLog\">\r\n  <ion-row justify-content-center align-items-center>\r\n    <ion-col col-12 col-sm-10 col-md-6 col-lg-5 col-xl-4>\r\n\r\n      <ion-card>\r\n\r\n        <!-- Image -->\r\n        <img src=\"assets/bg_logo.png\"/>  \r\n\r\n        <!-- Content -->\r\n        <ion-card-content>\r\n\r\n          <!-- Title -->\r\n          <ion-card-title>Se connecter</ion-card-title>\r\n\r\n          <!-- Login form -->\r\n          <form #loginForm=\"ngForm\" (ngSubmit)=\"login()\" autocomplete=\"off\">\r\n\r\n            <ion-list inset>\r\n\r\n              <ion-item>\r\n                <ion-input placeholder=\"Email\" name=\"username\" type=\"email\" required [(ngModel)]=\"username\" #email></ion-input>\r\n              </ion-item>\r\n\r\n              <ion-item>\r\n                <ion-input placeholder=\"Mot de passe\" name=\"password\" type=\"password\" required [(ngModel)]=\"password\"></ion-input>\r\n              </ion-item>\r\n\r\n            </ion-list>\r\n\r\n            <ion-button class=\"submit-btn\" color=\"primary\" full type=\"submit\" [disabled]=\"!loginForm.form.valid\" margin-top>Se connecter</ion-button>\r\n            <!--<ion-button class=\"submit-btn\" color=\"primary\" full margin-top (click)=\"onBBAM();\">Hors Connexion</ion-button>-->\r\n          </form>\r\n        </ion-card-content>\r\n\r\n      </ion-card>\r\n\r\n    </ion-col>\r\n  </ion-row>\r\n</ion-content>\r\n"
 
 /***/ }),
 
@@ -151,6 +151,7 @@ var LoginPage = /** @class */ (function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        console.log("============================= LogIn : ng on Init =============================");
                         this.storage.set("reconnect", true);
                         localStorage.setItem("BBAM", null);
                         return [4 /*yield*/, this.storage.get('user').then(function (res) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
@@ -191,9 +192,11 @@ var LoginPage = /** @class */ (function () {
             var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.loadingCtrl.create({
-                            message: 'Connexion en cours...'
-                        })];
+                    case 0:
+                        console.log("============================= LogIn : login =============================");
+                        return [4 /*yield*/, this.loadingCtrl.create({
+                                message: 'Connexion en cours...'
+                            })];
                     case 1:
                         loading = _a.sent();
                         loading.present();

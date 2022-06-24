@@ -994,9 +994,11 @@ export class ModbusClient extends StateMachine {
   stringArrayToRegister(stringArray: string[]){
     var registersArrayTmp = []; //tableau de tableau de int
     var registersArray: number[] = []; //tableau de int
-    //alert("stringArray : "+stringArray)
+    console.log("stringArray : "+stringArray)
+    let myarray=[]
+    myarray.push(stringArray)
     //alert("elements : ")
-    stringArray.forEach(element=>{
+    myarray.forEach(element=>{
       //alert(this.stringToRegister(element))
       registersArrayTmp.push(this.stringToRegister(element))
     })

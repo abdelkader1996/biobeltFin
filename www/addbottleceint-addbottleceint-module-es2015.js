@@ -209,7 +209,7 @@ let AddbottleceintPage = class AddbottleceintPage {
         });
         this.storage.get("stockBottleTypes").then(res => { this.stockBottleTypes = res; });
         this.storage.get("stockBottleTypesModeTest").then(res => { this.stockBottleTypesModeTest = res; });
-        this.storage.get("bottlesInTransit").then(res => { this.bottlesInTransit = res; alert(JSON.stringify(res)); });
+        this.storage.get("bottlesInTransit").then(res => { this.bottlesInTransit = res; alert("Boutillees Transit :" + JSON.stringify(res)); });
         this.storage.get("ceintureChoisieBottles").then(res => { this.ceintureChoisieBottles = res; });
         this.storage.get("addedBottlesB1").then(res => {
             if (res == undefined || res == null) {
@@ -367,12 +367,10 @@ let AddbottleceintPage = class AddbottleceintPage {
                 //if(text != "" && text !="\0\0\0\0\0\0\0\0\0\0"){
                 var letterNumber = /^[0-9a-zA-Z]+$/;
                 if (text2[0].match(letterNumber)) { //c'est à priori un codebar
-                    //alert("c'est à priori un codebar")
                     text2 = text2.replace(/[^\w\s]/gi, '');
                     var indexBottleType2;
                     this.stockBottleTypes.forEach((element, index) => {
                         if (text2.charAt(text2.length - 1) == element.codeUpc.toString()) { //c'est bien un codebar
-                            //alert("c'est bien un codebar")
                             indexBottleType2 = index;
                             this.global.contenusB2.push(this.stockBottleTypes[indexBottleType2].designation);
                             this.global.stringsB2.push(this.stockBottleTypes[indexBottleType2].brand + " (" + text2 + ") " + this.stockBottleTypes[indexBottleType2].contenue);
@@ -390,7 +388,6 @@ let AddbottleceintPage = class AddbottleceintPage {
                 }
             }
         }
-        //alert(this.global.codebarsB2SansCodeUpc)
         if (this.addedBottlesStringsB2.length != 0) {
             this.addedBottlesStringsB2.forEach(string => {
                 this.global.stringsB2.push(string);
@@ -408,14 +405,6 @@ let AddbottleceintPage = class AddbottleceintPage {
             this.global.isAddedB2 = JSON.parse(localStorage.getItem("isAddedB2"));
         }
         this.isLoaded = true;
-        //this.global.onWriteEnable(this.correspondancesRegistres.co2Res1ActVol, 34/0.001974)
-        //this.global.onWriteEnable(this.correspondancesRegistres.co2Res2ActVol, 0)
-        //alert("1")
-        //var thstyle12 = (<HTMLInputElement> document.getElementById("b10")).style.backgroundColor = "blue"
-        //alert("2")
-        //var thstyle2 = (<HTMLInputElement> document.getElementById("b11")).style.border = "1px solid black";
-        //var thstyle2 = (<HTMLInputElement> document.getElementById("rmv")).style.border = "1px solid black";
-        //alert("3")
         alert("contenus B1 : " + this.global.contenusB1);
         alert("contenus B2 : " + this.global.contenusB2);
     }
@@ -479,20 +468,15 @@ let AddbottleceintPage = class AddbottleceintPage {
                 var indexB1Ad = -1;
                 var indexB2Ad = -1;
                 var reserve;
-                //alert(res.text)
-                //alert(this.global.codebarsB1SansCodeUpc)
-                //alert(this.global.codebarsB2SansCodeUpc)
                 if (this.global.codebarsB1SansCodeUpc.includes(res.text)) {
                     scanned = true;
                     reserve = "B1";
                     indexB1 = this.global.codebarsB1SansCodeUpc.indexOf(res.text);
-                    //alert("scanned in B1")
                 }
                 if (this.global.codebarsB2SansCodeUpc.includes(res.text)) {
                     scanned = true;
                     reserve = "B2";
                     indexB2 = this.global.codebarsB2SansCodeUpc.indexOf(res.text);
-                    //alert("scanned in B2")
                 }
                 if (scanned) {
                     this.removedBottle.barcodes.push(res.text);
@@ -522,7 +506,6 @@ let AddbottleceintPage = class AddbottleceintPage {
                         this.calcContenant("B1");
                     }
                     else if (reserve == "B2") { //la bouteille à enlever est en B2  
-                        //alert(indexB2)     
                         if (this.isAddedB2[indexB2] == true) {
                             this.global.upcmodbus.reserves.co2Res2ActVol -= parseFloat(this.global.contenusB2[indexB2]);
                             this.global.contenuEnleveEnB2 += this.global.contenusB2[indexB2];
@@ -641,7 +624,6 @@ let AddbottleceintPage = class AddbottleceintPage {
                                     }) }, { text: "NON", handler: () => { } }]
                         });
                         alert.present();
-                        //alert("La bouteille n'est pas assigné à cette ceinture");
                     }
                 }
             }
@@ -675,7 +657,6 @@ let AddbottleceintPage = class AddbottleceintPage {
                                 this.transitBottlesBarcodes.push(element.barcode);
                             });
                         }
-                        //alert(transitBottlesBarcodes)
                         alert("pre");
                         this.ceintureChoisieBottlesBarcodes = [];
                         if (this.ceintureChoisieBottles.length != 0) {
@@ -925,7 +906,6 @@ let AddbottleceintPage = class AddbottleceintPage {
                 yield this.global.onWriteEnable(this.correspondancesRegistres.upcMode, 1);
             }
             //écriture codebars B1
-            //alert("code bars b1 :"+this.global.codebarsB1) 
             if (this.global.codebarsB1.length != 9) {
                 var length = this.global.codebarsB1.length;
                 for (var i = length + 1; i <= 9; i++) {
@@ -937,7 +917,6 @@ let AddbottleceintPage = class AddbottleceintPage {
             yield this.global.onWriteEnable(this.correspondancesRegistres.xCo2Res1CodesBarres, this.global.codebarsB1);
             this.global.resetListeCodebarsB1 = false;
             //écritures codebars B2
-            //alert("code bars b2 :"+this.global.codebarsB2)    
             if (this.global.codebarsB2.length != 9) {
                 var length = this.global.codebarsB2.length;
                 for (var i = length + 1; i <= 9; i++) {

@@ -137,15 +137,24 @@ export class AppComponent {
     localStorage.removeItem("isAddedB2")
 
     this.platform.ready().then(res=>{
-        this.global.pages = [];
+      this.global.pages = [];
       this.global.count = 0;  
       this.global.connexionRequise = "Aucune"
         /*let i = 1;
         setTimeout(this.run,500); */
         let i = 1;
+        var d=new Date()
+
+        this.global.logs.push(this.global.msToTime(d.getTime())+" ********* debut application *********")
+
         setInterval(()=>{
-          var d=new Date()
-          this.global.logs.push(this.global.msToTime(d.getTime())+" - set interval")
+          this.global.logs.push(this.global.msToTime(d.getTime())+" ======= interval =====")
+          this.global.logs.push(this.global.msToTime(d.getTime())+" connexion requise :"+this.global.connexionRequise)
+          this.global.logs.push(this.global.msToTime(d.getTime())+"ssid   : "+this.global.ssid)
+          this.global.logs.push(this.global.msToTime(d.getTime())+"current ssid  : "+this.global.currentssid)
+
+          this.global.logs.push(this.global.msToTime(d.getTime())+"page   : "+this.global.currentPage)
+
           return new Promise<void>(async (resolve, reject)=>{   
             /*if(this.global.connexionRequise == "Aucune"){
               this.global.onConnect("").then(()=>{
@@ -170,10 +179,12 @@ export class AppComponent {
                     this.global.startReadDate = new Date()
                     var d = new Date()
                     this.global.logs.push(this.global.msToTime(d)+" - Appel onReadCycliqueEnable")
+                    /*
                     this.global.onReadCycliqueEnable().then(()=>{
                       this.global.lectureCycliqueEnCours = false;
                       resolve()
                     });
+                    */
                   }                  
                 }
                 else{    

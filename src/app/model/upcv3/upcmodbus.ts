@@ -212,6 +212,7 @@ export class UPCModbus {
           break;
         }        
       case "namepiege":
+        console.log("mod bus name piege ")
         try{
           //40001 40015
           var res1 = await this.client.readHoldingRegisters(this.correspondancesRegistres.upcNameId.adr,15)
@@ -225,7 +226,7 @@ export class UPCModbus {
 
           if(mode != "modeTest"){ //on n'est pas en mode test   
 
-            if(nameId != upcNameId){ //changement d'UPC
+            if(false){ //changement d'UPC
               
 
               if(window.confirm("Une intervention est en cours sur l'upc "+upcNameId+". Voulez-vous néanmoins continuer sur l'upc "+nameId+"?")) {            

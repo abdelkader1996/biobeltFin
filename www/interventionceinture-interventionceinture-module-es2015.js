@@ -708,7 +708,8 @@ let InterventionceinturePage = class InterventionceinturePage {
         this.global.checkMode();
     }
     ngOnInit() {
-        this.global.connexionRequise = "Aucune";
+        console.log("===================== page  : intervention sur ceinture  =============================");
+        this.global.connexionRequise = "Serveur";
         this.storage.get("token").then((res) => {
             this.global.token = res;
             this.storage.get("dataAlreadyLoaded").then(res => {
@@ -1250,9 +1251,16 @@ let InterventionceinturePage = class InterventionceinturePage {
                 this.selectedUpcSsid = item.item_id.communicationParameters.comWiFiName;
                 this.selectedUpcPass = item.item_id.communicationParameters.comWiFiPass;
                 yield this.storage.set("ssid", this.selectedUpcSsid);
+                yield this.storage.set("ssid_upc", this.selectedUpcSsid);
+                //debug 
+                console.log("ssid:" + this.selectedUpcSsid);
                 yield this.storage.set("password", this.selectedUpcPass);
+                //debug 
+                console.log("password:" + this.selectedUpcPass);
                 yield this.storage.set("ceintureId", this.ceintureId);
+                //
                 yield this.storage.set("upcname", this.ceintureChoisieObject.upcNameId);
+                console.log("upc name ::" + this.ceintureChoisieObject.upcNameId);
                 /*Récupération commentaires "à faire" dans la base de données*/
                 this.getCommentaires(item);
             }

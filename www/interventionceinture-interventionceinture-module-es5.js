@@ -746,7 +746,8 @@ var InterventionceinturePage = /** @class */ (function () {
     }
     InterventionceinturePage.prototype.ngOnInit = function () {
         var _this = this;
-        this.global.connexionRequise = "Aucune";
+        console.log("===================== page  : intervention sur ceinture  =============================");
+        this.global.connexionRequise = "Serveur";
         this.storage.get("token").then(function (res) {
             _this.global.token = res;
             _this.storage.get("dataAlreadyLoaded").then(function (res) {
@@ -1387,7 +1388,7 @@ var InterventionceinturePage = /** @class */ (function () {
                         this.selectedUpcSsidTmp = item.item_id.communicationParameters.comWiFiName;
                         this.selectedUpcPassTmp = item.item_id.communicationParameters.comWiFiPass;
                         this.changementCeintureAlert();
-                        return [3 /*break*/, 8];
+                        return [3 /*break*/, 9];
                     case 2: return [4 /*yield*/, this.storage.set("ceintureChoisieObject", JSON.stringify(item.item_id))];
                     case 3:
                         _a.sent();
@@ -1400,21 +1401,35 @@ var InterventionceinturePage = /** @class */ (function () {
                         return [4 /*yield*/, this.storage.set("ssid", this.selectedUpcSsid)];
                     case 4:
                         _a.sent();
-                        return [4 /*yield*/, this.storage.set("password", this.selectedUpcPass)];
+                        return [4 /*yield*/, this.storage.set("ssid_upc", this.selectedUpcSsid)
+                            //debug 
+                        ];
                     case 5:
                         _a.sent();
-                        return [4 /*yield*/, this.storage.set("ceintureId", this.ceintureId)];
+                        //debug 
+                        console.log("ssid:" + this.selectedUpcSsid);
+                        return [4 /*yield*/, this.storage.set("password", this.selectedUpcPass)
+                            //debug 
+                        ];
                     case 6:
                         _a.sent();
-                        return [4 /*yield*/, this.storage.set("upcname", this.ceintureChoisieObject.upcNameId)
-                            /*Récupération commentaires "à faire" dans la base de données*/
+                        //debug 
+                        console.log("password:" + this.selectedUpcPass);
+                        return [4 /*yield*/, this.storage.set("ceintureId", this.ceintureId)
+                            //
                         ];
                     case 7:
                         _a.sent();
+                        //
+                        return [4 /*yield*/, this.storage.set("upcname", this.ceintureChoisieObject.upcNameId)];
+                    case 8:
+                        //
+                        _a.sent();
+                        console.log("upc name ::" + this.ceintureChoisieObject.upcNameId);
                         /*Récupération commentaires "à faire" dans la base de données*/
                         this.getCommentaires(item);
-                        _a.label = 8;
-                    case 8: return [2 /*return*/];
+                        _a.label = 9;
+                    case 9: return [2 /*return*/];
                 }
             });
         });

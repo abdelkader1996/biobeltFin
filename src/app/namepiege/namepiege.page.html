@@ -1,17 +1,14 @@
 <ion-header>
-  <!--<ion-toolbar color="primary">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
-    <ion-title>Paramètres UPC</ion-title>
-    <ion-buttons slot="end" *ngIf="!global.isBBAM">
-      <ion-button fill="clear"> <ion-icon name="globe" color="light" (click)="onSynchroB1B2();"></ion-icon>ADMIN</ion-button> 
+    
+     <ion-buttons>
+      <ion-button fill="clear"> <ion-icon name="wifi" color="light"></ion-icon> connecté a : {{this.current_ssid}}</ion-button> 
      </ion-buttons>
-     <ion-buttons slot="end" *ngIf="global.isBBAM">
-      <ion-button fill="clear"> <ion-icon name="wifi" color="light"></ion-icon>{{global.ssid}}</ion-button> 
-     </ion-buttons>
-  </ion-toolbar>-->  
+  </ion-toolbar>
   </ion-header>
 
 <ion-content>
@@ -39,10 +36,11 @@
 </div>
 </ion-content>
 <ion-footer style="display: inline-block">
-  <ion-button *ngIf="!global.displayLoading" style="float: left" fill="clear" (click)="global.onReadStatiqueEnable()">    
+  <ion-button *ngIf="!this.isLoading" style="float: left" fill="clear" (click)="this.ionViewWillEnter()">    
     <ion-icon name="refresh"></ion-icon>
+    hhhh
   </ion-button>
-  <ion-button *ngIf="global.displayLoading" style="float: left;" fill="clear" color="primary">
+  <ion-button *ngIf="this.isLoading" style="float: left;" fill="clear" color="primary">
     <ion-spinner></ion-spinner>
   </ion-button>
 </ion-footer>

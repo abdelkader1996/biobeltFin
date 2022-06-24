@@ -30,6 +30,7 @@ export class LoginPage implements OnInit {
 
   ) { }
   async ngOnInit() {
+    console.log("============================= LogIn : ng on Init =============================")
     this.storage.set("reconnect", true)
     localStorage.setItem("BBAM",null);
     await this.storage.get('user').then(async res=>{
@@ -53,6 +54,9 @@ export class LoginPage implements OnInit {
   
   
   async login() {
+
+    console.log("============================= LogIn : login =============================")
+
     // Show loading
     const loading = await this.loadingCtrl.create({
       message: 'Connexion en cours...'
