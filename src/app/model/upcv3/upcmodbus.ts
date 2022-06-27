@@ -426,7 +426,7 @@ export class UPCModbus {
 
           if(mode != "modeTest"){ //on n'est pas en mode test   
 
-            if(nameId != upcNameId){ //changement d'UPC
+            if(nameId != upcNameId && false){ //changement d'UPC
               
 
               if (window.confirm("Une intervention est en cours sur l'upc "+upcNameId+". Voulez-vous néanmoins continuer sur l'upc "+nameId+"?")) {            
@@ -452,21 +452,24 @@ export class UPCModbus {
               for (var i = 23;i<33;i++){
               tabMdmName.push(res1[i]);
               }
-              this.communicationParameters.comMdmName = this.client.registerToString(tabMdmName)
+              console.log("comMdm name :")
+              console.log(tabMdmName)
+              console.log(this.client.registerToString(tabMdmName))
+              this.communicationParameters.comMdmName = this.client.registerToString(tabMdmName).replace(/[^a-zA-Z0-9-.-]/g,'')
 
               //40034 40043
               var tabMdmPass = [];
               for(var i =33;i<43;i++){
                 tabMdmPass.push(res1[i]);
               }
-              this.communicationParameters.comGsmPass = this.client.registerToString(tabMdmPass)
+              this.communicationParameters.comGsmPass = this.client.registerToString(tabMdmPass).replace(/[^a-zA-Z0-9-.-]/g,'')
 
               //40045 40053
               var tabssid = [];
               for (var i =44;i<54;i++){
                 tabssid.push(res1[i]);
               }
-              this.communicationParameters.comGsmName = this.client.registerToString(tabssid)
+              this.communicationParameters.comGsmName = this.client.registerToString(tabssid).replace(/[^a-zA-Z0-9-.-]/g,'')
 
               //40055 40064
               var tabpassword = [];
