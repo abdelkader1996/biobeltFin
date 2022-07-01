@@ -1099,7 +1099,7 @@ export class UPCModbus {
   
             if(mode != "modeTest"){ //on n'est pas en mode test   
   
-              if(nameId != upcNameId){ //changement d'UPC
+              if(nameId != upcNameId && false ){ //changement d'UPC
                 
   
                 if(window.confirm("Une intervention est en cours sur l'upc "+upcNameId+". Voulez-vous néanmoins continuer sur l'upc "+nameId+"?")) {            
@@ -1109,6 +1109,10 @@ export class UPCModbus {
                   else{
 
                     this.alarm.alrResLowEn = this.client.registerToUint32(res1[65])
+                    console.log("65 ::> "+res1[65])
+                    console.log("64 ::"+res1[64])
+                    console.log("66 ::"+res1[64])
+
                     var res = await this.readAlarmParameters()  
                     this.success = true;                                
       
@@ -1124,7 +1128,7 @@ export class UPCModbus {
                 
                 this.nameId = nameId;
   
-                this.alarm.alrResLowEn = this.client.registerToUint32(res1[65])
+                this.alarm.alrResLowEn =res1[65]
   
                 var res = await this.readAlarmParameters()  
                 this.success = true;    
@@ -1163,7 +1167,6 @@ export class UPCModbus {
       return error;
     }
   }
-
   async readInterventionCeintureParameters(){
     return new Promise(async (resolve, reject)=>{  
       //40168
@@ -1214,41 +1217,46 @@ export class UPCModbus {
     return new Promise(async (resolve, reject)=>{ 
       
       //40169 40294
-      var res2 = await this.client.readHoldingRegisters(this.correspondancesRegistres.alrResEmptyEn.adr,125)
+      var res2 = await this.client.readHoldingRegisters(this.correspondancesRegistres.alrResEmptyEn.adr,126)
+      console.log("regitres ===========================================")
+      console.log(res2)
 
       //40169
-      this.alarm.alrResEmptyEn = this.client.registerToUint32(res2[0])
+      this.alarm.alrResEmptyEn = res2[0]
 
       //40170
-      this.alarm.alrPresInpEn = this.client.registerToUint32(res2[1])
+      this.alarm.alrPresInpEn = res2[1]
 
       //40171
-      this.alarm.alrPresOutEn= this.client.registerToUint32(res2[2])
+      this.alarm.alrPresOutEn= res2[2]
 
       //40172
-      this.alarm.alrFlowAvgEn = this.client.registerToUint32(res2[3])
+      this.alarm.alrFlowAvgEn = res2[3]
 
       //40173
-      this.alarm.alrPowDownEn = this.client.registerToUint32(res2[4])
+      this.alarm.alrPowDownEn = res2[4]
 
       //40174
-      this.alarm.alrPowBackEn = this.client.registerToUint32(res2[5])
+      this.alarm.alrPowBackEn = res2[5]
       
 
       //40225
-      this.alarm.alrResEmptyFlow = this.client.registerToFloat([res2[55],res2[56]])
+      this.alarm.alrResEmptyFlow = this.client.registerToFloat([res2[56],res2[57]])
 
       //40227
-      this.alarm.alrResLowLevel = this.client.registerToFloat([res2[57],res2[58]])
+      this.alarm.alrResLowLevel = this.client.registerToFloat([res2[58],res2[59]])
 
       //40269
       this.alarm.alrPresInpTol = this.client.registerToFloat([res2[100],res2[101]])
       
-      //40291
-      this.alarm.alrResEmptyFlow = this.client.registerToFloat([res2[121],res2[122]])
+     //40291
+      this.alarm.alrPresOutTol = this.client.registerToFloat([res2[122],res2[123]])
 
       //40293
-      this.alarm.alrResEmptyFlow = this.client.registerToFloat([res2[123],res2[124]])
+      this.alarm.alrFlowSetTol = this.client.registerToFloat([res2[124],res2[125]])
+
+
+      console.log( "this.alarm.alrFlowSetTol  => "+this.alarm.alrFlowSetTol)
       
 
       resolve("true");

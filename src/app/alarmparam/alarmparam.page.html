@@ -4,15 +4,12 @@
       <ion-menu-button></ion-menu-button>
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
-    <ion-title>Alarme</ion-title>
-    <ion-buttons slot="end" *ngIf="!global.isBBAM">
-      <ion-button fill="clear"> <ion-icon name="globe" color="light" (click)="onSynchroB1B2();"></ion-icon>ADMIN</ion-button> 
-     </ion-buttons>
-     <ion-buttons slot="end" *ngIf="global.isBBAM">
-      <ion-button fill="clear"> <ion-icon name="wifi" color="light"></ion-icon>{{global.ssid}}</ion-button> 
+    
+     <ion-buttons>
+      <ion-button fill="clear"> <ion-icon name="wifi" color="light"></ion-icon> connecté a : {{this.current_ssid}}</ion-button> 
      </ion-buttons>
   </ion-toolbar>
-</ion-header>
+  </ion-header>
 
 <ion-content>
   <ion-refresher slot="fixed" id="refresher" (ionRefresh)="doRefresh($event)">
