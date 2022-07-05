@@ -13,20 +13,17 @@
   }</style>
 </head>
 <ion-header>
-<ion-toolbar color="primary">
-  <ion-buttons slot="start">
-    <ion-menu-button></ion-menu-button>
-    <ion-back-button defaultHref="home"></ion-back-button>
-  </ion-buttons>
-  <ion-title>Programmes</ion-title>
-  <ion-buttons slot="end" *ngIf="!global.isBBAM">
-    <ion-button fill="clear"> <ion-icon name="globe" color="light" (click)="onSynchroB1B2();"></ion-icon>ADMIN</ion-button> 
-   </ion-buttons>
-   <ion-buttons slot="end" *ngIf="global.isBBAM">
-    <ion-button fill="clear"> <ion-icon name="wifi" color="light"></ion-icon>{{global.ssid}}</ion-button> 
-   </ion-buttons>
-</ion-toolbar>  
-</ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    
+     <ion-buttons>
+      <ion-button fill="clear"> <ion-icon name="wifi" color="light"></ion-icon> connecté a : {{this.current_ssid}}</ion-button> 
+     </ion-buttons>
+  </ion-toolbar>
+  </ion-header>
 
 <ion-content class ="ion-padding">
   <ion-refresher slot="fixed" id="refresher" (ionRefresh)="doRefresh($event)">
@@ -36,7 +33,7 @@
 
 <!--<ion-row style="text-align: center;padding-top: 5%;"><ion-col><ion-button [color]="colordif" size="large" shape="round" (click)="onDiff();">Diffusion</ion-button></ion-col></ion-row>-->
 <ion-row style="text-align: center;">
-  <ion-col size="12"><ion-button shape="round" expand="block" [color]="diffcolor" disabled="true">{{typediff}}</ion-button></ion-col>
+  <ion-col size="12">{{typediff}}</ion-col>
 </ion-row>
 <ion-row style="text-align: center;">
   <ion-col size="6"><ion-button shape="round" size="small" color="danger" (click)="onDisableDiff();">OFF</ion-button></ion-col>
@@ -122,7 +119,7 @@
     <ion-col size="12" size-sm="1.25">
       <div class="form">
         <div class="infosform">Intensité :</div>					
-        <ion-select *ngIf="!redBackground" [(ngModel)]="intensity[11]" (ngModelChange)="onEditSunset(correspondancesRegistres.diffCo2SunsetIntensity,'intensity',intensity[10])">
+        <ion-select *ngIf="!redBackground" [(ngModel)]="intensity[11]" (ngModelChange)="onEditSunset(correspondancesRegistres.diffCo2SunsetIntensity,'intensity',intensity[11])">
           <ion-select-option *ngFor="let intensityOption of intensityOptions" [value]="intensityOption">{{intensityOption}}</ion-select-option>
         </ion-select>	
         <ion-label *ngIf="redBackground">-</ion-label>

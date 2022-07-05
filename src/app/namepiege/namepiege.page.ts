@@ -334,30 +334,22 @@ export class NamepiegePage {
 
     }
   }
-  /*async onWipe() {
-    let alert = await this.alertCTRL.create({message : "Êtes vous sûr d'effectuer un Wipe ?",
-                                             buttons : [{text : "Non"},{text : "Oui",handler : ()=>{
-                                              this.global.onWriteModbusVariables().then(res=>{
-                                                var d = new Date()
-                                                this.global.logs.push(this.global.msToTime(d.getTime())+" - début écriture")
-                                                this.global.ecritureEnCours = true;
-                                                this.global.upcmodbus.client.setIntInHoldingRegister(40011,1,61166).then(res=>{
-                                                  var d = new Date()
-                                                  this.global.logs.push(this.global.msToTime(d.getTime())+" - écriture réussie")
-                                                  this.subscribeRefresh()
-                                                  this.global.ecritureEnCours = false;    
-                                                }).catch(err=>{
-                                                  var d = new Date()
-                                                  this.global.logs.push(this.global.msToTime(d.getTime())+" - écriture échouée")
-                                                  this.subscribeRefresh()
-                                                  this.global.ecritureEnCours = false;
-                                                })   
-                                              })
-                                             }}]
-                                      })
-    alert.present();
-  }
-
+  async onWipe() {
+    // ecrire la commande  EEEE dans 40011 pour faire un wipe
+   this.global.upcmodbus.client.setIntInHoldingRegister(40011,1,61166).then(res=>{
+                                                    var d = new Date()
+                                                    this.global.logs.push(this.global.msToTime(d.getTime())+" - écriture réussie")
+                                                    this.subscribeRefresh()
+                                                    this.global.ecritureEnCours = false;    
+                                                  }).catch(err=>{
+                                                    var d = new Date()
+                                                    this.global.logs.push(this.global.msToTime(d.getTime())+" - écriture échouée")
+                                                    this.subscribeRefresh()
+                                                    this.global.ecritureEnCours = false;
+      })   
+                                              
+    }
+    /*
   async onReset() {
     let alert = await this.alertCTRL.create({message : "Êtes vous sûr d'effectuer un Reset ?",
                                              buttons : [{text : "Non"},{text : "Oui", handler : ()=>{

@@ -375,56 +375,53 @@ var NamepiegePage = /** @class */ (function () {
             });
         }
     };
-    /*async onWipe() {
-      let alert = await this.alertCTRL.create({message : "Êtes vous sûr d'effectuer un Wipe ?",
-                                               buttons : [{text : "Non"},{text : "Oui",handler : ()=>{
-                                                this.global.onWriteModbusVariables().then(res=>{
+    NamepiegePage.prototype.onWipe = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var _this = this;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                // ecrire la commande  EEEE dans 40011 pour faire un wipe
+                this.global.upcmodbus.client.setIntInHoldingRegister(40011, 1, 61166).then(function (res) {
+                    var d = new Date();
+                    _this.global.logs.push(_this.global.msToTime(d.getTime()) + " - écriture réussie");
+                    _this.subscribeRefresh();
+                    _this.global.ecritureEnCours = false;
+                }).catch(function (err) {
+                    var d = new Date();
+                    _this.global.logs.push(_this.global.msToTime(d.getTime()) + " - écriture échouée");
+                    _this.subscribeRefresh();
+                    _this.global.ecritureEnCours = false;
+                });
+                return [2 /*return*/];
+            });
+        });
+    };
+    /*
+  async onReset() {
+    let alert = await this.alertCTRL.create({message : "Êtes vous sûr d'effectuer un Reset ?",
+                                             buttons : [{text : "Non"},{text : "Oui", handler : ()=>{
+                                              this.global.onWriteModbusVariables().then(res=>{
+                                                var d = new Date()
+                                                this.global.logs.push(this.global.msToTime(d.getTime())+" - début écriture")
+                                                this.global.ecritureEnCours = true;
+                                                this.global.upcmodbus.client.setIntInHoldingRegister(40011,1,65535).then(res=>{
                                                   var d = new Date()
-                                                  this.global.logs.push(this.global.msToTime(d.getTime())+" - début écriture")
-                                                  this.global.ecritureEnCours = true;
-                                                  this.global.upcmodbus.client.setIntInHoldingRegister(40011,1,61166).then(res=>{
-                                                    var d = new Date()
-                                                    this.global.logs.push(this.global.msToTime(d.getTime())+" - écriture réussie")
-                                                    this.subscribeRefresh()
-                                                    this.global.ecritureEnCours = false;
-                                                  }).catch(err=>{
-                                                    var d = new Date()
-                                                    this.global.logs.push(this.global.msToTime(d.getTime())+" - écriture échouée")
-                                                    this.subscribeRefresh()
-                                                    this.global.ecritureEnCours = false;
-                                                  })
-                                                })
-                                               }}]
-                                        })
-      alert.present();
-    }
-  
-    async onReset() {
-      let alert = await this.alertCTRL.create({message : "Êtes vous sûr d'effectuer un Reset ?",
-                                               buttons : [{text : "Non"},{text : "Oui", handler : ()=>{
-                                                this.global.onWriteModbusVariables().then(res=>{
+                                                  this.global.logs.push(this.global.msToTime(d.getTime())+" - écriture réussie")
+                                                  this.subscribeRefresh()
+                                                  this.global.ecritureEnCours = false;
+                                                }).catch(err=>{
                                                   var d = new Date()
-                                                  this.global.logs.push(this.global.msToTime(d.getTime())+" - début écriture")
-                                                  this.global.ecritureEnCours = true;
-                                                  this.global.upcmodbus.client.setIntInHoldingRegister(40011,1,65535).then(res=>{
-                                                    var d = new Date()
-                                                    this.global.logs.push(this.global.msToTime(d.getTime())+" - écriture réussie")
-                                                    this.subscribeRefresh()
-                                                    this.global.ecritureEnCours = false;
-                                                  }).catch(err=>{
-                                                    var d = new Date()
-                                                    this.global.logs.push(this.global.msToTime(d.getTime())+" - écriture échouée")
-                                                    this.subscribeRefresh()
-                                                    this.global.ecritureEnCours = false;
-                                                  })
+                                                  this.global.logs.push(this.global.msToTime(d.getTime())+" - écriture échouée")
+                                                  this.subscribeRefresh()
+                                                  this.global.ecritureEnCours = false;
                                                 })
-                                                  
+                                              })
                                                 
-                                               }}]
-      })
-      alert.present();
-      
-    }*/
+                                              
+                                             }}]
+    })
+    alert.present();
+    
+  }*/
     NamepiegePage.prototype.onChangeFusHor = function () {
         var d = new Date();
         this.global.logs.push(this.global.msToTime(d.getTime()) + " - appel on change fushor");

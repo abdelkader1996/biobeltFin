@@ -37760,7 +37760,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<head> \n  <style>\n    .bar {fill: #3498db;}    \n    .bar:hover {fill: #2ecc71;}\n  \n    .axis {font: 10px sans-serif;}\n  \n    .axis path, .axis line {fill: none; stroke: #000; shape-rendering: crispEdges;}\n  \n  .legend {padding: 5px; font: 10px sans-serif; background: yellow; box-shadow: 2px 2px 1px #888;}\n  \n  .tooltip {background: #eee; box-shadow: 0 0 5px #999999; color: #333; font-size: 12px; left: 130px; padding: 10px; position: absolute; text-align: center; top: 95px; z-index: 10; display: block; opacity: 0;\n  }</style>\n</head>\n<ion-header>\n<ion-toolbar color=\"primary\">\n  <ion-buttons slot=\"start\">\n    <ion-menu-button></ion-menu-button>\n    <ion-back-button defaultHref=\"home\"></ion-back-button>\n  </ion-buttons>\n  <ion-title>Programmes</ion-title>\n  <ion-buttons slot=\"end\" *ngIf=\"!global.isBBAM\">\n    <ion-button fill=\"clear\"> <ion-icon name=\"globe\" color=\"light\" (click)=\"onSynchroB1B2();\"></ion-icon>ADMIN</ion-button> \n   </ion-buttons>\n   <ion-buttons slot=\"end\" *ngIf=\"global.isBBAM\">\n    <ion-button fill=\"clear\"> <ion-icon name=\"wifi\" color=\"light\"></ion-icon>{{global.ssid}}</ion-button> \n   </ion-buttons>\n</ion-toolbar>  \n</ion-header>\n\n<ion-content class =\"ion-padding\">\n  <ion-refresher slot=\"fixed\" id=\"refresher\" (ionRefresh)=\"doRefresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n  <h3 style=\"text-align: center;\">Programmation </h3>\n\n<!--<ion-row style=\"text-align: center;padding-top: 5%;\"><ion-col><ion-button [color]=\"colordif\" size=\"large\" shape=\"round\" (click)=\"onDiff();\">Diffusion</ion-button></ion-col></ion-row>-->\n<ion-row style=\"text-align: center;\">\n  <ion-col size=\"12\"><ion-button shape=\"round\" expand=\"block\" [color]=\"diffcolor\" disabled=\"true\">{{typediff}}</ion-button></ion-col>\n</ion-row>\n<ion-row style=\"text-align: center;\">\n  <ion-col size=\"6\"><ion-button shape=\"round\" size=\"small\" color=\"danger\" (click)=\"onDisableDiff();\">OFF</ion-button></ion-col>\n  <ion-col size=\"6\"><ion-button shape=\"round\" size=\"small\" color=\"primary\" (click)=\"onEnableDiff();\">DIFF</ion-button></ion-col>  \n</ion-row>\n\n<ion-card class=\"ion-padding\">   \t\t\t\t\t\t\t\n  <ion-card-header>\t\t\t\t\t\t\t\n  <ion-card-title>Programmes Aube / Crépuscule</ion-card-title>\t\t\t\t\t\t\t\n  </ion-card-header>\n  <ion-grid>\n    <ion-row class=\"landscaperow\" [ngClass]=\"{'bgred' : redBackground}\"><ion-col size=\"2\"></ion-col><ion-col size=\"2.75\"><p style=\"margin-left: 10%;\">Décalage Début</p></ion-col><ion-col size=\"1.8\"><p>Durée</p></ion-col><ion-col size=\"1.5\"><p style=\"margin-left: 14%;\">Intensité</p></ion-col></ion-row>\t\n    <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n      \n      <ion-col size=\"12\" size-sm=\"2\">\t\t\t\t\t\t\n        <p>Aube</p>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.75\">\n        <div class=\"form\">\n          <div class=\"infosformhours\">Décalage début:</div>\t            \t\t\t\t\t\t\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"sign[0]\" (ngModelChange)=\"onEditSunrise(correspondancesRegistres.diffCo2SunriseDelay,'offset',paDelay[0])\">\t\t\t\t\t\t\t\n            <ion-select-option *ngFor=\"let signOption of signOptions\" [value]=\"signOption\">{{signOption}}</ion-select-option>\t           \t\t\t\t\t\t\t\n          </ion-select> \n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"paDelay[0]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEditSunrise(correspondancesRegistres.diffCo2SunriseDelay,'offset',paDelay[0])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\t\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"1.8\">\n        <div class=\"form\">\n          <div class=\"infosformhours\">Durée :</div>   \t\t\t\t\t\t\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"paDuration[0]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEditSunrise(correspondancesRegistres.diffCo2SunriseDuration,'duration',paDuration[0])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\t\n        </div>\n        <p *ngIf=\"pAubeStart[0] && pAubeEnd[0] && !redBackground\">{{pAubeStart[0]}}-{{pAubeEnd[0]}}</p>\n        <ion-label *ngIf=\"redBackground\">-</ion-label>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"1.25\">\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[10]\" (ngModelChange)=\"onEditSunrise(correspondancesRegistres.diffCo2SunriseIntensity,'intensity',intensity[10])\">\n            <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select>\n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>\t\t   \t\t\t\t\n    \n    </ion-row>\t\t\n    <ion-row [ngClass]=\"{'bgred' : redBackground}\">\t\t\n  \n    <ion-col size=\"12\" size-sm=\"2\">\t\t\t\t\t\t\n     <p>Crépuscule</p>\t\n    </ion-col>\n    <ion-col size=\"12\" size-sm=\"2.75\">\n      <div class=\"form\">\n        <div class=\"infosformhours\">Décalage début :</div>\t\t\t\t\t\t\n        <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"sign[1]\" (ngModelChange)=\"onEditSunset(correspondancesRegistres.diffCo2SunsetDelay,'offset',pcDelay[0])\">\t\t\t\t\t\t\t\n          <ion-select-option *ngFor=\"let signOption of signOptions\" [value]=\"signOption\">{{signOption}}</ion-select-option>\t           \t\t\t\t\t\t\t\n        </ion-select> \n        <ion-label *ngIf=\"redBackground\">-</ion-label>\n        <ion-item>\t\t\t\t\t\t\t\n          <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pcDelay[0]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEditSunset(correspondancesRegistres.diffCo2SunsetDelay,'offset',pcDelay[0])\"></ion-datetime>\t\t\t\t\t\t\t\n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </ion-item>\t\n      </div>\n    </ion-col>\n    <ion-col size=\"12\" size-sm=\"1.8\">\n      <div class=\"form\">\n        <div class=\"infosformhours\">Durée :</div>\t   \t\t\t\t\t\n        <ion-item>\t\t\t\t\t\t\t\n          <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pcDuration[0]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEditSunset(correspondancesRegistres.diffCo2SunsetDuration,'duration',pcDuration[0])\"></ion-datetime>\t\t\t\t\t\t\t\n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </ion-item>\t\t\n      </div>\n      <p *ngIf=\"pCrepusculeStart[0] && pCrepusculeEnd[0] && !redBackground\">{{pCrepusculeStart[0]}}-{{pCrepusculeEnd[0]}}</p>\n      <ion-label *ngIf=\"redBackground\">-</ion-label>\n    </ion-col>\n    <ion-col size=\"12\" size-sm=\"1.25\">\n      <div class=\"form\">\n        <div class=\"infosform\">Intensité :</div>\t\t\t\t\t\n        <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[11]\" (ngModelChange)=\"onEditSunset(correspondancesRegistres.diffCo2SunsetIntensity,'intensity',intensity[10])\">\n          <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n        </ion-select>\t\n        <ion-label *ngIf=\"redBackground\">-</ion-label>\n      </div>\n    </ion-col>\n    <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>\t\t\t\t\t\n    \n  </ion-row>\t\t   \t\n  </ion-grid>\t\t\t\t\t\t\n  </ion-card>\t\t\t\t\t\t\t\n  <ion-card class=\"ion-padding\">\t\t\t\t\t\t\t\n  <ion-card-header>\t\t\t\t\t\t\t\n    <ion-card-title>Programmes de diffusion</ion-card-title>\t\t\t\t\t\t\t\n  </ion-card-header>\t\n  <ion-grid [fixed]=\"true\">\t\t\n    <ion-row class=\"landscaperow\" [ngClass]=\"{'bgred' : redBackground}\"><ion-col size=\"1\"></ion-col><ion-col size=\"3.15\"><p style=\"margin-left: 10%;\">Fréquence</p></ion-col><ion-col size=\"2.5\"><p style=\"margin-left:24%;\">Début</p></ion-col><ion-col size=\"0.5\"></ion-col><ion-col size=\"2.5\"><p style=\"margin-left:24%;\">Fin</p></ion-col><ion-col size=\"2\"><p style=\"margin-left:14%;\">Intensité</p></ion-col></ion-row>\n    <ion-row class=\"rowDisplay\" [ngClass]=\"{'bgred' : redBackground}\">\n        \n        <ion-col size=\"12\" size-sm=\"1\">\t\t\t\t\n          <p>P1</p>\t\t\t\t\n        </ion-col>\t\n        <ion-col size=\"12\" size-sm=\"3.15\">\t\t\n          <div class=\"form\">\t\n            <div class=\"infosform\">Fréquence :</div>\t\t\n            <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"frequency2[0]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program1Frequency,'frequency',frequency2[0])\">\n              <ion-select-option *ngFor=\"let frequencyOption of frequencyOptions\" [value]=\"frequencyOption\">{{frequencyOption}}</ion-select-option>\n            </ion-select>\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\t\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"2.5\">\t\n          <div class=\"form\">\t\n            <div class=\"infosformhours\"><p>Début :</p></div>\t\t\t\t\n            <ion-item>\t\t\t\t\t\t\t\n              <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"pStart[0]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program1Start,'start',pStart[0])\"></ion-datetime>\t\t\t\t\t\t\n              <ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-item>\t\n          </div>\n        </ion-col>\n      <ion-col size=\"12\" size-sm=\"0.5\">\n        <p class=\"hoursrange\">-</p>\t\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.5\">\t\n        <div class=\"form\"\t>\n          <div class=\"infosformhours\">Fin :</div>\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pEnd[0]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program1End,'end',pEnd[0])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\n        </div>          \n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2\">\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[0]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program1Intensity,'intensity',intensity[0])\">\n             <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select> \n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>   \t\t\t\t\t\n      \n    </ion-row>\t\n    <ion-row class=\"rowDisplay\" [ngClass]=\"{'bgred' : redBackground}\">\n      \n        <ion-col size=\"12\" size-sm=\"1\">\t\t\t\t\t\t\t\n          <p>P2</p>\t\t\t\t\n        </ion-col>\t\n        <ion-col size=\"12\" size-sm=\"3.15\">\t\t\n          <div class=\"form\">\t\n            <div class=\"infosform\">Fréquence :</div>\t\t\n            <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"frequency2[1]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program2Frequency,'frequency',frequency2[1])\">\n              <ion-select-option *ngFor=\"let frequencyOption of frequencyOptions\" [value]=\"frequencyOption\">{{frequencyOption}}</ion-select-option>\n            </ion-select>\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"2.5\">\n          <div class=\"form\">\t\n            <div class=\"infosformhours\">Début :</div>\t\t\t\t\n            <ion-item>\t\t\t\t\t\t\t\n              <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"pStart[1]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program2Start,'start',pStart[1])\"></ion-datetime>\t\t\t\t\t\t\n            </ion-item>\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </div>\n        </ion-col>\n      <ion-col size=\"12\" size-sm=\"0.5\">\n        <p class=\"hoursrange\">-</p>\t\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.5\">\t\n        <div class=\"form\"\t>\n          <div class=\"infosformhours\">Fin :</div>\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pEnd[1]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program2End,'end',pEnd[1])\"></ion-datetime>\t\t\t\t\t\t\t\n          </ion-item>\t\n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2\">\t\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[1]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program2Intensity,'intensity',intensity[1])\">\n             <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select> \n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>   \t\t\t\t\t\n     \n    </ion-row>\n    <ion-row class=\"rowDisplay\" [ngClass]=\"{'bgred' : redBackground}\">\n      \n        <ion-col size=\"12\" size-sm=\"1\">\t\t\t\t\t\t\n          <p>P3</p>\t\t\t\t\n        </ion-col>\t\n        <ion-col size=\"12\" size-sm=\"3.15\">\t\t\n          <div class=\"form\">\t\n            <div class=\"infosform\">Fréquence :</div>\t\t\n            <ion-select *ngIf='frequency2[2] && !redBackground' [(ngModel)]=\"frequency2[2]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program3Frequency,'frequency',frequency2[2])\">\n              <ion-select-option *ngFor=\"let frequencyOption of frequencyOptions\" [value]=\"frequencyOption\">{{frequencyOption}}</ion-select-option>\n            </ion-select>\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"2.5\">\t\n          <div class=\"form\">\t\n            <div class=\"infosformhours\">Début :</div>\t\t\t\t\n            <ion-item>\t\t\t\t\t\t\t\n              <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"pStart[2]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program3Start,'start',pStart[2])\"></ion-datetime>\t\t\t\t\t\t\n              <ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-item>\t\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"0.5\">\n        <p class=\"hoursrange\">-</p>\t\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.5\">\t\t\n        <div class=\"form\"\t>\n          <div class=\"infosformhours\">Fin :</div>\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pEnd[2]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program3End,'end',pEnd[2])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2\">\t\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[2]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program3Intensity,'intensity',intensity[2])\">\n             <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select> \n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col> \n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>  \t\t\t\t\t\n      \n    </ion-row>\n    <ion-row class=\"rowDisplay\" [ngClass]=\"{'bgred' : redBackground}\">\n      \n        <ion-col size=\"12\" size-sm=\"1\">\t\t\t\t\t\n          <p>P4</p>\t\t\t\t\n        </ion-col>\t\n        <ion-col size=\"12\" size-sm=\"3.15\">\t\t\n          <div class=\"form\">\t\n            <div class=\"infosform\">Fréquence :</div>\t\t\n            <ion-select *ngIf='frequency2[3] && !redBackground' [(ngModel)]=\"frequency2[3]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program4Frequency,'frequency',frequency2[3])\">\n              <ion-select-option *ngFor=\"let frequencyOption of frequencyOptions\" [value]=\"frequencyOption\">{{frequencyOption}}</ion-select-option>\n            </ion-select>\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"2.5\">\t\n          <div class=\"form\">\t\n            <div class=\"infosformhours\">Début :</div>\t\t\t\t\n            <ion-item>\t\t\t\t\t\t\t\n              <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"pStart[3]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program4Start,'start',pStart[3])\"></ion-datetime>\t\t\t\t\t\t\n              <ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-item>\t\n          </div>\n        </ion-col>\n      <ion-col size=\"12\" size-sm=\"0.5\">\n        <p class=\"hoursrange\">-</p>\t\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.5\">\t\n        <div class=\"form\"\t>\n          <div class=\"infosformhours\">Fin :</div>\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pEnd[3]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program4End,'end',pEnd[3])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2\">\t\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[3]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program4Intensity,'intensity',intensity[3])\">\n             <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select> \n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>   \t\t\t\t\t\n      \n    </ion-row>\n    <ion-row class=\"rowDisplay\" [ngClass]=\"{'bgred' : redBackground}\">\n      \n        <ion-col size=\"12\" size-sm=\"1\">\t\t\t\t\t\n          <p>P5</p>\t\t\t\t\n        </ion-col>\t\n        <ion-col size=\"12\" size-sm=\"3.15\">\t\t\n          <div class=\"form\">\t\n            <div class=\"infosform\">Fréquence :</div>\t\t\n            <ion-select *ngIf='frequency2[4] && !redBackground' [(ngModel)]=\"frequency2[4]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program5Frequency,'frequency',frequency2[4])\">\n              <ion-select-option *ngFor=\"let frequencyOption of frequencyOptions\" [value]=\"frequencyOption\">{{frequencyOption}}</ion-select-option>\n            </ion-select>\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"2.5\">\t\n          <div class=\"form\">\t\n            <div class=\"infosformhours\">Début :</div>\t\t\t\t\n            <ion-item>\t\t\t\t\t\t\t\n              <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"pStart[4]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program5Start,'start',pStart[4])\"></ion-datetime>\t\t\t\t\t\t\n              <ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-item>\t\n          </div>\n        </ion-col>\n      <ion-col size=\"12\" size-sm=\"0.5\">\n        <p class=\"hoursrange\">-</p>\t\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.5\">\t\n        <div class=\"form\"\t>\n          <div class=\"infosformhours\">Fin :</div>\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pEnd[4]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program5End,'end',pEnd[4])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2\">\t\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[4]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program5Intensity,'intensity',intensity[4])\">\n             <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select> \n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>   \t\t\t\t\t\n      \n    </ion-row>\n    <ion-row class=\"rowDisplay\" [ngClass]=\"{'bgred' : redBackground}\">\n      \n        <ion-col size=\"12\" size-sm=\"1\">\t\t\t\t\t\n          <p>P6</p>\t\t\t\t\n        </ion-col>\t\n        <ion-col size=\"12\" size-sm=\"3.15\">\t\t\n          <div class=\"form\">\t\n            <div class=\"infosform\">Fréquence :</div>\t\t\n            <ion-select *ngIf='frequency2[5] && !redBackground' [(ngModel)]=\"frequency2[5]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program6Frequency,'frequency',frequency2[5])\">\n              <ion-select-option *ngFor=\"let frequencyOption of frequencyOptions\" [value]=\"frequencyOption\">{{frequencyOption}}</ion-select-option>\n            </ion-select>\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"2.5\">\t\n          <div class=\"form\">\t\n            <div class=\"infosformhours\">Début :</div>\t\t\t\t\n            <ion-item>\t\t\t\t\t\t\t\n              <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"pStart[5]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program6Start,'start',pStart[5])\"></ion-datetime>\t\t\t\t\t\t\n              <ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-item>\t\n          </div>\n        </ion-col>\n      <ion-col size=\"12\" size-sm=\"0.5\">\n        <p class=\"hoursrange\">-</p>\t\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.5\">\t\t\n        <div class=\"form\"\t>\n          <div class=\"infosformhours\">Fin :</div>\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pEnd[5]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program6End,'end',pEnd[5])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2\">\t\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[5]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program6Intensity,'intensity',intensity[5])\">\n             <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select> \n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>   \t\t\t\t\t\n      \n    </ion-row>\n    <ion-row class=\"rowDisplay\" [ngClass]=\"{'bgred' : redBackground}\">\n        \n        <ion-col size=\"12\" size-sm=\"1\">\t\t\t\t\t\n          <p>P7</p>\t\t\t\t\n        </ion-col>\t\n        <ion-col size=\"12\" size-sm=\"3.15\">\t\t\n          <div class=\"form\">\t\n            <div class=\"infosform\">Fréquence :</div>\t\t\n            <ion-select *ngIf='frequency2[6] && !redBackground' [(ngModel)]=\"frequency2[6]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program7Frequency,'frequency',frequency2[6])\">\n              <ion-select-option *ngFor=\"let frequencyOption of frequencyOptions\" [value]=\"frequencyOption\">{{frequencyOption}}</ion-select-option>\n            </ion-select>\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\t\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"2.5\">\t\n          <div class=\"form\">\t\n            <div class=\"infosformhours\">Début :</div>\t\t\t\t\n            <ion-item>\t\t\t\t\t\t\t\n              <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"pStart[6]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program7Start,'start',pStart[6])\"></ion-datetime>\t\t\t\t\t\t\n              <ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-item>\t\n          </div>\n        </ion-col>\n      <ion-col size=\"12\" size-sm=\"0.5\">\n        <p class=\"hoursrange\">-</p>\t\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.5\">\t\t\n        <div class=\"form\"\t>\n          <div class=\"infosformhours\">Fin :</div>\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pEnd[6]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program7End,'end',pEnd[6])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2\">\t\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[6]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program7Intensity,'intensity',intensity[6])\">\n             <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select> \n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>   \t\t\t\t\t\n      \n    </ion-row>\n    <ion-row class=\"rowDisplay\" [ngClass]=\"{'bgred' : redBackground}\">\n      \n        <ion-col size=\"12\" size-sm=\"1\">\t\t\t\t\t\n          <p>P8</p>\t\t\t\t\n        </ion-col>\t\n        <ion-col size=\"12\" size-sm=\"3.15\">\t\t\n          <div class=\"form\">\t\n            <div class=\"infosform\">Fréquence :</div>\t\t\n            <ion-select *ngIf='frequency2[7] && !redBackground' [(ngModel)]=\"frequency2[7]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program8Frequency,'frequency',frequency2[7])\">\n              <ion-select-option *ngFor=\"let frequencyOption of frequencyOptions\" [value]=\"frequencyOption\">{{frequencyOption}}</ion-select-option>\n            </ion-select>\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"2.5\">\t\n          <div class=\"form\">\t\n            <div class=\"infosformhours\">Début :</div>\t\t\t\t\n            <ion-item>\t\t\t\t\t\t\t\n              <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"pStart[7]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program8Start,'start',pStart[7])\"></ion-datetime>\t\t\t\t\t\t\n              <ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-item>\t\n          </div>\n        </ion-col>\n      <ion-col size=\"12\" size-sm=\"0.5\">\n        <p class=\"hoursrange\">-</p>\t\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.5\">\t\t\n        <div class=\"form\"\t>\n          <div class=\"infosformhours\">Fin :</div>\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pEnd[7]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program8End,'end',pEnd[7])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2\">\t\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[7]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program8Intensity,'intensity',intensity[7])\">\n             <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select> \n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>   \t\t\t\t\t\n     \n    </ion-row>\n    <ion-row class=\"rowDisplay\" [ngClass]=\"{'bgred' : redBackground}\">\n      \n        <ion-col size=\"12\" size-sm=\"1\">\t\t\t\t\t\n          <p>P9</p>\t\t\t\t\n        </ion-col>\t\n        <ion-col size=\"12\" size-sm=\"3.15\">\t\t\n          <div class=\"form\">\t\n            <div class=\"infosform\">Fréquence :</div>\t\t\n            <ion-select *ngIf='frequency2[8] && !redBackground' [(ngModel)]=\"frequency2[8]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program9Frequency,'frequency',frequency2[8])\">\n              <ion-select-option *ngFor=\"let frequencyOption of frequencyOptions\" [value]=\"frequencyOption\">{{frequencyOption}}</ion-select-option>\n            </ion-select>\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"2.5\">\t\n          <div class=\"form\">\t\n            <div class=\"infosformhours\">Début :</div>\t\t\t\t\n            <ion-item>\t\t\t\t\t\t\t\n              <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"pStart[8]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program9Start,'start',pStart[8])\"></ion-datetime>\t\t\t\t\t\t\n              <ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-item>\t\n          </div>\n        </ion-col>\n      <ion-col size=\"12\" size-sm=\"0.5\">\n        <p class=\"hoursrange\">-</p>\t\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.5\">\t\n        <div class=\"form\"\t>\n          <div class=\"infosformhours\">Fin :</div>\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pEnd[8]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program9End,'end',pEnd[8])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2\">\t\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[8]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program9Intensity,'intensity',intensity[8])\">\n             <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select> \n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>   \t\t\t\t\t\n      \n    </ion-row>\n    <ion-row class=\"rowDisplay\" height=\"100%\" [ngClass]=\"{'bgred' : redBackground}\">\n      \n        <ion-col size=\"12\" size-sm=\"1\">\t\t\t\t\t\n          <p>P10</p>\t\t\t\t\n        </ion-col>\t\n        <ion-col size=\"12\" size-sm=\"3.15\">\t\t\n          <div class=\"form\">\t\n            <div class=\"infosform\">Fréquence :</div>\t\t\n            <ion-select *ngIf='frequency2[9] && !redBackground' [(ngModel)]=\"frequency2[9]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program10Frequency,'frequency',frequency2[9])\">\n              <ion-select-option *ngFor=\"let frequencyOption of frequencyOptions\" [value]=\"frequencyOption\">{{frequencyOption}}</ion-select-option>\n            </ion-select>\t\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"2.5\">\t\n          <div class=\"form\">\t\n            <div class=\"infosformhours\"><p>Début :</p></div>\t\t\t\t\n            <ion-item>\t\t\t\t\t\t\t\n              <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"pStart[9]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program10Start,'start',pStart[9])\"></ion-datetime>\t\t\t\t\t\t\n              <ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-item>\t\n          </div>\n        </ion-col>\n      <ion-col size=\"12\" size-sm=\"0.5\">\n        <p class=\"hoursrange\">-</p>\t\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.5\">\t\n        <div class=\"form\"\t>\n          <div class=\"infosformhours\">Fin :</div>\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pEnd[9]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program10End,'end',pEnd[9])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2\">\t\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[9]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program10Intensity,'intensity',intensity[9])\">\n             <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select>\n          <ion-label *ngIf=\"redBackground\">-</ion-label> \n        </div>\n      </ion-col>\n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>   \t\t\t\t\t\n      \n    </ion-row>     \t\t\t\t\t\t\t\n  \n</ion-grid>\t\t\t\t\t\t\t\n</ion-card>\t\t\n\n<ion-card class=\"ion-padding\">\n  <ion-card-header>\n    <ion-card-title>Graphique</ion-card-title>\n  </ion-card-header>\n\n  <canvas id=\"myChart\"></canvas>\n</ion-card>\n\n<!--<ion-card class=\"ion-padding\">\n  <ion-card-header>\n    <ion-card-title>Consommations théoriques</ion-card-title>\n  </ion-card-header>\n  <ion-row class=\"colDisplay\">\n    <ion-col size=\"12\"><br></ion-col>  \n    <ion-col>\n      <p style=\"float: left;\">Par jour</p>\n      <p style=\"font-weight: bold; float: right;\">val1</p>\n    </ion-col>\n    <ion-col size=\"12\"><br></ion-col>  \n    <ion-col>\n      <p style=\"float: left;\">Par semaine</p>\n      <p style=\"font-weight: bold; float: right;\">val2</p>\n    </ion-col>\n    <ion-col size=\"12\"><br></ion-col>  \n    <ion-col>\n      <p style=\"float: left;\">Par mois</p>\n      <p style=\"font-weight: bold; float: right;\">val3</p>\n    </ion-col> \n    <ion-col size=\"12\"><br></ion-col>      \n  </ion-row>\n</ion-card>-->\n</ion-content>\n<ion-footer>\n  <ion-button *ngIf=\"!global.displayLoading\" style=\"float: left\" fill=\"clear\" (click)=\"global.onReadStatiqueEnable()\">    \n    <ion-icon name=\"refresh\"></ion-icon>\n  </ion-button>\n  <ion-button *ngIf=\"global.displayLoading\" style=\"float: left;\" fill=\"clear\" color=\"primary\">\n    <ion-spinner></ion-spinner>\n  </ion-button>\n  <ion-button *ngIf=\"display\" style='float: right' fill='clear' (click)='goToNextPage()'>Suivant<ion-icon name='arrow-forward'></ion-icon></ion-button>\n</ion-footer>\n\n\n"
+module.exports = "<head> \n  <style>\n    .bar {fill: #3498db;}    \n    .bar:hover {fill: #2ecc71;}\n  \n    .axis {font: 10px sans-serif;}\n  \n    .axis path, .axis line {fill: none; stroke: #000; shape-rendering: crispEdges;}\n  \n  .legend {padding: 5px; font: 10px sans-serif; background: yellow; box-shadow: 2px 2px 1px #888;}\n  \n  .tooltip {background: #eee; box-shadow: 0 0 5px #999999; color: #333; font-size: 12px; left: 130px; padding: 10px; position: absolute; text-align: center; top: 95px; z-index: 10; display: block; opacity: 0;\n  }</style>\n</head>\n<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n      <ion-back-button defaultHref=\"home\"></ion-back-button>\n    </ion-buttons>\n    \n     <ion-buttons>\n      <ion-button fill=\"clear\"> <ion-icon name=\"wifi\" color=\"light\"></ion-icon> connecté a : {{this.current_ssid}}</ion-button> \n     </ion-buttons>\n  </ion-toolbar>\n  </ion-header>\n\n<ion-content class =\"ion-padding\">\n  <ion-refresher slot=\"fixed\" id=\"refresher\" (ionRefresh)=\"doRefresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n  <h3 style=\"text-align: center;\">Programmation </h3>\n\n<!--<ion-row style=\"text-align: center;padding-top: 5%;\"><ion-col><ion-button [color]=\"colordif\" size=\"large\" shape=\"round\" (click)=\"onDiff();\">Diffusion</ion-button></ion-col></ion-row>-->\n<ion-row style=\"text-align: center;\">\n  <ion-col size=\"12\">{{typediff}}</ion-col>\n</ion-row>\n<ion-row style=\"text-align: center;\">\n  <ion-col size=\"6\"><ion-button shape=\"round\" size=\"small\" color=\"danger\" (click)=\"onDisableDiff();\">OFF</ion-button></ion-col>\n  <ion-col size=\"6\"><ion-button shape=\"round\" size=\"small\" color=\"primary\" (click)=\"onEnableDiff();\">DIFF</ion-button></ion-col>  \n</ion-row>\n\n<ion-card class=\"ion-padding\">   \t\t\t\t\t\t\t\n  <ion-card-header>\t\t\t\t\t\t\t\n  <ion-card-title>Programmes Aube / Crépuscule</ion-card-title>\t\t\t\t\t\t\t\n  </ion-card-header>\n  <ion-grid>\n    <ion-row class=\"landscaperow\" [ngClass]=\"{'bgred' : redBackground}\"><ion-col size=\"2\"></ion-col><ion-col size=\"2.75\"><p style=\"margin-left: 10%;\">Décalage Début</p></ion-col><ion-col size=\"1.8\"><p>Durée</p></ion-col><ion-col size=\"1.5\"><p style=\"margin-left: 14%;\">Intensité</p></ion-col></ion-row>\t\n    <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n      \n      <ion-col size=\"12\" size-sm=\"2\">\t\t\t\t\t\t\n        <p>Aube</p>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.75\">\n        <div class=\"form\">\n          <div class=\"infosformhours\">Décalage début:</div>\t            \t\t\t\t\t\t\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"sign[0]\" (ngModelChange)=\"onEditSunrise(correspondancesRegistres.diffCo2SunriseDelay,'offset',paDelay[0])\">\t\t\t\t\t\t\t\n            <ion-select-option *ngFor=\"let signOption of signOptions\" [value]=\"signOption\">{{signOption}}</ion-select-option>\t           \t\t\t\t\t\t\t\n          </ion-select> \n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"paDelay[0]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEditSunrise(correspondancesRegistres.diffCo2SunriseDelay,'offset',paDelay[0])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\t\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"1.8\">\n        <div class=\"form\">\n          <div class=\"infosformhours\">Durée :</div>   \t\t\t\t\t\t\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"paDuration[0]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEditSunrise(correspondancesRegistres.diffCo2SunriseDuration,'duration',paDuration[0])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\t\n        </div>\n        <p *ngIf=\"pAubeStart[0] && pAubeEnd[0] && !redBackground\">{{pAubeStart[0]}}-{{pAubeEnd[0]}}</p>\n        <ion-label *ngIf=\"redBackground\">-</ion-label>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"1.25\">\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[10]\" (ngModelChange)=\"onEditSunrise(correspondancesRegistres.diffCo2SunriseIntensity,'intensity',intensity[10])\">\n            <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select>\n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>\t\t   \t\t\t\t\n    \n    </ion-row>\t\t\n    <ion-row [ngClass]=\"{'bgred' : redBackground}\">\t\t\n  \n    <ion-col size=\"12\" size-sm=\"2\">\t\t\t\t\t\t\n     <p>Crépuscule</p>\t\n    </ion-col>\n    <ion-col size=\"12\" size-sm=\"2.75\">\n      <div class=\"form\">\n        <div class=\"infosformhours\">Décalage début :</div>\t\t\t\t\t\t\n        <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"sign[1]\" (ngModelChange)=\"onEditSunset(correspondancesRegistres.diffCo2SunsetDelay,'offset',pcDelay[0])\">\t\t\t\t\t\t\t\n          <ion-select-option *ngFor=\"let signOption of signOptions\" [value]=\"signOption\">{{signOption}}</ion-select-option>\t           \t\t\t\t\t\t\t\n        </ion-select> \n        <ion-label *ngIf=\"redBackground\">-</ion-label>\n        <ion-item>\t\t\t\t\t\t\t\n          <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pcDelay[0]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEditSunset(correspondancesRegistres.diffCo2SunsetDelay,'offset',pcDelay[0])\"></ion-datetime>\t\t\t\t\t\t\t\n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </ion-item>\t\n      </div>\n    </ion-col>\n    <ion-col size=\"12\" size-sm=\"1.8\">\n      <div class=\"form\">\n        <div class=\"infosformhours\">Durée :</div>\t   \t\t\t\t\t\n        <ion-item>\t\t\t\t\t\t\t\n          <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pcDuration[0]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEditSunset(correspondancesRegistres.diffCo2SunsetDuration,'duration',pcDuration[0])\"></ion-datetime>\t\t\t\t\t\t\t\n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </ion-item>\t\t\n      </div>\n      <p *ngIf=\"pCrepusculeStart[0] && pCrepusculeEnd[0] && !redBackground\">{{pCrepusculeStart[0]}}-{{pCrepusculeEnd[0]}}</p>\n      <ion-label *ngIf=\"redBackground\">-</ion-label>\n    </ion-col>\n    <ion-col size=\"12\" size-sm=\"1.25\">\n      <div class=\"form\">\n        <div class=\"infosform\">Intensité :</div>\t\t\t\t\t\n        <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[11]\" (ngModelChange)=\"onEditSunset(correspondancesRegistres.diffCo2SunsetIntensity,'intensity',intensity[11])\">\n          <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n        </ion-select>\t\n        <ion-label *ngIf=\"redBackground\">-</ion-label>\n      </div>\n    </ion-col>\n    <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>\t\t\t\t\t\n    \n  </ion-row>\t\t   \t\n  </ion-grid>\t\t\t\t\t\t\n  </ion-card>\t\t\t\t\t\t\t\n  <ion-card class=\"ion-padding\">\t\t\t\t\t\t\t\n  <ion-card-header>\t\t\t\t\t\t\t\n    <ion-card-title>Programmes de diffusion</ion-card-title>\t\t\t\t\t\t\t\n  </ion-card-header>\t\n  <ion-grid [fixed]=\"true\">\t\t\n    <ion-row class=\"landscaperow\" [ngClass]=\"{'bgred' : redBackground}\"><ion-col size=\"1\"></ion-col><ion-col size=\"3.15\"><p style=\"margin-left: 10%;\">Fréquence</p></ion-col><ion-col size=\"2.5\"><p style=\"margin-left:24%;\">Début</p></ion-col><ion-col size=\"0.5\"></ion-col><ion-col size=\"2.5\"><p style=\"margin-left:24%;\">Fin</p></ion-col><ion-col size=\"2\"><p style=\"margin-left:14%;\">Intensité</p></ion-col></ion-row>\n    <ion-row class=\"rowDisplay\" [ngClass]=\"{'bgred' : redBackground}\">\n        \n        <ion-col size=\"12\" size-sm=\"1\">\t\t\t\t\n          <p>P1</p>\t\t\t\t\n        </ion-col>\t\n        <ion-col size=\"12\" size-sm=\"3.15\">\t\t\n          <div class=\"form\">\t\n            <div class=\"infosform\">Fréquence :</div>\t\t\n            <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"frequency2[0]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program1Frequency,'frequency',frequency2[0])\">\n              <ion-select-option *ngFor=\"let frequencyOption of frequencyOptions\" [value]=\"frequencyOption\">{{frequencyOption}}</ion-select-option>\n            </ion-select>\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\t\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"2.5\">\t\n          <div class=\"form\">\t\n            <div class=\"infosformhours\"><p>Début :</p></div>\t\t\t\t\n            <ion-item>\t\t\t\t\t\t\t\n              <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"pStart[0]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program1Start,'start',pStart[0])\"></ion-datetime>\t\t\t\t\t\t\n              <ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-item>\t\n          </div>\n        </ion-col>\n      <ion-col size=\"12\" size-sm=\"0.5\">\n        <p class=\"hoursrange\">-</p>\t\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.5\">\t\n        <div class=\"form\"\t>\n          <div class=\"infosformhours\">Fin :</div>\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pEnd[0]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program1End,'end',pEnd[0])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\n        </div>          \n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2\">\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[0]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program1Intensity,'intensity',intensity[0])\">\n             <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select> \n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>   \t\t\t\t\t\n      \n    </ion-row>\t\n    <ion-row class=\"rowDisplay\" [ngClass]=\"{'bgred' : redBackground}\">\n      \n        <ion-col size=\"12\" size-sm=\"1\">\t\t\t\t\t\t\t\n          <p>P2</p>\t\t\t\t\n        </ion-col>\t\n        <ion-col size=\"12\" size-sm=\"3.15\">\t\t\n          <div class=\"form\">\t\n            <div class=\"infosform\">Fréquence :</div>\t\t\n            <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"frequency2[1]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program2Frequency,'frequency',frequency2[1])\">\n              <ion-select-option *ngFor=\"let frequencyOption of frequencyOptions\" [value]=\"frequencyOption\">{{frequencyOption}}</ion-select-option>\n            </ion-select>\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"2.5\">\n          <div class=\"form\">\t\n            <div class=\"infosformhours\">Début :</div>\t\t\t\t\n            <ion-item>\t\t\t\t\t\t\t\n              <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"pStart[1]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program2Start,'start',pStart[1])\"></ion-datetime>\t\t\t\t\t\t\n            </ion-item>\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </div>\n        </ion-col>\n      <ion-col size=\"12\" size-sm=\"0.5\">\n        <p class=\"hoursrange\">-</p>\t\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.5\">\t\n        <div class=\"form\"\t>\n          <div class=\"infosformhours\">Fin :</div>\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pEnd[1]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program2End,'end',pEnd[1])\"></ion-datetime>\t\t\t\t\t\t\t\n          </ion-item>\t\n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2\">\t\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[1]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program2Intensity,'intensity',intensity[1])\">\n             <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select> \n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>   \t\t\t\t\t\n     \n    </ion-row>\n    <ion-row class=\"rowDisplay\" [ngClass]=\"{'bgred' : redBackground}\">\n      \n        <ion-col size=\"12\" size-sm=\"1\">\t\t\t\t\t\t\n          <p>P3</p>\t\t\t\t\n        </ion-col>\t\n        <ion-col size=\"12\" size-sm=\"3.15\">\t\t\n          <div class=\"form\">\t\n            <div class=\"infosform\">Fréquence :</div>\t\t\n            <ion-select *ngIf='frequency2[2] && !redBackground' [(ngModel)]=\"frequency2[2]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program3Frequency,'frequency',frequency2[2])\">\n              <ion-select-option *ngFor=\"let frequencyOption of frequencyOptions\" [value]=\"frequencyOption\">{{frequencyOption}}</ion-select-option>\n            </ion-select>\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"2.5\">\t\n          <div class=\"form\">\t\n            <div class=\"infosformhours\">Début :</div>\t\t\t\t\n            <ion-item>\t\t\t\t\t\t\t\n              <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"pStart[2]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program3Start,'start',pStart[2])\"></ion-datetime>\t\t\t\t\t\t\n              <ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-item>\t\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"0.5\">\n        <p class=\"hoursrange\">-</p>\t\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.5\">\t\t\n        <div class=\"form\"\t>\n          <div class=\"infosformhours\">Fin :</div>\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pEnd[2]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program3End,'end',pEnd[2])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2\">\t\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[2]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program3Intensity,'intensity',intensity[2])\">\n             <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select> \n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col> \n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>  \t\t\t\t\t\n      \n    </ion-row>\n    <ion-row class=\"rowDisplay\" [ngClass]=\"{'bgred' : redBackground}\">\n      \n        <ion-col size=\"12\" size-sm=\"1\">\t\t\t\t\t\n          <p>P4</p>\t\t\t\t\n        </ion-col>\t\n        <ion-col size=\"12\" size-sm=\"3.15\">\t\t\n          <div class=\"form\">\t\n            <div class=\"infosform\">Fréquence :</div>\t\t\n            <ion-select *ngIf='frequency2[3] && !redBackground' [(ngModel)]=\"frequency2[3]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program4Frequency,'frequency',frequency2[3])\">\n              <ion-select-option *ngFor=\"let frequencyOption of frequencyOptions\" [value]=\"frequencyOption\">{{frequencyOption}}</ion-select-option>\n            </ion-select>\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"2.5\">\t\n          <div class=\"form\">\t\n            <div class=\"infosformhours\">Début :</div>\t\t\t\t\n            <ion-item>\t\t\t\t\t\t\t\n              <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"pStart[3]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program4Start,'start',pStart[3])\"></ion-datetime>\t\t\t\t\t\t\n              <ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-item>\t\n          </div>\n        </ion-col>\n      <ion-col size=\"12\" size-sm=\"0.5\">\n        <p class=\"hoursrange\">-</p>\t\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.5\">\t\n        <div class=\"form\"\t>\n          <div class=\"infosformhours\">Fin :</div>\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pEnd[3]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program4End,'end',pEnd[3])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2\">\t\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[3]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program4Intensity,'intensity',intensity[3])\">\n             <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select> \n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>   \t\t\t\t\t\n      \n    </ion-row>\n    <ion-row class=\"rowDisplay\" [ngClass]=\"{'bgred' : redBackground}\">\n      \n        <ion-col size=\"12\" size-sm=\"1\">\t\t\t\t\t\n          <p>P5</p>\t\t\t\t\n        </ion-col>\t\n        <ion-col size=\"12\" size-sm=\"3.15\">\t\t\n          <div class=\"form\">\t\n            <div class=\"infosform\">Fréquence :</div>\t\t\n            <ion-select *ngIf='frequency2[4] && !redBackground' [(ngModel)]=\"frequency2[4]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program5Frequency,'frequency',frequency2[4])\">\n              <ion-select-option *ngFor=\"let frequencyOption of frequencyOptions\" [value]=\"frequencyOption\">{{frequencyOption}}</ion-select-option>\n            </ion-select>\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"2.5\">\t\n          <div class=\"form\">\t\n            <div class=\"infosformhours\">Début :</div>\t\t\t\t\n            <ion-item>\t\t\t\t\t\t\t\n              <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"pStart[4]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program5Start,'start',pStart[4])\"></ion-datetime>\t\t\t\t\t\t\n              <ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-item>\t\n          </div>\n        </ion-col>\n      <ion-col size=\"12\" size-sm=\"0.5\">\n        <p class=\"hoursrange\">-</p>\t\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.5\">\t\n        <div class=\"form\"\t>\n          <div class=\"infosformhours\">Fin :</div>\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pEnd[4]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program5End,'end',pEnd[4])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2\">\t\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[4]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program5Intensity,'intensity',intensity[4])\">\n             <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select> \n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>   \t\t\t\t\t\n      \n    </ion-row>\n    <ion-row class=\"rowDisplay\" [ngClass]=\"{'bgred' : redBackground}\">\n      \n        <ion-col size=\"12\" size-sm=\"1\">\t\t\t\t\t\n          <p>P6</p>\t\t\t\t\n        </ion-col>\t\n        <ion-col size=\"12\" size-sm=\"3.15\">\t\t\n          <div class=\"form\">\t\n            <div class=\"infosform\">Fréquence :</div>\t\t\n            <ion-select *ngIf='frequency2[5] && !redBackground' [(ngModel)]=\"frequency2[5]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program6Frequency,'frequency',frequency2[5])\">\n              <ion-select-option *ngFor=\"let frequencyOption of frequencyOptions\" [value]=\"frequencyOption\">{{frequencyOption}}</ion-select-option>\n            </ion-select>\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"2.5\">\t\n          <div class=\"form\">\t\n            <div class=\"infosformhours\">Début :</div>\t\t\t\t\n            <ion-item>\t\t\t\t\t\t\t\n              <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"pStart[5]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program6Start,'start',pStart[5])\"></ion-datetime>\t\t\t\t\t\t\n              <ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-item>\t\n          </div>\n        </ion-col>\n      <ion-col size=\"12\" size-sm=\"0.5\">\n        <p class=\"hoursrange\">-</p>\t\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.5\">\t\t\n        <div class=\"form\"\t>\n          <div class=\"infosformhours\">Fin :</div>\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pEnd[5]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program6End,'end',pEnd[5])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2\">\t\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[5]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program6Intensity,'intensity',intensity[5])\">\n             <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select> \n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>   \t\t\t\t\t\n      \n    </ion-row>\n    <ion-row class=\"rowDisplay\" [ngClass]=\"{'bgred' : redBackground}\">\n        \n        <ion-col size=\"12\" size-sm=\"1\">\t\t\t\t\t\n          <p>P7</p>\t\t\t\t\n        </ion-col>\t\n        <ion-col size=\"12\" size-sm=\"3.15\">\t\t\n          <div class=\"form\">\t\n            <div class=\"infosform\">Fréquence :</div>\t\t\n            <ion-select *ngIf='frequency2[6] && !redBackground' [(ngModel)]=\"frequency2[6]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program7Frequency,'frequency',frequency2[6])\">\n              <ion-select-option *ngFor=\"let frequencyOption of frequencyOptions\" [value]=\"frequencyOption\">{{frequencyOption}}</ion-select-option>\n            </ion-select>\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\t\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"2.5\">\t\n          <div class=\"form\">\t\n            <div class=\"infosformhours\">Début :</div>\t\t\t\t\n            <ion-item>\t\t\t\t\t\t\t\n              <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"pStart[6]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program7Start,'start',pStart[6])\"></ion-datetime>\t\t\t\t\t\t\n              <ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-item>\t\n          </div>\n        </ion-col>\n      <ion-col size=\"12\" size-sm=\"0.5\">\n        <p class=\"hoursrange\">-</p>\t\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.5\">\t\t\n        <div class=\"form\"\t>\n          <div class=\"infosformhours\">Fin :</div>\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pEnd[6]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program7End,'end',pEnd[6])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2\">\t\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[6]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program7Intensity,'intensity',intensity[6])\">\n             <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select> \n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>   \t\t\t\t\t\n      \n    </ion-row>\n    <ion-row class=\"rowDisplay\" [ngClass]=\"{'bgred' : redBackground}\">\n      \n        <ion-col size=\"12\" size-sm=\"1\">\t\t\t\t\t\n          <p>P8</p>\t\t\t\t\n        </ion-col>\t\n        <ion-col size=\"12\" size-sm=\"3.15\">\t\t\n          <div class=\"form\">\t\n            <div class=\"infosform\">Fréquence :</div>\t\t\n            <ion-select *ngIf='frequency2[7] && !redBackground' [(ngModel)]=\"frequency2[7]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program8Frequency,'frequency',frequency2[7])\">\n              <ion-select-option *ngFor=\"let frequencyOption of frequencyOptions\" [value]=\"frequencyOption\">{{frequencyOption}}</ion-select-option>\n            </ion-select>\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"2.5\">\t\n          <div class=\"form\">\t\n            <div class=\"infosformhours\">Début :</div>\t\t\t\t\n            <ion-item>\t\t\t\t\t\t\t\n              <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"pStart[7]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program8Start,'start',pStart[7])\"></ion-datetime>\t\t\t\t\t\t\n              <ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-item>\t\n          </div>\n        </ion-col>\n      <ion-col size=\"12\" size-sm=\"0.5\">\n        <p class=\"hoursrange\">-</p>\t\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.5\">\t\t\n        <div class=\"form\"\t>\n          <div class=\"infosformhours\">Fin :</div>\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pEnd[7]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program8End,'end',pEnd[7])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2\">\t\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[7]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program8Intensity,'intensity',intensity[7])\">\n             <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select> \n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>   \t\t\t\t\t\n     \n    </ion-row>\n    <ion-row class=\"rowDisplay\" [ngClass]=\"{'bgred' : redBackground}\">\n      \n        <ion-col size=\"12\" size-sm=\"1\">\t\t\t\t\t\n          <p>P9</p>\t\t\t\t\n        </ion-col>\t\n        <ion-col size=\"12\" size-sm=\"3.15\">\t\t\n          <div class=\"form\">\t\n            <div class=\"infosform\">Fréquence :</div>\t\t\n            <ion-select *ngIf='frequency2[8] && !redBackground' [(ngModel)]=\"frequency2[8]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program9Frequency,'frequency',frequency2[8])\">\n              <ion-select-option *ngFor=\"let frequencyOption of frequencyOptions\" [value]=\"frequencyOption\">{{frequencyOption}}</ion-select-option>\n            </ion-select>\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"2.5\">\t\n          <div class=\"form\">\t\n            <div class=\"infosformhours\">Début :</div>\t\t\t\t\n            <ion-item>\t\t\t\t\t\t\t\n              <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"pStart[8]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program9Start,'start',pStart[8])\"></ion-datetime>\t\t\t\t\t\t\n              <ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-item>\t\n          </div>\n        </ion-col>\n      <ion-col size=\"12\" size-sm=\"0.5\">\n        <p class=\"hoursrange\">-</p>\t\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.5\">\t\n        <div class=\"form\"\t>\n          <div class=\"infosformhours\">Fin :</div>\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pEnd[8]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program9End,'end',pEnd[8])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2\">\t\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[8]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program9Intensity,'intensity',intensity[8])\">\n             <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select> \n          <ion-label *ngIf=\"redBackground\">-</ion-label>\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>   \t\t\t\t\t\n      \n    </ion-row>\n    <ion-row class=\"rowDisplay\" height=\"100%\" [ngClass]=\"{'bgred' : redBackground}\">\n      \n        <ion-col size=\"12\" size-sm=\"1\">\t\t\t\t\t\n          <p>P10</p>\t\t\t\t\n        </ion-col>\t\n        <ion-col size=\"12\" size-sm=\"3.15\">\t\t\n          <div class=\"form\">\t\n            <div class=\"infosform\">Fréquence :</div>\t\t\n            <ion-select *ngIf='frequency2[9] && !redBackground' [(ngModel)]=\"frequency2[9]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program10Frequency,'frequency',frequency2[9])\">\n              <ion-select-option *ngFor=\"let frequencyOption of frequencyOptions\" [value]=\"frequencyOption\">{{frequencyOption}}</ion-select-option>\n            </ion-select>\t\n          </div>\n        </ion-col>\n        <ion-col size=\"12\" size-sm=\"2.5\">\t\n          <div class=\"form\">\t\n            <div class=\"infosformhours\"><p>Début :</p></div>\t\t\t\t\n            <ion-item>\t\t\t\t\t\t\t\n              <ion-datetime *ngIf=\"!redBackground\" displayFormat=\"HH:mm\" [(ngModel)]=\"pStart[9]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program10Start,'start',pStart[9])\"></ion-datetime>\t\t\t\t\t\t\n              <ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-item>\t\n          </div>\n        </ion-col>\n      <ion-col size=\"12\" size-sm=\"0.5\">\n        <p class=\"hoursrange\">-</p>\t\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2.5\">\t\n        <div class=\"form\"\t>\n          <div class=\"infosformhours\">Fin :</div>\t\n          <ion-item>\t\t\t\t\t\t\t\n            <ion-datetime *ngIf=\"!redBackground\" value=\"00:00\" displayFormat=\"HH:mm\" [(ngModel)]=\"pEnd[9]\" [ngModelOptions]=\"{standalone: true}\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program10End,'end',pEnd[9])\"></ion-datetime>\t\t\t\t\t\t\t\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-item>\t\n        </div>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"2\">\t\n        <div class=\"form\">\n          <div class=\"infosform\">Intensité :</div>\n          <ion-select *ngIf=\"!redBackground\" [(ngModel)]=\"intensity[9]\" (ngModelChange)=\"onEdit(correspondancesRegistres.diffCo2Program10Intensity,'intensity',intensity[9])\">\n             <ion-select-option *ngFor=\"let intensityOption of intensityOptions\" [value]=\"intensityOption\">{{intensityOption}}</ion-select-option>\n          </ion-select>\n          <ion-label *ngIf=\"redBackground\">-</ion-label> \n        </div>\n      </ion-col>\n      <ion-col size=\"12\" class=\"portraitrow\"><br></ion-col>   \t\t\t\t\t\n      \n    </ion-row>     \t\t\t\t\t\t\t\n  \n</ion-grid>\t\t\t\t\t\t\t\n</ion-card>\t\t\n\n<ion-card class=\"ion-padding\">\n  <ion-card-header>\n    <ion-card-title>Graphique</ion-card-title>\n  </ion-card-header>\n\n  <canvas id=\"myChart\"></canvas>\n</ion-card>\n\n<!--<ion-card class=\"ion-padding\">\n  <ion-card-header>\n    <ion-card-title>Consommations théoriques</ion-card-title>\n  </ion-card-header>\n  <ion-row class=\"colDisplay\">\n    <ion-col size=\"12\"><br></ion-col>  \n    <ion-col>\n      <p style=\"float: left;\">Par jour</p>\n      <p style=\"font-weight: bold; float: right;\">val1</p>\n    </ion-col>\n    <ion-col size=\"12\"><br></ion-col>  \n    <ion-col>\n      <p style=\"float: left;\">Par semaine</p>\n      <p style=\"font-weight: bold; float: right;\">val2</p>\n    </ion-col>\n    <ion-col size=\"12\"><br></ion-col>  \n    <ion-col>\n      <p style=\"float: left;\">Par mois</p>\n      <p style=\"font-weight: bold; float: right;\">val3</p>\n    </ion-col> \n    <ion-col size=\"12\"><br></ion-col>      \n  </ion-row>\n</ion-card>-->\n</ion-content>\n<ion-footer>\n  <ion-button *ngIf=\"!global.displayLoading\" style=\"float: left\" fill=\"clear\" (click)=\"global.onReadStatiqueEnable()\">    \n    <ion-icon name=\"refresh\"></ion-icon>\n  </ion-button>\n  <ion-button *ngIf=\"global.displayLoading\" style=\"float: left;\" fill=\"clear\" color=\"primary\">\n    <ion-spinner></ion-spinner>\n  </ion-button>\n  <ion-button *ngIf=\"display\" style='float: right' fill='clear' (click)='goToNextPage()'>Suivant<ion-icon name='arrow-forward'></ion-icon></ion-button>\n</ion-footer>\n\n\n"
 
 /***/ }),
 
@@ -37940,6 +37940,13 @@ var SynchroPage = /** @class */ (function () {
         this.cd = cd;
         this.events = events;
         this.storage = storage;
+        this.check = false;
+        this.current_ssid = "NO WIFI";
+        this.stored_ssid = "NO WIFI";
+        this.password_ssid = "";
+        this.connection_modbus = false;
+        this.isLoading = false;
+        this.tryToRead = false;
         this.colordif = "light";
         this.programmes = [];
         this.pStart = [];
@@ -37971,20 +37978,219 @@ var SynchroPage = /** @class */ (function () {
         this.colorcheck = "light";
         this.diffcolor = "light";
         this.typediff = "Mode de diffusion";
+        this.horloge = "";
         this.time = "08:10";
         this.global.checkMode();
     }
     SynchroPage.prototype.ionViewWillEnter = function () {
-        var _this = this;
+        this.tryToRead = true;
+        console.log("=========================================================================");
+        console.log("========================== page  accueil :===============================");
+        console.log("=========================================================================");
         this.global.connexionRequise = "UPC";
+        console.log(" - Connexion requise :" + this.global.connexionRequise);
+        console.log(" - Connexion  actuel  (avant on read statique) :" + this.global.statutConnexion);
+        this.ConnecterUPC();
+        this.Read();
         this.correspondancesRegistres = new _model_upcv3_correspondancesRegistres__WEBPACK_IMPORTED_MODULE_10__["CorrespondancesRegistres"]();
-        /*affichage bouton suivant*/
-        this.global.checkNextPage().then(function (res) {
-            if (res == true) {
-                _this.display = true;
-            }
+        this.horloge = this.global.upcmodbus.general.upcClock;
+    };
+    SynchroPage.prototype.ConnecterUPC = function () {
+        var _this = this;
+        //connection a l 'UPC :
+        console.log("> try  connecter a l upc ");
+        if (this.global.mode != "modeTest") {
+            this.isLoading = true;
+            this.storage.get("ssid_upc").then(function (stored_ssid) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                var _this = this;
+                return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                    this.storage.get("password").then(function (password) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                        var wifi;
+                        var _this = this;
+                        return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    this.stored_ssid = stored_ssid;
+                                    this.password_ssid = password;
+                                    //recuperer l ssid  +password 
+                                    console.log("acceuil , stored password" + password);
+                                    console.log("acceuil , stored ssid" + stored_ssid);
+                                    return [4 /*yield*/, WifiWizard2.getConnectedSSID()];
+                                case 1:
+                                    wifi = _a.sent();
+                                    console.log("connected ssid: " + wifi);
+                                    if (wifi != stored_ssid) {
+                                        console.log("wifi diffrents :");
+                                        WifiWizard2.connect(stored_ssid, password).then(function () {
+                                            //connexion reussi a l UPC  :
+                                            console.log("connexion wifi up reussie :");
+                                            _this.check = true;
+                                            _this.global.statutConnexion = "UPC";
+                                            _this.global.onConnectModbus().then(function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                                                return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                                                    console.log("accueil , connexion modbus reussie >> ");
+                                                    this.connection_modbus = true;
+                                                    this.isLoading = false;
+                                                    //on peut lire 
+                                                    this.tryToRead = true;
+                                                    return [2 /*return*/];
+                                                });
+                                            }); }).catch(function (err) {
+                                                console.log("accueil + connexion modbus échouée  ");
+                                                _this.isLoading = false;
+                                                _this.connection_modbus = false;
+                                            });
+                                        }).catch(function () {
+                                            console.log("connexion impossible a l'UPC");
+                                        });
+                                    }
+                                    else {
+                                        this.global.onConnectModbus().then(function () {
+                                            //connexion modbus réussie : c'est un upc
+                                            console.log("accueil + connexion modbus reussie ");
+                                            _this.connection_modbus = true;
+                                            _this.isLoading = false;
+                                        }).catch(function (err) {
+                                            console.log("accueil + connexion modbus échouée  ");
+                                            _this.isLoading = false;
+                                            _this.connection_modbus = false;
+                                        });
+                                    }
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }); });
+                    return [2 /*return*/];
+                });
+            }); });
+        }
+    };
+    SynchroPage.prototype.checkConnectionWifi = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var wifi;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, WifiWizard2.getConnectedSSID()];
+                    case 1:
+                        wifi = _a.sent();
+                        this.current_ssid = wifi;
+                        return [2 /*return*/];
+                }
+            });
         });
-        this.pageInit();
+    };
+    SynchroPage.prototype.Read = function () {
+        var _this = this;
+        this.do = setInterval(function () {
+            console.log("======================== cycle ================================");
+            _this.checkConnectionWifi();
+            // en cas de perte de connexion 
+            if (_this.current_ssid != _this.stored_ssid && _this.check) {
+                console.log("wifi diff >>>> ");
+                console.log("reconnexion  >>>> ");
+                //connecter au wifi 
+                _this.ConnecterUPC();
+            }
+            if (_this.tryToRead) {
+                console.log("Try to read >");
+                // lecture statique :
+                _this.isLoading = true;
+                _this.global.upcmodbus.onReadStatique(_this.global.upcname, _this.global.mode, "synchro").then(function (res) {
+                    if (res == true) {
+                        _this.isLoading = false;
+                        console.log(">  lecture reussi ");
+                        //:
+                        _this.pageInit();
+                        _this.events.publish("loadParameters");
+                        ////
+                        _this.global.lectureStatiqueEnCours = false;
+                        _this.global.displayLoading = false;
+                        _this.tryToRead = false;
+                    }
+                    else {
+                        console.log(">  lecture echouée  ");
+                        _this.isLoading = false;
+                        _this.tryToRead = true;
+                        _this.global.statutConnexion = "Aucune";
+                        _this.global.lectureStatiqueEnCours = false;
+                        _this.global.displayLoading = false;
+                    }
+                }).catch(function (err) {
+                    _this.tryToRead = true;
+                    _this.isLoading = false;
+                    console.log("acceuil::erreur lecture");
+                    console.log(err);
+                });
+                //fin de lecture statique :
+            }
+        }, 500);
+    };
+    SynchroPage.prototype.ecrir = function (variable, value) {
+        var _this = this;
+        if (variable.type == "int") {
+            this.isLoading = true;
+            this.global.upcmodbus.client.setIntInHoldingRegister(variable.adr, variable.dim, value).then(function () {
+                console.log("accueil ::  ecriture reussie");
+                // lecture statique :
+                _this.global.upcmodbus.onReadStatique(_this.global.upcname, _this.global.mode, "synchro").then(function (res) {
+                    if (res == true) {
+                        _this.isLoading = false;
+                        console.log("accueil:  lecture reussi ");
+                        _this.pageInit();
+                        _this.events.publish("loadParameters");
+                        _this.global.lectureStatiqueEnCours = false;
+                        _this.global.displayLoading = false;
+                        _this.tryToRead = false;
+                    }
+                    else {
+                        _this.isLoading = false;
+                        _this.global.statutConnexion = "Aucune";
+                        _this.global.lectureStatiqueEnCours = false;
+                        _this.global.displayLoading = false;
+                    }
+                }).catch(function (err) {
+                    _this.isLoading = false;
+                    console.log("acceuil::erreur lecture");
+                    console.log(err);
+                });
+                //fin de lecture statique :
+            }).catch(function () {
+                _this.isLoading = false;
+                console.log("num piege ::écriture impossible");
+            });
+        }
+        else {
+            this.isLoading = true;
+            this.global.upcmodbus.client.setStringArrayInHoldingResgisters(variable.adr, value).then(function () {
+                console.log("accueil ::  ecriture reussie");
+                // lecture statique :
+                _this.global.upcmodbus.onReadStatique(_this.global.upcname, _this.global.mode, "synchro").then(function (res) {
+                    if (res == true) {
+                        _this.isLoading = false;
+                        console.log("accueil:  lecture reussi ");
+                        _this.pageInit();
+                        _this.events.publish("loadParameters");
+                        _this.global.lectureStatiqueEnCours = false;
+                        _this.global.displayLoading = false;
+                        _this.tryToRead = false;
+                    }
+                    else {
+                        _this.isLoading = false;
+                        _this.global.statutConnexion = "Aucune";
+                        _this.global.lectureStatiqueEnCours = false;
+                        _this.global.displayLoading = false;
+                    }
+                }).catch(function (err) {
+                    _this.isLoading = false;
+                    console.log("acceuil::erreur lecture");
+                    console.log(err);
+                });
+                //fin de lecture statique :
+            }).catch(function () {
+                _this.isLoading = false;
+                console.log("num piege ::écriture impossible");
+            });
+        }
     };
     SynchroPage.prototype.onDiff = function () {
         var _this = this;
@@ -38009,145 +38215,121 @@ var SynchroPage = /** @class */ (function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                this.platform.ready().then(function (readySource) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
-                    var _this = this;
-                    return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                        if (readySource == 'cordova') {
-                            this.global.onReadStatiqueEnable().then(function () {
-                                _this.events.subscribe("loadParameters", function ($event) {
-                                    var status = _this.global.upcmodbus.general.upcStatus;
-                                    if (status == 0) {
-                                        _this.colordis = "danger";
-                                        _this.colorcheck = "light";
-                                        _this.colorplayfiff = "light";
-                                        _this.colordif = "light";
-                                        _this.typediff = "Diffusion OFF";
-                                        _this.diffcolor = "danger";
-                                    }
-                                    else if (status == 3) {
-                                        _this.colorcheck = "primary";
-                                        _this.colordis = "light";
-                                        _this.colorplayfiff = "light";
-                                        _this.colordif = "light";
-                                        _this.typediff = "Mode CHECK Pressions";
-                                        _this.diffcolor = "warning";
-                                    }
-                                    else if (status == 2) {
-                                        _this.colordif = "primary";
-                                        _this.colorplayfiff = "light";
-                                        _this.colordis = "light";
-                                        _this.colorcheck = "light";
-                                        _this.diffcolor = "tertiary";
-                                        _this.typediff = "Mode ADJUST";
-                                    }
-                                    else {
-                                        _this.colorplayfiff = "primary";
-                                        _this.colordif = "light";
-                                        _this.colorcheck = "light";
-                                        _this.colordis = "light";
-                                        _this.typediff = "Diff. programmée ACTIF";
-                                        _this.diffcolor = "primary";
-                                    }
-                                    // 7 enable diff 0 disable 2 Adjust 
-                                    if (_this.global.upcmodbus.general.upcStatus == 7) {
-                                        _this.colordif = "primary";
-                                    }
-                                    else {
-                                        _this.colordif = "light";
-                                    }
-                                    //localStorage.setItem("upcname",this.global.upcmodbus.nameId);
-                                    //localStorage.setItem("currentssid",this.global.upcmodbus.communicationParameters.comGsmName);
-                                    /* await this.global.upcmodbus.client.getIntFromHoldingRegister(40011,1).then(res=>{
-                                        if(res == 1){
-                                          this.colordif = "primary";
-                                        }
-                                        else {
-                                          this.colordif = "light";
-                                        }
-                                        this.redBackground = false;
-                                        this.cd.detectChanges();
-                                      }).catch(err=>{
-                                        //localStorage.removeItem("isConnected");
-                                        this.redBackground = true;
-                                        this.colordif = "danger";
-                                        this.cd.detectChanges();
-                                        
-                                        //this.ngOnInit();
-                                      })*/
-                                    _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[0].start));
-                                    _this.pEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[0].stop));
-                                    _this.frequency2.push(_this.frequencyOptions[_this.convertDaysCode(_this.global.upcmodbus.diffCo2Program[0].mode)]);
-                                    _this.intensity.push(_this.global.upcmodbus.diffCo2Program[0].intensity);
-                                    _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[1].start));
-                                    _this.pEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[1].stop));
-                                    _this.frequency2.push(_this.frequencyOptions[_this.convertDaysCode(_this.global.upcmodbus.diffCo2Program[1].mode)]);
-                                    _this.intensity.push(_this.global.upcmodbus.diffCo2Program[1].intensity);
-                                    _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[2].start));
-                                    _this.pEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[2].stop));
-                                    _this.frequency2.push(_this.frequencyOptions[_this.convertDaysCode(_this.global.upcmodbus.diffCo2Program[2].mode)]);
-                                    _this.intensity.push(_this.global.upcmodbus.diffCo2Program[2].intensity);
-                                    _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[3].start));
-                                    _this.pEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[3].stop));
-                                    _this.frequency2.push(_this.frequencyOptions[_this.convertDaysCode(_this.global.upcmodbus.diffCo2Program[3].mode)]);
-                                    _this.intensity.push(_this.global.upcmodbus.diffCo2Program[3].intensity);
-                                    _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[4].start));
-                                    _this.pEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[4].stop));
-                                    _this.frequency2.push(_this.frequencyOptions[_this.convertDaysCode(_this.global.upcmodbus.diffCo2Program[4].mode)]);
-                                    _this.intensity.push(_this.global.upcmodbus.diffCo2Program[4].intensity);
-                                    _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[5].start));
-                                    _this.pEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[5].stop));
-                                    _this.frequency2.push(_this.frequencyOptions[_this.convertDaysCode(_this.global.upcmodbus.diffCo2Program[5].mode)]);
-                                    _this.intensity.push(_this.global.upcmodbus.diffCo2Program[5].intensity);
-                                    _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[6].start));
-                                    _this.pEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[6].stop));
-                                    _this.frequency2.push(_this.frequencyOptions[_this.convertDaysCode(_this.global.upcmodbus.diffCo2Program[6].mode)]);
-                                    _this.intensity.push(_this.global.upcmodbus.diffCo2Program[6].intensity);
-                                    _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[7].start));
-                                    _this.pEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[7].stop));
-                                    _this.frequency2.push(_this.frequencyOptions[_this.convertDaysCode(_this.global.upcmodbus.diffCo2Program[7].mode)]);
-                                    _this.intensity.push(_this.global.upcmodbus.diffCo2Program[7].intensity);
-                                    _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[8].start));
-                                    _this.pEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[8].stop));
-                                    _this.frequency2.push(_this.frequencyOptions[_this.convertDaysCode(_this.global.upcmodbus.diffCo2Program[8].mode)]);
-                                    _this.intensity.push(_this.global.upcmodbus.diffCo2Program[8].intensity);
-                                    _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[9].start));
-                                    _this.pEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[9].stop));
-                                    _this.frequency2.push(_this.frequencyOptions[_this.convertDaysCode(_this.global.upcmodbus.diffCo2Program[9].mode)]);
-                                    _this.intensity.push(_this.global.upcmodbus.diffCo2Program[9].intensity);
-                                    _this.paDelay.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Sunrise.offset));
-                                    _this.paDuration.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Sunrise.duration));
-                                    _this.intensity.push(_this.global.upcmodbus.diffCo2Sunrise.intensity);
-                                    if (_this.paDelay[0] >= 0) {
-                                        _this.sign.push("+");
-                                    }
-                                    else {
-                                        _this.sign.push("-");
-                                    }
-                                    _this.currentDawnTime = _this.global.upcmodbus.diffHourSunrise;
-                                    _this.pAubeStart.push(_this.secondsToHoursMinutes(_this.currentDawnTime + _this.global.upcmodbus.diffCo2Sunrise.offset));
-                                    _this.pAubeEnd.push(_this.secondsToHoursMinutes(_this.currentDawnTime + _this.global.upcmodbus.diffCo2Sunrise.offset + _this.global.upcmodbus.diffCo2Sunrise.duration));
-                                    _this.pcDelay.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Sunset.offset));
-                                    _this.pcDuration.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Sunset.duration));
-                                    _this.intensity.push(_this.global.upcmodbus.diffCo2Sunset.intensity);
-                                    if (_this.pcDelay[0] >= 0) {
-                                        _this.sign.push("+");
-                                    }
-                                    else {
-                                        _this.sign.push("-");
-                                    }
-                                    _this.currentDuskTime = _this.global.upcmodbus.diffHourSunset;
-                                    _this.pCrepusculeStart.push(_this.secondsToHoursMinutes(_this.currentDuskTime + _this.global.upcmodbus.diffCo2Sunset.offset));
-                                    _this.pCrepusculeEnd.push(_this.secondsToHoursMinutes(_this.currentDuskTime + _this.global.upcmodbus.diffCo2Sunset.offset + _this.global.upcmodbus.diffCo2Sunset.duration));
-                                    setTimeout(function () {
-                                        _this.finishRead = true;
-                                    }, 1000);
-                                });
-                                _this.drawChartjs();
-                            });
-                        }
-                        return [2 /*return*/];
-                    });
-                }); });
+                this.events.subscribe("loadParameters", function ($event) {
+                    var status = _this.global.upcmodbus.general.upcStatus;
+                    if (status == 0) {
+                        _this.colordis = "danger";
+                        _this.colorcheck = "light";
+                        _this.colorplayfiff = "light";
+                        _this.colordif = "light";
+                        _this.typediff = "Diffusion OFF";
+                        _this.diffcolor = "danger";
+                    }
+                    else if (status == 1) {
+                        _this.colordif = "primary";
+                        _this.colorplayfiff = "light";
+                        _this.colordis = "light";
+                        _this.colorcheck = "light";
+                        _this.diffcolor = "tertiary";
+                        _this.typediff = "Mode Enable";
+                    }
+                    else if (status == 2) {
+                        _this.colordif = "primary";
+                        _this.colorplayfiff = "light";
+                        _this.colordis = "light";
+                        _this.colorcheck = "light";
+                        _this.diffcolor = "tertiary";
+                        _this.typediff = "Mode ADJUST";
+                    }
+                    else if (status == 3) {
+                        _this.colorcheck = "primary";
+                        _this.colordis = "light";
+                        _this.colorplayfiff = "light";
+                        _this.colordif = "light";
+                        _this.typediff = "Mode CHECK Pressions";
+                        _this.diffcolor = "warning";
+                    }
+                    else {
+                        _this.colorplayfiff = "primary";
+                        _this.colordif = "light";
+                        _this.colorcheck = "light";
+                        _this.colordis = "light";
+                        _this.typediff = "Diff. programmée ACTIF";
+                        _this.diffcolor = "primary";
+                    }
+                    // 7 enable diff 0 disable 2 Adjust 
+                    if (_this.global.upcmodbus.general.upcStatus == 7) {
+                        _this.colordif = "primary";
+                    }
+                    else {
+                        _this.colordif = "light";
+                    }
+                    _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[0].start));
+                    _this.pEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[0].stop));
+                    _this.frequency2.push(_this.frequencyOptions[_this.convertDaysCode(_this.global.upcmodbus.diffCo2Program[0].mode)]);
+                    _this.intensity.push(_this.global.upcmodbus.diffCo2Program[0].intensity);
+                    _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[1].start));
+                    _this.pEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[1].stop));
+                    _this.frequency2.push(_this.frequencyOptions[_this.convertDaysCode(_this.global.upcmodbus.diffCo2Program[1].mode)]);
+                    _this.intensity.push(_this.global.upcmodbus.diffCo2Program[1].intensity);
+                    _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[2].start));
+                    _this.pEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[2].stop));
+                    _this.frequency2.push(_this.frequencyOptions[_this.convertDaysCode(_this.global.upcmodbus.diffCo2Program[2].mode)]);
+                    _this.intensity.push(_this.global.upcmodbus.diffCo2Program[2].intensity);
+                    _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[3].start));
+                    _this.pEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[3].stop));
+                    _this.frequency2.push(_this.frequencyOptions[_this.convertDaysCode(_this.global.upcmodbus.diffCo2Program[3].mode)]);
+                    _this.intensity.push(_this.global.upcmodbus.diffCo2Program[3].intensity);
+                    _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[4].start));
+                    _this.pEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[4].stop));
+                    _this.frequency2.push(_this.frequencyOptions[_this.convertDaysCode(_this.global.upcmodbus.diffCo2Program[4].mode)]);
+                    _this.intensity.push(_this.global.upcmodbus.diffCo2Program[4].intensity);
+                    _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[5].start));
+                    _this.pEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[5].stop));
+                    _this.frequency2.push(_this.frequencyOptions[_this.convertDaysCode(_this.global.upcmodbus.diffCo2Program[5].mode)]);
+                    _this.intensity.push(_this.global.upcmodbus.diffCo2Program[5].intensity);
+                    _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[6].start));
+                    _this.pEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[6].stop));
+                    _this.frequency2.push(_this.frequencyOptions[_this.convertDaysCode(_this.global.upcmodbus.diffCo2Program[6].mode)]);
+                    _this.intensity.push(_this.global.upcmodbus.diffCo2Program[6].intensity);
+                    _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[7].start));
+                    _this.pEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[7].stop));
+                    _this.frequency2.push(_this.frequencyOptions[_this.convertDaysCode(_this.global.upcmodbus.diffCo2Program[7].mode)]);
+                    _this.intensity.push(_this.global.upcmodbus.diffCo2Program[7].intensity);
+                    _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[8].start));
+                    _this.pEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[8].stop));
+                    _this.frequency2.push(_this.frequencyOptions[_this.convertDaysCode(_this.global.upcmodbus.diffCo2Program[8].mode)]);
+                    _this.intensity.push(_this.global.upcmodbus.diffCo2Program[8].intensity);
+                    _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[9].start));
+                    _this.pEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Program[9].stop));
+                    _this.frequency2.push(_this.frequencyOptions[_this.convertDaysCode(_this.global.upcmodbus.diffCo2Program[9].mode)]);
+                    _this.intensity.push(_this.global.upcmodbus.diffCo2Program[9].intensity);
+                    _this.paDelay.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Sunrise.offset));
+                    _this.paDuration.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Sunrise.duration));
+                    _this.intensity.push(_this.global.upcmodbus.diffCo2Sunrise.intensity);
+                    if (_this.paDelay[0] >= 0) {
+                        _this.sign.push("+");
+                    }
+                    else {
+                        _this.sign.push("-");
+                    }
+                    _this.currentDawnTime = _this.global.upcmodbus.diffHourSunrise;
+                    _this.pAubeStart.push(_this.secondsToHoursMinutes(_this.currentDawnTime + _this.global.upcmodbus.diffCo2Sunrise.offset));
+                    _this.pAubeEnd.push(_this.secondsToHoursMinutes(_this.currentDawnTime + _this.global.upcmodbus.diffCo2Sunrise.offset + _this.global.upcmodbus.diffCo2Sunrise.duration));
+                    _this.pcDelay.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Sunset.offset));
+                    _this.pcDuration.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Sunset.duration));
+                    _this.intensity.push(_this.global.upcmodbus.diffCo2Sunset.intensity);
+                    if (_this.pcDelay[0] >= 0) {
+                        _this.sign.push("+");
+                    }
+                    else {
+                        _this.sign.push("-");
+                    }
+                    _this.currentDuskTime = _this.global.upcmodbus.diffHourSunset;
+                    _this.pCrepusculeStart.push(_this.secondsToHoursMinutes(_this.currentDuskTime + _this.global.upcmodbus.diffCo2Sunset.offset));
+                    _this.pCrepusculeEnd.push(_this.secondsToHoursMinutes(_this.currentDuskTime + _this.global.upcmodbus.diffCo2Sunset.offset + _this.global.upcmodbus.diffCo2Sunset.duration));
+                });
+                this.drawChartjs();
                 this.fillTab();
                 return [2 /*return*/];
             });
@@ -38425,16 +38607,16 @@ var SynchroPage = /** @class */ (function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (parameterToEdit) {
                     case "start":
-                        this.global.onWriteEnable(variable, this.hoursMinutesToSeconds(value));
+                        this.ecrir(variable, this.hoursMinutesToSeconds(value));
                         break;
                     case "end":
-                        this.global.onWriteEnable(variable, this.hoursMinutesToSeconds(value));
+                        this.ecrir(variable, this.hoursMinutesToSeconds(value));
                         break;
                     case "frequency":
-                        this.global.onWriteEnable(variable, this.reverseConvertDaysCode(value));
+                        this.ecrir(variable, this.reverseConvertDaysCode(value));
                         break;
                     case "intensity":
-                        this.global.onWriteEnable(variable, value);
+                        this.ecrir(variable, value);
                         break;
                 }
                 return [2 /*return*/];
@@ -38454,21 +38636,21 @@ var SynchroPage = /** @class */ (function () {
                 switch (parameterToEdit) {
                     case "offset":
                         if (this.sign[0] == "+") {
-                            this.global.onWriteEnable(variable, this.hoursMinutesToSeconds(value));
+                            this.ecrir(variable, this.hoursMinutesToSeconds(value));
                             //this.pAubeStart[0]=this.secondsToHoursMinutes(this.currentDawnTime + this.hoursMinutesToSeconds(this.paDelay[0]));
                             //this.pAubeEnd[0]=this.secondsToHoursMinutes(this.currentDawnTime + this.hoursMinutesToSeconds(this.paDelay[0]) + this.hoursMinutesToSeconds(this.paDuration[0]));
                         }
                         else {
-                            this.global.onWriteEnable(variable, this.positiveToNegative(this.hoursMinutesToSeconds(value)));
+                            this.ecrir(variable, this.positiveToNegative(this.hoursMinutesToSeconds(value)));
                             //this.pAubeStart[0]=this.secondsToHoursMinutes(this.currentDawnTime - this.hoursMinutesToSeconds(this.paDelay[0]));
                             //this.pAubeEnd[0]=this.secondsToHoursMinutes(this.currentDawnTime - this.hoursMinutesToSeconds(this.paDelay[0]) + this.hoursMinutesToSeconds(this.paDuration[0]));
                         }
                         break;
                     case "duration":
-                        this.global.onWriteEnable(variable, this.hoursMinutesToSeconds(value));
+                        this.ecrir(variable, this.hoursMinutesToSeconds(value));
                         break;
                     case "intensity":
-                        this.global.onWriteEnable(variable, value);
+                        this.ecrir(variable, value);
                         break;
                 }
                 return [2 /*return*/];
@@ -38497,20 +38679,20 @@ var SynchroPage = /** @class */ (function () {
                         return [3 /*break*/, 5];
                     case 1:
                         if (this.sign[1] == "+") {
-                            this.global.onWriteEnable(variable, this.hoursMinutesToSeconds(value));
+                            this.ecrir(variable, this.hoursMinutesToSeconds(value));
                             //this.pCrepusculeStart[0]=this.secondsToHoursMinutes(this.currentDuskTime + this.hoursMinutesToSeconds(this.pcDelay[0]));
                             //this.pCrepusculeEnd[0]=this.secondsToHoursMinutes(this.currentDuskTime + this.hoursMinutesToSeconds(this.pcDelay[0]) + this.hoursMinutesToSeconds(this.pcDuration[0]));
                         }
                         else {
-                            this.global.onWriteEnable(variable, this.positiveToNegative(this.hoursMinutesToSeconds(value)));
+                            this.ecrir(variable, this.positiveToNegative(this.hoursMinutesToSeconds(value)));
                             //this.pCrepusculeStart[0]=this.secondsToHoursMinutes(this.currentDuskTime - this.hoursMinutesToSeconds(this.pcDelay[0]));
                             //this.pCrepusculeEnd[0]=this.secondsToHoursMinutes(this.currentDuskTime - this.hoursMinutesToSeconds(this.pcDelay[0]) + this.hoursMinutesToSeconds(this.pcDuration[0]));
                         }
                         return [3 /*break*/, 5];
                     case 2:
-                        this.global.onWriteEnable(variable, this.hoursMinutesToSeconds(value));
+                        this.ecrir(variable, this.hoursMinutesToSeconds(value));
                         return [3 /*break*/, 5];
-                    case 3: return [4 /*yield*/, this.global.onWriteEnable(variable, value)];
+                    case 3: return [4 /*yield*/, this.ecrir(variable, value)];
                     case 4:
                         _b.sent();
                         return [3 /*break*/, 5];
@@ -38518,6 +38700,10 @@ var SynchroPage = /** @class */ (function () {
                 }
             });
         });
+    };
+    SynchroPage.prototype.ionViewWillLeave = function () {
+        console.log("quitter la page  :");
+        clearInterval(this.do);
     };
     SynchroPage.prototype.drawChartjs = function () {
         var stringToIntStartProgrammes = [];
@@ -38648,14 +38834,10 @@ var SynchroPage = /** @class */ (function () {
         this.global.onWriteEnable(this.correspondancesRegistres.upcMode, 2);
     };
     SynchroPage.prototype.onDisableDiff = function () {
-        var d = new Date();
-        this.global.logs.push(this.global.msToTime(d.getTime()) + " - appel on disable diff");
-        this.global.onWriteEnable(this.correspondancesRegistres.upcMode, 0);
+        this.ecrir(this.correspondancesRegistres.upcMode, 0);
     };
     SynchroPage.prototype.onEnableDiff = function () {
-        var d = new Date();
-        this.global.logs.push(this.global.msToTime(d.getTime()) + " - appel on enable diff");
-        this.global.onWriteEnable(this.correspondancesRegistres.upcMode, 1);
+        this.ecrir(this.correspondancesRegistres.upcMode, 1);
     };
     SynchroPage.prototype.onCheck = function () {
         var _this = this;

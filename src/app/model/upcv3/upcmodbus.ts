@@ -138,6 +138,154 @@ export class UPCModbus {
     minute: 'numeric',
     dayPeriod: 'short' }; 
     switch(page){
+      case "synchro": 
+      try{
+        console.log("page programmation lire varibale modbus ")
+        var res1 = await this.client.readHoldingRegisters(correspondanceRegistres.diffHourSunRise.adr,77)
+          //40068 40069
+        this.diffHourSunrise = this.client.registerToUint32([res1[0],res1[1]]);
+        console.log(this.diffHourSunrise)
+        /*alert(res1[0])
+        alert(res1[1])
+        alert("diff sunrise :"+this.diffHourSunrise)*/
+        //40070 40071
+        this.diffHourSunset = this.client.registerToUint32([res1[2],res1[3]]);
+        console.log(this.diffHourSunset)
+        /*alert(res1[2])
+        alert(res1[3])
+        alert("diff sunset :"+this.diffCo2Sunset)*/
+  
+        //40072 40073
+        this.diffCo2Program[0].start = this.client.registerToUint32([res1[4],res1[5]]);
+        //40074 40075
+        this.diffCo2Program[0].stop = this.client.registerToUint32([res1[6],res1[7]]);
+        //40076
+        this.diffCo2Program[0].mode = this.client.registerToUint32([res1[8]]);
+        //40077
+        this.diffCo2Program[0].intensity = this.client.registerToUint32([res1[9]]);
+  
+        //40078 40079
+        this.diffCo2Program[1].start = this.client.registerToUint32([res1[10],res1[11]]);
+        //40080 40081
+        this.diffCo2Program[1].stop = this.client.registerToUint32([res1[12],res1[13]]);
+        // 40082
+        this.diffCo2Program[1].mode = this.client.registerToUint32([res1[14]]);
+        //40083
+        this.diffCo2Program[1].intensity = this.client.registerToUint32([res1[15]]);
+  
+        //40084 40085
+        this.diffCo2Program[2].start = this.client.registerToUint32([res1[16],res1[17]]);
+        //40086 40087
+        this.diffCo2Program[2].stop = this.client.registerToUint32([res1[18],res1[19]]);
+        //40088
+        this.diffCo2Program[2].mode = this.client.registerToUint32([res1[20]]);
+        //40089
+        this.diffCo2Program[2].intensity = this.client.registerToUint32([res1[21]]);
+  
+        //40090 40091
+        this.diffCo2Program[3].start = this.client.registerToUint32([res1[22],res1[23]]);
+        //40092 40093
+        this.diffCo2Program[3].stop = this.client.registerToUint32([res1[24],res1[25]]);
+        //40094 
+        this.diffCo2Program[3].mode = this.client.registerToUint32([res1[26]]);
+        //40095
+        this.diffCo2Program[3].intensity = this.client.registerToUint32(res1[27]);
+  
+        //40096 40097
+        this.diffCo2Program[4].start = this.client.registerToUint32([res1[28],res1[29]]);
+        //40098 40099
+        this.diffCo2Program[4].stop = this.client.registerToUint32([res1[30],res1[31]]);
+        //40100
+        this.diffCo2Program[4].mode = this.client.registerToUint32([res1[32]]);
+        //40101
+        this.diffCo2Program[4].intensity = this.client.registerToUint32(res1[33]);
+  
+        //40102 40103
+        this.diffCo2Program[5].start = this.client.registerToUint32([res1[34],res1[35]]);
+        //40104 40105
+        this.diffCo2Program[5].stop = this.client.registerToUint32([res1[36],res1[37]]);
+        //40106
+        this.diffCo2Program[5].mode = this.client.registerToUint32([res1[38]]);
+        //40107
+        this.diffCo2Program[5].intensity = this.client.registerToUint32([res1[39]]);
+  
+        //40108 40109
+        this.diffCo2Program[6].start = this.client.registerToUint32([res1[40],res1[41]]);
+        //40110 40111
+        this.diffCo2Program[6].stop = this.client.registerToUint32([res1[42],res1[43]]);
+        //40112 
+        this.diffCo2Program[6].mode = this.client.registerToUint32([res1[44]]);
+        //40113
+        this.diffCo2Program[6].intensity = this.client.registerToUint32([res1[45]]);
+  
+        //40114 40115
+        this.diffCo2Program[7].start = this.client.registerToUint32([res1[46],res1[47]]);
+        //40116 40117
+        this.diffCo2Program[7].stop = this.client.registerToUint32([res1[48],res1[49]]);
+        //40118 
+        this.diffCo2Program[7].mode = this.client.registerToUint32([res1[50]]);
+        //40119
+        this.diffCo2Program[7].intensity = this.client.registerToUint32([res1[51]]);
+  
+        //40120 40121
+        this.diffCo2Program[8].start = this.client.registerToUint32([res1[52],res1[53]]);          
+        //40122 40123
+        this.diffCo2Program[8].stop = this.client.registerToUint32([res1[54],res1[55]]);
+        //40124 
+        this.diffCo2Program[8].mode = this.client.registerToUint32([res1[56]]);
+        //40125
+        this.diffCo2Program[8].intensity = this.client.registerToUint32([res1[57]]);
+  
+        //40126 40127
+        this.diffCo2Program[9].start = this.client.registerToUint32([res1[58],res1[59]]);
+        //40128 40129
+        this.diffCo2Program[9].stop = this.client.registerToUint32([res1[60],res1[61]]);
+        //40130
+        this.diffCo2Program[9].mode = this.client.registerToUint32([res1[62]]);
+        //40131
+        this.diffCo2Program[9].intensity = this.client.registerToUint32(res1[63]);
+  
+        //40132 40133
+        this.diffCo2Sunrise.offset = this.client.registerToUint32([res1[64],res1[65]]);
+        //40134 40135
+        this.diffCo2Sunrise.duration = this.client.registerToUint32([res1[66],res1[67]]);
+        //40137
+        this.diffCo2Sunrise.intensity = this.client.registerToUint32([res1[69]]);
+  
+        //40138 40139
+        this.diffCo2Sunset.offset = this.client.registerToUint32([res1[70],res1[71]]);
+        //40140 40141
+        this.diffCo2Sunset.duration = this.client.registerToUint32([res1[72],res1[73]]);
+        //40143
+        this.diffCo2Sunset.intensity = this.client.registerToUint32([res1[75]]);
+        console.log("intesityyyyyyyyyyyyyyyyyyyy==============="+this.diffCo2Sunset.intensity)
+
+        
+
+        var res2 = await this.client.readHoldingRegisters(correspondanceRegistres.upcMode.adr,1)
+        console.log(":::::::::::::::::::UPC MODE :::::::::::::::::::::::::::::::::::::::")
+        console.log(res2)
+        var res2 = await this.client.readHoldingRegisters(correspondanceRegistres.upcStatus.adr,1)
+        console.log(":::::::::::::::::::UPC Statu :::::::::::::::::::::::::::::::::::::::")
+        console.log(res2)
+        
+
+        this.general.upcStatus = this.client.registerToUint32([res2[0]]);
+        //alert("success")
+
+        this.success = true
+
+        break; 
+
+      }
+      catch(err){
+        alert("catch lecture statique  page programmation")
+        success = false
+        error = err
+
+        break;
+      }
+
       case "interventionceinture":
         try{
           //40001 40015
@@ -945,143 +1093,7 @@ export class UPCModbus {
 
           break;
         } 
-      case "synchro": 
-      try{
-        var res1 = await this.client.readHoldingRegisters(correspondanceRegistres.diffHourSunRise.adr,77)
-        //alert("res1")
 
-          //40068 40069
-        this.diffHourSunrise = this.client.registerToUint32([res1[0],res1[1]]);
-        /*alert(res1[0])
-        alert(res1[1])
-        alert("diff sunrise :"+this.diffHourSunrise)*/
-        //40070 40071
-        this.diffHourSunset = this.client.registerToUint32([res1[2],res1[3]]);
-        /*alert(res1[2])
-        alert(res1[3])
-        alert("diff sunset :"+this.diffCo2Sunset)*/
-  
-        //40072 40073
-        this.diffCo2Program[0].start = this.client.registerToUint32([res1[4],res1[5]]);
-        //40074 40075
-        this.diffCo2Program[0].stop = this.client.registerToUint32([res1[6],res1[7]]);
-        //40076
-        this.diffCo2Program[0].mode = this.client.registerToUint32([res1[8]]);
-        //40077
-        this.diffCo2Program[0].intensity = this.client.registerToUint32([res1[9]]);
-  
-        //40078 40079
-        this.diffCo2Program[1].start = this.client.registerToUint32([res1[10],res1[11]]);
-        //40080 40081
-        this.diffCo2Program[1].stop = this.client.registerToUint32([res1[12],res1[13]]);
-        // 40082
-        this.diffCo2Program[1].mode = this.client.registerToUint32([res1[14]]);
-        //40083
-        this.diffCo2Program[1].intensity = this.client.registerToUint32([res1[15]]);
-  
-        //40084 40085
-        this.diffCo2Program[2].start = this.client.registerToUint32([res1[16],res1[17]]);
-        //40086 40087
-        this.diffCo2Program[2].stop = this.client.registerToUint32([res1[18],res1[19]]);
-        //40088
-        this.diffCo2Program[2].mode = this.client.registerToUint32([res1[20]]);
-        //40089
-        this.diffCo2Program[2].intensity = this.client.registerToUint32([res1[21]]);
-  
-        //40090 40091
-        this.diffCo2Program[3].start = this.client.registerToUint32([res1[22],res1[23]]);
-        //40092 40093
-        this.diffCo2Program[3].stop = this.client.registerToUint32([res1[24],res1[25]]);
-        //40094 
-        this.diffCo2Program[3].mode = this.client.registerToUint32([res1[26]]);
-        //40095
-        this.diffCo2Program[3].intensity = this.client.registerToUint32(res1[27]);
-  
-        //40096 40097
-        this.diffCo2Program[4].start = this.client.registerToUint32([res1[28],res1[29]]);
-        //40098 40099
-        this.diffCo2Program[4].stop = this.client.registerToUint32([res1[30],res1[31]]);
-        //40100
-        this.diffCo2Program[4].mode = this.client.registerToUint32([res1[32]]);
-        //40101
-        this.diffCo2Program[4].intensity = this.client.registerToUint32(res1[33]);
-  
-        //40102 40103
-        this.diffCo2Program[5].start = this.client.registerToUint32([res1[34],res1[35]]);
-        //40104 40105
-        this.diffCo2Program[5].stop = this.client.registerToUint32([res1[36],res1[37]]);
-        //40106
-        this.diffCo2Program[5].mode = this.client.registerToUint32([res1[38]]);
-        //40107
-        this.diffCo2Program[5].intensity = this.client.registerToUint32([res1[39]]);
-  
-        //40108 40109
-        this.diffCo2Program[6].start = this.client.registerToUint32([res1[40],res1[41]]);
-        //40110 40111
-        this.diffCo2Program[6].stop = this.client.registerToUint32([res1[42],res1[43]]);
-        //40112 
-        this.diffCo2Program[6].mode = this.client.registerToUint32([res1[44]]);
-        //40113
-        this.diffCo2Program[6].intensity = this.client.registerToUint32([res1[45]]);
-  
-        //40114 40115
-        this.diffCo2Program[7].start = this.client.registerToUint32([res1[46],res1[47]]);
-        //40116 40117
-        this.diffCo2Program[7].stop = this.client.registerToUint32([res1[48],res1[49]]);
-        //40118 
-        this.diffCo2Program[7].mode = this.client.registerToUint32([res1[50]]);
-        //40119
-        this.diffCo2Program[7].intensity = this.client.registerToUint32([res1[51]]);
-  
-        //40120 40121
-        this.diffCo2Program[8].start = this.client.registerToUint32([res1[52],res1[53]]);          
-        //40122 40123
-        this.diffCo2Program[8].stop = this.client.registerToUint32([res1[54],res1[55]]);
-        //40124 
-        this.diffCo2Program[8].mode = this.client.registerToUint32([res1[56]]);
-        //40125
-        this.diffCo2Program[8].intensity = this.client.registerToUint32([res1[57]]);
-  
-        //40126 40127
-        this.diffCo2Program[9].start = this.client.registerToUint32([res1[58],res1[59]]);
-        //40128 40129
-        this.diffCo2Program[9].stop = this.client.registerToUint32([res1[60],res1[61]]);
-        //40130
-        this.diffCo2Program[9].mode = this.client.registerToUint32([res1[62]]);
-        //40131
-        this.diffCo2Program[9].intensity = this.client.registerToUint32(res1[63]);
-  
-        //40132 40133
-        this.diffCo2Sunrise.offset = this.client.registerToUint32([res1[64],res1[65]]);
-        //40134 40135
-        this.diffCo2Sunrise.duration = this.client.registerToUint32([res1[66],res1[67]]);
-        //40137
-        this.diffCo2Sunrise.intensity = this.client.registerToUint32([res1[69]]);
-  
-        //40138 40139
-        this.diffCo2Sunset.offset = this.client.registerToUint32([res1[70],res1[71]]);
-        //40140 40141
-        this.diffCo2Sunset.duration = this.client.registerToUint32([res1[72],res1[73]]);
-        //40143
-        this.diffCo2Sunset.intensity = this.client.registerToUint32([res1[74]]);
-
-        var res2 = await this.client.readHoldingRegisters(correspondanceRegistres.upcStatus.adr,1)
-
-        this.general.upcStatus = this.client.registerToUint32([res2[0]]);
-        //alert("success")
-
-        success = true
-
-        break; 
-
-      }
-      catch(err){
-        alert("catch lecture cycliqye page synchro")
-        success = false
-        error = err
-
-        break;
-      }
       case "alarmparam":
         
           try{

@@ -29,7 +29,16 @@ declare var google2: { visualization: { arrayToDataTable: (arg0: (string | numbe
   styleUrls: ['./synchro.page.scss'],
 })
 export class SynchroPage { 
+  do;
+  check=false;
+  current_ssid="NO WIFI"
+  stored_ssid="NO WIFI";
+  password_ssid="";
+  connection_modbus=false;
+  isLoading=false;
+  tryToRead=false;
   upc: UPCModbus		
+
   upc3: UPCV3		
   nbpiege:number;	
   colordif = "light";    
@@ -69,6 +78,7 @@ export class SynchroPage {
   colorcheck = "light";
   diffcolor = "light";
   typediff = "Mode de diffusion";
+  horloge=""
 
 
   constructor(
@@ -95,25 +105,275 @@ export class SynchroPage {
   time : String = "08:10"
   googleChartLibrary;
   
-  ionViewWillEnter() {
-      this.global.connexionRequise = "UPC"
-      this.correspondancesRegistres = new CorrespondancesRegistres()
-      /*affichage bouton suivant*/    
-      this.global.checkNextPage().then(res=>{
-        if(res == true){
-          this.display = true;
-        } 
-        
-      }) 
-
-
-    this.pageInit();    
   
+  ionViewWillEnter(){
+
+    this.tryToRead=true;
+    console.log("=========================================================================") 
+    console.log("========================== page  accueil :===============================") 
+    console.log("=========================================================================") 
+
+    this.global.connexionRequise = "UPC"
+
+    console.log(" - Connexion requise :"+ this.global.connexionRequise)
+    console.log(" - Connexion  actuel  (avant on read statique) :"+ this.global.statutConnexion)
+
+     this.ConnecterUPC();
+
+     this.Read()
+
     
-    
-  
+    this.correspondancesRegistres = new CorrespondancesRegistres()
+
+      this.horloge = this.global.upcmodbus.general.upcClock
+                   
    
+}
+
+ConnecterUPC(){
+  //connection a l 'UPC :
+  console.log("> try  connecter a l upc ")
+  if(this.global.mode != "modeTest"){
+
+    this.isLoading=true;
+    this.storage.get("ssid_upc").then(async stored_ssid=>{
+          this.storage.get("password").then(async password=>{
+          this.stored_ssid=stored_ssid;
+          this.password_ssid=password;
+
+            //recuperer l ssid  +password 
+            console.log("acceuil , stored password" +password);
+            console.log("acceuil , stored ssid" +stored_ssid);
+
+            //si on est deja connecté a l upc :
+            let wifi = await WifiWizard2.getConnectedSSID()
+
+            console.log("connected ssid: "+wifi)
+
+            if(wifi != stored_ssid){
+            console.log("wifi diffrents :")
+
+            WifiWizard2.connect(stored_ssid, password).then(()=>{
+              //connexion reussi a l UPC  :
+              console.log("connexion wifi up reussie :")
+              this.check=true;
+
+              this.global.statutConnexion="UPC"
+              this.global.onConnectModbus().then(async ()=>{ 
+
+               console.log("accueil , connexion modbus reussie >> ")
+               this.connection_modbus=true;
+               this.isLoading=false; 
+
+               //on peut lire 
+               this.tryToRead=true;
+               
+
+               
+                   
+              }).catch(err =>{                   
+                console.log("accueil + connexion modbus échouée  ")  
+                this.isLoading=false;   
+                this.connection_modbus=false;          
+
+              })
+             
+             
+    
+              
+            }).catch(()=>{
+             console.log("connexion impossible a l'UPC")
+            })
+          }else{
+            this.global.onConnectModbus().then( ()=>{ //on tente une connexion modbus pour déterminer si c'est un upc
+              //connexion modbus réussie : c'est un upc
+             console.log("accueil + connexion modbus reussie ")
+             this.connection_modbus=true;
+             this.isLoading=false; 
+
+
+
+            }).catch(err =>{                   
+              console.log("accueil + connexion modbus échouée  ")  
+              this.isLoading=false;  
+              this.connection_modbus=false;           
+
+            })
+          }
+
+          })
+
+    })
+
   }
+
+
+} 
+
+async checkConnectionWifi(){
+  let wifi = await WifiWizard2.getConnectedSSID()
+  this.current_ssid=wifi;
+}
+
+
+Read(){
+  this.do= setInterval(()=>{
+
+     console.log("======================== cycle ================================")
+    
+     this.checkConnectionWifi()
+
+     // en cas de perte de connexion 
+     if(this.current_ssid != this.stored_ssid && this.check){
+       console.log("wifi diff >>>> ")
+       console.log("reconnexion  >>>> ")
+
+       //connecter au wifi 
+       this.ConnecterUPC()
+     }
+
+   
+
+      if(this.tryToRead){
+       console.log("Try to read >")
+
+        // lecture statique :
+        this.isLoading=true;
+
+        this.global.upcmodbus.onReadStatique(this.global.upcname, this.global.mode, "synchro").then(res=>{   
+        
+         if(res == true){
+
+           this.isLoading=false;
+           console.log(">  lecture reussi ")
+
+           //:
+          this.pageInit()
+          this.events.publish("loadParameters")
+
+           ////
+           this.global.lectureStatiqueEnCours = false;
+           this.global.displayLoading = false;
+           this.tryToRead=false;
+         }
+
+         else{ 
+                 console.log(">  lecture echouée  ")
+                 this.isLoading=false;
+                 this.tryToRead=true;
+                 this.global.statutConnexion="Aucune"
+                 this.global.lectureStatiqueEnCours = false;
+                 this.global.displayLoading = false;
+               
+               }      
+       
+       }).catch(err=>{
+         this.tryToRead=true;
+         this.isLoading=false;
+         console.log("acceuil::erreur lecture")
+         console.log(err)
+         
+       })
+
+       //fin de lecture statique :
+
+      }
+
+   },500);
+
+ }
+
+ ecrir(variable, value){
+  if(variable.type=="int"){
+  this.isLoading=true;
+  this.global.upcmodbus.client.setIntInHoldingRegister(variable.adr, variable.dim,value).then(()=>{
+
+    console.log("accueil ::  ecriture reussie")
+   
+    // lecture statique :
+     this.global.upcmodbus.onReadStatique(this.global.upcname, this.global.mode, "synchro").then(res=>{   
+ 
+  if(res == true){
+    this.isLoading=false;
+    console.log("accueil:  lecture reussi ")
+
+    this.pageInit()
+    this.events.publish("loadParameters")
+    this.global.lectureStatiqueEnCours = false;
+    this.global.displayLoading = false;
+    this.tryToRead=false;
+  }
+  else{ 
+            this.isLoading=false;
+         
+            this.global.statutConnexion="Aucune"
+            this.global.lectureStatiqueEnCours = false;
+            this.global.displayLoading = false;
+        
+        }      
+
+}).catch(err=>{
+  this.isLoading=false;
+  console.log("acceuil::erreur lecture")
+  console.log(err)
+  
+})
+
+//fin de lecture statique :
+
+}).catch(()=>{
+this.isLoading=false;
+console.log("num piege ::écriture impossible")
+})
+  }else{
+    this.isLoading=true;
+    this.global.upcmodbus.client.setStringArrayInHoldingResgisters(variable.adr,value).then(()=>{
+
+      console.log("accueil ::  ecriture reussie")
+     
+      // lecture statique :
+       this.global.upcmodbus.onReadStatique(this.global.upcname, this.global.mode, "synchro").then(res=>{   
+   
+    if(res == true){
+      this.isLoading=false;
+      console.log("accueil:  lecture reussi ")
+
+      this.pageInit()
+      this.events.publish("loadParameters")
+      this.global.lectureStatiqueEnCours = false;
+      this.global.displayLoading = false;
+      this.tryToRead=false;
+    }
+    else{ 
+              this.isLoading=false;
+           
+              this.global.statutConnexion="Aucune"
+              this.global.lectureStatiqueEnCours = false;
+              this.global.displayLoading = false;
+          
+          }      
+  
+  }).catch(err=>{
+    this.isLoading=false;
+    console.log("acceuil::erreur lecture")
+    console.log(err)
+    
+  })
+
+  //fin de lecture statique :
+
+}).catch(()=>{
+  this.isLoading=false;
+  console.log("num piege ::écriture impossible")
+})
+
+  }
+}
+
+
+
+
+
   onDiff() {
     this.ngZone.run(()=>{
       if(this.colordif == 'light'){
@@ -134,12 +394,7 @@ export class SynchroPage {
     
   }
 
-  async pageInit(){
-   
-    this.platform.ready().then(
-      async readySource => {
-        if (readySource == 'cordova') {
-          this.global.onReadStatiqueEnable().then(()=>{
+  async pageInit(){ 
             this.events.subscribe("loadParameters",($event)=>{
               var status = this.global.upcmodbus.general.upcStatus;
               if(status == 0){
@@ -149,6 +404,21 @@ export class SynchroPage {
                 this.colordif = "light";
                 this.typediff = "Diffusion OFF";
                 this.diffcolor = "danger";
+              }else if(status == 1) {
+                this.colordif = "primary";
+                this.colorplayfiff = "light";
+                this.colordis ="light"
+                this.colorcheck = "light";
+                this.diffcolor = "tertiary";
+                this.typediff = "Mode Enable";
+              }
+              else if(status == 2) {
+                this.colordif = "primary";
+                this.colorplayfiff = "light";
+                this.colordis ="light"
+                this.colorcheck = "light";
+                this.diffcolor = "tertiary";
+                this.typediff = "Mode ADJUST";
               }else if (status == 3) {
                 this.colorcheck = "primary";
                 this.colordis = "light";
@@ -156,13 +426,6 @@ export class SynchroPage {
                 this.colordif = "light";
                 this.typediff = "Mode CHECK Pressions";
                 this.diffcolor = "warning";
-              }else if(status == 2) {
-                this.colordif = "primary";
-                this.colorplayfiff = "light";
-                this.colordis ="light"
-                this.colorcheck = "light";
-                this.diffcolor = "tertiary";
-                this.typediff = "Mode ADJUST";
               } else {
                 this.colorplayfiff = "primary";
                 this.colordif = "light";
@@ -181,26 +444,7 @@ export class SynchroPage {
                   } else {
                     this.colordif = "light";
                   }
-                  //localStorage.setItem("upcname",this.global.upcmodbus.nameId);
-                  //localStorage.setItem("currentssid",this.global.upcmodbus.communicationParameters.comGsmName);
-                /* await this.global.upcmodbus.client.getIntFromHoldingRegister(40011,1).then(res=>{
-                    if(res == 1){
-                      this.colordif = "primary";
-                    }
-                    else {
-                      this.colordif = "light";
-                    }
-                    this.redBackground = false;
-                    this.cd.detectChanges();
-                  }).catch(err=>{
-                    //localStorage.removeItem("isConnected");
-                    this.redBackground = true;
-                    this.colordif = "danger";
-                    this.cd.detectChanges();
-                    
-                    //this.ngOnInit();
-                  })*/
-                  
+             
                   this.pStart.push(this.secondsToHoursMinutes(this.global.upcmodbus.diffCo2Program[0].start));
                   this.pEnd.push(this.secondsToHoursMinutes(this.global.upcmodbus.diffCo2Program[0].stop));
                   this.frequency2.push(this.frequencyOptions[this.convertDaysCode(this.global.upcmodbus.diffCo2Program[0].mode)]);
@@ -279,33 +523,17 @@ export class SynchroPage {
                   this.pCrepusculeStart.push(this.secondsToHoursMinutes(this.currentDuskTime + this.global.upcmodbus.diffCo2Sunset.offset));
                   this.pCrepusculeEnd.push(this.secondsToHoursMinutes(this.currentDuskTime + this.global.upcmodbus.diffCo2Sunset.offset + this.global.upcmodbus.diffCo2Sunset.duration));
 
-                  
-
-
-                  setTimeout(()=>{
-                    this.finishRead = true;
-
-                  },1000)
-                  
-                      
-                
 
               
                 })
                 this.drawChartjs();
-              })
-        }
-      }
-    )
-  
-
-
-
-
 
 
 this.fillTab()
 }
+
+
+
 doRefresh(event) {
   this.ionViewWillEnter();
   event.target.complete();
@@ -604,16 +832,16 @@ doRefresh(event) {
  async onEdit(variable, parameterToEdit: string, value){ //set UPC params   
     switch(parameterToEdit){
       case "start":     
-        this.global.onWriteEnable(variable, this.hoursMinutesToSeconds(value))
+        this.ecrir(variable, this.hoursMinutesToSeconds(value))
         break;
       case "end":
-        this.global.onWriteEnable(variable, this.hoursMinutesToSeconds(value))
+        this.ecrir(variable, this.hoursMinutesToSeconds(value))
         break;
       case "frequency":
-        this.global.onWriteEnable(variable, this.reverseConvertDaysCode(value))
+        this.ecrir(variable, this.reverseConvertDaysCode(value))
         break;
       case "intensity":
-        this.global.onWriteEnable(variable, value)
+        this.ecrir(variable, value)
         break;
     }
 
@@ -636,25 +864,25 @@ doRefresh(event) {
       switch(parameterToEdit){
         case "offset":
           if (this.sign[0] == "+"){
-            this.global.onWriteEnable(variable,this.hoursMinutesToSeconds(value))
+            this.ecrir(variable,this.hoursMinutesToSeconds(value))
 
             //this.pAubeStart[0]=this.secondsToHoursMinutes(this.currentDawnTime + this.hoursMinutesToSeconds(this.paDelay[0]));
             //this.pAubeEnd[0]=this.secondsToHoursMinutes(this.currentDawnTime + this.hoursMinutesToSeconds(this.paDelay[0]) + this.hoursMinutesToSeconds(this.paDuration[0]));
                           
           }
           else{              
-            this.global.onWriteEnable(variable,this.positiveToNegative(this.hoursMinutesToSeconds(value))) 
+            this.ecrir(variable,this.positiveToNegative(this.hoursMinutesToSeconds(value))) 
             
             //this.pAubeStart[0]=this.secondsToHoursMinutes(this.currentDawnTime - this.hoursMinutesToSeconds(this.paDelay[0]));
             //this.pAubeEnd[0]=this.secondsToHoursMinutes(this.currentDawnTime - this.hoursMinutesToSeconds(this.paDelay[0]) + this.hoursMinutesToSeconds(this.paDuration[0]));
           }
           break;
         case "duration":
-          this.global.onWriteEnable(variable,this.hoursMinutesToSeconds(value))
+          this.ecrir(variable,this.hoursMinutesToSeconds(value))
           break;
 
         case "intensity":        
-          this.global.onWriteEnable(variable,value)
+          this.ecrir(variable,value)
           break;
       }
     }
@@ -673,13 +901,13 @@ doRefresh(event) {
       switch(parameterToEdit){
         case "offset":
           if (this.sign[1] == "+"){
-            this.global.onWriteEnable(variable,this.hoursMinutesToSeconds(value))
+            this.ecrir(variable,this.hoursMinutesToSeconds(value))
 
             //this.pCrepusculeStart[0]=this.secondsToHoursMinutes(this.currentDuskTime + this.hoursMinutesToSeconds(this.pcDelay[0]));
             //this.pCrepusculeEnd[0]=this.secondsToHoursMinutes(this.currentDuskTime + this.hoursMinutesToSeconds(this.pcDelay[0]) + this.hoursMinutesToSeconds(this.pcDuration[0]));
           }
           else{
-            this.global.onWriteEnable(variable,this.positiveToNegative(this.hoursMinutesToSeconds(value)))
+            this.ecrir(variable,this.positiveToNegative(this.hoursMinutesToSeconds(value)))
 
             //this.pCrepusculeStart[0]=this.secondsToHoursMinutes(this.currentDuskTime - this.hoursMinutesToSeconds(this.pcDelay[0]));
             //this.pCrepusculeEnd[0]=this.secondsToHoursMinutes(this.currentDuskTime - this.hoursMinutesToSeconds(this.pcDelay[0]) + this.hoursMinutesToSeconds(this.pcDuration[0]));
@@ -687,15 +915,24 @@ doRefresh(event) {
           break;
 
         case "duration":
-          this.global.onWriteEnable(variable,this.hoursMinutesToSeconds(value))
+          this.ecrir(variable,this.hoursMinutesToSeconds(value))
           break;
       
 
         case "intensity":   
-          await this.global.onWriteEnable(variable,value)
+          await this.ecrir(variable,value)
           break;    
       }
-    } 
+    }
+    
+    
+    ionViewWillLeave(){
+
+
+      console.log("quitter la page  :")  
+      clearInterval(this.do)
+  
+    }
 
    
     
@@ -854,15 +1091,11 @@ doRefresh(event) {
     }
   
     onDisableDiff() {
-      var d=new Date()
-      this.global.logs.push(this.global.msToTime(d.getTime())+" - appel on disable diff")
-      this.global.onWriteEnable(this.correspondancesRegistres.upcMode,0)
+      this.ecrir(this.correspondancesRegistres.upcMode,0)
     }
   
     onEnableDiff() {
-      var d=new Date()
-      this.global.logs.push(this.global.msToTime(d.getTime())+" - appel on enable diff")
-      this.global.onWriteEnable(this.correspondancesRegistres.upcMode,1)
+      this.ecrir(this.correspondancesRegistres.upcMode,1)
     }
   
     onCheck() {
