@@ -760,7 +760,7 @@ export class UPCModbus {
  
            if(mode != "modeTest"){ //on n'est pas en mode test   
  
-             if(nameId != upcNameId){ //changement d'UPC
+             if(nameId != upcNameId && false){ //changement d'UPC
                
  
                if (window.confirm("Une intervention est en cours sur l'upc "+upcNameId+". Voulez-vous néanmoins continuer sur l'upc "+nameId+"?")) {            
@@ -806,12 +806,10 @@ export class UPCModbus {
               this.reserves.co2Res2Status = this.client.registerToUint32([res3[6]]);
 
               //40421 40422 
-              alert([res3[45],res3[46]])
               this.reserves.co2Res1StartVol = Math.round((this.client.registerToFloat([res3[45],res3[46]])* 0.001974) * 100) / 100;
 
               //40449 40450  Math.round((this.client.registerToFloat([res[87],res[88]])* 0.001974) * 100) / 100
               this.reserves.co2Res2StartVol = Math.round((this.client.registerToFloat([res3[73],res3[74]])* 0.001974) * 100) / 100;
-              alert([res3[73],res3[74]])
               var res4 = await this.client.readHoldingRegisters(this.correspondancesRegistres.xCo2Res1CodesBarres.adr,90)
               //alert("all bar codes registers : "+res4) 
 

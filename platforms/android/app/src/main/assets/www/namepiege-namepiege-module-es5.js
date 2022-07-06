@@ -131,9 +131,10 @@ __webpack_require__.r(__webpack_exports__);
 
 var NamepiegePage = /** @class */ (function () {
     // Pièges sauvegardes plan
-    function NamepiegePage(global, storage, events) {
+    function NamepiegePage(global, storage, alertCTRL, events) {
         this.global = global;
         this.storage = storage;
+        this.alertCTRL = alertCTRL;
         this.events = events;
         this.check = false;
         this.current_ssid = "NO WIFI";
@@ -237,6 +238,7 @@ var NamepiegePage = /** @class */ (function () {
         var _this = this;
         this.do = setInterval(function () {
             console.log("======================== cycle ================================");
+            console.log("UPC stat  ====  " + _this.global.upcmodbus.state);
             _this.checkConnectionWifi();
             // en cas de perte de connexion 
             if (_this.current_ssid != _this.stored_ssid && _this.check) {
@@ -245,8 +247,9 @@ var NamepiegePage = /** @class */ (function () {
                 //connecter au wifi 
                 _this.ConnecterUPC();
             }
-            if (_this.tryToRead) {
+            if (_this.tryToRead && _this.global.upcmodbus.state == 1) {
                 console.log("Try to read >");
+                _this.tryToRead = false;
                 // lecture statique :
                 _this.isLoading = true;
                 _this.global.upcmodbus.onReadStatique(_this.global.upcname, _this.global.mode, "namepiege").then(function (res) {
@@ -377,21 +380,59 @@ var NamepiegePage = /** @class */ (function () {
     };
     NamepiegePage.prototype.onWipe = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var alert;
             var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                // ecrire la commande  EEEE dans 40011 pour faire un wipe
-                this.global.upcmodbus.client.setIntInHoldingRegister(40011, 1, 61166).then(function (res) {
-                    var d = new Date();
-                    _this.global.logs.push(_this.global.msToTime(d.getTime()) + " - écriture réussie");
-                    _this.subscribeRefresh();
-                    _this.global.ecritureEnCours = false;
-                }).catch(function (err) {
-                    var d = new Date();
-                    _this.global.logs.push(_this.global.msToTime(d.getTime()) + " - écriture échouée");
-                    _this.subscribeRefresh();
-                    _this.global.ecritureEnCours = false;
-                });
-                return [2 /*return*/];
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.alertCTRL.create({ message: "Êtes vous sûr d'effectuer un Wipe ?",
+                            buttons: [{ text: "Non" }, { text: "Oui", handler: function () {
+                                        // ecrire la commande  EEEE dans 40011 pour faire un wipe
+                                        _this.global.upcmodbus.client.setIntInHoldingRegister(40011, 1, 61166).then(function (res) {
+                                            var d = new Date();
+                                            _this.global.logs.push(_this.global.msToTime(d.getTime()) + " - écriture réussie");
+                                            _this.subscribeRefresh();
+                                            _this.global.ecritureEnCours = false;
+                                        }).catch(function (err) {
+                                            var d = new Date();
+                                            _this.global.logs.push(_this.global.msToTime(d.getTime()) + " - écriture échouée");
+                                            _this.subscribeRefresh();
+                                            _this.global.ecritureEnCours = false;
+                                        });
+                                    } }] })];
+                    case 1:
+                        alert = _a.sent();
+                        alert.present();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    NamepiegePage.prototype.onReset = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var alert;
+            var _this = this;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.alertCTRL.create({ message: "Êtes vous sûr d'effectuer un Reset ?",
+                            buttons: [{ text: "Non" }, { text: "Oui", handler: function () {
+                                        // ecrire la commande  EEEE dans 40011 pour faire un wipe
+                                        _this.global.upcmodbus.client.setIntInHoldingRegister(40011, 1, 65535).then(function (res) {
+                                            var d = new Date();
+                                            _this.global.logs.push(_this.global.msToTime(d.getTime()) + " - écriture réussie");
+                                            _this.subscribeRefresh();
+                                            _this.global.ecritureEnCours = false;
+                                        }).catch(function (err) {
+                                            var d = new Date();
+                                            _this.global.logs.push(_this.global.msToTime(d.getTime()) + " - écriture échouée");
+                                            _this.subscribeRefresh();
+                                            _this.global.ecritureEnCours = false;
+                                        });
+                                    } }] })];
+                    case 1:
+                        alert = _a.sent();
+                        alert.present();
+                        return [2 /*return*/];
+                }
             });
         });
     };
@@ -451,6 +492,7 @@ var NamepiegePage = /** @class */ (function () {
     NamepiegePage.ctorParameters = function () { return [
         { type: _api_global_service__WEBPACK_IMPORTED_MODULE_2__["GlobalService"] },
         { type: _ionic_storage__WEBPACK_IMPORTED_MODULE_3__["Storage"] },
+        { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"] },
         { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["Events"] }
     ]; };
     NamepiegePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -461,6 +503,7 @@ var NamepiegePage = /** @class */ (function () {
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_api_global_service__WEBPACK_IMPORTED_MODULE_2__["GlobalService"],
             _ionic_storage__WEBPACK_IMPORTED_MODULE_3__["Storage"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"],
             _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["Events"]])
     ], NamepiegePage);
     return NamepiegePage;

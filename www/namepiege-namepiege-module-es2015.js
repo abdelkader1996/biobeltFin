@@ -125,9 +125,10 @@ __webpack_require__.r(__webpack_exports__);
 
 let NamepiegePage = class NamepiegePage {
     // Pièges sauvegardes plan
-    constructor(global, storage, events) {
+    constructor(global, storage, alertCTRL, events) {
         this.global = global;
         this.storage = storage;
+        this.alertCTRL = alertCTRL;
         this.events = events;
         this.check = false;
         this.current_ssid = "NO WIFI";
@@ -213,6 +214,7 @@ let NamepiegePage = class NamepiegePage {
     Read() {
         this.do = setInterval(() => {
             console.log("======================== cycle ================================");
+            console.log("UPC stat  ====  " + this.global.upcmodbus.state);
             this.checkConnectionWifi();
             // en cas de perte de connexion 
             if (this.current_ssid != this.stored_ssid && this.check) {
@@ -221,8 +223,9 @@ let NamepiegePage = class NamepiegePage {
                 //connecter au wifi 
                 this.ConnecterUPC();
             }
-            if (this.tryToRead) {
+            if (this.tryToRead && this.global.upcmodbus.state == 1) {
                 console.log("Try to read >");
+                this.tryToRead = false;
                 // lecture statique :
                 this.isLoading = true;
                 this.global.upcmodbus.onReadStatique(this.global.upcname, this.global.mode, "namepiege").then(res => {
@@ -344,18 +347,42 @@ let NamepiegePage = class NamepiegePage {
     }
     onWipe() {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
-            // ecrire la commande  EEEE dans 40011 pour faire un wipe
-            this.global.upcmodbus.client.setIntInHoldingRegister(40011, 1, 61166).then(res => {
-                var d = new Date();
-                this.global.logs.push(this.global.msToTime(d.getTime()) + " - écriture réussie");
-                this.subscribeRefresh();
-                this.global.ecritureEnCours = false;
-            }).catch(err => {
-                var d = new Date();
-                this.global.logs.push(this.global.msToTime(d.getTime()) + " - écriture échouée");
-                this.subscribeRefresh();
-                this.global.ecritureEnCours = false;
-            });
+            let alert = yield this.alertCTRL.create({ message: "Êtes vous sûr d'effectuer un Wipe ?",
+                buttons: [{ text: "Non" }, { text: "Oui", handler: () => {
+                            // ecrire la commande  EEEE dans 40011 pour faire un wipe
+                            this.global.upcmodbus.client.setIntInHoldingRegister(40011, 1, 61166).then(res => {
+                                var d = new Date();
+                                this.global.logs.push(this.global.msToTime(d.getTime()) + " - écriture réussie");
+                                this.subscribeRefresh();
+                                this.global.ecritureEnCours = false;
+                            }).catch(err => {
+                                var d = new Date();
+                                this.global.logs.push(this.global.msToTime(d.getTime()) + " - écriture échouée");
+                                this.subscribeRefresh();
+                                this.global.ecritureEnCours = false;
+                            });
+                        } }] });
+            alert.present();
+        });
+    }
+    onReset() {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+            let alert = yield this.alertCTRL.create({ message: "Êtes vous sûr d'effectuer un Reset ?",
+                buttons: [{ text: "Non" }, { text: "Oui", handler: () => {
+                            // ecrire la commande  EEEE dans 40011 pour faire un wipe
+                            this.global.upcmodbus.client.setIntInHoldingRegister(40011, 1, 65535).then(res => {
+                                var d = new Date();
+                                this.global.logs.push(this.global.msToTime(d.getTime()) + " - écriture réussie");
+                                this.subscribeRefresh();
+                                this.global.ecritureEnCours = false;
+                            }).catch(err => {
+                                var d = new Date();
+                                this.global.logs.push(this.global.msToTime(d.getTime()) + " - écriture échouée");
+                                this.subscribeRefresh();
+                                this.global.ecritureEnCours = false;
+                            });
+                        } }] });
+            alert.present();
         });
     }
     /*
@@ -414,6 +441,7 @@ let NamepiegePage = class NamepiegePage {
 NamepiegePage.ctorParameters = () => [
     { type: _api_global_service__WEBPACK_IMPORTED_MODULE_2__["GlobalService"] },
     { type: _ionic_storage__WEBPACK_IMPORTED_MODULE_3__["Storage"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["Events"] }
 ];
 NamepiegePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -424,6 +452,7 @@ NamepiegePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     }),
     tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_api_global_service__WEBPACK_IMPORTED_MODULE_2__["GlobalService"],
         _ionic_storage__WEBPACK_IMPORTED_MODULE_3__["Storage"],
+        _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"],
         _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["Events"]])
 ], NamepiegePage);
 

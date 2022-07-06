@@ -6666,7 +6666,7 @@ var UPCModbus = /** @class */ (function () {
                         }
                         nameId = this.client.registerToString(tabname).replace(/[^a-zA-Z0-9]/g, '');
                         if (!(mode != "modeTest")) return [3 /*break*/, 64];
-                        if (!(nameId != upcNameId)) return [3 /*break*/, 59];
+                        if (!(nameId != upcNameId && false)) return [3 /*break*/, 59];
                         if (window.confirm("Une intervention est en cours sur l'upc " + upcNameId + ". Voulez-vous néanmoins continuer sur l'upc " + nameId + "?")) {
                             if (window.confirm("Voulez-vous terminer l'intervention ? (OK) ou l'abandonner ? (Annuler)")) {
                                 return [2 /*return*/, { success: true, object: "Terminer l'intervention en cours" }];
@@ -6706,11 +6706,9 @@ var UPCModbus = /** @class */ (function () {
                         //40383
                         this.reserves.co2Res2Status = this.client.registerToUint32([res3[6]]);
                         //40421 40422 
-                        alert([res3[45], res3[46]]);
                         this.reserves.co2Res1StartVol = Math.round((this.client.registerToFloat([res3[45], res3[46]]) * 0.001974) * 100) / 100;
                         //40449 40450  Math.round((this.client.registerToFloat([res[87],res[88]])* 0.001974) * 100) / 100
                         this.reserves.co2Res2StartVol = Math.round((this.client.registerToFloat([res3[73], res3[74]]) * 0.001974) * 100) / 100;
-                        alert([res3[73], res3[74]]);
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.xCo2Res1CodesBarres.adr, 90)
                             //alert("all bar codes registers : "+res4) 
                             //41124 41128
