@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n      <ion-back-button defaultHref=\"home\"></ion-back-button>\n    </ion-buttons>\n    \n     <ion-buttons>\n      <ion-button fill=\"clear\"> <ion-icon name=\"wifi\" color=\"light\"></ion-icon> connecté a : {{this.current_ssid}}</ion-button> \n     </ion-buttons>\n  </ion-toolbar>\n  </ion-header>\n\n\n<ion-content>\n  <h3 style=\"text-align: center;\">Changement de bouteilles </h3>\n  <!--<ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>-->\n  <ion-grid style=\"padding-top: 5%;\">\n    <ion-row>\n      <ion-col size=\"6\" style=\"border-right: solid 3px green;\">\n        <!--<ion-select placeholder=\"Type de bouteilles\">\n          <ion-select-option *ngFor=\"let bottle of listBottles\">\n            {{bottle.brand+\" \"+bottle.designation.toFixed(2)+\" kg\"}}\n          </ion-select-option>\n        </ion-select>-->\n      <h1 style=\"text-align: center;\" (click)=\"changeRes(1);\" [ngClass]=\"{'bgreen' : highlightB1}\">\n        B1\n      </h1>\n      \n      </ion-col>\n      \n      <ion-col size=\"6\">\n        <h1 style=\"text-align: center;\" (click)=\"changeRes(2);\" [ngClass]=\"{'bgreen' : highlightB2}\">\n          B2\n        </h1>  \n      </ion-col>\n      \n\n\n      <ion-col size=\"12\" style=\"border-top-right-radius: 80px 80px;border-top-left-radius: 80px 80px;\">\n          <div style=\"text-align: center;\">Etat du Contenu</div>\n      </ion-col>\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px;\">\n        \n        <ion-select *ngIf=\"!true\" [(ngModel)]=\"statusB1\" (ngModelChange)=\"changeContentStatus('B1');\">\n          <ion-select-option value=\"0\">VIDE</ion-select-option>\n          <ion-select-option value=\"1\">RESIDUEL</ion-select-option>\n          <ion-select-option value=\"2\">DISPONIBLE</ion-select-option>\n        </ion-select>\n        <ion-label *ngIf=\"!false\" style=\"text-align: center;\">-</ion-label>\n      </ion-col>\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px;\" [ngClass]=\"{'bgred' : false}\">\n        \n        <ion-select *ngIf=\"!true\" [(ngModel)]=\"statusB2\" (ngModelChange)=\"changeContentStatus('B2');\">\n          <ion-select-option value=\"0\">VIDE</ion-select-option>\n          <ion-select-option value=\"1\">RESIDUEL</ion-select-option>\n          <ion-select-option value=\"2\">DISPONIBLE</ion-select-option>\n        </ion-select>\n        <ion-label *ngIf=\"true\" style=\"text-align: center;\">-</ion-label>\n      </ion-col>\n\n\n     \n\n    </ion-row>\n  </ion-grid>\n  \n</ion-content>\n<ion-footer>\n  <ion-button *ngIf=\"!global.displayLoading\" style=\"float: left\" fill=\"clear\">    \n    <ion-icon name=\"refresh\"></ion-icon>\n  </ion-button>\n  <ion-button *ngIf=\"global.displayLoading\" style=\"float: left;\" fill=\"clear\" color=\"primary\">\n    <ion-spinner></ion-spinner>\n  </ion-button>\n \n</ion-footer>\n\n"
+module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n      <ion-back-button defaultHref=\"home\"></ion-back-button>\n    </ion-buttons>\n    \n     <ion-buttons>\n      <ion-button fill=\"clear\"> <ion-icon name=\"wifi\" color=\"light\"></ion-icon> connecté a : {{this.current_ssid}}</ion-button> \n     </ion-buttons>\n  </ion-toolbar>\n  </ion-header>\n\n\n<ion-content>\n  <h3 style=\"text-align: center;\">Changement de bouteilles </h3>\n  <!--<ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>-->\n  <ion-grid style=\"padding-top: 5%;\">\n    <ion-row>\n      <ion-col size=\"6\" style=\"border-right: solid 3px green;\">\n        <!--<ion-select placeholder=\"Type de bouteilles\">\n          <ion-select-option *ngFor=\"let bottle of listBottles\">\n            {{bottle.brand+\" \"+bottle.designation.toFixed(2)+\" kg\"}}\n          </ion-select-option>\n        </ion-select>-->\n      <h1 style=\"text-align: center;\" (click)=\"changeRes(1);\" [ngClass]=\"{'bgreen' : highlightB1}\">\n        B1\n      </h1>\n      \n      </ion-col>\n      \n      <ion-col size=\"6\">\n        <h1 style=\"text-align: center;\" (click)=\"changeRes(2);\" [ngClass]=\"{'bgreen' : highlightB2}\">\n          B2\n        </h1>  \n      </ion-col>\n      \n\n\n      <ion-col size=\"12\" style=\"border-top-right-radius: 80px 80px;border-top-left-radius: 80px 80px;\">\n          <div style=\"text-align: center;\">Etat du Contenu</div>\n      </ion-col>\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px;\">\n        \n        <ion-select  [(ngModel)]=\"statusB1\" (ngModelChange)=\"changeContentStatus('B1');\">\n          <ion-select-option value=\"0\">VIDE</ion-select-option>\n          <ion-select-option value=\"1\">RESIDUEL</ion-select-option>\n          <ion-select-option value=\"2\">DISPONIBLE</ion-select-option>\n        </ion-select>\n        <ion-label  style=\"text-align: center;\">-</ion-label>\n      </ion-col>\n\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px;\" [ngClass]=\"{'bgred' : false}\">\n        \n        <ion-select  [(ngModel)]=\"statusB2\" (ngModelChange)=\"changeContentStatus('B2');\">\n          <ion-select-option value=\"0\">VIDE</ion-select-option>\n          <ion-select-option value=\"1\">RESIDUEL</ion-select-option>\n          <ion-select-option value=\"2\">DISPONIBLE</ion-select-option>\n        </ion-select>\n        <ion-label style=\"text-align: center;\">-</ion-label>\n      </ion-col>\n\n\n     \n\n    </ion-row>\n    <ion-row>\n\n      <ion-col size=\"12\" style=\"border-top-right-radius: 80px 80px;border-top-left-radius: 80px 80px;\">\n          <div style=\"text-align: center;\"> Contenu :</div>\n      </ion-col>\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px;\">\n \n        <ion-label  style=\"text-align: center;\">{{contenuB1}} kg </ion-label>\n      </ion-col>\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px;\">\n \n        <ion-label  style=\"text-align: center;\">{{contenuB2}} kg </ion-label>\n      </ion-col>\n\n    </ion-row>\n  </ion-grid>\n  \n</ion-content>\n<ion-footer>\n  <ion-button *ngIf=\"!global.displayLoading\" style=\"float: left\" fill=\"clear\">    \n    <ion-icon name=\"refresh\"></ion-icon>\n  </ion-button>\n  <ion-button *ngIf=\"global.displayLoading\" style=\"float: left;\" fill=\"clear\" color=\"primary\">\n    <ion-spinner></ion-spinner>\n  </ion-button>\n \n</ion-footer>\n\n"
 
 /***/ }),
 
@@ -399,25 +399,14 @@ var AddbottleceintPage = /** @class */ (function () {
         });
     };
     AddbottleceintPage.prototype.changeContentStatus = function (reserve) {
-        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!(reserve == "B1")) return [3 /*break*/, 2];
-                        return [4 /*yield*/, this.global.onWriteEnable(this.correspondancesRegistres.co2Res1Status, this.statusB1)];
-                    case 1:
-                        _a.sent();
-                        return [3 /*break*/, 4];
-                    case 2:
-                        if (!(reserve == "B2")) return [3 /*break*/, 4];
-                        return [4 /*yield*/, this.global.onWriteEnable(this.correspondancesRegistres.co2Res2Status, this.statusB2)];
-                    case 3:
-                        _a.sent();
-                        _a.label = 4;
-                    case 4: return [2 /*return*/];
-                }
-            });
-        });
+        if (reserve == "B1") {
+            this.ecrir(this.correspondancesRegistres.co2Res1Status, this.statusB1);
+        }
+        else {
+            if (reserve == "B2") {
+                this.ecrir(this.correspondancesRegistres.co2Res2Status, this.statusB2);
+            }
+        }
     };
     AddbottleceintPage.prototype.subscribeRefresh = function () {
         var _this = this;
@@ -426,8 +415,8 @@ var AddbottleceintPage = /** @class */ (function () {
             _this.statusB2 = "" + _this.global.upcmodbus.reserves.co2Res2Status;
             _this.highlightB1 = _this.global.upcmodbus.reserves.co2ResActive == 1;
             _this.highlightB2 = _this.global.upcmodbus.reserves.co2ResActive == 2;
-            _this.global.contenuB1 = _this.global.upcmodbus.reserves.co2Res1ActVol;
-            _this.global.contenuB2 = _this.global.upcmodbus.reserves.co2Res2ActVol;
+            _this.contenuB1 = _this.global.upcmodbus.reserves.co2Res1ActVol;
+            _this.contenuB2 = _this.global.upcmodbus.reserves.co2Res2ActVol;
             _this.global.contenantB1 = _this.global.upcmodbus.reserves.co2Res1StartVol;
             _this.global.contenantB2 = _this.global.upcmodbus.reserves.co2Res2StartVol;
         });

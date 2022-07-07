@@ -39,6 +39,9 @@ export class AddbottleceintPage  {
   highlightB2 = false;
   statusB1;
   statusB2;
+  contenuB1;
+  contenuB2;
+
 
   correspondancesRegistres: CorrespondancesRegistres;
 
@@ -130,7 +133,7 @@ Read(){
                  this.global.displayLoading = false;
                
                }      
-       
+        
        }).catch(err=>{
          this.tryToRead=true;
          this.isLoading=false;
@@ -368,13 +371,13 @@ ConnecterUPC(){
   }
 
 
-  async changeContentStatus(reserve:string) {
+   changeContentStatus(reserve:string) {
     if(reserve == "B1"){
-      await this.global.onWriteEnable(this.correspondancesRegistres.co2Res1Status,this.statusB1)      
+      this.ecrir(this.correspondancesRegistres.co2Res1Status,this.statusB1)      
     }
     else{
       if(reserve == "B2"){
-        await this.global.onWriteEnable(this.correspondancesRegistres.co2Res2Status,this.statusB2)     
+        this.ecrir(this.correspondancesRegistres.co2Res2Status,this.statusB2)     
       }
     }
   }
@@ -389,8 +392,8 @@ ConnecterUPC(){
       this.highlightB1 = this.global.upcmodbus.reserves.co2ResActive == 1;
       this.highlightB2 = this.global.upcmodbus.reserves.co2ResActive == 2;
 
-      this.global.contenuB1 = this.global.upcmodbus.reserves.co2Res1ActVol;
-      this.global.contenuB2 = this.global.upcmodbus.reserves.co2Res2ActVol;
+      this.contenuB1 = this.global.upcmodbus.reserves.co2Res1ActVol;
+      this.contenuB2 = this.global.upcmodbus.reserves.co2Res2ActVol;
       this.global.contenantB1 = this.global.upcmodbus.reserves.co2Res1StartVol;
       this.global.contenantB2 = this.global.upcmodbus.reserves.co2Res2StartVol;
 

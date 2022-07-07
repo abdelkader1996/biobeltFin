@@ -803,7 +803,7 @@ export class UPCModbus {
               this.reserves.co2Res1Status = this.client.registerToUint32([res3[5]]);
 
               //40383
-              this.reserves.co2Res2Status = this.client.registerToUint32([res3[6]]);
+              this.reserves.co2Res2Status = this.client.registerToUint32([res3[7]]);
 
               //40421 40422 
               this.reserves.co2Res1StartVol = Math.round((this.client.registerToFloat([res3[45],res3[46]])* 0.001974) * 100) / 100;
