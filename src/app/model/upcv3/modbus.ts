@@ -973,8 +973,19 @@ export class ModbusClient extends StateMachine {
     return this.writeMultipleRegisters(start, this.stringToRegister(value));
   }
 
-  setStringArrayInHoldingResgisters(start, values){
-    return this.writeMultipleRegisters(start, this.stringArrayToRegister(values));
+  setStringArrayInHoldingResgisters(variable, values){
+    console.log("register a ecrire ")
+    console.log("value = "+values)
+    console.log( this.stringArrayToRegister(values))
+
+    let result=this.stringArrayToRegister(values)
+    for(let i=0;i<(variable.dim-this.stringArrayToRegister(values).length);i++){
+      result.push(0)
+
+    }
+    console.log(result)
+
+    return this.writeMultipleRegisters(variable.adr, result);
   }
 
   registerToString(registers) {

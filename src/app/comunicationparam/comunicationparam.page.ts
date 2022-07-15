@@ -222,6 +222,8 @@ Read(){
     return ( (ipInt>>>24) +'.' + (ipInt>>16 & 255) +'.' + (ipInt>>8 & 255) +'.' + (ipInt & 255) );
   }
 
+  //modbus 
+
   onChangeMDMGSM() {
    
     this.ecrir(this.correspondancesRegistres.comMdmName,this.modemGSM)     
@@ -230,6 +232,8 @@ Read(){
   onChangeMDMGSMPass() {
    this.ecrir(this.correspondancesRegistres.comMdmPass,this.modemGSMpass)      
   }
+
+  //wifi 
   
   onChangeSSID() {
     
@@ -237,17 +241,23 @@ Read(){
   }
 
   onChangeMDP() {
-   this.ecrir(this.correspondancesRegistres.comWifiPassW,this.password)    
+   this.ecrir(this.correspondancesRegistres.comWifiPass,this.password)    
   }
 
   onChangeChannel() {
    this.ecrir(this.correspondancesRegistres.comWifiApCh,this.channel)
   }
+  /// url 
 
   onChangeURL() {
+    console.log("on change URL ")
     this.ecrir(this.correspondancesRegistres.comWebSrvUrl,this.url)
   }
+//APN
 
+onChangeAPNURL() {
+  this.ecrir(this.correspondancesRegistres.comMdmApnId2,this.apn)     
+  }
   onChangeAPNUS() {
   this.ecrir(this.correspondancesRegistres.comMdmApnUser,this.apnuser)     
   }
@@ -333,7 +343,7 @@ Read(){
 })
     }else{
       this.isLoading=true;
-      this.global.upcmodbus.client.setStringArrayInHoldingResgisters(variable.adr,value).then(()=>{
+      this.global.upcmodbus.client.setStringArrayInHoldingResgisters(variable,value).then(()=>{
   
         console.log("accueil ::  ecriture reussie")
        

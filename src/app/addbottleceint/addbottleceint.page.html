@@ -4,93 +4,220 @@
       <ion-menu-button></ion-menu-button>
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
-    
-     <ion-buttons>
-      <ion-button fill="clear"> <ion-icon name="wifi" color="light"></ion-icon> connecté a : {{this.current_ssid}}</ion-button> 
-     </ion-buttons>
-  </ion-toolbar>
-  </ion-header>
 
+    <ion-buttons>
+      <ion-button fill="clear">
+        <ion-icon name="wifi" color="light"></ion-icon> connecté a :
+        {{this.current_ssid}}</ion-button
+      >
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
-  <h3 style="text-align: center;">Changement de bouteilles </h3>
+  <h3 style="text-align: center">Changement de bouteilles</h3>
   <!--<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>-->
-  <ion-grid style="padding-top: 5%;">
+  <ion-grid style="padding-top: 5%">
     <ion-row>
-      <ion-col size="6" style="border-right: solid 3px green;">
+      <ion-col size="6" style="border-right: solid 3px green">
         <!--<ion-select placeholder="Type de bouteilles">
           <ion-select-option *ngFor="let bottle of listBottles">
             {{bottle.brand+" "+bottle.designation.toFixed(2)+" kg"}}
           </ion-select-option>
         </ion-select>-->
-      <h1 style="text-align: center;" (click)="changeRes(1);" [ngClass]="{'bgreen' : highlightB1}">
-        B1
-      </h1>
-      
+        <h1
+          style="text-align: center"
+          (click)="changeRes(1);"
+          [ngClass]="{'bgreen' : highlightB1}"
+        >
+          B1
+        </h1>
       </ion-col>
-      
+
       <ion-col size="6">
-        <h1 style="text-align: center;" (click)="changeRes(2);" [ngClass]="{'bgreen' : highlightB2}">
+        <h1
+          style="text-align: center"
+          (click)="changeRes(2);"
+          [ngClass]="{'bgreen' : highlightB2}"
+        >
           B2
-        </h1>  
+        </h1>
       </ion-col>
-      
 
-
-      <ion-col size="12" style="border-top-right-radius: 80px 80px;border-top-left-radius: 80px 80px;">
-          <div style="text-align: center;">Etat du Contenu</div>
+      <ion-col
+        size="12"
+        style="
+          border-top-right-radius: 80px 80px;
+          border-top-left-radius: 80px 80px;
+        "
+      >
+        <div style="text-align: center">Etat du Contenu</div>
       </ion-col>
-      <ion-col size="6" style="border-bottom-left-radius: 80px 80px;">
-        
-        <ion-select  [(ngModel)]="statusB1" (ngModelChange)="changeContentStatus('B1');">
+      <ion-col size="6" style="border-bottom-left-radius: 80px 80px">
+        <ion-select
+          [(ngModel)]="statusB1"
+          (ngModelChange)="changeContentStatus('B1');"
+        >
           <ion-select-option value="0">VIDE</ion-select-option>
           <ion-select-option value="1">RESIDUEL</ion-select-option>
           <ion-select-option value="2">DISPONIBLE</ion-select-option>
         </ion-select>
-        <ion-label  style="text-align: center;">-</ion-label>
+        <ion-label style="text-align: center">-</ion-label>
       </ion-col>
 
-      <ion-col size="6" style="border-bottom-left-radius: 80px 80px;" [ngClass]="{'bgred' : false}">
-        
-        <ion-select  [(ngModel)]="statusB2" (ngModelChange)="changeContentStatus('B2');">
+      <ion-col
+        size="6"
+        style="border-bottom-left-radius: 80px 80px"
+        [ngClass]="{'bgred' : false}"
+      >
+        <ion-select
+          [(ngModel)]="statusB2"
+          (ngModelChange)="changeContentStatus('B2');"
+        >
           <ion-select-option value="0">VIDE</ion-select-option>
           <ion-select-option value="1">RESIDUEL</ion-select-option>
           <ion-select-option value="2">DISPONIBLE</ion-select-option>
         </ion-select>
-        <ion-label style="text-align: center;">-</ion-label>
+        <ion-label style="text-align: center">-</ion-label>
       </ion-col>
-
-
-     
-
     </ion-row>
     <ion-row>
+      <ion-col
+        size="12"
+        style="
+          border-top-right-radius: 80px 80px;
+          border-top-left-radius: 80px 80px;
+        "
+      >
+        <div style="text-align: center">Contenu :</div>
+      </ion-col>
+      <ion-col size="6" style="border-bottom-left-radius: 80px 80px">
+        <ion-label style="text-align: center">{{contenuB1}} kg </ion-label>
+      </ion-col>
+      <ion-col size="6" style="border-bottom-left-radius: 80px 80px">
+        <ion-label style="text-align: center">{{contenuB2}} kg </ion-label>
+      </ion-col>
+    </ion-row>
 
-      <ion-col size="12" style="border-top-right-radius: 80px 80px;border-top-left-radius: 80px 80px;">
-          <div style="text-align: center;"> Contenu :</div>
+    <ion-row>
+      <ion-col
+        size="12"
+        style="
+          border-top-right-radius: 80px 80px;
+          border-top-left-radius: 80px 80px;
+        "
+      >
+        <div style="text-align: center">ajouter une bouteille :</div>
       </ion-col>
-      <ion-col size="6" style="border-bottom-left-radius: 80px 80px;">
- 
-        <ion-label  style="text-align: center;">{{contenuB1}} kg </ion-label>
+      <!-- ajout bouteille B1-->
+      <ion-col size="6" style="border-bottom-left-radius: 80px 80px">
+        <ion-list>
+          <ion-item *ngFor="let bottle of bottlesB1">
+            <ion-label
+              [ngStyle]="{'background-color':bottle.style==1?'green':''}"
+            >
+              {{bottle.type.brand}} {{bottle.type.designation}}
+            </ion-label>
+            <ion-label
+              [ngStyle]="{'background-color':bottle.style==1?'green':''}"
+            >
+              {{bottle.barcode}}
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>type de bouteille </ion-label>
+            <ion-select
+              placeholder="Selectionner un type "
+              [(ngModel)]="currentBotlleTypeB1"
+            >
+              <ion-select-option
+                *ngFor="let bt of bottleTypedb"
+                value="{{bt.id}}"
+                >{{bt.brand+"-"+bt.designation+" kg"}}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Total : {{contenueAAjouterB1}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <button class="button-3" (click)="onAddBottleB1()">
+              + bouteille B1
+            </button>
+          </ion-item>
+        </ion-list>
       </ion-col>
-      <ion-col size="6" style="border-bottom-left-radius: 80px 80px;">
- 
-        <ion-label  style="text-align: center;">{{contenuB2}} kg </ion-label>
+      <!-- ajout bouteille B2-->
+      <ion-col size="6" style="border-bottom-left-radius: 80px 80px">
+        <ion-list>
+          <ion-item class="bouteille-ajoute" *ngFor="let bottle of bottlesB2">
+            <ion-label
+              [ngStyle]="{'background-color':bottle.style==1?'green':''}"
+            >
+              {{bottle.type.brand}} {{bottle.type.designation}}
+            </ion-label>
+            <ion-label
+              [ngStyle]="{'background-color':bottle.style==1?'green':''}"
+              style="display: block"
+            >
+              {{bottle.barcode}}
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>type de bouteille </ion-label>
+            <ion-select
+              placeholder="Selectionner un type "
+              [(ngModel)]="currentBotlleTypeB2"
+            >
+              <ion-select-option
+                *ngFor="let bt of bottleTypedb"
+                value="{{bt.id}}"
+                >{{bt.brand+"-"+bt.designation+" kg"}}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Total : {{contenueAAjouterB2}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <button class="button-3" (click)="onAddBottleB2()">
+              + bouteille B2
+            </button>
+          </ion-item>
+        </ion-list>
       </ion-col>
 
+      <ion-col
+        size="12"
+        style="
+          border-bottom-left-radius: 80px 80px;
+          margin-top: 15px;
+          text-align: center;
+        "
+      >
+        <button class="button-3" style="margin: auto" (click)="onSynchro()">
+          Synchronisation
+        </button>
+      </ion-col>
     </ion-row>
   </ion-grid>
-  
 </ion-content>
 <ion-footer>
-  <ion-button *ngIf="!global.displayLoading" style="float: left" fill="clear">    
+  <ion-button *ngIf="!global.displayLoading" style="float: left" fill="clear">
     <ion-icon name="refresh"></ion-icon>
   </ion-button>
-  <ion-button *ngIf="global.displayLoading" style="float: left;" fill="clear" color="primary">
+  <ion-button
+    *ngIf="global.displayLoading"
+    style="float: left"
+    fill="clear"
+    color="primary"
+  >
     <ion-spinner></ion-spinner>
   </ion-button>
- 
 </ion-footer>
-

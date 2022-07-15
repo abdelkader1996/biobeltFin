@@ -174,7 +174,6 @@ export class NamepiegePage {
 
        if(this.tryToRead && this.global.upcmodbus.state==1){
         console.log("Try to read >")
-        this.tryToRead=false;
 
          // lecture statique :
          this.isLoading=true;
@@ -182,6 +181,7 @@ export class NamepiegePage {
          this.global.upcmodbus.onReadStatique(this.global.upcname, this.global.mode, "namepiege").then(res=>{   
          
           if(res == true){
+            this.tryToRead=false;
             this.isLoading=false;
             console.log(">  lecture reussi ")
             this.subscribeRefresh()
@@ -245,6 +245,7 @@ export class NamepiegePage {
   onChangeName() {
     console.log(" Accueil :: ecrir : nome upc  ") 
     this.ecrir(this.correspondancesRegistres.upcNameId,this.name)
+
   }
   onChangePieges() {
     console.log(" Accueil :: ecrir : num piege ")   
@@ -295,7 +296,7 @@ export class NamepiegePage {
 })
     }else{
       this.isLoading=true;
-      this.global.upcmodbus.client.setStringArrayInHoldingResgisters(variable.adr,value).then(()=>{
+      this.global.upcmodbus.client.setStringArrayInHoldingResgisters(variable,value).then(()=>{
   
         console.log("accueil ::  ecriture reussie")
        
@@ -410,9 +411,7 @@ export class NamepiegePage {
     
   }*/
   onChangeFusHor(){    
-    var d=new Date()
-    this.global.logs.push(this.global.msToTime(d.getTime())+" - appel on change fushor")
-    this.global.onWriteEnable(this.correspondancesRegistres.upcTimeZone,this.fusehor)
+    this.ecrir(this.correspondancesRegistres.upcTimeZone,this.fusehor)
    
   }
   

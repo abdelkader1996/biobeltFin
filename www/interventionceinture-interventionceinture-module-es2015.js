@@ -581,6 +581,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_native_hotspot_ngx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ionic-native/hotspot/ngx */ "./node_modules/@ionic-native/hotspot/ngx/index.js");
 /* harmony import */ var _ionic_native_network_ngx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ionic-native/network/ngx */ "./node_modules/@ionic-native/network/ngx/index.js");
 /* harmony import */ var _ionic_native_diagnostic_ngx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic-native/diagnostic/ngx */ "./node_modules/@ionic-native/diagnostic/ngx/index.js");
+/* harmony import */ var _api_ApiResponse__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../api/ApiResponse */ "./src/app/api/ApiResponse.ts");
+
 
 
 
@@ -610,7 +612,7 @@ let InterventionceinturePage = class InterventionceinturePage {
         this.diagnostic = diagnostic;
         this.events = events;
         //tenter un accès modbus et s'il ne réussit pas alert connectez vous à l'upc
-        //accès modbus s'il se connecte 
+        //accès modbus s'il se connecte
         /* Variables liées à la séquence d'écrans */
         this.sequenceOfScreensOptions = {
             installation: [
@@ -621,7 +623,7 @@ let InterventionceinturePage = class InterventionceinturePage {
                 "Controle débits Mini/Maxi",
                 "Vérification débits pièges individuels",
                 "Programmation diffusion CO2",
-                "Mesures pressions de sortie"
+                "Mesures pressions de sortie",
             ],
             remiseEnRoute: [
                 "Etat de la connexion au réseau",
@@ -630,35 +632,44 @@ let InterventionceinturePage = class InterventionceinturePage {
                 "Controle débits Mini/Maxi",
                 "Vérification débits pièges individuels",
                 "Programmation diffusion CO2",
-                "Mesures pressions de sortie"
+                "Mesures pressions de sortie",
             ],
             modificationNbPieges: [
                 "Modification du nombre de pièges",
                 "Réglage des détendeurs",
                 "Controle débits Mini/Maxi",
-                "Mesures pressions de sortie"
+                "Mesures pressions de sortie",
             ],
             maintenance: [
                 "Etat de la connexion au réseau",
-                "Controle débits Mini/Maxi"
+                "Controle débits Mini/Maxi",
             ],
             changementBouteillesCo2: [
                 "Réglage des détendeurs",
-                "Controle débits Mini/Maxi"
+                "Controle débits Mini/Maxi",
             ],
             changementUpc: [
                 "Initialisation/Echange boitier UPC",
-                "Etat de la connexion au réseau"
-            ]
+                "Etat de la connexion au réseau",
+            ],
         };
         this.sequenceOfScreens = [];
         this.sequenceOfScreensTmp = [];
         /* Variables liées à l'objet de l'intervention */
-        this.motiveOptions = ["Installation", "Modification du nombre de pièges", "Remise en route", "Maintenance", "Changements de bouteilles CO2", "Changement d'UPC", "Hivernage", "Autre"];
+        this.motiveOptions = [
+            "Installation",
+            "Modification du nombre de pièges",
+            "Remise en route",
+            "Maintenance",
+            "Changements de bouteilles CO2",
+            "Changement d'UPC",
+            "Hivernage",
+            "Autre",
+        ];
         this.motive = []; //format pour la base de données
         this.selectedMotive = []; //format pour la liste
         /* Variables liées aux intervenants */
-        this.intervenants = []; //liste de tous les intervenants  
+        this.intervenants = []; //liste de tous les intervenants
         this.intervenantsChoisis = []; //format pour la base de données
         this.selectedIntervenants = []; //format pour la liste
         /* Variables liées aux ceintures */
@@ -684,18 +695,20 @@ let InterventionceinturePage = class InterventionceinturePage {
         this.ShowFilter = false;
         this.limitSelection = false;
         this.dropdownSettings = {
+            // Liste objets + Liste intervenants
             singleSelection: false,
-            idField: 'item_id',
-            textField: 'item_text',
-            selectAllText: 'Select All',
-            unSelectAllText: 'UnSelect All',
-            allowSearchFilter: true
+            idField: "item_id",
+            textField: "item_text",
+            selectAllText: "Select All",
+            unSelectAllText: "UnSelect All",
+            allowSearchFilter: true,
         };
         this.dropdownSettings2 = {
+            // Liste ceintures
             singleSelection: true,
-            idField: 'item_id',
-            textField: 'item_text',
-            allowSearchFilter: true
+            idField: "item_id",
+            textField: "item_text",
+            allowSearchFilter: true,
         };
         this.isUpcConnected = false;
         this.dt = new Date(Date.now());
@@ -712,7 +725,7 @@ let InterventionceinturePage = class InterventionceinturePage {
         this.global.connexionRequise = "Serveur";
         this.storage.get("token").then((res) => {
             this.global.token = res;
-            this.storage.get("dataAlreadyLoaded").then(res => {
+            this.storage.get("dataAlreadyLoaded").then((res) => {
                 if (res != true) {
                     this.needToLoadData = true;
                     this.function = "getDataFromServer";
@@ -723,22 +736,40 @@ let InterventionceinturePage = class InterventionceinturePage {
                 }
             });
         });
+        // recup bouteilles types
+        //recuperer les types de bouteilles de la base de données :
+        this.storage.get("token").then((val) => {
+            this.token = val;
+            //recuperer les types de bouteilles de la base de données :
+            this.upcv3service.getAllBottleTypes(val).subscribe((res) => {
+                if (res.code === _api_ApiResponse__WEBPACK_IMPORTED_MODULE_11__["Code"].BOTTLE_TYPE_RECOVERED) {
+                    this.storage.set("bottleTypes", res.result);
+                    console.log("bottle types");
+                    console.log(res.result);
+                }
+            });
+        });
         /*Formattage de la date pour la création de l'intervention*/
-        var dtstring = this.dt.getFullYear()
-            + '-' + this.pad2(this.dt.getMonth() + 1)
-            + '-' + this.pad2(this.dt.getDate())
-            + 'T' + this.pad2(this.dt.getHours())
-            + ':' + this.pad2(this.dt.getMinutes())
-            + ':' + this.pad2(this.dt.getSeconds());
+        var dtstring = this.dt.getFullYear() +
+            "-" +
+            this.pad2(this.dt.getMonth() + 1) +
+            "-" +
+            this.pad2(this.dt.getDate()) +
+            "T" +
+            this.pad2(this.dt.getHours()) +
+            ":" +
+            this.pad2(this.dt.getMinutes()) +
+            ":" +
+            this.pad2(this.dt.getSeconds());
         this.dateString = dtstring;
         this.storage.set("debutIntervention", this.dateString);
     }
     getDataFromStorage() {
-        this.storage.get("intervenantsList").then(res => {
+        this.storage.get("intervenantsList").then((res) => {
             this.intervenants = res;
-            this.storage.get("nearUpcList").then(res => {
+            this.storage.get("nearUpcList").then((res) => {
                 this.nearUPCList = res;
-                this.storage.get("bottlesInTransit").then(res => {
+                this.storage.get("bottlesInTransit").then((res) => {
                     this.bottlesInTransit = res;
                     this.setInterventionVariables();
                 });
@@ -747,12 +778,15 @@ let InterventionceinturePage = class InterventionceinturePage {
     }
     getDataFromServer() {
         this.global.connexionRequise = "Serveur";
-        this.upcv3service.getConnected(this.global.token).subscribe(res => {
+        this.upcv3service.getConnected(this.global.token).subscribe((res) => {
+            //Opérateur connecté
             this.global.statutConnexion = "Serveur";
             this.global.retryCount = 0;
-            this.connectedOperator = res.result.lastName + " " + res.result.firstName;
+            this.connectedOperator =
+                res.result.lastName + " " + res.result.firstName;
             this.storage.set("connectedOperator", this.connectedOperator);
-            this.upcv3service.getOperators(this.global.token).subscribe(res => {
+            this.upcv3service.getOperators(this.global.token).subscribe((res) => {
+                //Liste des intervenants
                 this.global.statutConnexion = "Serveur";
                 var data = res.result;
                 for (var i = 0; i < data.length; i++) {
@@ -761,7 +795,7 @@ let InterventionceinturePage = class InterventionceinturePage {
                 this.storage.set("intervenantsList", this.intervenants);
                 this.getNearUpcList();
             }, (err) => {
-                this.global.onConnect(err).then(res => {
+                this.global.onConnect(err).then((res) => {
                     this.global.onConnectEnCours = false;
                     if (res == "retry") {
                         this.getDataFromServer();
@@ -772,8 +806,8 @@ let InterventionceinturePage = class InterventionceinturePage {
                     }
                 });
             });
-        }, err => {
-            this.global.onConnect(err).then(res => {
+        }, (err) => {
+            this.global.onConnect(err).then((res) => {
                 this.global.onConnectEnCours = false;
                 if (res == "retry") {
                     this.getDataFromServer();
@@ -864,9 +898,10 @@ let InterventionceinturePage = class InterventionceinturePage {
                 this.getUpcName(),
                 this.getStockBottleTypes(),
                 this.getCeintureChoisieBottles(),
-                this.getCeintureChoisieCommentaires()
+                this.getCeintureChoisieCommentaires(),
             ]);
-            if (arr[0] == undefined || arr[0] == null) { //motif format liste
+            if (arr[0] == undefined || arr[0] == null) {
+                //motif format liste
                 this.storage.set("motiveItems", "");
             }
             else {
@@ -874,7 +909,8 @@ let InterventionceinturePage = class InterventionceinturePage {
                     this.selectedMotive = arr[0];
                 }
             }
-            if (arr[1] == undefined || arr[1] == null) { //motif format bdd                                                 
+            if (arr[1] == undefined || arr[1] == null) {
+                //motif format bdd
                 this.storage.set("motiveString", "");
             }
             else {
@@ -883,11 +919,13 @@ let InterventionceinturePage = class InterventionceinturePage {
                 }
             }
             if (this.motive.includes("Autre")) {
-                if (this.storage.get("autre") != undefined && this.storage.get("autre") != null) {
+                if (this.storage.get("autre") != undefined &&
+                    this.storage.get("autre") != null) {
                     this.motive[this.motive.indexOf("Autre")] = this.storage.get("autre");
                 }
             }
-            if (arr[2] == undefined || arr[2] == null) { //intervenants choisis format liste
+            if (arr[2] == undefined || arr[2] == null) {
+                //intervenants choisis format liste
                 this.storage.set("intervenantsItems", "");
             }
             else {
@@ -895,7 +933,8 @@ let InterventionceinturePage = class InterventionceinturePage {
                     this.selectedIntervenants = arr[2];
                 }
             }
-            if (arr[3] == undefined || arr[3] == null) { //intervenants choisis format bdd
+            if (arr[3] == undefined || arr[3] == null) {
+                //intervenants choisis format bdd
                 this.storage.set("intervenantsString", "");
             }
             else {
@@ -903,7 +942,8 @@ let InterventionceinturePage = class InterventionceinturePage {
                     this.intervenantsChoisis = arr[3];
                 }
             }
-            if (arr[4] == undefined || arr[4] == null) { //ceinture choisie 
+            if (arr[4] == undefined || arr[4] == null) {
+                //ceinture choisie
                 this.storage.set("ceintureChoisieObject", "");
                 this.ceintureChoisieObject = "";
                 this.selectedCeintureName = "";
@@ -918,24 +958,28 @@ let InterventionceinturePage = class InterventionceinturePage {
                     this.selectedCeintureName = "";
                 }
             }
-            if (arr[5] == undefined || arr[5] == null) { //ceinture choisie ssid 
+            if (arr[5] == undefined || arr[5] == null) {
+                //ceinture choisie ssid
                 this.storage.set("ssid", "");
                 this.selectedUpcSsid = "";
             }
             else {
                 this.selectedUpcSsid = arr[5];
             }
-            if (arr[6] == undefined || arr[6] == null) { //ceinture choisie password   
+            if (arr[6] == undefined || arr[6] == null) {
+                //ceinture choisie password
                 this.storage.set("password", "");
                 this.selectedUpcPass = "";
             }
             else {
                 this.selectedUpcPass = arr[6];
             }
-            if (arr[7] == undefined || arr[7] == null) { //nom de l'upc
+            if (arr[7] == undefined || arr[7] == null) {
+                //nom de l'upc
                 this.storage.set("upcname", "");
             }
-            if (arr[8] == undefined || arr[8] == null) { //types des bouteilles de l'entrepôt associé à la ceinture
+            if (arr[8] == undefined || arr[8] == null) {
+                //types des bouteilles de l'entrepôt associé à la ceinture
                 this.storage.set("stockBottleTypes", "");
             }
             else {
@@ -943,7 +987,8 @@ let InterventionceinturePage = class InterventionceinturePage {
                     this.ceintureChoisieBottlesTypes = arr[8];
                 }
             }
-            if (arr[9] == undefined || arr[9] == null) { //bouteilles de l'entrepôt associé à la ceinture 
+            if (arr[9] == undefined || arr[9] == null) {
+                //bouteilles de l'entrepôt associé à la ceinture
                 this.storage.set("ceintureChoisieBottles", "");
             }
             else {
@@ -951,7 +996,8 @@ let InterventionceinturePage = class InterventionceinturePage {
                     this.ceintureChoisieBottles = arr[9];
                 }
             }
-            if (arr[10] == undefined || arr[10] == null) { //commentaires associé à la ceinture
+            if (arr[10] == undefined || arr[10] == null) {
+                //commentaires associé à la ceinture
                 this.storage.set("commentaires", "");
             }
             else {
@@ -963,7 +1009,8 @@ let InterventionceinturePage = class InterventionceinturePage {
             if (this.ceintureChoisieObject != "") {
                 var d = new Date();
                 this.global.logs.push(this.global.msToTime(d.getTime()) + " --- Présélection ceinture ---");
-                this.nearUPCList.forEach(element => {
+                this.nearUPCList.forEach((element) => {
+                    //compare les id pour présélectionner la ceinture
                     if (this.ceintureChoisieObject.id == element.item_id.id) {
                         this.selectedItems = [element];
                         this.isCeintureSelected = true;
@@ -980,18 +1027,20 @@ let InterventionceinturePage = class InterventionceinturePage {
     }
     /*fonction formattage date*/
     pad2(number) {
-        return (number < 10 ? '0' : '') + number;
+        return (number < 10 ? "0" : "") + number;
     }
     getCommentaires(item) {
         this.item = item;
         if (item != undefined && item != null) {
-            this.upcv3service.getActionNotDoneById(this.global.token, item.item_id.id).subscribe(res => {
+            this.upcv3service
+                .getActionNotDoneById(this.global.token, item.item_id.id)
+                .subscribe((res) => {
                 this.global.retryCount = 0;
                 if (res.result[0] != undefined) {
                     if (res.result[0].mess != null) {
                         this.displayCommentaire = true;
                         this.commentaires = [];
-                        res.result.forEach(element => {
+                        res.result.forEach((element) => {
                             this.commentaires.push(element.mess);
                         });
                         this.storage.set("commentaires", this.commentaires);
@@ -999,7 +1048,7 @@ let InterventionceinturePage = class InterventionceinturePage {
                 }
                 this.getBottlesInfos();
             }, (err) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
-                this.global.onConnect(err).then(res => {
+                this.global.onConnect(err).then((res) => {
                     this.global.onConnectEnCours = false;
                     if (res == "retry") {
                         this.getCommentaires(item);
@@ -1017,22 +1066,29 @@ let InterventionceinturePage = class InterventionceinturePage {
     }
     getBottlesInfos() {
         /*Récupération des informations sur les bouteilles dans la base de données*/
-        if (this.ceintureChoisieObject != undefined && this.ceintureChoisieObject != null && this.ceintureChoisieObject != "") {
-            this.upcv3service.getSitesByUpcID(this.ceintureChoisieObject.id, this.global.token).subscribe(res => {
+        if (this.ceintureChoisieObject != undefined &&
+            this.ceintureChoisieObject != null &&
+            this.ceintureChoisieObject != "") {
+            this.upcv3service
+                .getSitesByUpcID(this.ceintureChoisieObject.id, this.global.token)
+                .subscribe((res) => {
                 this.global.retryCount = 0;
-                //alert("site : "+JSON.stringify(res))       
-                if (res.result.stock != null) { //s'il y a un entrepôt par défaut associé à la ceinture           
+                //alert("site : "+JSON.stringify(res))
+                if (res.result.stock != null) {
+                    //s'il y a un entrepôt par défaut associé à la ceinture
                     this.ceintureChoisieBottlesTypes = res.result.stock.bottleTypes; //liste des types de bouteilles de l'entreôt associé à la ceinture
                     this.storage.set("stockBottleTypes", this.ceintureChoisieBottlesTypes);
                     this.storage.set("stockBottleTypesModeTest", this.ceintureChoisieBottlesTypes);
-                    this.upcv3service.getBottlesByStockId(res.result.stock.id, this.global.token).subscribe(res => {
-                        res.result.forEach(element => {
+                    this.upcv3service
+                        .getBottlesByStockId(res.result.stock.id, this.global.token)
+                        .subscribe((res) => {
+                        res.result.forEach((element) => {
                             this.ceintureChoisieBottles.push(element); //liste des bouteilles de l'entrepôt associé à la ceinture
                         });
                         this.storage.set("ceintureChoisieBottles", this.ceintureChoisieBottles);
                         this.global.connexionRequise = "Aucune";
-                    }, err => {
-                        this.global.onConnect(err).then(res => {
+                    }, (err) => {
+                        this.global.onConnect(err).then((res) => {
                             this.global.onConnectEnCours = false;
                             if (res == "retry") {
                                 this.getBottlesInfos();
@@ -1046,16 +1102,18 @@ let InterventionceinturePage = class InterventionceinturePage {
                     });
                 }
                 else {
-                    this.upcv3service.getAllBottleTypes(this.global.token).subscribe(res => {
-                        res.result.forEach(element => {
+                    this.upcv3service
+                        .getAllBottleTypes(this.global.token)
+                        .subscribe((res) => {
+                        res.result.forEach((element) => {
                             this.defaultBottlesTypes.push(element);
                         });
                         this.storage.set("stockBottleTypes", this.defaultBottlesTypes);
                         this.global.connexionRequise = "Aucune";
                     });
                 }
-            }, err => {
-                this.global.onConnect(err).then(res => {
+            }, (err) => {
+                this.global.onConnect(err).then((res) => {
                     this.global.onConnectEnCours = false;
                     if (res == "retry") {
                         this.getBottlesInfos();
@@ -1071,15 +1129,15 @@ let InterventionceinturePage = class InterventionceinturePage {
     }
     /*Liste des ceintures*/
     getNearUpcList() {
-        this.upcv3service.getUPC3(this.global.token).subscribe(res => {
+        this.upcv3service.getUPC3(this.global.token).subscribe((res) => {
             this.global.retryCount = 0;
             this.storage.set("statutConnexion", "Serveur").then(() => {
-                var data = res.result; //liste de toutes les ceintures   
+                var data = res.result; //liste de toutes les ceintures
                 this.data = data;
                 this.checkLocationEnabled(data);
             });
-        }, err => {
-            this.global.onConnect(err).then(res => {
+        }, (err) => {
+            this.global.onConnect(err).then((res) => {
                 this.global.onConnectEnCours = false;
                 if (res == "retry") {
                     this.getDataFromServer();
@@ -1092,7 +1150,9 @@ let InterventionceinturePage = class InterventionceinturePage {
         });
     }
     checkLocationEnabled(data) {
-        this.diagnostic.isLocationEnabled().then(res => {
+        this.diagnostic
+            .isLocationEnabled()
+            .then((res) => {
             if (res == true) {
                 this.successGeolocation(data);
             }
@@ -1101,27 +1161,33 @@ let InterventionceinturePage = class InterventionceinturePage {
                 alert("La page a besoin de la position de l'appareil. Activez la géolocalisation puis appuyez sur 'OK'.");
                 this.checkLocationEnabled(this.data);
             }
-        }).catch(error => {
+        })
+            .catch((error) => {
             this.successGeolocation(data);
         });
     }
     successGeolocation(data) {
-        this.geolocation.getCurrentPosition().then(res => {
+        this.geolocation
+            .getCurrentPosition()
+            .then((res) => {
             this.lat = res.coords.latitude;
             this.long = res.coords.longitude;
             this.makeUpcList();
-        }).catch(err => {
+        })
+            .catch((err) => {
             this.geolocationAlert();
         });
     }
     makeUpcList() {
-        this.data.forEach(element => {
-            this.nearUPCNotSorted.push(element); //Liste des ceintures qu'on gardera volontairement non triée             
-            this.nearUPCToSort.push(element); //Liste des ceintures qu'on va trier 
+        this.data.forEach((element) => {
+            this.nearUPCNotSorted.push(element); //Liste des ceintures qu'on gardera volontairement non triée
+            this.nearUPCToSort.push(element); //Liste des ceintures qu'on va trier
         });
         if (this.useGeolocation == true) {
             this.nearUPCToSort.sort((a, b) => {
-                return this.getDistanceFromLatLonInKm(this.lat, this.long, a.lat, a.lng) - this.getDistanceFromLatLonInKm(this.lat, this.long, b.lat, b.lng);
+                //Tri croissant des ceintures en fonction de la distance où elles se trouvent par rapport à la position du téléphone
+                return (this.getDistanceFromLatLonInKm(this.lat, this.long, a.lat, a.lng) -
+                    this.getDistanceFromLatLonInKm(this.lat, this.long, b.lat, b.lng));
             });
             //crée la liste avec les 10 ceintures les plus proches
             for (var i = 0; i < 10; i++) {
@@ -1129,23 +1195,25 @@ let InterventionceinturePage = class InterventionceinturePage {
                 this.nearUPCNames.push(this.nearUPC[i].upcNameId);
             }
         }
-        //ajoute toutes les ceintures sans ordre de distance 
-        this.nearUPCNotSorted.forEach(element => {
+        //ajoute toutes les ceintures sans ordre de distance
+        this.nearUPCNotSorted.forEach((element) => {
             this.nearUPC.push(element);
             this.nearUPCNames.push(element.upcNameId);
         });
-        this.nearUPC.forEach(element => {
+        this.nearUPC.forEach((element) => {
+            //crée une liste d'items ceinture {item_id:{json de la ceinture},item_text:"nom de la ceinture"}
             this.nearUPCList.push({ item_id: element, item_text: element.upcNameId });
         });
         this.storage.set("nearUpcList", this.nearUPCList);
         this.getBottlesInTransitList();
     }
     getBottlesInTransitList() {
-        this.upcv3service.getAllBottle(this.global.token).subscribe(res => {
+        this.upcv3service.getAllBottle(this.global.token).subscribe((res) => {
+            //liste de toutes les bouteilles
             this.global.retryCount = 0;
             this.bottles = res;
             var bottlesInTransitTmp = [];
-            this.bottles.result.forEach(element => {
+            this.bottles.result.forEach((element) => {
                 if (element.localisationType == "TRANSIT") {
                     bottlesInTransitTmp.push(element); //liste des bouteilles en transit
                 }
@@ -1161,8 +1229,8 @@ let InterventionceinturePage = class InterventionceinturePage {
             });
             this.storage.set("bottlesInTransit", this.bottlesInTransit);
             this.setInterventionVariables();
-        }, err => {
-            this.global.onConnect(err).then(res => {
+        }, (err) => {
+            this.global.onConnect(err).then((res) => {
                 this.global.onConnectEnCours = false;
                 if (res == "retry") {
                     this.getBottlesInTransitList();
@@ -1176,6 +1244,7 @@ let InterventionceinturePage = class InterventionceinturePage {
     }
     /* --- fonctions liées à l'objet de l'intervention --- */
     other() {
+        //choix d'un objet "autre" qui n'est pas dans la liste
         this.display = false;
         this.motive[this.motive.indexOf("Autre")] = this.otherObj;
         this.storage.set("autre", this.otherObj);
@@ -1189,14 +1258,14 @@ let InterventionceinturePage = class InterventionceinturePage {
             this.motive.push(item);
         }
         this.storage.set("motiveItems", this.selectedMotive); //format pour la liste
-        this.storage.set("motiveString", this.motive); //format pour la base de données    
+        this.storage.set("motiveString", this.motive); //format pour la base de données
     }
     onRemoveMotive(item) {
         this.motive = this.motive.filter(function (element) {
             return element !== item;
         });
         this.storage.set("motiveItems", this.selectedMotive); //format pour la liste
-        this.storage.set("motiveString", this.motive); //format pour la base de données   
+        this.storage.set("motiveString", this.motive); //format pour la base de données
     }
     /* --- fonctions liées aux intervenants --- */
     onSelectIntervenant(item) {
@@ -1218,14 +1287,16 @@ let InterventionceinturePage = class InterventionceinturePage {
     deg2rad(deg) {
         return deg * (Math.PI / 180);
     }
-    //fonction calcul de distance 
+    //fonction calcul de distance
     getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
         var R = 6371; // Radius of the earth in km
         var dLat = this.deg2rad(lat2 - lat1); // deg2rad below
         var dLon = this.deg2rad(lon2 - lon1);
         var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) *
-                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            Math.cos(this.deg2rad(lat1)) *
+                Math.cos(this.deg2rad(lat2)) *
+                Math.sin(dLon / 2) *
+                Math.sin(dLon / 2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         var d = R * c; // Distance in km
         return d;
@@ -1238,8 +1309,10 @@ let InterventionceinturePage = class InterventionceinturePage {
             this.item = item;
             if (this.isCeintureSelected == true) {
                 this.ceintureChoisieObjectTmp = item.item_id;
-                this.selectedUpcSsidTmp = item.item_id.communicationParameters.comWiFiName;
-                this.selectedUpcPassTmp = item.item_id.communicationParameters.comWiFiPass;
+                this.selectedUpcSsidTmp =
+                    item.item_id.communicationParameters.comWiFiName;
+                this.selectedUpcPassTmp =
+                    item.item_id.communicationParameters.comWiFiPass;
                 this.changementCeintureAlert();
             }
             else {
@@ -1252,10 +1325,10 @@ let InterventionceinturePage = class InterventionceinturePage {
                 this.selectedUpcPass = item.item_id.communicationParameters.comWiFiPass;
                 yield this.storage.set("ssid", this.selectedUpcSsid);
                 yield this.storage.set("ssid_upc", this.selectedUpcSsid);
-                //debug 
+                //debug
                 console.log("ssid:" + this.selectedUpcSsid);
                 yield this.storage.set("password", this.selectedUpcPass);
-                //debug 
+                //debug
                 console.log("password:" + this.selectedUpcPass);
                 yield this.storage.set("ceintureId", this.ceintureId);
                 //
@@ -1273,18 +1346,22 @@ let InterventionceinturePage = class InterventionceinturePage {
     /*Changement de ceinture dans le cas d'une intervention en cours*/
     changementCeintureAlert() {
         return new Promise((resolve, reject) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
-            this.alertController.create({
+            this.alertController
+                .create({
                 header: "Attention",
                 subHeader: "Intervention en cours",
-                message: "Une intervention est en cours sur la ceinture " + this.selectedCeintureName + ". Les données ne seront pas enregistrées, souhaitez-vous continuer ?",
+                message: "Une intervention est en cours sur la ceinture " +
+                    this.selectedCeintureName +
+                    ". Les données ne seront pas enregistrées, souhaitez-vous continuer ?",
                 buttons: [
                     {
                         text: "Annuler",
-                        role: 'cancel',
+                        role: "cancel",
                         handler: () => {
                             this.selectedUpcSsidTmp = "";
                             this.selectedUpcPassTmp = "";
-                            this.nearUPCList.forEach(element => {
+                            this.nearUPCList.forEach((element) => {
+                                //compare les id pour présélectionner la ceinture
                                 if (this.ceintureChoisieObject.id == element.item_id.id) {
                                     this.selectedItems = [element];
                                 }
@@ -1293,45 +1370,50 @@ let InterventionceinturePage = class InterventionceinturePage {
                             this.isCeintureSelected = false;
                             this.selectedItems = [];
                             resolve();
-                        }
+                        },
                     },
                     {
-                        text: "Continuer", handler: () => {
+                        text: "Continuer",
+                        handler: () => {
                             this.selectedUpcSsid = this.selectedUpcSsidTmp;
                             this.selectedUpcPass = this.selectedUpcPassTmp;
                             this.ceintureChoisieObject = this.ceintureChoisieObjectTmp;
                             this.storage.set("ceintureChoisieObject", JSON.stringify(this.ceintureChoisieObject));
-                            this.selectedCeintureName = this.ceintureChoisieObject.upcNameId;
+                            this.selectedCeintureName =
+                                this.ceintureChoisieObject.upcNameId;
                             this.display = false;
                             this.display = true;
                             /*WifiWizard2.disconnect().then(
-                              this.connectToUpc()
-                            );   */
+                          this.connectToUpc()
+                        );   */
                             resolve();
-                        }
-                    }
-                ]
-            }).then(res => res.present());
+                        },
+                    },
+                ],
+            })
+                .then((res) => res.present());
         }));
     }
     geolocationAlert() {
         return new Promise((resolve, reject) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
-            this.alertController.create({
+            this.alertController
+                .create({
                 header: "Attention",
                 subHeader: "Géolocalisation requise",
                 message: "La page a besoin de la position de l'appareil. Activez la géolocalisation puis appuyez sur 'OK'.",
                 buttons: [
                     {
                         text: "Poursuivre sans géolocalisation",
-                        role: 'cancel',
+                        role: "cancel",
                         handler: () => {
                             this.useGeolocation = false;
                             this.makeUpcList();
                             resolve();
-                        }
+                        },
                     },
                     {
-                        text: "OK", handler: () => {
+                        text: "OK",
+                        handler: () => {
                             switch (this.geolocationErrorFunction) {
                                 case "check":
                                     this.checkLocationEnabled(this.data);
@@ -1341,36 +1423,48 @@ let InterventionceinturePage = class InterventionceinturePage {
                                     break;
                             }
                             resolve();
-                        }
-                    }
-                ]
-            }).then(res => res.present());
+                        },
+                    },
+                ],
+            })
+                .then((res) => res.present());
         }));
     }
     createSequence() {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
             var notSortedSequenceOfScreensTmp = [];
-            this.motive.forEach(element => {
+            this.motive.forEach((element) => {
+                //récupère tous les écrans pour tous les motifs d'intervention choisis
                 switch (element) {
                     case "Installation":
-                        this.sequenceOfScreensOptions.installation.forEach(element => {
+                        this.sequenceOfScreensOptions.installation.forEach((element) => {
                             notSortedSequenceOfScreensTmp.push(element);
                         });
                         break;
                     case "Modification du nombre de pièges":
-                        this.sequenceOfScreensOptions.modificationNbPieges.forEach(element => { notSortedSequenceOfScreensTmp.push(element); });
+                        this.sequenceOfScreensOptions.modificationNbPieges.forEach((element) => {
+                            notSortedSequenceOfScreensTmp.push(element);
+                        });
                         break;
                     case "Remise en route":
-                        this.sequenceOfScreensOptions.remiseEnRoute.forEach(element => { notSortedSequenceOfScreensTmp.push(element); });
+                        this.sequenceOfScreensOptions.remiseEnRoute.forEach((element) => {
+                            notSortedSequenceOfScreensTmp.push(element);
+                        });
                         break;
                     case "Maintenance":
-                        this.sequenceOfScreensOptions.maintenance.forEach(element => { notSortedSequenceOfScreensTmp.push(element); });
+                        this.sequenceOfScreensOptions.maintenance.forEach((element) => {
+                            notSortedSequenceOfScreensTmp.push(element);
+                        });
                         break;
                     case "Changements de bouteilles CO2":
-                        this.sequenceOfScreensOptions.changementBouteillesCo2.forEach(element => { notSortedSequenceOfScreensTmp.push(element); });
+                        this.sequenceOfScreensOptions.changementBouteillesCo2.forEach((element) => {
+                            notSortedSequenceOfScreensTmp.push(element);
+                        });
                         break;
                     case "Changement d'UPC":
-                        this.sequenceOfScreensOptions.changementUpc.forEach(element => { notSortedSequenceOfScreensTmp.push(element); });
+                        this.sequenceOfScreensOptions.changementUpc.forEach((element) => {
+                            notSortedSequenceOfScreensTmp.push(element);
+                        });
                         break;
                     case "Hivernage":
                         break;
@@ -1385,7 +1479,7 @@ let InterventionceinturePage = class InterventionceinturePage {
             this.sequenceOfScreensTmp.push("Commentaires", "Rapport de visite", "Fin d'intervention");
             this.sequenceOfScreensTmp.unshift("Paramètres généraux");
             var sequenceTmp = [];
-            this.sequenceOfScreensTmp.forEach(element => {
+            this.sequenceOfScreensTmp.forEach((element) => {
                 var page;
                 switch (element) {
                     case "Paramètres généraux":
@@ -1430,15 +1524,15 @@ let InterventionceinturePage = class InterventionceinturePage {
                 }
                 sequenceTmp.push([element, false, page]);
             });
-            this.storage.get("sequence").then(res => {
+            this.storage.get("sequence").then((res) => {
                 var sequence;
                 if (res == undefined || res == "") {
                     sequence = sequenceTmp;
                 }
                 else {
                     if (res != null) {
-                        sequenceTmp.forEach(elementTmp => {
-                            res.forEach(elementRes => {
+                        sequenceTmp.forEach((elementTmp) => {
+                            res.forEach((elementRes) => {
                                 if (elementRes[2] == elementTmp[2]) {
                                     if (elementRes[1] != elementTmp[1]) {
                                         elementTmp[1] = elementRes[1];
@@ -1457,7 +1551,9 @@ let InterventionceinturePage = class InterventionceinturePage {
     }
     /*Commence la séquence et/ou redirige vers la première page de la séquence suivante*/
     goNext() {
-        if (this.motive == [] || this.intervenants == [] || this.ceintureChoisieObject == "") {
+        if (this.motive == [] ||
+            this.intervenants == [] ||
+            this.ceintureChoisieObject == "") {
             alert("Vous devez remplir tous les champs pour continuer.");
         }
         else {
@@ -1486,7 +1582,7 @@ InterventionceinturePage.ctorParameters = () => [
 ];
 InterventionceinturePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-        selector: 'app-interventionceinture',
+        selector: "app-interventionceinture",
         template: __webpack_require__(/*! raw-loader!./interventionceinture.page.html */ "./node_modules/raw-loader/index.js!./src/app/interventionceinture/interventionceinture.page.html"),
         encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewEncapsulation"].None,
         styles: [__webpack_require__(/*! ./interventionceinture.page.scss */ "./src/app/interventionceinture/interventionceinture.page.scss")]

@@ -249,11 +249,11 @@ var NamepiegePage = /** @class */ (function () {
             }
             if (_this.tryToRead && _this.global.upcmodbus.state == 1) {
                 console.log("Try to read >");
-                _this.tryToRead = false;
                 // lecture statique :
                 _this.isLoading = true;
                 _this.global.upcmodbus.onReadStatique(_this.global.upcname, _this.global.mode, "namepiege").then(function (res) {
                     if (res == true) {
+                        _this.tryToRead = false;
                         _this.isLoading = false;
                         console.log(">  lecture reussi ");
                         _this.subscribeRefresh();
@@ -347,7 +347,7 @@ var NamepiegePage = /** @class */ (function () {
         }
         else {
             this.isLoading = true;
-            this.global.upcmodbus.client.setStringArrayInHoldingResgisters(variable.adr, value).then(function () {
+            this.global.upcmodbus.client.setStringArrayInHoldingResgisters(variable, value).then(function () {
                 console.log("accueil ::  ecriture reussie");
                 // lecture statique :
                 _this.global.upcmodbus.onReadStatique(_this.global.upcname, _this.global.mode, "namepiege").then(function (res) {
@@ -464,9 +464,7 @@ var NamepiegePage = /** @class */ (function () {
     
   }*/
     NamepiegePage.prototype.onChangeFusHor = function () {
-        var d = new Date();
-        this.global.logs.push(this.global.msToTime(d.getTime()) + " - appel on change fushor");
-        this.global.onWriteEnable(this.correspondancesRegistres.upcTimeZone, this.fusehor);
+        this.ecrir(this.correspondancesRegistres.upcTimeZone, this.fusehor);
     };
     NamepiegePage.prototype.unsubscribeRefresh = function () {
         this.events.unsubscribe("loadParameters");

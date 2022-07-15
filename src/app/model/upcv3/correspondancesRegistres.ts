@@ -35,7 +35,7 @@ export class CorrespondancesRegistres {
     comWifiSsid = {adr : 40045, dim: 10, type: "string"}
     comWifiSsidW = {adr : 40720, dim: 20, type: "string"}
     comWifiPass = {adr : 40055, dim: 10, type: "string"}
-    comWifiPassW = {adr : 40740, dim: 20, type: "string"}
+    comWifiPassW = {adr : 40740, dim: 10, type: "string"}
     comWifiApCh	= {adr : 40340, dim: 1, type: "int"}
 
     //CO2 diffusion
