@@ -4927,7 +4927,7 @@ var Events = /** @class */ (function () {
         this.cbList[name].push(func);
         return {
             name: name,
-            index: this.cbList[name].length - 1
+            index: this.cbList[name].length - 1,
         };
     };
     Events.prototype.off = function (id) {
@@ -4951,7 +4951,7 @@ var StateMachine = /** @class */ (function (_super) {
     StateMachine.prototype.setState = function (newState) {
         var oldState = this.state;
         this.state = newState;
-        this.fire('state_changed', [oldState, newState]);
+        this.fire("state_changed", [oldState, newState]);
         return this;
     };
     StateMachine.ctorParameters = function () { return [
@@ -4973,7 +4973,7 @@ var MODBUS_CONSTS = {
     READ_INPUT_REGISTERS: 4,
     WRITE_SINGLE_COIL: 5,
     WRITE_SINGLE_REGISTER: 6,
-    WRITE_MULTIPLE_REGISTERS: 16
+    WRITE_MULTIPLE_REGISTERS: 16,
 };
 var ModbusRequest = /** @class */ (function () {
     function ModbusRequest(id, length) {
@@ -5035,7 +5035,7 @@ var ReadCoilsRequest = /** @class */ (function (_super) {
     ReadCoilsRequest.prototype.handleResponse = function (data, offset) {
         var mbap = new DataView(data, offset, 7), pdu = new DataView(data, offset + 7, 2), fc = pdu.getUint8(0), byte_count = pdu.getUint8(1);
         if (fc > 0x80) {
-            this.reject({ errCode: 'serverError' });
+            this.reject({ errCode: "serverError" });
             return 2;
         }
         var dv = new DataView(data, offset + 9, byte_count), fc_data = [], i, t, j, mask, c = this.count;
@@ -5077,7 +5077,7 @@ var ReadHoldingRegistersRequest = /** @class */ (function (_super) {
     ReadHoldingRegistersRequest.prototype.handleResponse = function (data, offset) {
         var mbap = new DataView(data, offset, 7), pdu = new DataView(data, offset + 7, 2), fc = pdu.getUint8(0), byte_count = pdu.getUint8(1);
         if (fc > 0x80) {
-            this.reject({ errCode: 'serverError' });
+            this.reject({ errCode: "serverError" });
             return 2;
         }
         var dv = new DataView(data, offset + 7 + 2, byte_count), fc_data = [];
@@ -5111,7 +5111,7 @@ var ReadInputRegistersRequest = /** @class */ (function (_super) {
     ReadInputRegistersRequest.prototype.handleResponse = function (data, offset) {
         var mbap = new DataView(data, offset, 7), pdu = new DataView(data, offset + 7, 2), fc = pdu.getUint8(0), byte_count = pdu.getUint8(1);
         if (fc > 0x80) {
-            this.reject({ errCode: 'serverError' });
+            this.reject({ errCode: "serverError" });
             return 2;
         }
         var dv = new DataView(data, offset + 7 + 2, byte_count), fc_data = [];
@@ -5145,7 +5145,7 @@ var WriteSingleCoilRequest = /** @class */ (function (_super) {
     WriteSingleCoilRequest.prototype.handleResponse = function (data, offset) {
         var mbap = new DataView(data, offset, 7), pdu = new DataView(data, offset + 7, 5), fc = pdu.getUint8(0), start = pdu.getUint8(1), value = pdu.getUint16(3);
         if (fc > 0x80) {
-            this.reject({ errCode: 'serverError' });
+            this.reject({ errCode: "serverError" });
             return 2;
         }
         this.resolve(this);
@@ -5175,7 +5175,7 @@ var WriteSingleRegisterRequest = /** @class */ (function (_super) {
     WriteSingleRegisterRequest.prototype.handleResponse = function (data, offset) {
         var mbap = new DataView(data, offset, 7), pdu = new DataView(data, offset + 7, 5), fc = pdu.getUint8(0), start = pdu.getUint16(1), value = pdu.getUint16(3);
         if (fc > 0x80) {
-            this.reject({ errCode: 'serverError' });
+            this.reject({ errCode: "serverError" });
             return 2;
         }
         this.resolve(this);
@@ -5192,24 +5192,24 @@ var WriteSingleRegisterRequest = /** @class */ (function (_super) {
 var WriteMultipleRegistersRequest = /** @class */ (function (_super) {
     tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](WriteMultipleRegistersRequest, _super);
     function WriteMultipleRegistersRequest(id, address, values) {
-        var _this = _super.call(this, id, 7 + 6 + (values.length * 2)) || this;
+        var _this = _super.call(this, id, 7 + 6 + values.length * 2) || this;
         _this.address = address;
         _this.values = values;
         // Init
-        _this.body = new DataView(_this.packet, 7, 6 + (_this.values.length * 2));
+        _this.body = new DataView(_this.packet, 7, 6 + _this.values.length * 2);
         _this.body.setUint8(MODBUS_CONSTS.BODY_FC, MODBUS_CONSTS.WRITE_MULTIPLE_REGISTERS);
         _this.body.setUint16(1, _this.address);
         _this.body.setUint16(3, _this.values.length);
         _this.body.setUint8(5, 2 * _this.values.length);
         _this.values.forEach(function (v, i) {
-            this.body.setUint16(6 + (i * 2), v);
+            this.body.setUint16(6 + i * 2, v);
         }.bind(_this));
         return _this;
     }
     WriteMultipleRegistersRequest.prototype.handleResponse = function (data, offset) {
         var mbap = new DataView(data, offset, 7), pdu = new DataView(data, offset + 7, 5), fc = pdu.getUint8(0), start = pdu.getUint16(1), quant = pdu.getUint16(3);
         if (fc > 0x80) {
-            this.reject({ errCode: 'serverError' });
+            this.reject({ errCode: "serverError" });
             return 2;
         }
         this.resolve(this);
@@ -5227,7 +5227,7 @@ var ModbusRequestManager = /** @class */ (function (_super) {
     tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](ModbusRequestManager, _super);
     function ModbusRequestManager(verbose) {
         if (verbose === void 0) { verbose = false; }
-        var _this = _super.call(this, 'ready') || this;
+        var _this = _super.call(this, "ready") || this;
         _this.queue = [];
         _this.socketId = 1;
         _this.receiveBuffer = [];
@@ -5236,9 +5236,9 @@ var ModbusRequestManager = /** @class */ (function (_super) {
         _this.socketId = 1;
         _this.verbose = verbose;
         // Init
-        window['chrome'].sockets.tcp.onReceive.addListener(_this.receiveListener.bind(_this));
-        _this.on('state_changed', function onStateChanged(oldState, newState) {
-            if (newState === 'ready')
+        window["chrome"].sockets.tcp.onReceive.addListener(_this.receiveListener.bind(_this));
+        _this.on("state_changed", function onStateChanged(oldState, newState) {
+            if (newState === "ready")
                 this.send();
         }.bind(_this));
         return _this;
@@ -5246,7 +5246,7 @@ var ModbusRequestManager = /** @class */ (function (_super) {
     ModbusRequestManager.prototype.receiveListener = function (info) {
         if (info.socketId !== this.socketId)
             return;
-        if (this.inState('waiting')) {
+        if (this.inState("waiting")) {
             this.receiveBuffer.push(info);
             this.handleResponse();
         }
@@ -5255,66 +5255,66 @@ var ModbusRequestManager = /** @class */ (function (_super) {
     };
     ModbusRequestManager.prototype.handleResponse = function () {
         if (this.verbose)
-            console.log('ModbusRequestManager', 'Trying to handle response.');
+            console.log("ModbusRequestManager", "Trying to handle response.");
         if (this.receiveBuffer.length === null)
             return;
         var response = this.receiveBuffer.shift(), data = response.data;
         if (data.byteLength < 7) {
             if (this.verbose)
-                console.log('ModbusRequestManager', 'Wrong packet size.', (data.byteLength));
+                console.log("ModbusRequestManager", "Wrong packet size.", data.byteLength);
             return;
         }
         // read the header
         var mbap = new DataView(data, 0, 7), tid = mbap.getUint16(0);
         if (!this.currentRequest) {
             if (this.verbose)
-                console.error('ModbusRequestManager', 'No current request, strange!!', this.currentRequest);
+                console.error("ModbusRequestManager", "No current request, strange!!", this.currentRequest);
             return;
         }
         if (this.currentRequest.id !== tid) {
             if (this.verbose)
-                console.error('ModbusRequestManager', 'CurrentRequest tid !== received tid', this.currentRequest.id, tid);
+                console.error("ModbusRequestManager", "CurrentRequest tid !== received tid", this.currentRequest.id, tid);
             return;
         }
         if (this.verbose)
-            console.log('ModbusRequestManager', 'Request handled fine.');
+            console.log("ModbusRequestManager", "Request handled fine.");
         // cleartimeout
         clearTimeout(this.currentRequest.timeout);
         // handle fc response
         this.currentRequest.handleResponse(data, 0);
-        this.setState('ready');
+        this.setState("ready");
     };
     ModbusRequestManager.prototype.send = function () {
         if (this.queue.length === 0) {
             if (this.verbose)
-                console.log('ModbusRequestManager', 'Nothing in Queue.');
+                console.log("ModbusRequestManager", "Nothing in Queue.");
             return;
         }
-        this.setState('sending');
+        this.setState("sending");
         if (this.verbose)
-            console.log('ModbusRequestManager', 'Trying to send packet.');
+            console.log("ModbusRequestManager", "Trying to send packet.");
         this.currentRequest = this.queue.shift();
         // Before sending set the timeout for this request
         var timeout_no = setTimeout(function () {
             if (this.verbose)
-                console.log('ModbusRequestManager', 'Timeout occured.');
-            this.currentRequest.reject({ errCode: 'timeout' });
-            this.fire('error', [{ errCode: 'timeout' }]);
+                console.log("ModbusRequestManager", "Timeout occured.");
+            this.currentRequest.reject({ errCode: "timeout" });
+            this.fire("error", [{ errCode: "timeout" }]);
         }.bind(this), 10000);
         this.currentRequest.setTimeout(timeout_no);
         if (this.verbose)
-            console.log('ModbusRequestManager', 'Sending packet...');
-        window['chrome'].sockets.tcp.send(this.socketId, this.currentRequest.packet, function (sendInfo) {
+            console.log("ModbusRequestManager", "Sending packet...");
+        window["chrome"].sockets.tcp.send(this.socketId, this.currentRequest.packet, function (sendInfo) {
             if (sendInfo.resultCode < 0) {
                 if (this.verbose)
-                    console.log('ModbusRequestManager', 'A error occured while sending packet.', sendInfo.resultCode);
-                this.currentRequest.reject({ errCode: 'sendError' });
-                this.setState('ready');
+                    console.log("ModbusRequestManager", "A error occured while sending packet.", sendInfo.resultCode);
+                this.currentRequest.reject({ errCode: "sendError" });
+                this.setState("ready");
                 return;
             }
             if (this.verbose)
-                console.log('ModbusRequestManager', 'Packet send! Waiting for response.');
-            this.setState('waiting');
+                console.log("ModbusRequestManager", "Packet send! Waiting for response.");
+            this.setState("waiting");
         }.bind(this));
     };
     ModbusRequestManager.prototype.setSocketId = function (id) {
@@ -5323,12 +5323,12 @@ var ModbusRequestManager = /** @class */ (function (_super) {
     };
     ModbusRequestManager.prototype.sendPacket = function (packet) {
         if (this.verbose)
-            console.log('ModbusRequestManager', 'Queing a new packet.');
+            console.log("ModbusRequestManager", "Queing a new packet.");
         this.queue.push(packet);
         if (this.socketId === null) {
-            throw new Error('ModbusRequestManager - No socketId provided.');
+            throw new Error("ModbusRequestManager - No socketId provided.");
         }
-        if (!this.inState('ready')) {
+        if (!this.inState("ready")) {
             return;
         }
         this.send();
@@ -5336,13 +5336,13 @@ var ModbusRequestManager = /** @class */ (function (_super) {
     };
     ModbusRequestManager.prototype.clear = function () {
         while (this.queue.length > 0) {
-            this.queue.pop().reject({ 'errCode': 'clientOffline' });
+            this.queue.pop().reject({ errCode: "clientOffline" });
         }
-        this.setState('ready');
+        this.setState("ready");
     };
     ModbusRequestManager.prototype.flush = function () {
         if (this.verbose)
-            console.log('ModbusRequestManager', 'Flush');
+            console.log("ModbusRequestManager", "Flush");
         if (this.socketId === null)
             return;
         this.send();
@@ -5360,8 +5360,8 @@ var ModbusClient = /** @class */ (function (_super) {
         if (timeout === void 0) { timeout = 32000; }
         if (autoreconnect === void 0) { autoreconnect = true; }
         if (verbose === void 0) { verbose = true; }
-        var _this = _super.call(this, 'init') || this;
-        _this.host = '10.1.1.1';
+        var _this = _super.call(this, "init") || this;
+        _this.host = "10.1.1.1";
         _this.port = 502;
         _this.id = 0;
         _this.isWaiting = false;
@@ -5375,30 +5375,30 @@ var ModbusClient = /** @class */ (function (_super) {
         _this.verbose = verbose;
         _this.requestManager = new ModbusRequestManager(verbose);
         // Init
-        _this.requestManager.on('error', function (err) {
-            if (this.inState('offline'))
+        _this.requestManager.on("error", function (err) {
+            if (this.inState("offline"))
                 return;
-            this.fire('error', [err]);
+            this.fire("error", [err]);
             if (this.autoreconnect)
                 this.reconnect();
             else
                 this.disconnect();
         }.bind(_this));
         // flush everything when going from error to online again
-        _this.on('state_changed', function (oldState, newState) {
+        _this.on("state_changed", function (oldState, newState) {
             if (this.verbose)
-                console.log('state changed', oldState, newState);
+                console.log("state changed", oldState, newState);
             this.fire(newState);
-            if (oldState === 'error' && newState === 'online')
+            if (oldState === "error" && newState === "online")
                 this.requestManager.flush();
         }.bind(_this));
-        _this.on('offline', function () {
+        _this.on("offline", function () {
             this.requestManager.clear();
         }.bind(_this));
-        _this.on('online', function () {
+        _this.on("online", function () {
             this.isReconnecting = false;
         }.bind(_this));
-        _this.on('error', function () {
+        _this.on("error", function () {
             this.isReconnecting = false;
         }.bind(_this));
         _this.createSocket();
@@ -5406,19 +5406,19 @@ var ModbusClient = /** @class */ (function (_super) {
     }
     ModbusClient.prototype.onReceiveError = function (info) {
         if (this.verbose)
-            console.log('ModbusClient', 'Receive Error occured.', info, this.socketId);
+            console.log("ModbusClient", "Receive Error occured.", info, this.socketId);
         if (info.socketId !== this.socketId)
             return;
-        this.setState('offline');
-        this.fire('error', [{ errCode: 'ServerError', args: arguments }]);
+        this.setState("offline");
+        this.fire("error", [{ errCode: "ServerError", args: arguments }]);
         if (this.autoreconnect) {
             if (this.verbose)
-                console.log('ModbusClient', 'AutoReconnect enabled, reconnecting.');
+                console.log("ModbusClient", "AutoReconnect enabled, reconnecting.");
             this.reconnect();
             return;
         }
         if (this.verbose)
-            console.log('ModbusClient', 'Disconnecting client.');
+            console.log("ModbusClient", "Disconnecting client.");
         this.close();
     };
     ModbusClient.prototype.createSocket = function () {
@@ -5426,15 +5426,15 @@ var ModbusClient = /** @class */ (function (_super) {
         return new Promise(function (resolve, reject) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 if (this.verbose)
-                    console.log('ModbusClient', 'Creating socket.');
-                window['chrome'].sockets.tcp.onReceiveError.addListener(this.onReceiveError.bind(this));
-                window['chrome'].sockets.tcp.create({}, function (createInfo) {
+                    console.log("ModbusClient", "Creating socket.");
+                window["chrome"].sockets.tcp.onReceiveError.addListener(this.onReceiveError.bind(this));
+                window["chrome"].sockets.tcp.create({}, function (createInfo) {
                     if (this.verbose)
-                        console.log('ModbusClient', 'Socket created.', createInfo);
+                        console.log("ModbusClient", "Socket created.", createInfo);
                     this.socketId = createInfo.socketId;
                     this.requestManager.setSocketId(this.socketId);
-                    this.setState('offline');
-                    this.fire('ready');
+                    this.setState("offline");
+                    this.fire("ready");
                     this.setHost(this.host);
                     this.setPort(this.port);
                     this.connect();
@@ -5450,17 +5450,17 @@ var ModbusClient = /** @class */ (function (_super) {
     };
     ModbusClient.prototype.sendPacket = function (req) {
         // invalid states for sending packages
-        if (!this.inState('online'))
+        if (!this.inState("online"))
             return;
         this.requestManager.sendPacket(req);
     };
     ModbusClient.prototype.isOnline = function () {
-        return this.inState('online');
+        return this.inState("online");
     };
     ModbusClient.prototype.readCoils = function (start, count) {
         var request = new ReadCoilsRequest(this.createNewId(), start, count);
-        if (!this.inState('online')) {
-            request.reject({ errCode: 'offline' });
+        if (!this.inState("online")) {
+            request.reject({ errCode: "offline" });
             return request.getPromise();
         }
         this.sendPacket(request);
@@ -5468,8 +5468,8 @@ var ModbusClient = /** @class */ (function (_super) {
     };
     ModbusClient.prototype.readHoldingRegisters = function (start, count) {
         var request = new ReadHoldingRegistersRequest(this.createNewId(), start, count);
-        if (!this.inState('online')) {
-            request.reject({ errCode: 'offline' });
+        if (!this.inState("online")) {
+            request.reject({ errCode: "offline" });
             return request.getPromise();
         }
         this.sendPacket(request);
@@ -5477,8 +5477,8 @@ var ModbusClient = /** @class */ (function (_super) {
     };
     ModbusClient.prototype.readInputRegisters = function (start, count) {
         var request = new ReadInputRegistersRequest(this.createNewId(), start, count);
-        if (!this.inState('online')) {
-            request.reject({ errCode: 'offline' });
+        if (!this.inState("online")) {
+            request.reject({ errCode: "offline" });
             return request.getPromise();
         }
         this.sendPacket(request);
@@ -5486,8 +5486,8 @@ var ModbusClient = /** @class */ (function (_super) {
     };
     ModbusClient.prototype.writeSingleCoil = function (address, value) {
         var request = new WriteSingleCoilRequest(this.createNewId(), address, value);
-        if (!this.inState('online')) {
-            request.reject({ errCode: 'offline' });
+        if (!this.inState("online")) {
+            request.reject({ errCode: "offline" });
             return request.getPromise();
         }
         this.sendPacket(request);
@@ -5495,8 +5495,8 @@ var ModbusClient = /** @class */ (function (_super) {
     };
     ModbusClient.prototype.writeSingleRegister = function (address, value) {
         var request = new WriteSingleRegisterRequest(this.createNewId(), address, value);
-        if (!this.inState('online')) {
-            request.reject({ errCode: 'offline' });
+        if (!this.inState("online")) {
+            request.reject({ errCode: "offline" });
             return request.getPromise();
         }
         this.sendPacket(request);
@@ -5504,46 +5504,48 @@ var ModbusClient = /** @class */ (function (_super) {
     };
     ModbusClient.prototype.writeMultipleRegisters = function (address, values) {
         var request = new WriteMultipleRegistersRequest(this.createNewId(), address, values);
-        if (!this.inState('online')) {
-            request.reject({ errCode: 'offline' });
+        if (!this.inState("online")) {
+            request.reject({ errCode: "offline" });
             return request.getPromise();
         }
         this.sendPacket(request);
         return request.getPromise();
     };
     ModbusClient.prototype.connect = function () {
-        if (this.inState('connecting') || this.inState('online'))
+        if (this.inState("connecting") || this.inState("online"))
             return;
-        this.setState('connecting');
-        this.fire('busy', null);
+        this.setState("connecting");
+        this.fire("busy", null);
         if (this.verbose)
-            console.log('ModbusClient', 'Establishing connection.', this.socketId, this.host, this.port);
-        window['chrome'].sockets.tcp.connect(this.socketId, this.host, this.port, function (result) {
-            //38 error 0 successful Echec connection UPC 
+            console.log("ModbusClient", "Establishing connection.", this.socketId, this.host, this.port);
+        window["chrome"].sockets.tcp.connect(this.socketId, this.host, this.port, function (result) {
+            //38 error 0 successful Echec connection UPC
             //-104 not connected WiFi non connecté
-            //popup pour donner l'erreur à l'utilisateur 
+            //popup pour donner l'erreur à l'utilisateur
             //Retentative de connexion
             if (this.verbose)
-                console.log('ModbusClient', 'Connect returned', arguments);
+                console.log("ModbusClient", "Connect returned", arguments);
             if (result !== 0) {
                 if (this.verbose) {
-                    console.log('ModbusClient', 'Connection failed.', result);
+                    console.log("ModbusClient", "Connection failed.", result);
                     localStorage.removeItem("isConnected");
                 }
-                this.fire('error', [{
-                        errCode: 'connectionError',
-                        result: result
-                    }]);
+                this.fire("error", [
+                    {
+                        errCode: "connectionError",
+                        result: result,
+                    },
+                ]);
                 //if (this.autoreconnect) {
                 if (this.verbose)
-                    console.log('ModbusClient', 'Auto Reconnect enabled, trying to reconnect.');
+                    console.log("ModbusClient", "Auto Reconnect enabled, trying to reconnect.");
                 this.reconnect(5000);
                 //}
                 return;
             }
             if (this.verbose)
-                console.log('ModbusClient', 'Connection successfull.');
-            this.setState('online');
+                console.log("ModbusClient", "Connection successfull.");
+            this.setState("online");
         }.bind(this));
         return this;
     };
@@ -5563,16 +5565,16 @@ var ModbusClient = /** @class */ (function (_super) {
     };
     ModbusClient.prototype.disconnect = function (cb) {
         if (cb === void 0) { cb = null; }
-        if (this.inState('disconnecting'))
+        if (this.inState("disconnecting"))
             return;
-        this.setState('disconnecting');
-        this.fire('busy', null);
+        this.setState("disconnecting");
+        this.fire("busy", null);
         if (this.verbose)
-            console.log('ModbusClient', 'Disconnecting client.');
-        window['chrome'].sockets.tcp.disconnect(this.socketId, function () {
+            console.log("ModbusClient", "Disconnecting client.");
+        window["chrome"].sockets.tcp.disconnect(this.socketId, function () {
             if (this.verbose)
-                console.log('ModbusClient', 'Client disconnected.');
-            this.setState('offline');
+                console.log("ModbusClient", "Client disconnected.");
+            this.setState("offline");
             if (!cb)
                 return;
             cb();
@@ -5583,11 +5585,11 @@ var ModbusClient = /** @class */ (function (_super) {
         if (cb === void 0) { cb = null; }
         this.disconnect(function () {
             if (this.verbose)
-                console.log('ModbusClient', 'Close socket.');
-            window['chrome'].sockets.tcp.close(this.socketId, function () {
+                console.log("ModbusClient", "Close socket.");
+            window["chrome"].sockets.tcp.close(this.socketId, function () {
                 if (this.verbose)
-                    console.log('ModbusClient', 'Client closed.');
-                this.setState('init');
+                    console.log("ModbusClient", "Client closed.");
+                this.setState("init");
                 this.socketId = null;
                 if (!cb)
                     return;
@@ -5599,18 +5601,18 @@ var ModbusClient = /** @class */ (function (_super) {
         if (this.isReconnecting)
             return;
         this.isReconnecting = true;
-        this.fire('reconnecting', null);
+        this.fire("reconnecting", null);
         setTimeout(function () {
-            if (this.inState('offline')) {
+            if (this.inState("offline")) {
                 if (this.verbose)
-                    console.log('ModbusClient', 'Client already disconnected.');
+                    console.log("ModbusClient", "Client already disconnected.");
                 this.connect();
                 return;
             }
-            window['chrome'].sockets.tcp.disconnect(this.socketId, function () {
+            window["chrome"].sockets.tcp.disconnect(this.socketId, function () {
                 if (this.verbose)
-                    console.log('ModbusClient', 'Client disconnected.', arguments);
-                this.setState('offline');
+                    console.log("ModbusClient", "Client disconnected.", arguments);
+                this.setState("offline");
                 this.connect();
             }.bind(this));
         }.bind(this), wait ? wait : 0);
@@ -5641,7 +5643,12 @@ var ModbusClient = /** @class */ (function (_super) {
         view.setUint16(0, lowRegister);
         lowRegisterBytes = [view.getUint8(1), view.getUint8(0)];
         // Get bytes from float
-        floatBytes = [highRegisterBytes[1], highRegisterBytes[0], lowRegisterBytes[1], lowRegisterBytes[0]];
+        floatBytes = [
+            highRegisterBytes[1],
+            highRegisterBytes[0],
+            lowRegisterBytes[1],
+            lowRegisterBytes[0],
+        ];
         buffer = new ArrayBuffer(4);
         view = new DataView(buffer);
         for (var i = 0; i < floatBytes.length; i++) {
@@ -5704,7 +5711,12 @@ var ModbusClient = /** @class */ (function (_super) {
         view.setUint16(0, lowRegister);
         lowRegisterBytes = [view.getUint8(1), view.getUint8(0)];
         // Get bytes from int
-        intBytes = [highRegisterBytes[1], highRegisterBytes[0], lowRegisterBytes[1], lowRegisterBytes[0]];
+        intBytes = [
+            highRegisterBytes[1],
+            highRegisterBytes[0],
+            lowRegisterBytes[1],
+            lowRegisterBytes[0],
+        ];
         buffer = new ArrayBuffer(4);
         view = new DataView(buffer);
         for (var i = 0; i < intBytes.length; i++) {
@@ -5736,10 +5748,10 @@ var ModbusClient = /** @class */ (function (_super) {
     ModbusClient.prototype.getStringFromHoldingRegister = function (start, count) {
         return this.readHoldingRegisters(start, count).then(function (data) {
             var string = this.registerToString(data);
-            if (string.indexOf('\u0004') != -1)
-                string = string.substr(0, string.indexOf('\u0004'));
-            if (string.indexOf('\0') != -1)
-                string = string.substr(0, string.indexOf('\0'));
+            if (string.indexOf("\u0004") != -1)
+                string = string.substr(0, string.indexOf("\u0004"));
+            if (string.indexOf("\0") != -1)
+                string = string.substr(0, string.indexOf("\0"));
             return string;
         }.bind(this));
     };
@@ -5751,18 +5763,30 @@ var ModbusClient = /** @class */ (function (_super) {
         console.log("value = " + values);
         console.log(this.stringArrayToRegister(values));
         var result = this.stringArrayToRegister(values);
-        for (var i = 0; i < (variable.dim - this.stringArrayToRegister(values).length); i++) {
+        for (var i = 0; i < variable.dim - this.stringArrayToRegister(values).length; i++) {
             result.push(0);
         }
         console.log(result);
         return this.writeMultipleRegisters(variable.adr, result);
     };
+    ModbusClient.prototype.getArray = function (dim, values) {
+        console.log("register a ecrire ");
+        console.log("value = " + values);
+        console.log(this.stringArrayToRegister(values));
+        var result = this.stringArrayToRegister(values);
+        for (var i = 0; i < dim - this.stringArrayToRegister(values).length; i++) {
+            result.push(0);
+        }
+        return result;
+    };
     ModbusClient.prototype.registerToString = function (registers) {
-        var hexValue = '';
+        var hexValue = "";
         for (var i = 0; i < registers.length; i++) {
             //if (i > 0 && registers[i - 1] == 101) break;
             if (registers[i].toString(16).length == 4)
-                hexValue += registers[i].toString(16).substr(2, 2) + registers[i].toString(16).substr(0, 2);
+                hexValue +=
+                    registers[i].toString(16).substr(2, 2) +
+                        registers[i].toString(16).substr(0, 2);
             else
                 hexValue += registers[i].toString(16);
         }
@@ -5791,26 +5815,33 @@ var ModbusClient = /** @class */ (function (_super) {
         return registersArray;
     };
     ModbusClient.prototype.stringToRegister = function (string) {
-        var array = string.split('').map(function (s) { return s.charCodeAt(0); });
+        var array = string.split("").map(function (s) {
+            return s.charCodeAt(0);
+        });
         var returnarray = [];
-        for (var i = 0; i < string.length / 2 + string.length % 2; i++)
+        for (var i = 0; i < string.length / 2 + (string.length % 2); i++)
             returnarray.push(0);
         for (var i = 0; i < returnarray.length; i++) {
             returnarray[i] = array[i * 2];
             if (i * 2 + 1 < array.length) {
-                returnarray[i] = (returnarray[i] | (array[i * 2 + 1] << 8));
+                returnarray[i] = returnarray[i] | (array[i * 2 + 1] << 8);
             }
         }
-        return returnarray;
+        return returnarray.filter(function (el) { return el != undefined; });
     };
     /* Date */
     ModbusClient.prototype.getDateFromHoldingRegister = function (start) {
         return this.readHoldingRegisters(start, 2).then(function (data) {
-            var startDate = new Date(1970, 0, 1, 0, 0, 0), highRegister = data[1], lowRegister = data[0], highRegisterBytes = this.toByteArray(highRegister), lowRegisterBytes = this.toByteArray(lowRegister), intBytes = [highRegisterBytes[1], highRegisterBytes[0], lowRegisterBytes[1], lowRegisterBytes[0]], buf = new ArrayBuffer(4), view = new DataView(buf);
+            var startDate = new Date(1970, 0, 1, 0, 0, 0), highRegister = data[1], lowRegister = data[0], highRegisterBytes = this.toByteArray(highRegister), lowRegisterBytes = this.toByteArray(lowRegister), intBytes = [
+                highRegisterBytes[1],
+                highRegisterBytes[0],
+                lowRegisterBytes[1],
+                lowRegisterBytes[0],
+            ], buf = new ArrayBuffer(4), view = new DataView(buf);
             for (var i = 0; i < intBytes.length; i++) {
                 view.setUint8(i, intBytes[i]);
             }
-            return new Date(startDate.getTime() + (view.getInt32(0) * 1000));
+            return new Date(startDate.getTime() + view.getInt32(0) * 1000);
         });
     };
     /* Diffusion program */
@@ -5825,10 +5856,12 @@ var ModbusClient = /** @class */ (function (_super) {
     };
     ModbusClient.prototype.setDiffusionProgramInHoldingRegister = function (start, value) {
         var startTimeData = this.uint32ToRegister(value.start), endTimeData = this.uint32ToRegister(value.stop), data = [
-            startTimeData[0], startTimeData[1],
-            endTimeData[0], endTimeData[1],
+            startTimeData[0],
+            startTimeData[1],
+            endTimeData[0],
+            endTimeData[1],
             value.mode,
-            value.intensity
+            value.intensity,
         ];
         return this.writeMultipleRegisters(start, data);
     };
@@ -5843,16 +5876,18 @@ var ModbusClient = /** @class */ (function (_super) {
     };
     ModbusClient.prototype.setDiffusionSunInHoldingRegister = function (start, value) {
         var startTimeData = this.uint32ToRegister(value.offset), endTimeData = this.uint32ToRegister(value.duration), data = [
-            startTimeData[0], startTimeData[1],
-            endTimeData[0], endTimeData[1],
+            startTimeData[0],
+            startTimeData[1],
+            endTimeData[0],
+            endTimeData[1],
             value.mode,
-            value.intensity
+            value.intensity,
         ];
         return this.writeMultipleRegisters(start, data);
     };
     ModbusClient.prototype.hex2a = function (hexx) {
         var hex = hexx.toString();
-        var str = '';
+        var str = "";
         for (var i = 0; i < hex.length; i += 2)
             str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
         return str;
@@ -5881,7 +5916,11 @@ var UPCDiffCo2Program = /** @class */ (function () {
         this.intensity = intensity;
     }
     UPCDiffCo2Program.prototype.getDailyConsumption = function (beltRefConsumption) {
-        return Math.round((beltRefConsumption * ((this.stop - this.start) / 3600) * this.intensity / 10) * 100) / 100;
+        return (Math.round(((beltRefConsumption *
+            ((this.stop - this.start) / 3600) *
+            this.intensity) /
+            10) *
+            100) / 100);
     };
     UPCDiffCo2Program.prototype.getMonthlyConsumption = function (beltRefConsumption) {
         if (this.mode >= 0 && this.mode <= 6)
@@ -5918,7 +5957,8 @@ var UPCDiffCo2Sun = /** @class */ (function () {
         this.mode = mode;
     }
     UPCDiffCo2Sun.prototype.getDailyConsumption = function (beltRefConsumption) {
-        return Math.round((beltRefConsumption * (this.duration / 3600) * this.intensity / 10) * 100) / 100;
+        return (Math.round(((beltRefConsumption * (this.duration / 3600) * this.intensity) / 10) *
+            100) / 100);
     };
     UPCDiffCo2Sun.prototype.getMonthlyConsumption = function (beltRefConsumption) {
         return this.getDailyConsumption(beltRefConsumption) * 7 * 4;

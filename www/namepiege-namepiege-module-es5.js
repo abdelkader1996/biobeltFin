@@ -158,7 +158,8 @@ var NamepiegePage = /** @class */ (function () {
         console.log("=========================================================================");
         this.global.connexionRequise = "UPC";
         console.log(" - Connexion requise :" + this.global.connexionRequise);
-        console.log(" - Connexion  actuel  (avant on read statique) :" + this.global.statutConnexion);
+        console.log(" - Connexion  actuel  (avant on read statique) :" +
+            this.global.statutConnexion);
         this.ConnecterUPC();
         this.Read();
         this.correspondancesRegistres = new _model_upcv3_correspondancesRegistres__WEBPACK_IMPORTED_MODULE_5__["CorrespondancesRegistres"]();
@@ -181,7 +182,7 @@ var NamepiegePage = /** @class */ (function () {
                                 case 0:
                                     this.stored_ssid = stored_ssid;
                                     this.password_ssid = password;
-                                    //recuperer l ssid  +password 
+                                    //recuperer l ssid  +password
                                     console.log("acceuil , stored password" + password);
                                     console.log("acceuil , stored ssid" + stored_ssid);
                                     return [4 /*yield*/, WifiWizard2.getConnectedSSID()];
@@ -189,37 +190,48 @@ var NamepiegePage = /** @class */ (function () {
                                     wifi = _a.sent();
                                     console.log("connected ssid: " + wifi);
                                     if (wifi != stored_ssid) {
-                                        console.log("wifi diffrents :");
-                                        WifiWizard2.connect(stored_ssid, password).then(function () {
+                                        console.log("wifi diffrents :>>>>>>>>>");
+                                        console.log("connecte wifi ");
+                                        WifiWizard2.connect(stored_ssid, password)
+                                            .then(function () {
                                             //connexion reussi a l UPC  :
                                             console.log("connexion wifi up reussie :");
                                             _this.check = true;
                                             _this.global.statutConnexion = "UPC";
-                                            _this.global.onConnectModbus().then(function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                                            _this.global
+                                                .onConnectModbus()
+                                                .then(function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
                                                 return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                                                     console.log("accueil , connexion modbus reussie >> ");
                                                     this.connection_modbus = true;
                                                     this.isLoading = false;
-                                                    //on peut lire 
+                                                    //on peut lire
                                                     this.tryToRead = true;
                                                     return [2 /*return*/];
                                                 });
-                                            }); }).catch(function (err) {
+                                            }); })
+                                                .catch(function (err) {
                                                 console.log("accueil + connexion modbus échouée  ");
                                                 _this.isLoading = false;
                                                 _this.connection_modbus = false;
                                             });
-                                        }).catch(function () {
-                                            console.log("connexion impossible a l'UPC");
+                                        })
+                                            .catch(function (err) {
+                                            console.log("connexion impossible a l'UPC wifi");
+                                            console.log(err);
                                         });
                                     }
                                     else {
-                                        this.global.onConnectModbus().then(function () {
+                                        this.global
+                                            .onConnectModbus()
+                                            .then(function () {
+                                            //on tente une connexion modbus pour déterminer si c'est un upc
                                             //connexion modbus réussie : c'est un upc
                                             console.log("accueil + connexion modbus reussie ");
                                             _this.connection_modbus = true;
                                             _this.isLoading = false;
-                                        }).catch(function (err) {
+                                        })
+                                            .catch(function (err) {
                                             console.log("accueil + connexion modbus échouée  ");
                                             _this.isLoading = false;
                                             _this.connection_modbus = false;
@@ -236,60 +248,81 @@ var NamepiegePage = /** @class */ (function () {
     };
     NamepiegePage.prototype.Read = function () {
         var _this = this;
-        this.do = setInterval(function () {
-            console.log("======================== cycle ================================");
-            console.log("UPC stat  ====  " + _this.global.upcmodbus.state);
-            _this.checkConnectionWifi();
-            // en cas de perte de connexion 
-            if (_this.current_ssid != _this.stored_ssid && _this.check) {
-                console.log("wifi diff >>>> ");
-                console.log("reconnexion  >>>> ");
-                //connecter au wifi 
-                _this.ConnecterUPC();
-            }
-            if (_this.tryToRead && _this.global.upcmodbus.state == 1) {
-                console.log("Try to read >");
-                // lecture statique :
-                _this.isLoading = true;
-                _this.global.upcmodbus.onReadStatique(_this.global.upcname, _this.global.mode, "namepiege").then(function (res) {
-                    if (res == true) {
-                        _this.tryToRead = false;
-                        _this.isLoading = false;
-                        console.log(">  lecture reussi ");
-                        _this.subscribeRefresh();
-                        _this.events.publish("loadParameters");
-                        _this.global.lectureStatiqueEnCours = false;
-                        _this.global.displayLoading = false;
-                        _this.tryToRead = false;
-                    }
-                    else {
-                        console.log(">  lecture echouée  ");
-                        _this.isLoading = false;
-                        _this.tryToRead = true;
-                        _this.global.statutConnexion = "Aucune";
-                        _this.global.lectureStatiqueEnCours = false;
-                        _this.global.displayLoading = false;
-                    }
-                }).catch(function (err) {
-                    _this.tryToRead = true;
-                    _this.isLoading = false;
-                    console.log("acceuil::erreur lecture");
-                    console.log(err);
-                });
-                //fin de lecture statique :
-            }
-        }, 500);
+        this.do = setInterval(function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+            var res;
+            var _this = this;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        console.log("======================== cycle ================================");
+                        this.checkConnectionWifi();
+                        if (!(this.current_ssid != this.stored_ssid)) return [3 /*break*/, 2];
+                        console.log("wifi diff >>>> ");
+                        console.log("disconnect ");
+                        return [4 /*yield*/, WifiWizard2.disconnect(this.current_ssid)
+                                .then(function (result) {
+                                console.log("connect ");
+                                _this.ConnecterUPC();
+                            })
+                                .catch(function (err) { })];
+                    case 1:
+                        res = _a.sent();
+                        console.log(res);
+                        //connecter au wifi
+                        console.log("reconnexion  >>>> ");
+                        _a.label = 2;
+                    case 2:
+                        if (this.tryToRead && this.global.upcmodbus.state == 1) {
+                            console.log("Try to read >");
+                            // lecture statique :
+                            this.isLoading = true;
+                            this.global.upcmodbus
+                                .onReadStatique(this.global.upcname, this.global.mode, "namepiege")
+                                .then(function (res) {
+                                if (res == true) {
+                                    _this.tryToRead = false;
+                                    _this.isLoading = false;
+                                    console.log(">  lecture reussi ");
+                                    _this.subscribeRefresh();
+                                    _this.events.publish("loadParameters");
+                                    _this.global.lectureStatiqueEnCours = false;
+                                    _this.global.displayLoading = false;
+                                    _this.tryToRead = false;
+                                }
+                                else {
+                                    console.log(">  lecture echouée  ");
+                                    _this.isLoading = false;
+                                    _this.tryToRead = true;
+                                    _this.global.statutConnexion = "Aucune";
+                                    _this.global.lectureStatiqueEnCours = false;
+                                    _this.global.displayLoading = false;
+                                }
+                            })
+                                .catch(function (err) {
+                                _this.tryToRead = true;
+                                _this.isLoading = false;
+                                console.log("acceuil::erreur lecture");
+                                console.log(err);
+                            });
+                            //fin de lecture statique :
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        }); }, 500);
     };
-    NamepiegePage.prototype.ngOnInit = function () {
-    };
+    NamepiegePage.prototype.ngOnInit = function () { };
     NamepiegePage.prototype.checkConnectionWifi = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             var wifi;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, WifiWizard2.getConnectedSSID()];
+                    case 0:
+                        console.log("check wifi conx");
+                        return [4 /*yield*/, WifiWizard2.getConnectedSSID()];
                     case 1:
                         wifi = _a.sent();
+                        console.log(wifi);
                         this.current_ssid = wifi;
                         return [2 /*return*/];
                 }
@@ -315,10 +348,14 @@ var NamepiegePage = /** @class */ (function () {
         var _this = this;
         if (variable.type == "int") {
             this.isLoading = true;
-            this.global.upcmodbus.client.setIntInHoldingRegister(variable.adr, variable.dim, value).then(function () {
+            this.global.upcmodbus.client
+                .setIntInHoldingRegister(variable.adr, variable.dim, value)
+                .then(function () {
                 console.log("accueil ::  ecriture reussie");
                 // lecture statique :
-                _this.global.upcmodbus.onReadStatique(_this.global.upcname, _this.global.mode, "namepiege").then(function (res) {
+                _this.global.upcmodbus
+                    .onReadStatique(_this.global.upcname, _this.global.mode, "namepiege")
+                    .then(function (res) {
                     if (res == true) {
                         _this.isLoading = false;
                         console.log("accueil:  lecture reussi ");
@@ -334,23 +371,29 @@ var NamepiegePage = /** @class */ (function () {
                         _this.global.lectureStatiqueEnCours = false;
                         _this.global.displayLoading = false;
                     }
-                }).catch(function (err) {
+                })
+                    .catch(function (err) {
                     _this.isLoading = false;
                     console.log("acceuil::erreur lecture");
                     console.log(err);
                 });
                 //fin de lecture statique :
-            }).catch(function () {
+            })
+                .catch(function () {
                 _this.isLoading = false;
                 console.log("num piege ::écriture impossible");
             });
         }
         else {
             this.isLoading = true;
-            this.global.upcmodbus.client.setStringArrayInHoldingResgisters(variable, value).then(function () {
+            this.global.upcmodbus.client
+                .setStringArrayInHoldingResgisters(variable, value)
+                .then(function () {
                 console.log("accueil ::  ecriture reussie");
                 // lecture statique :
-                _this.global.upcmodbus.onReadStatique(_this.global.upcname, _this.global.mode, "namepiege").then(function (res) {
+                _this.global.upcmodbus
+                    .onReadStatique(_this.global.upcname, _this.global.mode, "namepiege")
+                    .then(function (res) {
                     if (res == true) {
                         _this.isLoading = false;
                         console.log("accueil:  lecture reussi ");
@@ -366,13 +409,15 @@ var NamepiegePage = /** @class */ (function () {
                         _this.global.lectureStatiqueEnCours = false;
                         _this.global.displayLoading = false;
                     }
-                }).catch(function (err) {
+                })
+                    .catch(function (err) {
                     _this.isLoading = false;
                     console.log("acceuil::erreur lecture");
                     console.log(err);
                 });
                 //fin de lecture statique :
-            }).catch(function () {
+            })
+                .catch(function () {
                 _this.isLoading = false;
                 console.log("num piege ::écriture impossible");
             });
@@ -384,21 +429,32 @@ var NamepiegePage = /** @class */ (function () {
             var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.alertCTRL.create({ message: "Êtes vous sûr d'effectuer un Wipe ?",
-                            buttons: [{ text: "Non" }, { text: "Oui", handler: function () {
+                    case 0: return [4 /*yield*/, this.alertCTRL.create({
+                            message: "Êtes vous sûr d'effectuer un Wipe ?",
+                            buttons: [
+                                { text: "Non" },
+                                {
+                                    text: "Oui",
+                                    handler: function () {
                                         // ecrire la commande  EEEE dans 40011 pour faire un wipe
-                                        _this.global.upcmodbus.client.setIntInHoldingRegister(40011, 1, 61166).then(function (res) {
+                                        _this.global.upcmodbus.client
+                                            .setIntInHoldingRegister(40011, 1, 61166)
+                                            .then(function (res) {
                                             var d = new Date();
                                             _this.global.logs.push(_this.global.msToTime(d.getTime()) + " - écriture réussie");
                                             _this.subscribeRefresh();
                                             _this.global.ecritureEnCours = false;
-                                        }).catch(function (err) {
+                                        })
+                                            .catch(function (err) {
                                             var d = new Date();
                                             _this.global.logs.push(_this.global.msToTime(d.getTime()) + " - écriture échouée");
                                             _this.subscribeRefresh();
                                             _this.global.ecritureEnCours = false;
                                         });
-                                    } }] })];
+                                    },
+                                },
+                            ],
+                        })];
                     case 1:
                         alert = _a.sent();
                         alert.present();
@@ -413,21 +469,32 @@ var NamepiegePage = /** @class */ (function () {
             var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.alertCTRL.create({ message: "Êtes vous sûr d'effectuer un Reset ?",
-                            buttons: [{ text: "Non" }, { text: "Oui", handler: function () {
+                    case 0: return [4 /*yield*/, this.alertCTRL.create({
+                            message: "Êtes vous sûr d'effectuer un Reset ?",
+                            buttons: [
+                                { text: "Non" },
+                                {
+                                    text: "Oui",
+                                    handler: function () {
                                         // ecrire la commande  EEEE dans 40011 pour faire un wipe
-                                        _this.global.upcmodbus.client.setIntInHoldingRegister(40011, 1, 65535).then(function (res) {
+                                        _this.global.upcmodbus.client
+                                            .setIntInHoldingRegister(40011, 1, 65535)
+                                            .then(function (res) {
                                             var d = new Date();
                                             _this.global.logs.push(_this.global.msToTime(d.getTime()) + " - écriture réussie");
                                             _this.subscribeRefresh();
                                             _this.global.ecritureEnCours = false;
-                                        }).catch(function (err) {
+                                        })
+                                            .catch(function (err) {
                                             var d = new Date();
                                             _this.global.logs.push(_this.global.msToTime(d.getTime()) + " - écriture échouée");
                                             _this.subscribeRefresh();
                                             _this.global.ecritureEnCours = false;
                                         });
-                                    } }] })];
+                                    },
+                                },
+                            ],
+                        })];
                     case 1:
                         alert = _a.sent();
                         alert.present();
@@ -437,32 +504,32 @@ var NamepiegePage = /** @class */ (function () {
         });
     };
     /*
-  async onReset() {
-    let alert = await this.alertCTRL.create({message : "Êtes vous sûr d'effectuer un Reset ?",
-                                             buttons : [{text : "Non"},{text : "Oui", handler : ()=>{
-                                              this.global.onWriteModbusVariables().then(res=>{
-                                                var d = new Date()
-                                                this.global.logs.push(this.global.msToTime(d.getTime())+" - début écriture")
-                                                this.global.ecritureEnCours = true;
-                                                this.global.upcmodbus.client.setIntInHoldingRegister(40011,1,65535).then(res=>{
+    async onReset() {
+      let alert = await this.alertCTRL.create({message : "Êtes vous sûr d'effectuer un Reset ?",
+                                               buttons : [{text : "Non"},{text : "Oui", handler : ()=>{
+                                                this.global.onWriteModbusVariables().then(res=>{
                                                   var d = new Date()
-                                                  this.global.logs.push(this.global.msToTime(d.getTime())+" - écriture réussie")
-                                                  this.subscribeRefresh()
-                                                  this.global.ecritureEnCours = false;
-                                                }).catch(err=>{
-                                                  var d = new Date()
-                                                  this.global.logs.push(this.global.msToTime(d.getTime())+" - écriture échouée")
-                                                  this.subscribeRefresh()
-                                                  this.global.ecritureEnCours = false;
+                                                  this.global.logs.push(this.global.msToTime(d.getTime())+" - début écriture")
+                                                  this.global.ecritureEnCours = true;
+                                                  this.global.upcmodbus.client.setIntInHoldingRegister(40011,1,65535).then(res=>{
+                                                    var d = new Date()
+                                                    this.global.logs.push(this.global.msToTime(d.getTime())+" - écriture réussie")
+                                                    this.subscribeRefresh()
+                                                    this.global.ecritureEnCours = false;
+                                                  }).catch(err=>{
+                                                    var d = new Date()
+                                                    this.global.logs.push(this.global.msToTime(d.getTime())+" - écriture échouée")
+                                                    this.subscribeRefresh()
+                                                    this.global.ecritureEnCours = false;
+                                                  })
                                                 })
-                                              })
+                                                  
                                                 
-                                              
-                                             }}]
-    })
-    alert.present();
-    
-  }*/
+                                               }}]
+      })
+      alert.present();
+      
+    }*/
     NamepiegePage.prototype.onChangeFusHor = function () {
         this.ecrir(this.correspondancesRegistres.upcTimeZone, this.fusehor);
     };
@@ -495,7 +562,7 @@ var NamepiegePage = /** @class */ (function () {
     ]; };
     NamepiegePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-            selector: 'app-namepiege',
+            selector: "app-namepiege",
             template: __webpack_require__(/*! raw-loader!./namepiege.page.html */ "./node_modules/raw-loader/index.js!./src/app/namepiege/namepiege.page.html"),
             styles: [__webpack_require__(/*! ./namepiege.page.scss */ "./src/app/namepiege/namepiege.page.scss")]
         }),

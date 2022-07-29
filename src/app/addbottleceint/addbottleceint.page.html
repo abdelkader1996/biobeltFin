@@ -114,14 +114,17 @@
       <!-- ajout bouteille B1-->
       <ion-col size="6" style="border-bottom-left-radius: 80px 80px">
         <ion-list>
-          <ion-item *ngFor="let bottle of bottlesB1">
+          <ion-item
+            *ngFor="let bottle of bottlesB1;let i =index"
+            (click)="cancelB1(i)"
+          >
             <ion-label
-              [ngStyle]="{'background-color':bottle.style==1?'green':''}"
+              [ngStyle]="{'background-color':bottle.style==1?'green':bottle.style==-1?'red':''}"
             >
-              {{bottle.type.brand}} {{bottle.type.designation}}
+              {{bottle.type?.brand}} {{bottle.type?.designation}}
             </ion-label>
             <ion-label
-              [ngStyle]="{'background-color':bottle.style==1?'green':''}"
+              [ngStyle]="{'background-color':bottle.style==1?'green':bottle.style==-1?'red':''}"
             >
               {{bottle.barcode}}
             </ion-label>
@@ -149,19 +152,26 @@
               + bouteille B1
             </button>
           </ion-item>
+          <ion-item>
+            <button class="button-3" (click)="viderB1()">vider B1</button>
+          </ion-item>
         </ion-list>
       </ion-col>
       <!-- ajout bouteille B2-->
       <ion-col size="6" style="border-bottom-left-radius: 80px 80px">
         <ion-list>
-          <ion-item class="bouteille-ajoute" *ngFor="let bottle of bottlesB2">
+          <ion-item
+            class="bouteille-ajoute"
+            *ngFor="let bottle of bottlesB2; let i=index"
+            (click)="cancelB2(i)"
+          >
             <ion-label
-              [ngStyle]="{'background-color':bottle.style==1?'green':''}"
+              [ngStyle]="{'background-color':bottle.style==1?'green':bottle.style==-1?'red':''}"
             >
-              {{bottle.type.brand}} {{bottle.type.designation}}
+              {{bottle.type?.brand}} {{bottle.type?.designation}}
             </ion-label>
             <ion-label
-              [ngStyle]="{'background-color':bottle.style==1?'green':''}"
+              [ngStyle]="{'background-color':bottle.style==1?'green':bottle.style==-1?'red':''}"
               style="display: block"
             >
               {{bottle.barcode}}
@@ -186,9 +196,12 @@
             <ion-label>Total : {{contenueAAjouterB2}}</ion-label>
           </ion-item>
           <ion-item>
-            <button class="button-3" (click)="onAddBottleB2()">
+            <button class="button-3" full (click)="onAddBottleB2()">
               + bouteille B2
             </button>
+          </ion-item>
+          <ion-item>
+            <button class="button-3" full (click)="viderB2()">vider B2</button>
           </ion-item>
         </ion-list>
       </ion-col>
@@ -201,12 +214,18 @@
           text-align: center;
         "
       >
-        <button class="button-3" style="margin: auto" (click)="onSynchro()">
+        <button
+          class="button-3"
+          style="margin: auto"
+          (click)="ecrireLesBouteilles()"
+        >
           Synchronisation
         </button>
       </ion-col>
     </ion-row>
   </ion-grid>
+  <hr />
+  {{this.aEcrir | json}}
 </ion-content>
 <ion-footer>
   <ion-button *ngIf="!global.displayLoading" style="float: left" fill="clear">

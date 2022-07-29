@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n    </ion-buttons>    \r\n    <ion-buttons slot=\"end\" *ngIf=\"!global.isBBAM\">\r\n      <ion-button fill=\"clear\"> <ion-icon name=\"globe\" color=\"light\" (click)=\"onSynchroB1B2();\"></ion-icon>ADMIN</ion-button> \r\n     </ion-buttons>\r\n     <ion-buttons slot=\"end\" *ngIf=\"global.isBBAM\">\r\n      <ion-button fill=\"clear\"> <ion-icon name=\"wifi\" color=\"light\"></ion-icon>{{global.ssid}}</ion-button> \r\n     </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>  \r\n  <ion-grid>    \r\n    <ion-row>\r\n        <ion-col size=\"12\" text-center style=\"padding-top: 5%;\"><h3>Accueil</h3></ion-col>\r\n        <ion-col size=\"12\">\r\n          <fieldset>\r\n            <legend>Type d'opération</legend>           \r\n            <ion-button class=\"ion-text-wrap\" color=\"primary\" size=\"block\" style=\"height: 7vh;\" (click)=\"goToBottles()\">\r\n              \r\n                Mouvement de bouteilles dans l'entrepôt\r\n              \r\n            </ion-button>\r\n            <ion-button color=\"primary\" size=\"block\" (click)=\"goToInterventionCeinture();\" style=\"margin-top: 2%;\">\r\n              <ion-label class=\"ion-text-wrap\">\r\n                Intervention sur une ceinture\r\n              </ion-label>\r\n            </ion-button>\r\n\r\n            <ion-button color=\"primary\" size=\"block\" (click)=\"testMode($event);\" style=\"margin-top: 2%;\">\r\n              <ion-label class=\"ion-text-wrap\">\r\n                Mode Test\r\n              </ion-label>\r\n            </ion-button>\r\n          </fieldset>\r\n        </ion-col>\r\n      \r\n      \r\n       \r\n      \r\n    </ion-row>\r\n    \r\n  </ion-grid>\r\n \r\n</ion-content>\r\n\r\n"
+module.exports = "<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n    </ion-buttons>\r\n    <ion-buttons slot=\"end\" *ngIf=\"!global.isBBAM\">\r\n      <ion-button fill=\"clear\">\r\n        <ion-icon\r\n          name=\"globe\"\r\n          color=\"light\"\r\n          (click)=\"onSynchroB1B2();\"\r\n        ></ion-icon\r\n        >ADMIN</ion-button\r\n      >\r\n    </ion-buttons>\r\n    <ion-buttons slot=\"end\" *ngIf=\"global.isBBAM\">\r\n      <ion-button fill=\"clear\">\r\n        <ion-icon name=\"wifi\" color=\"light\"></ion-icon\r\n        >{{global.ssid}}</ion-button\r\n      >\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <ion-grid>\r\n    <ion-row>\r\n      <ion-col size=\"12\" text-center style=\"padding-top: 5%\"\r\n        ><h3>Accueil</h3></ion-col\r\n      >\r\n      <ion-col size=\"12\">\r\n        <fieldset>\r\n          <legend>Type d'opération</legend>\r\n          <ion-button\r\n            [class.button-disabled]=\"mode_test\"\r\n            class=\"ion-text-wrap\"\r\n            color=\"primary\"\r\n            size=\"block\"\r\n            style=\"height: 7vh\"\r\n            (click)=\"goToBottles()\"\r\n          >\r\n            Mouvement de bouteilles dans l'entrepôt\r\n          </ion-button>\r\n          <ion-button\r\n            [class.button-disabled]=\"mode_test\"\r\n            color=\"primary\"\r\n            size=\"block\"\r\n            (click)=\"goToInterventionCeinture();\"\r\n            style=\"margin-top: 2%\"\r\n          >\r\n            <ion-label class=\"ion-text-wrap\">\r\n              Intervention sur une ceinture\r\n            </ion-label>\r\n          </ion-button>\r\n\r\n          <ion-button\r\n            color=\"primary\"\r\n            size=\"block\"\r\n            (click)=\"testMode($event);\"\r\n            style=\"margin-top: 2%\"\r\n          >\r\n            <ion-label class=\"ion-text-wrap\"> Mode Test </ion-label>\r\n          </ion-button>\r\n        </fieldset>\r\n      </ion-col>\r\n    </ion-row>\r\n    <ion-row> </ion-row>\r\n  </ion-grid>\r\n</ion-content>\r\n"
 
 /***/ }),
 
@@ -124,20 +124,31 @@ var HomePage = /** @class */ (function () {
         this.loadingCtrl = loadingCtrl;
         this.popoverController = popoverController;
         this.alertController = alertController;
+        //
+        this.mode_test = false;
         this.globals = [];
-        this.operationTypeOptions = ["Mouvement de bouteilles dans l'entrepôt", "Intervention sur une ceinture"];
+        this.operationTypeOptions = [
+            "Mouvement de bouteilles dans l'entrepôt",
+            "Intervention sur une ceinture",
+        ];
         this.operationType = "Mouvement de bouteilles dans l'entrepôt";
     }
     HomePage.prototype.ionViewWillEnter = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var _a;
             var _this = this;
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                switch (_a.label) {
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
+                switch (_b.label) {
                     case 0:
+                        _a = this;
+                        return [4 /*yield*/, this.storage.get("mode_test")];
+                    case 1:
+                        _a.mode_test = _b.sent();
+                        console.log("mode test :", this.mode_test);
                         this.global.connexionRequise = "Aucune";
                         return [4 /*yield*/, this.storage.get("reconnect")];
-                    case 1:
-                        if (!_a.sent()) return [3 /*break*/, 3];
+                    case 2:
+                        if (!_b.sent()) return [3 /*break*/, 4];
                         this.storage.get("isInterventionNotSaved").then(function (res) {
                             if (res == true) {
                                 (function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
@@ -145,15 +156,12 @@ var HomePage = /** @class */ (function () {
                                     return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                                         switch (_a.label) {
                                             case 0: return [4 /*yield*/, this.loadingCtrl.create({
-                                                    message: "Sauvegarde de l'intervention en cours..."
+                                                    message: "Sauvegarde de l'intervention en cours...",
                                                 })];
                                             case 1:
                                                 loading = _a.sent();
                                                 loading.present();
-                                                return [4 /*yield*/, Promise.all([
-                                                        this.getJson(),
-                                                        this.getToken()
-                                                    ])];
+                                                return [4 /*yield*/, Promise.all([this.getJson(), this.getToken()])];
                                             case 2:
                                                 arr = _a.sent();
                                                 this.json = JSON.parse(arr[0]);
@@ -175,10 +183,10 @@ var HomePage = /** @class */ (function () {
                                     _this.storage.set("reconnect", false);
                                 }
                             })];
-                    case 2:
-                        _a.sent();
-                        _a.label = 3;
-                    case 3: return [2 /*return*/];
+                    case 3:
+                        _b.sent();
+                        _b.label = 4;
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -222,25 +230,29 @@ var HomePage = /** @class */ (function () {
         return new Promise(function (resolve, reject) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
             var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                this.alertController.create({
+                this.alertController
+                    .create({
                     header: "Attention",
                     subHeader: "Intervention en cours",
                     message: "Une intervention est en cours, souhaitez-vous restaurer les paramètres ?",
                     buttons: [
                         {
-                            text: "Non", handler: function () {
+                            text: "Non",
+                            handler: function () {
                                 _this.global.resetParameters().then(function () {
                                     resolve();
                                 });
-                            }
+                            },
                         },
                         {
-                            text: "Oui", handler: function () {
+                            text: "Oui",
+                            handler: function () {
                                 resolve();
-                            }
-                        }
-                    ]
-                }).then(function (res) { return res.present(); });
+                            },
+                        },
+                    ],
+                })
+                    .then(function (res) { return res.present(); });
                 return [2 /*return*/];
             });
         }); });
@@ -249,12 +261,12 @@ var HomePage = /** @class */ (function () {
         var _this = this;
         this.global.mode = "intervention";
         this.storage.set("isInterventionEnCours", true).then(function () {
-            _this.router.navigate(['interventionceinture']);
+            _this.router.navigate(["interventionceinture"]);
         });
     };
     HomePage.prototype.goToBottles = function () {
         this.global.mode = "mvtBouteilles";
-        this.router.navigate(['optionbottle']);
+        this.router.navigate(["optionbottle"]);
     };
     /*getUpcStateConnexion() {
       this.platform.ready().then(async res=>{
@@ -280,39 +292,58 @@ var HomePage = /** @class */ (function () {
       })
     }*/
     HomePage.prototype.testMode = function ($event) {
-        /*let popover = await this.popoverController.create({
-          component: PopoverComponent,
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var wifi;
+            var _this = this;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, WifiWizard2.getConnectedSSID()];
+                    case 1:
+                        wifi = _a.sent();
+                        return [4 /*yield*/, this.storage.set("ssid_upc", wifi)];
+                    case 2:
+                        _a.sent();
+                        return [4 /*yield*/, this.storage.set("password", "")];
+                    case 3:
+                        _a.sent();
+                        this.global.mode = "intervention";
+                        this.storage.set("isInterventionEnCours", true).then(function () {
+                            _this.router.navigate(["namepiege"]);
+                        });
+                        return [2 /*return*/];
+                }
+            });
         });
-        return await popover.present();*/
-        this.global.mode = "modeTest";
-        this.router.navigate(["namepiege"]);
     };
     HomePage.prototype.interventionNotSavedAlert = function () {
         var _this = this;
         return new Promise(function (resolve, reject) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
             var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                this.alertController.create({
+                this.alertController
+                    .create({
                     header: "Attention",
                     subHeader: "Intervention en cours",
                     message: "L'intervention n'a pas pu être enregistrée, souhaitez-vous réessayer (vérifiez votre connexion internet) ?",
                     buttons: [
                         {
                             text: "Non",
-                            role: 'cancel',
+                            role: "cancel",
                             handler: function () {
                                 _this.global.resetParameters().then(function () {
                                     resolve();
                                 });
-                            }
+                            },
                         },
                         {
-                            text: "Oui", handler: function () {
+                            text: "Oui",
+                            handler: function () {
                                 resolve();
-                            }
-                        }
-                    ]
-                }).then(function (res) { return res.present(); });
+                            },
+                        },
+                    ],
+                })
+                    .then(function (res) { return res.present(); });
                 return [2 /*return*/];
             });
         }); });
@@ -331,7 +362,7 @@ var HomePage = /** @class */ (function () {
     ]; };
     HomePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-            selector: 'app-home',
+            selector: "app-home",
             template: __webpack_require__(/*! raw-loader!./home.page.html */ "./node_modules/raw-loader/index.js!./src/app/home/home.page.html"),
             styles: [__webpack_require__(/*! ./home.page.scss */ "./src/app/home/home.page.scss")]
         }),

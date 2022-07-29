@@ -152,7 +152,8 @@ let NamepiegePage = class NamepiegePage {
         console.log("=========================================================================");
         this.global.connexionRequise = "UPC";
         console.log(" - Connexion requise :" + this.global.connexionRequise);
-        console.log(" - Connexion  actuel  (avant on read statique) :" + this.global.statutConnexion);
+        console.log(" - Connexion  actuel  (avant on read statique) :" +
+            this.global.statutConnexion);
         this.ConnecterUPC();
         this.Read();
         this.correspondancesRegistres = new _model_upcv3_correspondancesRegistres__WEBPACK_IMPORTED_MODULE_5__["CorrespondancesRegistres"]();
@@ -167,41 +168,52 @@ let NamepiegePage = class NamepiegePage {
                 this.storage.get("password").then((password) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
                     this.stored_ssid = stored_ssid;
                     this.password_ssid = password;
-                    //recuperer l ssid  +password 
+                    //recuperer l ssid  +password
                     console.log("acceuil , stored password" + password);
                     console.log("acceuil , stored ssid" + stored_ssid);
                     //si on est deja connecté a l upc :
                     let wifi = yield WifiWizard2.getConnectedSSID();
                     console.log("connected ssid: " + wifi);
                     if (wifi != stored_ssid) {
-                        console.log("wifi diffrents :");
-                        WifiWizard2.connect(stored_ssid, password).then(() => {
+                        console.log("wifi diffrents :>>>>>>>>>");
+                        console.log("connecte wifi ");
+                        WifiWizard2.connect(stored_ssid, password)
+                            .then(() => {
                             //connexion reussi a l UPC  :
                             console.log("connexion wifi up reussie :");
                             this.check = true;
                             this.global.statutConnexion = "UPC";
-                            this.global.onConnectModbus().then(() => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+                            this.global
+                                .onConnectModbus()
+                                .then(() => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
                                 console.log("accueil , connexion modbus reussie >> ");
                                 this.connection_modbus = true;
                                 this.isLoading = false;
-                                //on peut lire 
+                                //on peut lire
                                 this.tryToRead = true;
-                            })).catch(err => {
+                            }))
+                                .catch((err) => {
                                 console.log("accueil + connexion modbus échouée  ");
                                 this.isLoading = false;
                                 this.connection_modbus = false;
                             });
-                        }).catch(() => {
-                            console.log("connexion impossible a l'UPC");
+                        })
+                            .catch((err) => {
+                            console.log("connexion impossible a l'UPC wifi");
+                            console.log(err);
                         });
                     }
                     else {
-                        this.global.onConnectModbus().then(() => {
+                        this.global
+                            .onConnectModbus()
+                            .then(() => {
+                            //on tente une connexion modbus pour déterminer si c'est un upc
                             //connexion modbus réussie : c'est un upc
                             console.log("accueil + connexion modbus reussie ");
                             this.connection_modbus = true;
                             this.isLoading = false;
-                        }).catch(err => {
+                        })
+                            .catch((err) => {
                             console.log("accueil + connexion modbus échouée  ");
                             this.isLoading = false;
                             this.connection_modbus = false;
@@ -212,22 +224,30 @@ let NamepiegePage = class NamepiegePage {
         }
     }
     Read() {
-        this.do = setInterval(() => {
+        this.do = setInterval(() => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
             console.log("======================== cycle ================================");
-            console.log("UPC stat  ====  " + this.global.upcmodbus.state);
             this.checkConnectionWifi();
-            // en cas de perte de connexion 
-            if (this.current_ssid != this.stored_ssid && this.check) {
+            // en cas de perte de connexion
+            if (this.current_ssid != this.stored_ssid) {
                 console.log("wifi diff >>>> ");
+                console.log("disconnect ");
+                let res = yield WifiWizard2.disconnect(this.current_ssid)
+                    .then((result) => {
+                    console.log("connect ");
+                    this.ConnecterUPC();
+                })
+                    .catch((err) => { });
+                console.log(res);
+                //connecter au wifi
                 console.log("reconnexion  >>>> ");
-                //connecter au wifi 
-                this.ConnecterUPC();
             }
             if (this.tryToRead && this.global.upcmodbus.state == 1) {
                 console.log("Try to read >");
                 // lecture statique :
                 this.isLoading = true;
-                this.global.upcmodbus.onReadStatique(this.global.upcname, this.global.mode, "namepiege").then(res => {
+                this.global.upcmodbus
+                    .onReadStatique(this.global.upcname, this.global.mode, "namepiege")
+                    .then((res) => {
                     if (res == true) {
                         this.tryToRead = false;
                         this.isLoading = false;
@@ -246,7 +266,8 @@ let NamepiegePage = class NamepiegePage {
                         this.global.lectureStatiqueEnCours = false;
                         this.global.displayLoading = false;
                     }
-                }).catch(err => {
+                })
+                    .catch((err) => {
                     this.tryToRead = true;
                     this.isLoading = false;
                     console.log("acceuil::erreur lecture");
@@ -254,13 +275,14 @@ let NamepiegePage = class NamepiegePage {
                 });
                 //fin de lecture statique :
             }
-        }, 500);
+        }), 500);
     }
-    ngOnInit() {
-    }
+    ngOnInit() { }
     checkConnectionWifi() {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+            console.log("check wifi conx");
             let wifi = yield WifiWizard2.getConnectedSSID();
+            console.log(wifi);
             this.current_ssid = wifi;
         });
     }
@@ -282,10 +304,14 @@ let NamepiegePage = class NamepiegePage {
     ecrir(variable, value) {
         if (variable.type == "int") {
             this.isLoading = true;
-            this.global.upcmodbus.client.setIntInHoldingRegister(variable.adr, variable.dim, value).then(() => {
+            this.global.upcmodbus.client
+                .setIntInHoldingRegister(variable.adr, variable.dim, value)
+                .then(() => {
                 console.log("accueil ::  ecriture reussie");
                 // lecture statique :
-                this.global.upcmodbus.onReadStatique(this.global.upcname, this.global.mode, "namepiege").then(res => {
+                this.global.upcmodbus
+                    .onReadStatique(this.global.upcname, this.global.mode, "namepiege")
+                    .then((res) => {
                     if (res == true) {
                         this.isLoading = false;
                         console.log("accueil:  lecture reussi ");
@@ -301,23 +327,29 @@ let NamepiegePage = class NamepiegePage {
                         this.global.lectureStatiqueEnCours = false;
                         this.global.displayLoading = false;
                     }
-                }).catch(err => {
+                })
+                    .catch((err) => {
                     this.isLoading = false;
                     console.log("acceuil::erreur lecture");
                     console.log(err);
                 });
                 //fin de lecture statique :
-            }).catch(() => {
+            })
+                .catch(() => {
                 this.isLoading = false;
                 console.log("num piege ::écriture impossible");
             });
         }
         else {
             this.isLoading = true;
-            this.global.upcmodbus.client.setStringArrayInHoldingResgisters(variable, value).then(() => {
+            this.global.upcmodbus.client
+                .setStringArrayInHoldingResgisters(variable, value)
+                .then(() => {
                 console.log("accueil ::  ecriture reussie");
                 // lecture statique :
-                this.global.upcmodbus.onReadStatique(this.global.upcname, this.global.mode, "namepiege").then(res => {
+                this.global.upcmodbus
+                    .onReadStatique(this.global.upcname, this.global.mode, "namepiege")
+                    .then((res) => {
                     if (res == true) {
                         this.isLoading = false;
                         console.log("accueil:  lecture reussi ");
@@ -333,13 +365,15 @@ let NamepiegePage = class NamepiegePage {
                         this.global.lectureStatiqueEnCours = false;
                         this.global.displayLoading = false;
                     }
-                }).catch(err => {
+                })
+                    .catch((err) => {
                     this.isLoading = false;
                     console.log("acceuil::erreur lecture");
                     console.log(err);
                 });
                 //fin de lecture statique :
-            }).catch(() => {
+            })
+                .catch(() => {
                 this.isLoading = false;
                 console.log("num piege ::écriture impossible");
             });
@@ -347,71 +381,93 @@ let NamepiegePage = class NamepiegePage {
     }
     onWipe() {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
-            let alert = yield this.alertCTRL.create({ message: "Êtes vous sûr d'effectuer un Wipe ?",
-                buttons: [{ text: "Non" }, { text: "Oui", handler: () => {
+            let alert = yield this.alertCTRL.create({
+                message: "Êtes vous sûr d'effectuer un Wipe ?",
+                buttons: [
+                    { text: "Non" },
+                    {
+                        text: "Oui",
+                        handler: () => {
                             // ecrire la commande  EEEE dans 40011 pour faire un wipe
-                            this.global.upcmodbus.client.setIntInHoldingRegister(40011, 1, 61166).then(res => {
+                            this.global.upcmodbus.client
+                                .setIntInHoldingRegister(40011, 1, 61166)
+                                .then((res) => {
                                 var d = new Date();
                                 this.global.logs.push(this.global.msToTime(d.getTime()) + " - écriture réussie");
                                 this.subscribeRefresh();
                                 this.global.ecritureEnCours = false;
-                            }).catch(err => {
+                            })
+                                .catch((err) => {
                                 var d = new Date();
                                 this.global.logs.push(this.global.msToTime(d.getTime()) + " - écriture échouée");
                                 this.subscribeRefresh();
                                 this.global.ecritureEnCours = false;
                             });
-                        } }] });
+                        },
+                    },
+                ],
+            });
             alert.present();
         });
     }
     onReset() {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
-            let alert = yield this.alertCTRL.create({ message: "Êtes vous sûr d'effectuer un Reset ?",
-                buttons: [{ text: "Non" }, { text: "Oui", handler: () => {
+            let alert = yield this.alertCTRL.create({
+                message: "Êtes vous sûr d'effectuer un Reset ?",
+                buttons: [
+                    { text: "Non" },
+                    {
+                        text: "Oui",
+                        handler: () => {
                             // ecrire la commande  EEEE dans 40011 pour faire un wipe
-                            this.global.upcmodbus.client.setIntInHoldingRegister(40011, 1, 65535).then(res => {
+                            this.global.upcmodbus.client
+                                .setIntInHoldingRegister(40011, 1, 65535)
+                                .then((res) => {
                                 var d = new Date();
                                 this.global.logs.push(this.global.msToTime(d.getTime()) + " - écriture réussie");
                                 this.subscribeRefresh();
                                 this.global.ecritureEnCours = false;
-                            }).catch(err => {
+                            })
+                                .catch((err) => {
                                 var d = new Date();
                                 this.global.logs.push(this.global.msToTime(d.getTime()) + " - écriture échouée");
                                 this.subscribeRefresh();
                                 this.global.ecritureEnCours = false;
                             });
-                        } }] });
+                        },
+                    },
+                ],
+            });
             alert.present();
         });
     }
     /*
-  async onReset() {
-    let alert = await this.alertCTRL.create({message : "Êtes vous sûr d'effectuer un Reset ?",
-                                             buttons : [{text : "Non"},{text : "Oui", handler : ()=>{
-                                              this.global.onWriteModbusVariables().then(res=>{
-                                                var d = new Date()
-                                                this.global.logs.push(this.global.msToTime(d.getTime())+" - début écriture")
-                                                this.global.ecritureEnCours = true;
-                                                this.global.upcmodbus.client.setIntInHoldingRegister(40011,1,65535).then(res=>{
+    async onReset() {
+      let alert = await this.alertCTRL.create({message : "Êtes vous sûr d'effectuer un Reset ?",
+                                               buttons : [{text : "Non"},{text : "Oui", handler : ()=>{
+                                                this.global.onWriteModbusVariables().then(res=>{
                                                   var d = new Date()
-                                                  this.global.logs.push(this.global.msToTime(d.getTime())+" - écriture réussie")
-                                                  this.subscribeRefresh()
-                                                  this.global.ecritureEnCours = false;
-                                                }).catch(err=>{
-                                                  var d = new Date()
-                                                  this.global.logs.push(this.global.msToTime(d.getTime())+" - écriture échouée")
-                                                  this.subscribeRefresh()
-                                                  this.global.ecritureEnCours = false;
+                                                  this.global.logs.push(this.global.msToTime(d.getTime())+" - début écriture")
+                                                  this.global.ecritureEnCours = true;
+                                                  this.global.upcmodbus.client.setIntInHoldingRegister(40011,1,65535).then(res=>{
+                                                    var d = new Date()
+                                                    this.global.logs.push(this.global.msToTime(d.getTime())+" - écriture réussie")
+                                                    this.subscribeRefresh()
+                                                    this.global.ecritureEnCours = false;
+                                                  }).catch(err=>{
+                                                    var d = new Date()
+                                                    this.global.logs.push(this.global.msToTime(d.getTime())+" - écriture échouée")
+                                                    this.subscribeRefresh()
+                                                    this.global.ecritureEnCours = false;
+                                                  })
                                                 })
-                                              })
+                                                  
                                                 
-                                              
-                                             }}]
-    })
-    alert.present();
-    
-  }*/
+                                               }}]
+      })
+      alert.present();
+      
+    }*/
     onChangeFusHor() {
         this.ecrir(this.correspondancesRegistres.upcTimeZone, this.fusehor);
     }
@@ -444,7 +500,7 @@ NamepiegePage.ctorParameters = () => [
 ];
 NamepiegePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-        selector: 'app-namepiege',
+        selector: "app-namepiege",
         template: __webpack_require__(/*! raw-loader!./namepiege.page.html */ "./node_modules/raw-loader/index.js!./src/app/namepiege/namepiege.page.html"),
         styles: [__webpack_require__(/*! ./namepiege.page.scss */ "./src/app/namepiege/namepiege.page.scss")]
     }),

@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n    </ion-buttons>    \r\n    <ion-buttons slot=\"end\" *ngIf=\"!global.isBBAM\">\r\n      <ion-button fill=\"clear\"> <ion-icon name=\"globe\" color=\"light\" (click)=\"onSynchroB1B2();\"></ion-icon>ADMIN</ion-button> \r\n     </ion-buttons>\r\n     <ion-buttons slot=\"end\" *ngIf=\"global.isBBAM\">\r\n      <ion-button fill=\"clear\"> <ion-icon name=\"wifi\" color=\"light\"></ion-icon>{{global.ssid}}</ion-button> \r\n     </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>  \r\n  <ion-grid>    \r\n    <ion-row>\r\n        <ion-col size=\"12\" text-center style=\"padding-top: 5%;\"><h3>Accueil</h3></ion-col>\r\n        <ion-col size=\"12\">\r\n          <fieldset>\r\n            <legend>Type d'opération</legend>           \r\n            <ion-button class=\"ion-text-wrap\" color=\"primary\" size=\"block\" style=\"height: 7vh;\" (click)=\"goToBottles()\">\r\n              \r\n                Mouvement de bouteilles dans l'entrepôt\r\n              \r\n            </ion-button>\r\n            <ion-button color=\"primary\" size=\"block\" (click)=\"goToInterventionCeinture();\" style=\"margin-top: 2%;\">\r\n              <ion-label class=\"ion-text-wrap\">\r\n                Intervention sur une ceinture\r\n              </ion-label>\r\n            </ion-button>\r\n\r\n            <ion-button color=\"primary\" size=\"block\" (click)=\"testMode($event);\" style=\"margin-top: 2%;\">\r\n              <ion-label class=\"ion-text-wrap\">\r\n                Mode Test\r\n              </ion-label>\r\n            </ion-button>\r\n          </fieldset>\r\n        </ion-col>\r\n      \r\n      \r\n       \r\n      \r\n    </ion-row>\r\n    \r\n  </ion-grid>\r\n \r\n</ion-content>\r\n\r\n"
+module.exports = "<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n    </ion-buttons>\r\n    <ion-buttons slot=\"end\" *ngIf=\"!global.isBBAM\">\r\n      <ion-button fill=\"clear\">\r\n        <ion-icon\r\n          name=\"globe\"\r\n          color=\"light\"\r\n          (click)=\"onSynchroB1B2();\"\r\n        ></ion-icon\r\n        >ADMIN</ion-button\r\n      >\r\n    </ion-buttons>\r\n    <ion-buttons slot=\"end\" *ngIf=\"global.isBBAM\">\r\n      <ion-button fill=\"clear\">\r\n        <ion-icon name=\"wifi\" color=\"light\"></ion-icon\r\n        >{{global.ssid}}</ion-button\r\n      >\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <ion-grid>\r\n    <ion-row>\r\n      <ion-col size=\"12\" text-center style=\"padding-top: 5%\"\r\n        ><h3>Accueil</h3></ion-col\r\n      >\r\n      <ion-col size=\"12\">\r\n        <fieldset>\r\n          <legend>Type d'opération</legend>\r\n          <ion-button\r\n            [class.button-disabled]=\"mode_test\"\r\n            class=\"ion-text-wrap\"\r\n            color=\"primary\"\r\n            size=\"block\"\r\n            style=\"height: 7vh\"\r\n            (click)=\"goToBottles()\"\r\n          >\r\n            Mouvement de bouteilles dans l'entrepôt\r\n          </ion-button>\r\n          <ion-button\r\n            [class.button-disabled]=\"mode_test\"\r\n            color=\"primary\"\r\n            size=\"block\"\r\n            (click)=\"goToInterventionCeinture();\"\r\n            style=\"margin-top: 2%\"\r\n          >\r\n            <ion-label class=\"ion-text-wrap\">\r\n              Intervention sur une ceinture\r\n            </ion-label>\r\n          </ion-button>\r\n\r\n          <ion-button\r\n            color=\"primary\"\r\n            size=\"block\"\r\n            (click)=\"testMode($event);\"\r\n            style=\"margin-top: 2%\"\r\n          >\r\n            <ion-label class=\"ion-text-wrap\"> Mode Test </ion-label>\r\n          </ion-button>\r\n        </fieldset>\r\n      </ion-col>\r\n    </ion-row>\r\n    <ion-row> </ion-row>\r\n  </ion-grid>\r\n</ion-content>\r\n"
 
 /***/ }),
 
@@ -121,25 +121,29 @@ let HomePage = class HomePage {
         this.loadingCtrl = loadingCtrl;
         this.popoverController = popoverController;
         this.alertController = alertController;
+        //
+        this.mode_test = false;
         this.globals = [];
-        this.operationTypeOptions = ["Mouvement de bouteilles dans l'entrepôt", "Intervention sur une ceinture"];
+        this.operationTypeOptions = [
+            "Mouvement de bouteilles dans l'entrepôt",
+            "Intervention sur une ceinture",
+        ];
         this.operationType = "Mouvement de bouteilles dans l'entrepôt";
     }
     ionViewWillEnter() {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+            this.mode_test = yield this.storage.get("mode_test");
+            console.log("mode test :", this.mode_test);
             this.global.connexionRequise = "Aucune";
             if (yield this.storage.get("reconnect")) {
-                this.storage.get("isInterventionNotSaved").then(res => {
+                this.storage.get("isInterventionNotSaved").then((res) => {
                     if (res == true) {
                         () => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
                             const loading = yield this.loadingCtrl.create({
-                                message: "Sauvegarde de l'intervention en cours..."
+                                message: "Sauvegarde de l'intervention en cours...",
                             });
                             loading.present();
-                            var arr = yield Promise.all([
-                                this.getJson(),
-                                this.getToken()
-                            ]);
+                            var arr = yield Promise.all([this.getJson(), this.getToken()]);
                             this.json = JSON.parse(arr[0]);
                             this.token = arr[1];
                             this.createIntervention();
@@ -147,7 +151,7 @@ let HomePage = class HomePage {
                         this.interventionNotSavedAlert();
                     }
                 });
-                yield this.storage.get("isInterventionEnCours").then(res => {
+                yield this.storage.get("isInterventionEnCours").then((res) => {
                     if (res == true) {
                         this.interventionEnCoursAlert();
                         this.storage.set("reconnect", false);
@@ -160,9 +164,9 @@ let HomePage = class HomePage {
         });
     }
     createIntervention() {
-        this.ucp3service.createIntervention(this.json, this.token).subscribe(res => {
+        this.ucp3service.createIntervention(this.json, this.token).subscribe((res) => {
             alert(JSON.stringify(res));
-        }, err => {
+        }, (err) => {
             this.interventionNotSavedAlert();
         });
     }
@@ -180,36 +184,40 @@ let HomePage = class HomePage {
     }
     interventionEnCoursAlert() {
         return new Promise((resolve, reject) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
-            this.alertController.create({
+            this.alertController
+                .create({
                 header: "Attention",
                 subHeader: "Intervention en cours",
                 message: "Une intervention est en cours, souhaitez-vous restaurer les paramètres ?",
                 buttons: [
                     {
-                        text: "Non", handler: () => {
+                        text: "Non",
+                        handler: () => {
                             this.global.resetParameters().then(() => {
                                 resolve();
                             });
-                        }
+                        },
                     },
                     {
-                        text: "Oui", handler: () => {
+                        text: "Oui",
+                        handler: () => {
                             resolve();
-                        }
-                    }
-                ]
-            }).then(res => res.present());
+                        },
+                    },
+                ],
+            })
+                .then((res) => res.present());
         }));
     }
     goToInterventionCeinture() {
         this.global.mode = "intervention";
         this.storage.set("isInterventionEnCours", true).then(() => {
-            this.router.navigate(['interventionceinture']);
+            this.router.navigate(["interventionceinture"]);
         });
     }
     goToBottles() {
         this.global.mode = "mvtBouteilles";
-        this.router.navigate(['optionbottle']);
+        this.router.navigate(["optionbottle"]);
     }
     /*getUpcStateConnexion() {
       this.platform.ready().then(async res=>{
@@ -235,36 +243,50 @@ let HomePage = class HomePage {
       })
     }*/
     testMode($event) {
-        /*let popover = await this.popoverController.create({
-          component: PopoverComponent,
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+            /*let popover = await this.popoverController.create({
+              component: PopoverComponent,
+            });
+        
+            
+        
+            return await popover.present();*/
+            let wifi = yield WifiWizard2.getConnectedSSID();
+            yield this.storage.set("ssid_upc", wifi);
+            yield this.storage.set("password", "");
+            this.global.mode = "intervention";
+            this.storage.set("isInterventionEnCours", true).then(() => {
+                this.router.navigate(["namepiege"]);
+            });
+            //this.global.mode="modeTest"
         });
-        return await popover.present();*/
-        this.global.mode = "modeTest";
-        this.router.navigate(["namepiege"]);
     }
     interventionNotSavedAlert() {
         return new Promise((resolve, reject) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
-            this.alertController.create({
+            this.alertController
+                .create({
                 header: "Attention",
                 subHeader: "Intervention en cours",
                 message: "L'intervention n'a pas pu être enregistrée, souhaitez-vous réessayer (vérifiez votre connexion internet) ?",
                 buttons: [
                     {
                         text: "Non",
-                        role: 'cancel',
+                        role: "cancel",
                         handler: () => {
                             this.global.resetParameters().then(() => {
                                 resolve();
                             });
-                        }
+                        },
                     },
                     {
-                        text: "Oui", handler: () => {
+                        text: "Oui",
+                        handler: () => {
                             resolve();
-                        }
-                    }
-                ]
-            }).then(res => res.present());
+                        },
+                    },
+                ],
+            })
+                .then((res) => res.present());
         }));
     }
 };
@@ -282,7 +304,7 @@ HomePage.ctorParameters = () => [
 ];
 HomePage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-        selector: 'app-home',
+        selector: "app-home",
         template: __webpack_require__(/*! raw-loader!./home.page.html */ "./node_modules/raw-loader/index.js!./src/app/home/home.page.html"),
         styles: [__webpack_require__(/*! ./home.page.scss */ "./src/app/home/home.page.scss")]
     }),

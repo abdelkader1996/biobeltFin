@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n      <ion-back-button defaultHref=\"home\"></ion-back-button>\n    </ion-buttons>\n\n    <ion-buttons>\n      <ion-button fill=\"clear\">\n        <ion-icon name=\"wifi\" color=\"light\"></ion-icon> connecté a :\n        {{this.current_ssid}}</ion-button\n      >\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <h3 style=\"text-align: center\">Changement de bouteilles</h3>\n  <!--<ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>-->\n  <ion-grid style=\"padding-top: 5%\">\n    <ion-row>\n      <ion-col size=\"6\" style=\"border-right: solid 3px green\">\n        <!--<ion-select placeholder=\"Type de bouteilles\">\n          <ion-select-option *ngFor=\"let bottle of listBottles\">\n            {{bottle.brand+\" \"+bottle.designation.toFixed(2)+\" kg\"}}\n          </ion-select-option>\n        </ion-select>-->\n        <h1\n          style=\"text-align: center\"\n          (click)=\"changeRes(1);\"\n          [ngClass]=\"{'bgreen' : highlightB1}\"\n        >\n          B1\n        </h1>\n      </ion-col>\n\n      <ion-col size=\"6\">\n        <h1\n          style=\"text-align: center\"\n          (click)=\"changeRes(2);\"\n          [ngClass]=\"{'bgreen' : highlightB2}\"\n        >\n          B2\n        </h1>\n      </ion-col>\n\n      <ion-col\n        size=\"12\"\n        style=\"\n          border-top-right-radius: 80px 80px;\n          border-top-left-radius: 80px 80px;\n        \"\n      >\n        <div style=\"text-align: center\">Etat du Contenu</div>\n      </ion-col>\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px\">\n        <ion-select\n          [(ngModel)]=\"statusB1\"\n          (ngModelChange)=\"changeContentStatus('B1');\"\n        >\n          <ion-select-option value=\"0\">VIDE</ion-select-option>\n          <ion-select-option value=\"1\">RESIDUEL</ion-select-option>\n          <ion-select-option value=\"2\">DISPONIBLE</ion-select-option>\n        </ion-select>\n        <ion-label style=\"text-align: center\">-</ion-label>\n      </ion-col>\n\n      <ion-col\n        size=\"6\"\n        style=\"border-bottom-left-radius: 80px 80px\"\n        [ngClass]=\"{'bgred' : false}\"\n      >\n        <ion-select\n          [(ngModel)]=\"statusB2\"\n          (ngModelChange)=\"changeContentStatus('B2');\"\n        >\n          <ion-select-option value=\"0\">VIDE</ion-select-option>\n          <ion-select-option value=\"1\">RESIDUEL</ion-select-option>\n          <ion-select-option value=\"2\">DISPONIBLE</ion-select-option>\n        </ion-select>\n        <ion-label style=\"text-align: center\">-</ion-label>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col\n        size=\"12\"\n        style=\"\n          border-top-right-radius: 80px 80px;\n          border-top-left-radius: 80px 80px;\n        \"\n      >\n        <div style=\"text-align: center\">Contenu :</div>\n      </ion-col>\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px\">\n        <ion-label style=\"text-align: center\">{{contenuB1}} kg </ion-label>\n      </ion-col>\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px\">\n        <ion-label style=\"text-align: center\">{{contenuB2}} kg </ion-label>\n      </ion-col>\n    </ion-row>\n\n    <ion-row>\n      <ion-col\n        size=\"12\"\n        style=\"\n          border-top-right-radius: 80px 80px;\n          border-top-left-radius: 80px 80px;\n        \"\n      >\n        <div style=\"text-align: center\">ajouter une bouteille :</div>\n      </ion-col>\n      <!-- ajout bouteille B1-->\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px\">\n        <ion-list>\n          <ion-item *ngFor=\"let bottle of bottlesB1\">\n            <ion-label\n              [ngStyle]=\"{'background-color':bottle.style==1?'green':''}\"\n            >\n              {{bottle.type.brand}} {{bottle.type.designation}}\n            </ion-label>\n            <ion-label\n              [ngStyle]=\"{'background-color':bottle.style==1?'green':''}\"\n            >\n              {{bottle.barcode}}\n            </ion-label>\n          </ion-item>\n\n          <ion-item>\n            <ion-label>type de bouteille </ion-label>\n            <ion-select\n              placeholder=\"Selectionner un type \"\n              [(ngModel)]=\"currentBotlleTypeB1\"\n            >\n              <ion-select-option\n                *ngFor=\"let bt of bottleTypedb\"\n                value=\"{{bt.id}}\"\n                >{{bt.brand+\"-\"+bt.designation+\" kg\"}}</ion-select-option\n              >\n            </ion-select>\n          </ion-item>\n\n          <ion-item>\n            <ion-label>Total : {{contenueAAjouterB1}}</ion-label>\n          </ion-item>\n          <ion-item>\n            <button class=\"button-3\" (click)=\"onAddBottleB1()\">\n              + bouteille B1\n            </button>\n          </ion-item>\n        </ion-list>\n      </ion-col>\n      <!-- ajout bouteille B2-->\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px\">\n        <ion-list>\n          <ion-item class=\"bouteille-ajoute\" *ngFor=\"let bottle of bottlesB2\">\n            <ion-label\n              [ngStyle]=\"{'background-color':bottle.style==1?'green':''}\"\n            >\n              {{bottle.type.brand}} {{bottle.type.designation}}\n            </ion-label>\n            <ion-label\n              [ngStyle]=\"{'background-color':bottle.style==1?'green':''}\"\n              style=\"display: block\"\n            >\n              {{bottle.barcode}}\n            </ion-label>\n          </ion-item>\n\n          <ion-item>\n            <ion-label>type de bouteille </ion-label>\n            <ion-select\n              placeholder=\"Selectionner un type \"\n              [(ngModel)]=\"currentBotlleTypeB2\"\n            >\n              <ion-select-option\n                *ngFor=\"let bt of bottleTypedb\"\n                value=\"{{bt.id}}\"\n                >{{bt.brand+\"-\"+bt.designation+\" kg\"}}</ion-select-option\n              >\n            </ion-select>\n          </ion-item>\n\n          <ion-item>\n            <ion-label>Total : {{contenueAAjouterB2}}</ion-label>\n          </ion-item>\n          <ion-item>\n            <button class=\"button-3\" (click)=\"onAddBottleB2()\">\n              + bouteille B2\n            </button>\n          </ion-item>\n        </ion-list>\n      </ion-col>\n\n      <ion-col\n        size=\"12\"\n        style=\"\n          border-bottom-left-radius: 80px 80px;\n          margin-top: 15px;\n          text-align: center;\n        \"\n      >\n        <button class=\"button-3\" style=\"margin: auto\" (click)=\"onSynchro()\">\n          Synchronisation\n        </button>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n<ion-footer>\n  <ion-button *ngIf=\"!global.displayLoading\" style=\"float: left\" fill=\"clear\">\n    <ion-icon name=\"refresh\"></ion-icon>\n  </ion-button>\n  <ion-button\n    *ngIf=\"global.displayLoading\"\n    style=\"float: left\"\n    fill=\"clear\"\n    color=\"primary\"\n  >\n    <ion-spinner></ion-spinner>\n  </ion-button>\n</ion-footer>\n"
+module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n      <ion-back-button defaultHref=\"home\"></ion-back-button>\n    </ion-buttons>\n\n    <ion-buttons>\n      <ion-button fill=\"clear\">\n        <ion-icon name=\"wifi\" color=\"light\"></ion-icon> connecté a :\n        {{this.current_ssid}}</ion-button\n      >\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <h3 style=\"text-align: center\">Changement de bouteilles</h3>\n  <!--<ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>-->\n  <ion-grid style=\"padding-top: 5%\">\n    <ion-row>\n      <ion-col size=\"6\" style=\"border-right: solid 3px green\">\n        <!--<ion-select placeholder=\"Type de bouteilles\">\n          <ion-select-option *ngFor=\"let bottle of listBottles\">\n            {{bottle.brand+\" \"+bottle.designation.toFixed(2)+\" kg\"}}\n          </ion-select-option>\n        </ion-select>-->\n        <h1\n          style=\"text-align: center\"\n          (click)=\"changeRes(1);\"\n          [ngClass]=\"{'bgreen' : highlightB1}\"\n        >\n          B1\n        </h1>\n      </ion-col>\n\n      <ion-col size=\"6\">\n        <h1\n          style=\"text-align: center\"\n          (click)=\"changeRes(2);\"\n          [ngClass]=\"{'bgreen' : highlightB2}\"\n        >\n          B2\n        </h1>\n      </ion-col>\n\n      <ion-col\n        size=\"12\"\n        style=\"\n          border-top-right-radius: 80px 80px;\n          border-top-left-radius: 80px 80px;\n        \"\n      >\n        <div style=\"text-align: center\">Etat du Contenu</div>\n      </ion-col>\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px\">\n        <ion-select\n          [(ngModel)]=\"statusB1\"\n          (ngModelChange)=\"changeContentStatus('B1');\"\n        >\n          <ion-select-option value=\"0\">VIDE</ion-select-option>\n          <ion-select-option value=\"1\">RESIDUEL</ion-select-option>\n          <ion-select-option value=\"2\">DISPONIBLE</ion-select-option>\n        </ion-select>\n        <ion-label style=\"text-align: center\">-</ion-label>\n      </ion-col>\n\n      <ion-col\n        size=\"6\"\n        style=\"border-bottom-left-radius: 80px 80px\"\n        [ngClass]=\"{'bgred' : false}\"\n      >\n        <ion-select\n          [(ngModel)]=\"statusB2\"\n          (ngModelChange)=\"changeContentStatus('B2');\"\n        >\n          <ion-select-option value=\"0\">VIDE</ion-select-option>\n          <ion-select-option value=\"1\">RESIDUEL</ion-select-option>\n          <ion-select-option value=\"2\">DISPONIBLE</ion-select-option>\n        </ion-select>\n        <ion-label style=\"text-align: center\">-</ion-label>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col\n        size=\"12\"\n        style=\"\n          border-top-right-radius: 80px 80px;\n          border-top-left-radius: 80px 80px;\n        \"\n      >\n        <div style=\"text-align: center\">Contenu :</div>\n      </ion-col>\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px\">\n        <ion-label style=\"text-align: center\">{{contenuB1}} kg </ion-label>\n      </ion-col>\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px\">\n        <ion-label style=\"text-align: center\">{{contenuB2}} kg </ion-label>\n      </ion-col>\n    </ion-row>\n\n    <ion-row>\n      <ion-col\n        size=\"12\"\n        style=\"\n          border-top-right-radius: 80px 80px;\n          border-top-left-radius: 80px 80px;\n        \"\n      >\n        <div style=\"text-align: center\">ajouter une bouteille :</div>\n      </ion-col>\n      <!-- ajout bouteille B1-->\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px\">\n        <ion-list>\n          <ion-item\n            *ngFor=\"let bottle of bottlesB1;let i =index\"\n            (click)=\"cancelB1(i)\"\n          >\n            <ion-label\n              [ngStyle]=\"{'background-color':bottle.style==1?'green':bottle.style==-1?'red':''}\"\n            >\n              {{bottle.type?.brand}} {{bottle.type?.designation}}\n            </ion-label>\n            <ion-label\n              [ngStyle]=\"{'background-color':bottle.style==1?'green':bottle.style==-1?'red':''}\"\n            >\n              {{bottle.barcode}}\n            </ion-label>\n          </ion-item>\n\n          <ion-item>\n            <ion-label>type de bouteille </ion-label>\n            <ion-select\n              placeholder=\"Selectionner un type \"\n              [(ngModel)]=\"currentBotlleTypeB1\"\n            >\n              <ion-select-option\n                *ngFor=\"let bt of bottleTypedb\"\n                value=\"{{bt.id}}\"\n                >{{bt.brand+\"-\"+bt.designation+\" kg\"}}</ion-select-option\n              >\n            </ion-select>\n          </ion-item>\n\n          <ion-item>\n            <ion-label>Total : {{contenueAAjouterB1}}</ion-label>\n          </ion-item>\n          <ion-item>\n            <button class=\"button-3\" (click)=\"onAddBottleB1()\">\n              + bouteille B1\n            </button>\n          </ion-item>\n          <ion-item>\n            <button class=\"button-3\" (click)=\"viderB1()\">vider B1</button>\n          </ion-item>\n        </ion-list>\n      </ion-col>\n      <!-- ajout bouteille B2-->\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px\">\n        <ion-list>\n          <ion-item\n            class=\"bouteille-ajoute\"\n            *ngFor=\"let bottle of bottlesB2; let i=index\"\n            (click)=\"cancelB2(i)\"\n          >\n            <ion-label\n              [ngStyle]=\"{'background-color':bottle.style==1?'green':bottle.style==-1?'red':''}\"\n            >\n              {{bottle.type?.brand}} {{bottle.type?.designation}}\n            </ion-label>\n            <ion-label\n              [ngStyle]=\"{'background-color':bottle.style==1?'green':bottle.style==-1?'red':''}\"\n              style=\"display: block\"\n            >\n              {{bottle.barcode}}\n            </ion-label>\n          </ion-item>\n\n          <ion-item>\n            <ion-label>type de bouteille </ion-label>\n            <ion-select\n              placeholder=\"Selectionner un type \"\n              [(ngModel)]=\"currentBotlleTypeB2\"\n            >\n              <ion-select-option\n                *ngFor=\"let bt of bottleTypedb\"\n                value=\"{{bt.id}}\"\n                >{{bt.brand+\"-\"+bt.designation+\" kg\"}}</ion-select-option\n              >\n            </ion-select>\n          </ion-item>\n\n          <ion-item>\n            <ion-label>Total : {{contenueAAjouterB2}}</ion-label>\n          </ion-item>\n          <ion-item>\n            <button class=\"button-3\" full (click)=\"onAddBottleB2()\">\n              + bouteille B2\n            </button>\n          </ion-item>\n          <ion-item>\n            <button class=\"button-3\" full (click)=\"viderB2()\">vider B2</button>\n          </ion-item>\n        </ion-list>\n      </ion-col>\n\n      <ion-col\n        size=\"12\"\n        style=\"\n          border-bottom-left-radius: 80px 80px;\n          margin-top: 15px;\n          text-align: center;\n        \"\n      >\n        <button\n          class=\"button-3\"\n          style=\"margin: auto\"\n          (click)=\"ecrireLesBouteilles()\"\n        >\n          Synchronisation\n        </button>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n  <hr />\n  {{this.aEcrir | json}}\n</ion-content>\n<ion-footer>\n  <ion-button *ngIf=\"!global.displayLoading\" style=\"float: left\" fill=\"clear\">\n    <ion-icon name=\"refresh\"></ion-icon>\n  </ion-button>\n  <ion-button\n    *ngIf=\"global.displayLoading\"\n    style=\"float: left\"\n    fill=\"clear\"\n    color=\"primary\"\n  >\n    <ion-spinner></ion-spinner>\n  </ion-button>\n</ion-footer>\n"
 
 /***/ }),
 
@@ -173,6 +173,8 @@ var AddbottleceintPage = /** @class */ (function () {
         this.contenueAAjouterB2 = 0;
         //bouteilles :
         this.bottlesInTransit = [];
+        // a ecrire dans l UPC
+        this.aEcrir = { b1: [], b2: [] };
         this.global.checkMode();
     }
     AddbottleceintPage.prototype.ionViewWillEnter = function () {
@@ -196,29 +198,92 @@ var AddbottleceintPage = /** @class */ (function () {
     AddbottleceintPage.prototype.onAddBottleB1 = function () {
         var _this = this;
         console.log("on add bottle B1 :");
-        var bottle = { barcode: "inconnu", type: {}, style: 1 };
+        var bottle = { barcode: "inconnue", type: {}, style: 1 };
         this.contenueAAjouterB1 = 0;
         var bt = this.bottleTypedb.find(function (el) { return el.id == _this.currentBotlleTypeB1; });
         bottle.type = bt;
+        bottle.barcode = bottle.barcode + "" + bt.codeUpc;
+        this.aEcrir.b1.push(bottle.barcode + "" + bt.codeUpc);
         this.bottlesB1.push(bottle);
-        this.bottlesB1.forEach(function (bottle) { return (_this.contenueAAjouterB1 += bottle.contenue); });
+        this.bottlesB1.forEach(function (bottle) {
+            if (bottle.style == 1)
+                _this.contenueAAjouterB1 += bottle.type.contenue;
+        });
         console.log("b1");
         console.log(this.bottlesB1);
         console.log(this.contenueAAjouterB1);
     };
     AddbottleceintPage.prototype.onSynchro = function () { };
+    AddbottleceintPage.prototype.cancelB1 = function (id) {
+        console.log("click rem ", id);
+        var bottle = this.bottlesB1[id];
+        console.log(bottle);
+        if (bottle.style == 1) {
+            console.log("style", 1);
+            this.bottlesB1.splice(id, 1);
+            this.contenueAAjouterB1 -= bottle.type.contenue;
+        }
+        else if (bottle.style == 0) {
+            console.log("style", 0);
+            this.bottlesB1[id].style = -1;
+        }
+        else if (bottle.style == -1) {
+            console.log("style", -1);
+            this.bottlesB1[id].style = 0;
+        }
+        console.log(bottle);
+    };
+    AddbottleceintPage.prototype.cancelB2 = function (id) {
+        console.log("click rem ", id);
+        var bottle = this.bottlesB2[id];
+        console.log(bottle);
+        if (bottle.style == 1) {
+            console.log("style", 1);
+            this.bottlesB2.splice(id, 1);
+            this.contenueAAjouterB2 -= bottle.type.contenue;
+        }
+        else if (bottle.style == 0) {
+            console.log("style", 0);
+            this.bottlesB2[id].style = -1;
+        }
+        else if (bottle.style == -1) {
+            console.log("style", -1);
+            this.bottlesB2[id].style = 0;
+        }
+        console.log(bottle);
+    };
     AddbottleceintPage.prototype.onAddBottleB2 = function () {
         var _this = this;
         console.log("on add botlle B2");
         var bottle = { barcode: "inconnu", type: {}, style: 1 };
         var bt = this.bottleTypedb.find(function (el) { return el.id == _this.currentBotlleTypeB2; });
         bottle.type = bt;
+        bottle.barcode = bottle.barcode + "" + bt.codeUpc;
+        this.aEcrir.b2.push(bottle.barcode + "" + bt.codeUpc);
         this.contenueAAjouterB2 = 0;
         this.bottlesB2.push(bottle);
-        this.bottlesB2.forEach(function (bottle) { return (_this.contenueAAjouterB2 += bottle.type.contenue); });
+        this.bottlesB2.forEach(function (bottle) {
+            if (bottle.style == 1) {
+                _this.contenueAAjouterB2 += bottle.type.contenue;
+            }
+        });
         console.log("b2");
         console.log(this.bottlesB2);
         console.log(this.contenueAAjouterB2);
+    };
+    //----vider b1 B2 ;:
+    AddbottleceintPage.prototype.viderB1 = function () {
+        var res = [];
+        for (var i = 0; i < 45; i++)
+            res.push(0);
+        this.global.upcmodbus.client.writeMultipleRegisters(41124, res);
+    };
+    //----vider b1 B2 ;:
+    AddbottleceintPage.prototype.viderB2 = function () {
+        var res = [];
+        for (var i = 0; i < 45; i++)
+            res.push(0);
+        this.global.upcmodbus.client.writeMultipleRegisters(41169, res);
     };
     AddbottleceintPage.prototype.Read = function () {
         var _this = this;
@@ -452,6 +517,33 @@ var AddbottleceintPage = /** @class */ (function () {
             });
         }
     };
+    AddbottleceintPage.prototype.ecrireLesBouteilles = function () {
+        var _this = this;
+        //b1
+        var res = [];
+        this.bottlesB1.forEach(function (el) {
+            if (el.style == 1 || el.style == 0)
+                res = res.concat(_this.global.upcmodbus.client.getArray(5, el.barcode));
+        });
+        for (var i = res.length; i < 45; i++) {
+            res.push(0);
+        }
+        console.log("bottle B1 register : ");
+        console.log(res);
+        //b1
+        var res2 = [];
+        this.bottlesB2.forEach(function (el) {
+            if (el.style == 1 || el.style == 0)
+                res2 = res2.concat(_this.global.upcmodbus.client.getArray(5, el.barcode));
+        });
+        for (var i = res2.length; i < 45; i++) {
+            res2.push(0);
+        }
+        console.log("bottle B1 register : ");
+        console.log(res2);
+        // this.global.upcmodbus.client.writeMultipleRegisters(41124, res);
+        // this.global.upcmodbus.client.writeMultipleRegisters(41169, res2);
+    };
     AddbottleceintPage.prototype.changeRes = function (i) {
         this.ecrir(this.correspondancesRegistres.co2ResActive, i);
     };
@@ -483,16 +575,50 @@ var AddbottleceintPage = /** @class */ (function () {
             _this.contenuB2 = _this.global.upcmodbus.reserves.co2Res2ActVol;
             _this.global.contenantB1 = _this.global.upcmodbus.reserves.co2Res1StartVol;
             _this.global.contenantB2 = _this.global.upcmodbus.reserves.co2Res2StartVol;
+            console.log("bottles en  b1");
+            console.log(_this.global.upcmodbus.reserves.bottlesB1);
             //lire les barcodes en B1 :
             _this.global.upcmodbus.reserves.bottlesB1.forEach(function (barcode) {
-                var bottle = { barcode: barcode, type: {}, style: 0 };
-                _this.bottlesB1.push(bottle);
+                if (barcode != "\u0000\u0000\u0000") {
+                    _this.aEcrir.b1.push(barcode);
+                    var bottle_1 = {
+                        barcode: barcode.replace(/[^\w\s]/gi, ""),
+                        type: {},
+                        style: 0,
+                    };
+                    console.log(bottle_1.barcode.charAt(bottle_1.barcode.length - 1));
+                    var bt = _this.bottleTypedb.find(function (elem) {
+                        return elem.codeUpc.toString() ==
+                            bottle_1.barcode.charAt(bottle_1.barcode.length - 1);
+                    });
+                    console.log(bt);
+                    bottle_1.type = bt;
+                    _this.bottlesB1.push(bottle_1);
+                }
             });
-            //lire les barcodes en B1 :
-            _this.global.upcmodbus.reserves.bottlesB2.forEach(function (barcode) {
-                var bottle = { barcode: barcode, type: {}, style: 0 };
-                _this.bottlesB2.push(bottle);
+            console.log(_this.bottlesB1);
+            //lire les barcodes en B2 :
+            console.log("bottles en B2");
+            console.log(_this.global.upcmodbus.reserves.bottlesB2);
+            _this.global.upcmodbus.reserves.bottlesB2
+                .filter(function (el) { return el != ""; })
+                .forEach(function (barcode) {
+                if (barcode != "\u0000\u0000\u0000") {
+                    _this.aEcrir.b2.push(barcode);
+                    var bottle_2 = {
+                        barcode: barcode.replace(/[^\w\s]/gi, ""),
+                        type: {},
+                        style: 0,
+                    };
+                    var bt = _this.bottleTypedb.find(function (elem) {
+                        return elem.codeUpc.toString() ==
+                            bottle_2.barcode.charAt(bottle_2.barcode.length - 1);
+                    });
+                    bottle_2.type = bt;
+                    _this.bottlesB2.push(bottle_2);
+                }
             });
+            console.log(_this.bottlesB2);
         });
     };
     AddbottleceintPage.prototype.unsubscribeRefresh = function () {
