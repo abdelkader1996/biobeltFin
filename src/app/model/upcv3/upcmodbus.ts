@@ -1174,6 +1174,11 @@ export class UPCModbus {
                 ) / 100;
 
               //40165 40166
+
+              //40165 40166
+              console.log("registre  ACT vol 2 ::");
+              console.log(res2[14], res2[15]);
+
               this.reserves.co2Res2ActVol =
                 Math.round(
                   this.client.registerToFloat([res2[14], res2[15]]) *
@@ -1209,6 +1214,8 @@ export class UPCModbus {
                 ) / 100;
 
               //40449 40450  Math.round((this.client.registerToFloat([res[87],res[88]])* 0.001974) * 100) / 100
+              //40165 40166
+
               this.reserves.co2Res2StartVol =
                 Math.round(
                   this.client.registerToFloat([res3[73], res3[74]]) *
@@ -1403,6 +1410,9 @@ export class UPCModbus {
               ) / 100;
 
             //40165 40166
+            console.log("registre  ACT vol 2 ::");
+            console.log(res2[14], res2[15]);
+
             this.reserves.co2Res2ActVol =
               Math.round(
                 this.client.registerToFloat([res2[14], res2[15]]) *

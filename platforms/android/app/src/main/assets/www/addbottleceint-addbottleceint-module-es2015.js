@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n      <ion-back-button defaultHref=\"home\"></ion-back-button>\n    </ion-buttons>\n\n    <ion-buttons>\n      <ion-button fill=\"clear\">\n        <ion-icon name=\"wifi\" color=\"light\"></ion-icon> connecté a :\n        {{this.current_ssid}}</ion-button\n      >\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <h3 style=\"text-align: center\">Changement de bouteilles</h3>\n  <!--<ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>-->\n  <ion-grid style=\"padding-top: 5%\">\n    <ion-row>\n      <ion-col size=\"6\" style=\"border-right: solid 3px green\">\n        <!--<ion-select placeholder=\"Type de bouteilles\">\n          <ion-select-option *ngFor=\"let bottle of listBottles\">\n            {{bottle.brand+\" \"+bottle.designation.toFixed(2)+\" kg\"}}\n          </ion-select-option>\n        </ion-select>-->\n        <h1\n          style=\"text-align: center\"\n          (click)=\"changeRes(1);\"\n          [ngClass]=\"{'bgreen' : highlightB1}\"\n        >\n          B1\n        </h1>\n      </ion-col>\n\n      <ion-col size=\"6\">\n        <h1\n          style=\"text-align: center\"\n          (click)=\"changeRes(2);\"\n          [ngClass]=\"{'bgreen' : highlightB2}\"\n        >\n          B2\n        </h1>\n      </ion-col>\n\n      <ion-col\n        size=\"12\"\n        style=\"\n          border-top-right-radius: 80px 80px;\n          border-top-left-radius: 80px 80px;\n        \"\n      >\n        <div style=\"text-align: center\">Etat du Contenu</div>\n      </ion-col>\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px\">\n        <ion-select\n          [(ngModel)]=\"statusB1\"\n          (ngModelChange)=\"changeContentStatus('B1');\"\n        >\n          <ion-select-option value=\"0\">VIDE</ion-select-option>\n          <ion-select-option value=\"1\">RESIDUEL</ion-select-option>\n          <ion-select-option value=\"2\">DISPONIBLE</ion-select-option>\n        </ion-select>\n        <ion-label style=\"text-align: center\">-</ion-label>\n      </ion-col>\n\n      <ion-col\n        size=\"6\"\n        style=\"border-bottom-left-radius: 80px 80px\"\n        [ngClass]=\"{'bgred' : false}\"\n      >\n        <ion-select\n          [(ngModel)]=\"statusB2\"\n          (ngModelChange)=\"changeContentStatus('B2');\"\n        >\n          <ion-select-option value=\"0\">VIDE</ion-select-option>\n          <ion-select-option value=\"1\">RESIDUEL</ion-select-option>\n          <ion-select-option value=\"2\">DISPONIBLE</ion-select-option>\n        </ion-select>\n        <ion-label style=\"text-align: center\">-</ion-label>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col\n        size=\"12\"\n        style=\"\n          border-top-right-radius: 80px 80px;\n          border-top-left-radius: 80px 80px;\n        \"\n      >\n        <div style=\"text-align: center\">Contenu :</div>\n      </ion-col>\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px\">\n        <ion-label style=\"text-align: center\">{{contenuB1}} kg </ion-label>\n      </ion-col>\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px\">\n        <ion-label style=\"text-align: center\">{{contenuB2}} kg </ion-label>\n      </ion-col>\n    </ion-row>\n\n    <ion-row>\n      <ion-col\n        size=\"12\"\n        style=\"\n          border-top-right-radius: 80px 80px;\n          border-top-left-radius: 80px 80px;\n        \"\n      >\n        <div style=\"text-align: center\">ajouter une bouteille :</div>\n      </ion-col>\n      <!-- ajout bouteille B1-->\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px\">\n        <ion-list>\n          <ion-item\n            *ngFor=\"let bottle of bottlesB1;let i =index\"\n            (click)=\"cancelB1(i)\"\n          >\n            <ion-label\n              [ngStyle]=\"{'background-color':bottle.style==1?'green':bottle.style==-1?'red':''}\"\n            >\n              {{bottle.type?.brand}} {{bottle.type?.designation}}\n            </ion-label>\n            <ion-label\n              [ngStyle]=\"{'background-color':bottle.style==1?'green':bottle.style==-1?'red':''}\"\n            >\n              {{bottle.barcode}}\n            </ion-label>\n          </ion-item>\n\n          <ion-item>\n            <ion-label>type de bouteille </ion-label>\n            <ion-select\n              placeholder=\"Selectionner un type \"\n              [(ngModel)]=\"currentBotlleTypeB1\"\n            >\n              <ion-select-option\n                *ngFor=\"let bt of bottleTypedb\"\n                value=\"{{bt.id}}\"\n                >{{bt.brand+\"-\"+bt.designation+\" kg\"}}</ion-select-option\n              >\n            </ion-select>\n          </ion-item>\n\n          <ion-item>\n            <ion-label>Total : {{contenueAAjouterB1}}</ion-label>\n          </ion-item>\n          <ion-item>\n            <button class=\"button-3\" (click)=\"onAddBottleB1()\">\n              + bouteille B1\n            </button>\n          </ion-item>\n          <ion-item>\n            <button class=\"button-3\" (click)=\"viderB1()\">vider B1</button>\n          </ion-item>\n        </ion-list>\n      </ion-col>\n      <!-- ajout bouteille B2-->\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px\">\n        <ion-list>\n          <ion-item\n            class=\"bouteille-ajoute\"\n            *ngFor=\"let bottle of bottlesB2; let i=index\"\n            (click)=\"cancelB2(i)\"\n          >\n            <ion-label\n              [ngStyle]=\"{'background-color':bottle.style==1?'green':bottle.style==-1?'red':''}\"\n            >\n              {{bottle.type?.brand}} {{bottle.type?.designation}}\n            </ion-label>\n            <ion-label\n              [ngStyle]=\"{'background-color':bottle.style==1?'green':bottle.style==-1?'red':''}\"\n              style=\"display: block\"\n            >\n              {{bottle.barcode}}\n            </ion-label>\n          </ion-item>\n\n          <ion-item>\n            <ion-label>type de bouteille </ion-label>\n            <ion-select\n              placeholder=\"Selectionner un type \"\n              [(ngModel)]=\"currentBotlleTypeB2\"\n            >\n              <ion-select-option\n                *ngFor=\"let bt of bottleTypedb\"\n                value=\"{{bt.id}}\"\n                >{{bt.brand+\"-\"+bt.designation+\" kg\"}}</ion-select-option\n              >\n            </ion-select>\n          </ion-item>\n\n          <ion-item>\n            <ion-label>Total : {{contenueAAjouterB2}}</ion-label>\n          </ion-item>\n          <ion-item>\n            <button class=\"button-3\" full (click)=\"onAddBottleB2()\">\n              + bouteille B2\n            </button>\n          </ion-item>\n          <ion-item>\n            <button class=\"button-3\" full (click)=\"viderB2()\">vider B2</button>\n          </ion-item>\n        </ion-list>\n      </ion-col>\n\n      <ion-col\n        size=\"12\"\n        style=\"\n          border-bottom-left-radius: 80px 80px;\n          margin-top: 15px;\n          text-align: center;\n        \"\n      >\n        <button\n          class=\"button-3\"\n          style=\"margin: auto\"\n          (click)=\"ecrireLesBouteilles()\"\n        >\n          Synchronisation\n        </button>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n  <hr />\n  {{this.aEcrir | json}}\n</ion-content>\n<ion-footer>\n  <ion-button *ngIf=\"!global.displayLoading\" style=\"float: left\" fill=\"clear\">\n    <ion-icon name=\"refresh\"></ion-icon>\n  </ion-button>\n  <ion-button\n    *ngIf=\"global.displayLoading\"\n    style=\"float: left\"\n    fill=\"clear\"\n    color=\"primary\"\n  >\n    <ion-spinner></ion-spinner>\n  </ion-button>\n</ion-footer>\n"
+module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n      <ion-back-button defaultHref=\"home\"></ion-back-button>\n    </ion-buttons>\n\n    <ion-buttons>\n      <ion-button fill=\"clear\">\n        <ion-icon name=\"wifi\" color=\"light\"></ion-icon> connecté a :\n        {{this.current_ssid}}</ion-button\n      >\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <!--<ion-refresher slot=\"fixed\" (ionRefresh)=\"doRefresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>-->\n  <ion-grid style=\"padding-top: 5%\">\n    <h4 style=\"text-align: center; color: rgb(151, 150, 150)\">Diffusion</h4>\n\n    <ion-row class=\"row\">\n      <ion-col size=\"12\">\n        <ion-label>Diffusion : </ion-label>\n        <ion-toggle\n          [checked]=\"upcStatus\"\n          (click)=\"ondiffusionchnage($event)\"\n        ></ion-toggle>\n      </ion-col>\n    </ion-row>\n\n    <h4 style=\"text-align: center; color: rgb(151, 150, 150)\">Informations</h4>\n\n    <ion-row class=\"row\">\n      <ion-col size=\"6\">\n        <!--<ion-select placeholder=\"Type de bouteilles\">\n          <ion-select-option *ngFor=\"let bottle of listBottles\">\n            {{bottle.brand+\" \"+bottle.designation.toFixed(2)+\" kg\"}}\n          </ion-select-option>\n        </ion-select>-->\n        <h1\n          style=\"text-align: center\"\n          (click)=\"changeRes(1);\"\n          [ngClass]=\"{'bgreen' : highlightB1 && upcStatus==0,'clignote':highlightB1 && upcStatus==1}\"\n        >\n          B1\n        </h1>\n      </ion-col>\n\n      <ion-col size=\"6\">\n        <h1\n          style=\"text-align: center\"\n          (click)=\"changeRes(2);\"\n          [ngClass]=\"{'bgreen' : highlightB2 && upcStatus==0,'clignote':highlightB2 && upcStatus==1}\"\n        >\n          B2\n        </h1>\n      </ion-col>\n\n      <ion-col\n        size=\"12\"\n        style=\"\n          border-top-right-radius: 80px 80px;\n          border-top-left-radius: 80px 80px;\n        \"\n      >\n      </ion-col>\n      <ion-col\n        size=\"6\"\n        style=\"border-bottom-left-radius: 80px 80px; color: black\"\n      >\n        <ion-select\n          style=\"text-align: center\"\n          [(ngModel)]=\"statusB1\"\n          (ngModelChange)=\"changeContentStatus('B1');\"\n        >\n          <ion-select-option value=\"0\">VIDE</ion-select-option>\n          <ion-select-option value=\"1\">RESIDUEL</ion-select-option>\n          <ion-select-option value=\"2\">DISPONIBLE</ion-select-option>\n        </ion-select>\n      </ion-col>\n\n      <ion-col\n        size=\"6\"\n        style=\"border-bottom-left-radius: 80px 80px; color: black\"\n        [ngClass]=\"{'bgred' : false}\"\n      >\n        <ion-select\n          style=\"text-align: center\"\n          [(ngModel)]=\"statusB2\"\n          (ngModelChange)=\"changeContentStatus('B2');\"\n        >\n          <ion-select-option value=\"0\">VIDE</ion-select-option>\n          <ion-select-option value=\"1\">RESIDUEL</ion-select-option>\n          <ion-select-option value=\"2\">DISPONIBLE</ion-select-option>\n        </ion-select>\n      </ion-col>\n\n      <ion-col\n        size=\"6\"\n        style=\"border-bottom-left-radius: 80px 80px; text-align: center\"\n      >\n        <ion-label style=\"text-align: center; color: black\">\n          <ion-icon name=\"md-battery-full\"></ion-icon>\n\n          {{contenuB1}} kg\n        </ion-label>\n      </ion-col>\n      <ion-col\n        size=\"6\"\n        style=\"border-bottom-left-radius: 80px 80px; text-align: center\"\n      >\n        <ion-label style=\"text-align: center; color: black\">\n          <ion-icon name=\"md-battery-full\"></ion-icon>\n\n          {{contenuB2}} kg\n        </ion-label>\n      </ion-col>\n    </ion-row>\n    <h4 style=\"text-align: center; color: rgb(151, 150, 150)\">\n      Changement de bouteilles\n    </h4>\n\n    <ion-row class=\"row\">\n      <!-- ajout bouteille B1-->\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px\">\n        <ion-list>\n          <ion-item>\n            <ion-label>type de bouteille </ion-label>\n            <ion-select\n              placeholder=\"Selectionner un type \"\n              [(ngModel)]=\"currentBotlleTypeB1\"\n            >\n              <ion-select-option\n                *ngFor=\"let bt of bottleTypedb\"\n                value=\"{{bt.id}}\"\n                >{{bt.brand+\"-\"+bt.designation+\" kg\"}}</ion-select-option\n              >\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <button class=\"button-3\" (click)=\"onAddBottleB1()\">\n              + bouteille B1\n            </button>\n          </ion-item>\n          <ion-item>\n            <button class=\"button-3\" (click)=\"viderB1()\">vider B1</button>\n          </ion-item>\n          <ion-item\n            *ngFor=\"let bottle of bottlesB1;let i =index\"\n            (click)=\"cancelB1(i)\"\n          >\n            <ion-label\n              [ngStyle]=\"{'background-color':bottle.style==1?'green':bottle.style==-1?'red':''}\"\n            >\n              {{bottle.type?.brand}} {{bottle.type?.designation}}\n            </ion-label>\n            <ion-label\n              [ngStyle]=\"{'background-color':bottle.style==1?'green':bottle.style==-1?'red':''}\"\n            >\n              {{bottle.barcode}}\n            </ion-label>\n          </ion-item>\n\n          <ion-item>\n            <ion-label>Total : {{contenueAAjouterB1}}</ion-label>\n          </ion-item>\n        </ion-list>\n      </ion-col>\n      <!-- ajout bouteille B2-->\n      <ion-col size=\"6\" style=\"border-bottom-left-radius: 80px 80px\">\n        <ion-list>\n          <ion-item>\n            <ion-label>type de bouteille </ion-label>\n            <ion-select\n              placeholder=\"Selectionner un type \"\n              [(ngModel)]=\"currentBotlleTypeB2\"\n            >\n              <ion-select-option\n                *ngFor=\"let bt of bottleTypedb\"\n                value=\"{{bt.id}}\"\n                >{{bt.brand+\"-\"+bt.designation+\" kg\"}}</ion-select-option\n              >\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <button class=\"button-3\" full (click)=\"onAddBottleB2()\">\n              + bouteille B2\n            </button>\n          </ion-item>\n          <ion-item>\n            <button class=\"button-3\" full (click)=\"viderB2()\">vider B2</button>\n          </ion-item>\n          <ion-item\n            class=\"bouteille-ajoute\"\n            *ngFor=\"let bottle of bottlesB2; let i=index\"\n            (click)=\"cancelB2(i)\"\n          >\n            <ion-label\n              [ngStyle]=\"{'background-color':bottle.style==1?'green':bottle.style==-1?'red':''}\"\n            >\n              {{bottle.type?.brand}} {{bottle.type?.designation}}\n            </ion-label>\n            <ion-label\n              [ngStyle]=\"{'background-color':bottle.style==1?'green':bottle.style==-1?'red':''}\"\n              style=\"display: block\"\n            >\n              {{bottle.barcode}}\n            </ion-label>\n          </ion-item>\n\n          <ion-item>\n            <ion-label>Total : {{contenueAAjouterB2}}</ion-label>\n          </ion-item>\n        </ion-list>\n      </ion-col>\n\n      <ion-col\n        size=\"12\"\n        style=\"\n          border-bottom-left-radius: 80px 80px;\n          margin-top: 15px;\n          text-align: center;\n        \"\n      >\n        <button\n          class=\"button-3\"\n          style=\"margin: auto\"\n          (click)=\"ecrireLesBouteilles()\"\n        >\n          Synchronisation\n        </button>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n  <hr />\n  {{this.aEcrir | json}}\n\n  <hr />\n  upc Status : {{upcStatus}}\n</ion-content>\n<ion-footer>\n  <ion-button *ngIf=\"!global.displayLoading\" style=\"float: left\" fill=\"clear\">\n    <ion-icon name=\"refresh\"></ion-icon>\n  </ion-button>\n  <ion-button\n    *ngIf=\"global.displayLoading\"\n    style=\"float: left\"\n    fill=\"clear\"\n    color=\"primary\"\n  >\n    <ion-spinner></ion-spinner>\n  </ion-button>\n</ion-footer>\n"
 
 /***/ }),
 
@@ -97,7 +97,7 @@ AddbottleceintPageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/* CSS */\n.bouteille-ajoute {\n  background-color: rgba(14, 182, 39, 0.3);\n  box-shadow: rgba(27, 31, 35, 0.1) 0 1px 0;\n}\n.button-3 {\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  background-color: #2ea44f;\n  border: 1px solid rgba(27, 31, 35, 0.15);\n  border-radius: 6px;\n  box-shadow: rgba(27, 31, 35, 0.1) 0 1px 0;\n  box-sizing: border-box;\n  color: #fff;\n  cursor: pointer;\n  display: inline-block;\n  font-family: -apple-system, system-ui, \"Segoe UI\", Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\";\n  font-size: 14px;\n  font-weight: 600;\n  line-height: 20px;\n  padding: 6px 16px;\n  position: relative;\n  text-align: center;\n  text-decoration: none;\n  -moz-user-select: none;\n   -ms-user-select: none;\n       user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n  vertical-align: middle;\n  white-space: nowrap;\n}\n.button-3:focus:not(:focus-visible):not(.focus-visible) {\n  box-shadow: none;\n  outline: none;\n}\n.button-3:hover {\n  background-color: #2c974b;\n}\n.button-3:focus {\n  box-shadow: rgba(46, 164, 79, 0.4) 0 0 0 3px;\n  outline: none;\n}\n.button-3:disabled {\n  background-color: #94d3a2;\n  border-color: rgba(27, 31, 35, 0.1);\n  color: rgba(255, 255, 255, 0.8);\n  cursor: default;\n}\n.button-3:active {\n  background-color: #298e46;\n  box-shadow: rgba(20, 70, 32, 0.2) 0 1px 0 inset;\n}\n.item.item-trns {\n  border-color: rgba(0, 0, 0, 0);\n  background-color: rgba(0, 0, 0, 0);\n  color: white;\n}\n.bgreen {\n  background-color: green;\n}\n/*.bgred {\n\tbackground-color: red;\n}*/\n.bgblank {\n  background-color: white;\n}\n.contenuegreen {\n  border-bottom-left-radius: 80px 80px;\n  background-color: green;\n}\n.contenuered {\n  border-bottom-left-radius: 80px 80px;\n  background-color: red;\n}\n.contenuegreen2 {\n  border-bottom-right-radius: 80px 80px;\n  background-color: green;\n}\n.contenuered2 {\n  border-bottom-right-radius: 80px 80px;\n  background-color: red;\n}\n#one {\n  width: 200px;\n}\n#two {\n  display: inline-block;\n  position: relative;\n  left: 0;\n  width: 100px;\n  height: 100px;\n}\n#three {\n  display: inline-block;\n  position: relative;\n  left: 0;\n  width: 100px;\n  height: 100px;\n}\n.removed {\n  background-color: yellow !important;\n}\n.added {\n  background-color: yellowgreen !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYWRkYm90dGxlY2VpbnQvQzpcXFVzZXJzXFxkZXZlbFxcT25lRHJpdmVcXEJ1cmVhdVxcYi1EZXYvc3JjXFxhcHBcXGFkZGJvdHRsZWNlaW50XFxhZGRib3R0bGVjZWludC5wYWdlLnNjc3MiLCJzcmMvYXBwL2FkZGJvdHRsZWNlaW50L2FkZGJvdHRsZWNlaW50LnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxRQUFBO0FBRUE7RUFDRSx3Q0FBQTtFQUNBLHlDQUFBO0FDQUY7QURFQTtFQUNFLHdCQUFBO0tBQUEscUJBQUE7VUFBQSxnQkFBQTtFQUNBLHlCQUFBO0VBQ0Esd0NBQUE7RUFDQSxrQkFBQTtFQUNBLHlDQUFBO0VBQ0Esc0JBQUE7RUFDQSxXQUFBO0VBQ0EsZUFBQTtFQUNBLHFCQUFBO0VBQ0Esc0hBQUE7RUFFQSxlQUFBO0VBQ0EsZ0JBQUE7RUFDQSxpQkFBQTtFQUNBLGlCQUFBO0VBQ0Esa0JBQUE7RUFDQSxrQkFBQTtFQUNBLHFCQUFBO0VBQ0Esc0JBQUE7R0FBQSxxQkFBQTtPQUFBLGlCQUFBO0VBQ0EseUJBQUE7RUFDQSwwQkFBQTtFQUNBLHNCQUFBO0VBQ0EsbUJBQUE7QUNBRjtBREdBO0VBQ0UsZ0JBQUE7RUFDQSxhQUFBO0FDQUY7QURHQTtFQUNFLHlCQUFBO0FDQUY7QURHQTtFQUNFLDRDQUFBO0VBQ0EsYUFBQTtBQ0FGO0FER0E7RUFDRSx5QkFBQTtFQUNBLG1DQUFBO0VBQ0EsK0JBQUE7RUFDQSxlQUFBO0FDQUY7QURHQTtFQUNFLHlCQUFBO0VBQ0EsK0NBQUE7QUNBRjtBREdBO0VBQ0UsOEJBQUE7RUFDQSxrQ0FBQTtFQUNBLFlBQUE7QUNBRjtBREVBO0VBQ0UsdUJBQUE7QUNDRjtBRENBOztFQUFBO0FBR0E7RUFDRSx1QkFBQTtBQ0VGO0FEQUE7RUFDRSxvQ0FBQTtFQUNBLHVCQUFBO0FDR0Y7QUREQTtFQUNFLG9DQUFBO0VBQ0EscUJBQUE7QUNJRjtBREZBO0VBQ0UscUNBQUE7RUFDQSx1QkFBQTtBQ0tGO0FESEE7RUFDRSxxQ0FBQTtFQUNBLHFCQUFBO0FDTUY7QURKQTtFQUNFLFlBQUE7QUNPRjtBREhBO0VBQ0UscUJBQUE7RUFFQSxrQkFBQTtFQUNBLE9BQUE7RUFDQSxZQUFBO0VBQ0EsYUFBQTtBQ0tGO0FERkE7RUFDRSxxQkFBQTtFQUVBLGtCQUFBO0VBQ0EsT0FBQTtFQUNBLFlBQUE7RUFDQSxhQUFBO0FDSUY7QUREQTtFQUNFLG1DQUFBO0FDSUY7QUREQTtFQUNFLHdDQUFBO0FDSUYiLCJmaWxlIjoic3JjL2FwcC9hZGRib3R0bGVjZWludC9hZGRib3R0bGVjZWludC5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvKiBDU1MgKi9cblxuLmJvdXRlaWxsZS1ham91dGUge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDE0LCAxODIsIDM5LCAwLjMpO1xuICBib3gtc2hhZG93OiByZ2JhKDI3LCAzMSwgMzUsIDAuMSkgMCAxcHggMDtcbn1cbi5idXR0b24tMyB7XG4gIGFwcGVhcmFuY2U6IG5vbmU7XG4gIGJhY2tncm91bmQtY29sb3I6ICMyZWE0NGY7XG4gIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoMjcsIDMxLCAzNSwgMC4xNSk7XG4gIGJvcmRlci1yYWRpdXM6IDZweDtcbiAgYm94LXNoYWRvdzogcmdiYSgyNywgMzEsIDM1LCAwLjEpIDAgMXB4IDA7XG4gIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG4gIGNvbG9yOiAjZmZmO1xuICBjdXJzb3I6IHBvaW50ZXI7XG4gIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgZm9udC1mYW1pbHk6IC1hcHBsZS1zeXN0ZW0sIHN5c3RlbS11aSwgXCJTZWdvZSBVSVwiLCBIZWx2ZXRpY2EsIEFyaWFsLFxuICAgIHNhbnMtc2VyaWYsIFwiQXBwbGUgQ29sb3IgRW1vamlcIiwgXCJTZWdvZSBVSSBFbW9qaVwiO1xuICBmb250LXNpemU6IDE0cHg7XG4gIGZvbnQtd2VpZ2h0OiA2MDA7XG4gIGxpbmUtaGVpZ2h0OiAyMHB4O1xuICBwYWRkaW5nOiA2cHggMTZweDtcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgdXNlci1zZWxlY3Q6IG5vbmU7XG4gIC13ZWJraXQtdXNlci1zZWxlY3Q6IG5vbmU7XG4gIHRvdWNoLWFjdGlvbjogbWFuaXB1bGF0aW9uO1xuICB2ZXJ0aWNhbC1hbGlnbjogbWlkZGxlO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xufVxuXG4uYnV0dG9uLTM6Zm9jdXM6bm90KDpmb2N1cy12aXNpYmxlKTpub3QoLmZvY3VzLXZpc2libGUpIHtcbiAgYm94LXNoYWRvdzogbm9uZTtcbiAgb3V0bGluZTogbm9uZTtcbn1cblxuLmJ1dHRvbi0zOmhvdmVyIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogIzJjOTc0Yjtcbn1cblxuLmJ1dHRvbi0zOmZvY3VzIHtcbiAgYm94LXNoYWRvdzogcmdiYSg0NiwgMTY0LCA3OSwgMC40KSAwIDAgMCAzcHg7XG4gIG91dGxpbmU6IG5vbmU7XG59XG5cbi5idXR0b24tMzpkaXNhYmxlZCB7XG4gIGJhY2tncm91bmQtY29sb3I6ICM5NGQzYTI7XG4gIGJvcmRlci1jb2xvcjogcmdiYSgyNywgMzEsIDM1LCAwLjEpO1xuICBjb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjgpO1xuICBjdXJzb3I6IGRlZmF1bHQ7XG59XG5cbi5idXR0b24tMzphY3RpdmUge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjMjk4ZTQ2O1xuICBib3gtc2hhZG93OiByZ2JhKDIwLCA3MCwgMzIsIDAuMikgMCAxcHggMCBpbnNldDtcbn1cblxuLml0ZW0uaXRlbS10cm5zIHtcbiAgYm9yZGVyLWNvbG9yOiByZ2JhKDAsIDAsIDAsIDApO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDAsIDAsIDAsIDApO1xuICBjb2xvcjogd2hpdGU7XG59XG4uYmdyZWVuIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogZ3JlZW47XG59XG4vKi5iZ3JlZCB7XG5cdGJhY2tncm91bmQtY29sb3I6IHJlZDtcbn0qL1xuLmJnYmxhbmsge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTtcbn1cbi5jb250ZW51ZWdyZWVuIHtcbiAgYm9yZGVyLWJvdHRvbS1sZWZ0LXJhZGl1czogODBweCA4MHB4O1xuICBiYWNrZ3JvdW5kLWNvbG9yOiBncmVlbjtcbn1cbi5jb250ZW51ZXJlZCB7XG4gIGJvcmRlci1ib3R0b20tbGVmdC1yYWRpdXM6IDgwcHggODBweDtcbiAgYmFja2dyb3VuZC1jb2xvcjogcmVkO1xufVxuLmNvbnRlbnVlZ3JlZW4yIHtcbiAgYm9yZGVyLWJvdHRvbS1yaWdodC1yYWRpdXM6IDgwcHggODBweDtcbiAgYmFja2dyb3VuZC1jb2xvcjogZ3JlZW47XG59XG4uY29udGVudWVyZWQyIHtcbiAgYm9yZGVyLWJvdHRvbS1yaWdodC1yYWRpdXM6IDgwcHggODBweDtcbiAgYmFja2dyb3VuZC1jb2xvcjogcmVkO1xufVxuI29uZSB7XG4gIHdpZHRoOiAyMDBweDtcbiAgLy9iYWNrZ3JvdW5kOiAjY2NjO1xufVxuXG4jdHdvIHtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICAvL2JhY2tncm91bmQ6IGJsdWU7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgbGVmdDogMDtcbiAgd2lkdGg6IDEwMHB4O1xuICBoZWlnaHQ6IDEwMHB4O1xufVxuXG4jdGhyZWUge1xuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIC8vYmFja2dyb3VuZDogcmVkO1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIGxlZnQ6IDA7XG4gIHdpZHRoOiAxMDBweDtcbiAgaGVpZ2h0OiAxMDBweDtcbn1cblxuLnJlbW92ZWQge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB5ZWxsb3cgIWltcG9ydGFudDtcbn1cblxuLmFkZGVkIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogeWVsbG93Z3JlZW4gIWltcG9ydGFudDtcbn1cbiIsIi8qIENTUyAqL1xuLmJvdXRlaWxsZS1ham91dGUge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDE0LCAxODIsIDM5LCAwLjMpO1xuICBib3gtc2hhZG93OiByZ2JhKDI3LCAzMSwgMzUsIDAuMSkgMCAxcHggMDtcbn1cblxuLmJ1dHRvbi0zIHtcbiAgYXBwZWFyYW5jZTogbm9uZTtcbiAgYmFja2dyb3VuZC1jb2xvcjogIzJlYTQ0ZjtcbiAgYm9yZGVyOiAxcHggc29saWQgcmdiYSgyNywgMzEsIDM1LCAwLjE1KTtcbiAgYm9yZGVyLXJhZGl1czogNnB4O1xuICBib3gtc2hhZG93OiByZ2JhKDI3LCAzMSwgMzUsIDAuMSkgMCAxcHggMDtcbiAgYm94LXNpemluZzogYm9yZGVyLWJveDtcbiAgY29sb3I6ICNmZmY7XG4gIGN1cnNvcjogcG9pbnRlcjtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICBmb250LWZhbWlseTogLWFwcGxlLXN5c3RlbSwgc3lzdGVtLXVpLCBcIlNlZ29lIFVJXCIsIEhlbHZldGljYSwgQXJpYWwsIHNhbnMtc2VyaWYsIFwiQXBwbGUgQ29sb3IgRW1vamlcIiwgXCJTZWdvZSBVSSBFbW9qaVwiO1xuICBmb250LXNpemU6IDE0cHg7XG4gIGZvbnQtd2VpZ2h0OiA2MDA7XG4gIGxpbmUtaGVpZ2h0OiAyMHB4O1xuICBwYWRkaW5nOiA2cHggMTZweDtcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgdXNlci1zZWxlY3Q6IG5vbmU7XG4gIC13ZWJraXQtdXNlci1zZWxlY3Q6IG5vbmU7XG4gIHRvdWNoLWFjdGlvbjogbWFuaXB1bGF0aW9uO1xuICB2ZXJ0aWNhbC1hbGlnbjogbWlkZGxlO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xufVxuXG4uYnV0dG9uLTM6Zm9jdXM6bm90KDpmb2N1cy12aXNpYmxlKTpub3QoLmZvY3VzLXZpc2libGUpIHtcbiAgYm94LXNoYWRvdzogbm9uZTtcbiAgb3V0bGluZTogbm9uZTtcbn1cblxuLmJ1dHRvbi0zOmhvdmVyIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogIzJjOTc0Yjtcbn1cblxuLmJ1dHRvbi0zOmZvY3VzIHtcbiAgYm94LXNoYWRvdzogcmdiYSg0NiwgMTY0LCA3OSwgMC40KSAwIDAgMCAzcHg7XG4gIG91dGxpbmU6IG5vbmU7XG59XG5cbi5idXR0b24tMzpkaXNhYmxlZCB7XG4gIGJhY2tncm91bmQtY29sb3I6ICM5NGQzYTI7XG4gIGJvcmRlci1jb2xvcjogcmdiYSgyNywgMzEsIDM1LCAwLjEpO1xuICBjb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjgpO1xuICBjdXJzb3I6IGRlZmF1bHQ7XG59XG5cbi5idXR0b24tMzphY3RpdmUge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjMjk4ZTQ2O1xuICBib3gtc2hhZG93OiByZ2JhKDIwLCA3MCwgMzIsIDAuMikgMCAxcHggMCBpbnNldDtcbn1cblxuLml0ZW0uaXRlbS10cm5zIHtcbiAgYm9yZGVyLWNvbG9yOiByZ2JhKDAsIDAsIDAsIDApO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDAsIDAsIDAsIDApO1xuICBjb2xvcjogd2hpdGU7XG59XG5cbi5iZ3JlZW4ge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiBncmVlbjtcbn1cblxuLyouYmdyZWQge1xuXHRiYWNrZ3JvdW5kLWNvbG9yOiByZWQ7XG59Ki9cbi5iZ2JsYW5rIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7XG59XG5cbi5jb250ZW51ZWdyZWVuIHtcbiAgYm9yZGVyLWJvdHRvbS1sZWZ0LXJhZGl1czogODBweCA4MHB4O1xuICBiYWNrZ3JvdW5kLWNvbG9yOiBncmVlbjtcbn1cblxuLmNvbnRlbnVlcmVkIHtcbiAgYm9yZGVyLWJvdHRvbS1sZWZ0LXJhZGl1czogODBweCA4MHB4O1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZWQ7XG59XG5cbi5jb250ZW51ZWdyZWVuMiB7XG4gIGJvcmRlci1ib3R0b20tcmlnaHQtcmFkaXVzOiA4MHB4IDgwcHg7XG4gIGJhY2tncm91bmQtY29sb3I6IGdyZWVuO1xufVxuXG4uY29udGVudWVyZWQyIHtcbiAgYm9yZGVyLWJvdHRvbS1yaWdodC1yYWRpdXM6IDgwcHggODBweDtcbiAgYmFja2dyb3VuZC1jb2xvcjogcmVkO1xufVxuXG4jb25lIHtcbiAgd2lkdGg6IDIwMHB4O1xufVxuXG4jdHdvIHtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIGxlZnQ6IDA7XG4gIHdpZHRoOiAxMDBweDtcbiAgaGVpZ2h0OiAxMDBweDtcbn1cblxuI3RocmVlIHtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIGxlZnQ6IDA7XG4gIHdpZHRoOiAxMDBweDtcbiAgaGVpZ2h0OiAxMDBweDtcbn1cblxuLnJlbW92ZWQge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB5ZWxsb3cgIWltcG9ydGFudDtcbn1cblxuLmFkZGVkIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogeWVsbG93Z3JlZW4gIWltcG9ydGFudDtcbn0iXX0= */"
+module.exports = "/* CSS */\n.row {\n  margin-bottom: 30px;\n  padding: 15px;\n  border-color: #a5a5a5;\n  border-width: 2px;\n  border-style: solid;\n}\n.clignote {\n  background-color: green;\n  -webkit-animation: clignote 2s linear infinite;\n          animation: clignote 2s linear infinite;\n}\n@-webkit-keyframes clignote {\n  50% {\n    opacity: 0;\n  }\n}\n@keyframes clignote {\n  50% {\n    opacity: 0;\n  }\n}\n.bouteille-ajoute {\n  background-color: rgba(14, 182, 39, 0.3);\n  box-shadow: rgba(27, 31, 35, 0.1) 0 1px 0;\n}\n.button-3 {\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  background-color: #2ea44f;\n  border: 1px solid rgba(27, 31, 35, 0.15);\n  border-radius: 6px;\n  box-shadow: rgba(27, 31, 35, 0.1) 0 1px 0;\n  box-sizing: border-box;\n  color: #fff;\n  cursor: pointer;\n  display: inline-block;\n  font-family: -apple-system, system-ui, \"Segoe UI\", Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\";\n  font-size: 14px;\n  font-weight: 600;\n  line-height: 20px;\n  padding: 6px 16px;\n  position: relative;\n  text-align: center;\n  text-decoration: none;\n  -moz-user-select: none;\n   -ms-user-select: none;\n       user-select: none;\n  -webkit-user-select: none;\n  touch-action: manipulation;\n  vertical-align: middle;\n  white-space: nowrap;\n}\n.button-3:focus:not(:focus-visible):not(.focus-visible) {\n  box-shadow: none;\n  outline: none;\n}\n.button-3:hover {\n  background-color: #2c974b;\n}\n.button-3:focus {\n  box-shadow: rgba(46, 164, 79, 0.4) 0 0 0 3px;\n  outline: none;\n}\n.button-3:disabled {\n  background-color: #94d3a2;\n  border-color: rgba(27, 31, 35, 0.1);\n  color: rgba(255, 255, 255, 0.8);\n  cursor: default;\n}\n.button-3:active {\n  background-color: #298e46;\n  box-shadow: rgba(20, 70, 32, 0.2) 0 1px 0 inset;\n}\n.item.item-trns {\n  border-color: rgba(0, 0, 0, 0);\n  background-color: rgba(0, 0, 0, 0);\n  color: white;\n}\n.bgreen {\n  background-color: green;\n}\n/*.bgred {\n\tbackground-color: red;\n}*/\n.bgblank {\n  background-color: white;\n}\n.contenuegreen {\n  border-bottom-left-radius: 80px 80px;\n  background-color: green;\n}\n.contenuered {\n  border-bottom-left-radius: 80px 80px;\n  background-color: red;\n}\n.contenuegreen2 {\n  border-bottom-right-radius: 80px 80px;\n  background-color: green;\n}\n.contenuered2 {\n  border-bottom-right-radius: 80px 80px;\n  background-color: red;\n}\n#one {\n  width: 200px;\n}\n#two {\n  display: inline-block;\n  position: relative;\n  left: 0;\n  width: 100px;\n  height: 100px;\n}\n#three {\n  display: inline-block;\n  position: relative;\n  left: 0;\n  width: 100px;\n  height: 100px;\n}\n.removed {\n  background-color: yellow !important;\n}\n.added {\n  background-color: yellowgreen !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYWRkYm90dGxlY2VpbnQvQzpcXFVzZXJzXFxkZXZlbFxcT25lRHJpdmVcXEJ1cmVhdVxcYi1EZXYvc3JjXFxhcHBcXGFkZGJvdHRsZWNlaW50XFxhZGRib3R0bGVjZWludC5wYWdlLnNjc3MiLCJzcmMvYXBwL2FkZGJvdHRsZWNlaW50L2FkZGJvdHRsZWNlaW50LnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxRQUFBO0FBRUE7RUFDRSxtQkFBQTtFQUNBLGFBQUE7RUFDQSxxQkFBQTtFQUNBLGlCQUFBO0VBQ0EsbUJBQUE7QUNBRjtBREVBO0VBQ0UsdUJBQUE7RUFDQSw4Q0FBQTtVQUFBLHNDQUFBO0FDQ0Y7QURDQTtFQUNFO0lBQ0UsVUFBQTtFQ0VGO0FBQ0Y7QURMQTtFQUNFO0lBQ0UsVUFBQTtFQ0VGO0FBQ0Y7QURDQTtFQUNFLHdDQUFBO0VBQ0EseUNBQUE7QUNDRjtBRENBO0VBQ0Usd0JBQUE7S0FBQSxxQkFBQTtVQUFBLGdCQUFBO0VBQ0EseUJBQUE7RUFDQSx3Q0FBQTtFQUNBLGtCQUFBO0VBQ0EseUNBQUE7RUFDQSxzQkFBQTtFQUNBLFdBQUE7RUFDQSxlQUFBO0VBQ0EscUJBQUE7RUFDQSxzSEFBQTtFQUVBLGVBQUE7RUFDQSxnQkFBQTtFQUNBLGlCQUFBO0VBQ0EsaUJBQUE7RUFDQSxrQkFBQTtFQUNBLGtCQUFBO0VBQ0EscUJBQUE7RUFDQSxzQkFBQTtHQUFBLHFCQUFBO09BQUEsaUJBQUE7RUFDQSx5QkFBQTtFQUNBLDBCQUFBO0VBQ0Esc0JBQUE7RUFDQSxtQkFBQTtBQ0NGO0FERUE7RUFDRSxnQkFBQTtFQUNBLGFBQUE7QUNDRjtBREVBO0VBQ0UseUJBQUE7QUNDRjtBREVBO0VBQ0UsNENBQUE7RUFDQSxhQUFBO0FDQ0Y7QURFQTtFQUNFLHlCQUFBO0VBQ0EsbUNBQUE7RUFDQSwrQkFBQTtFQUNBLGVBQUE7QUNDRjtBREVBO0VBQ0UseUJBQUE7RUFDQSwrQ0FBQTtBQ0NGO0FERUE7RUFDRSw4QkFBQTtFQUNBLGtDQUFBO0VBQ0EsWUFBQTtBQ0NGO0FEQ0E7RUFDRSx1QkFBQTtBQ0VGO0FEQUE7O0VBQUE7QUFHQTtFQUNFLHVCQUFBO0FDR0Y7QUREQTtFQUNFLG9DQUFBO0VBQ0EsdUJBQUE7QUNJRjtBREZBO0VBQ0Usb0NBQUE7RUFDQSxxQkFBQTtBQ0tGO0FESEE7RUFDRSxxQ0FBQTtFQUNBLHVCQUFBO0FDTUY7QURKQTtFQUNFLHFDQUFBO0VBQ0EscUJBQUE7QUNPRjtBRExBO0VBQ0UsWUFBQTtBQ1FGO0FESkE7RUFDRSxxQkFBQTtFQUVBLGtCQUFBO0VBQ0EsT0FBQTtFQUNBLFlBQUE7RUFDQSxhQUFBO0FDTUY7QURIQTtFQUNFLHFCQUFBO0VBRUEsa0JBQUE7RUFDQSxPQUFBO0VBQ0EsWUFBQTtFQUNBLGFBQUE7QUNLRjtBREZBO0VBQ0UsbUNBQUE7QUNLRjtBREZBO0VBQ0Usd0NBQUE7QUNLRiIsImZpbGUiOiJzcmMvYXBwL2FkZGJvdHRsZWNlaW50L2FkZGJvdHRsZWNlaW50LnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi8qIENTUyAqL1xuXG4ucm93IHtcbiAgbWFyZ2luLWJvdHRvbTogMzBweDtcbiAgcGFkZGluZzogMTVweDtcbiAgYm9yZGVyLWNvbG9yOiAjYTVhNWE1O1xuICBib3JkZXItd2lkdGg6IDJweDtcbiAgYm9yZGVyLXN0eWxlOiBzb2xpZDtcbn1cbi5jbGlnbm90ZSB7XG4gIGJhY2tncm91bmQtY29sb3I6IGdyZWVuO1xuICBhbmltYXRpb246IGNsaWdub3RlIDJzIGxpbmVhciBpbmZpbml0ZTtcbn1cbkBrZXlmcmFtZXMgY2xpZ25vdGUge1xuICA1MCUge1xuICAgIG9wYWNpdHk6IDA7XG4gIH1cbn1cblxuLmJvdXRlaWxsZS1ham91dGUge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDE0LCAxODIsIDM5LCAwLjMpO1xuICBib3gtc2hhZG93OiByZ2JhKDI3LCAzMSwgMzUsIDAuMSkgMCAxcHggMDtcbn1cbi5idXR0b24tMyB7XG4gIGFwcGVhcmFuY2U6IG5vbmU7XG4gIGJhY2tncm91bmQtY29sb3I6ICMyZWE0NGY7XG4gIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoMjcsIDMxLCAzNSwgMC4xNSk7XG4gIGJvcmRlci1yYWRpdXM6IDZweDtcbiAgYm94LXNoYWRvdzogcmdiYSgyNywgMzEsIDM1LCAwLjEpIDAgMXB4IDA7XG4gIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG4gIGNvbG9yOiAjZmZmO1xuICBjdXJzb3I6IHBvaW50ZXI7XG4gIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgZm9udC1mYW1pbHk6IC1hcHBsZS1zeXN0ZW0sIHN5c3RlbS11aSwgXCJTZWdvZSBVSVwiLCBIZWx2ZXRpY2EsIEFyaWFsLFxuICAgIHNhbnMtc2VyaWYsIFwiQXBwbGUgQ29sb3IgRW1vamlcIiwgXCJTZWdvZSBVSSBFbW9qaVwiO1xuICBmb250LXNpemU6IDE0cHg7XG4gIGZvbnQtd2VpZ2h0OiA2MDA7XG4gIGxpbmUtaGVpZ2h0OiAyMHB4O1xuICBwYWRkaW5nOiA2cHggMTZweDtcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgdXNlci1zZWxlY3Q6IG5vbmU7XG4gIC13ZWJraXQtdXNlci1zZWxlY3Q6IG5vbmU7XG4gIHRvdWNoLWFjdGlvbjogbWFuaXB1bGF0aW9uO1xuICB2ZXJ0aWNhbC1hbGlnbjogbWlkZGxlO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xufVxuXG4uYnV0dG9uLTM6Zm9jdXM6bm90KDpmb2N1cy12aXNpYmxlKTpub3QoLmZvY3VzLXZpc2libGUpIHtcbiAgYm94LXNoYWRvdzogbm9uZTtcbiAgb3V0bGluZTogbm9uZTtcbn1cblxuLmJ1dHRvbi0zOmhvdmVyIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogIzJjOTc0Yjtcbn1cblxuLmJ1dHRvbi0zOmZvY3VzIHtcbiAgYm94LXNoYWRvdzogcmdiYSg0NiwgMTY0LCA3OSwgMC40KSAwIDAgMCAzcHg7XG4gIG91dGxpbmU6IG5vbmU7XG59XG5cbi5idXR0b24tMzpkaXNhYmxlZCB7XG4gIGJhY2tncm91bmQtY29sb3I6ICM5NGQzYTI7XG4gIGJvcmRlci1jb2xvcjogcmdiYSgyNywgMzEsIDM1LCAwLjEpO1xuICBjb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjgpO1xuICBjdXJzb3I6IGRlZmF1bHQ7XG59XG5cbi5idXR0b24tMzphY3RpdmUge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjMjk4ZTQ2O1xuICBib3gtc2hhZG93OiByZ2JhKDIwLCA3MCwgMzIsIDAuMikgMCAxcHggMCBpbnNldDtcbn1cblxuLml0ZW0uaXRlbS10cm5zIHtcbiAgYm9yZGVyLWNvbG9yOiByZ2JhKDAsIDAsIDAsIDApO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDAsIDAsIDAsIDApO1xuICBjb2xvcjogd2hpdGU7XG59XG4uYmdyZWVuIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogZ3JlZW47XG59XG4vKi5iZ3JlZCB7XG5cdGJhY2tncm91bmQtY29sb3I6IHJlZDtcbn0qL1xuLmJnYmxhbmsge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTtcbn1cbi5jb250ZW51ZWdyZWVuIHtcbiAgYm9yZGVyLWJvdHRvbS1sZWZ0LXJhZGl1czogODBweCA4MHB4O1xuICBiYWNrZ3JvdW5kLWNvbG9yOiBncmVlbjtcbn1cbi5jb250ZW51ZXJlZCB7XG4gIGJvcmRlci1ib3R0b20tbGVmdC1yYWRpdXM6IDgwcHggODBweDtcbiAgYmFja2dyb3VuZC1jb2xvcjogcmVkO1xufVxuLmNvbnRlbnVlZ3JlZW4yIHtcbiAgYm9yZGVyLWJvdHRvbS1yaWdodC1yYWRpdXM6IDgwcHggODBweDtcbiAgYmFja2dyb3VuZC1jb2xvcjogZ3JlZW47XG59XG4uY29udGVudWVyZWQyIHtcbiAgYm9yZGVyLWJvdHRvbS1yaWdodC1yYWRpdXM6IDgwcHggODBweDtcbiAgYmFja2dyb3VuZC1jb2xvcjogcmVkO1xufVxuI29uZSB7XG4gIHdpZHRoOiAyMDBweDtcbiAgLy9iYWNrZ3JvdW5kOiAjY2NjO1xufVxuXG4jdHdvIHtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICAvL2JhY2tncm91bmQ6IGJsdWU7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgbGVmdDogMDtcbiAgd2lkdGg6IDEwMHB4O1xuICBoZWlnaHQ6IDEwMHB4O1xufVxuXG4jdGhyZWUge1xuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIC8vYmFja2dyb3VuZDogcmVkO1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIGxlZnQ6IDA7XG4gIHdpZHRoOiAxMDBweDtcbiAgaGVpZ2h0OiAxMDBweDtcbn1cblxuLnJlbW92ZWQge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB5ZWxsb3cgIWltcG9ydGFudDtcbn1cblxuLmFkZGVkIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogeWVsbG93Z3JlZW4gIWltcG9ydGFudDtcbn1cbiIsIi8qIENTUyAqL1xuLnJvdyB7XG4gIG1hcmdpbi1ib3R0b206IDMwcHg7XG4gIHBhZGRpbmc6IDE1cHg7XG4gIGJvcmRlci1jb2xvcjogI2E1YTVhNTtcbiAgYm9yZGVyLXdpZHRoOiAycHg7XG4gIGJvcmRlci1zdHlsZTogc29saWQ7XG59XG5cbi5jbGlnbm90ZSB7XG4gIGJhY2tncm91bmQtY29sb3I6IGdyZWVuO1xuICBhbmltYXRpb246IGNsaWdub3RlIDJzIGxpbmVhciBpbmZpbml0ZTtcbn1cblxuQGtleWZyYW1lcyBjbGlnbm90ZSB7XG4gIDUwJSB7XG4gICAgb3BhY2l0eTogMDtcbiAgfVxufVxuLmJvdXRlaWxsZS1ham91dGUge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDE0LCAxODIsIDM5LCAwLjMpO1xuICBib3gtc2hhZG93OiByZ2JhKDI3LCAzMSwgMzUsIDAuMSkgMCAxcHggMDtcbn1cblxuLmJ1dHRvbi0zIHtcbiAgYXBwZWFyYW5jZTogbm9uZTtcbiAgYmFja2dyb3VuZC1jb2xvcjogIzJlYTQ0ZjtcbiAgYm9yZGVyOiAxcHggc29saWQgcmdiYSgyNywgMzEsIDM1LCAwLjE1KTtcbiAgYm9yZGVyLXJhZGl1czogNnB4O1xuICBib3gtc2hhZG93OiByZ2JhKDI3LCAzMSwgMzUsIDAuMSkgMCAxcHggMDtcbiAgYm94LXNpemluZzogYm9yZGVyLWJveDtcbiAgY29sb3I6ICNmZmY7XG4gIGN1cnNvcjogcG9pbnRlcjtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICBmb250LWZhbWlseTogLWFwcGxlLXN5c3RlbSwgc3lzdGVtLXVpLCBcIlNlZ29lIFVJXCIsIEhlbHZldGljYSwgQXJpYWwsIHNhbnMtc2VyaWYsIFwiQXBwbGUgQ29sb3IgRW1vamlcIiwgXCJTZWdvZSBVSSBFbW9qaVwiO1xuICBmb250LXNpemU6IDE0cHg7XG4gIGZvbnQtd2VpZ2h0OiA2MDA7XG4gIGxpbmUtaGVpZ2h0OiAyMHB4O1xuICBwYWRkaW5nOiA2cHggMTZweDtcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgdXNlci1zZWxlY3Q6IG5vbmU7XG4gIC13ZWJraXQtdXNlci1zZWxlY3Q6IG5vbmU7XG4gIHRvdWNoLWFjdGlvbjogbWFuaXB1bGF0aW9uO1xuICB2ZXJ0aWNhbC1hbGlnbjogbWlkZGxlO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xufVxuXG4uYnV0dG9uLTM6Zm9jdXM6bm90KDpmb2N1cy12aXNpYmxlKTpub3QoLmZvY3VzLXZpc2libGUpIHtcbiAgYm94LXNoYWRvdzogbm9uZTtcbiAgb3V0bGluZTogbm9uZTtcbn1cblxuLmJ1dHRvbi0zOmhvdmVyIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogIzJjOTc0Yjtcbn1cblxuLmJ1dHRvbi0zOmZvY3VzIHtcbiAgYm94LXNoYWRvdzogcmdiYSg0NiwgMTY0LCA3OSwgMC40KSAwIDAgMCAzcHg7XG4gIG91dGxpbmU6IG5vbmU7XG59XG5cbi5idXR0b24tMzpkaXNhYmxlZCB7XG4gIGJhY2tncm91bmQtY29sb3I6ICM5NGQzYTI7XG4gIGJvcmRlci1jb2xvcjogcmdiYSgyNywgMzEsIDM1LCAwLjEpO1xuICBjb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjgpO1xuICBjdXJzb3I6IGRlZmF1bHQ7XG59XG5cbi5idXR0b24tMzphY3RpdmUge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjMjk4ZTQ2O1xuICBib3gtc2hhZG93OiByZ2JhKDIwLCA3MCwgMzIsIDAuMikgMCAxcHggMCBpbnNldDtcbn1cblxuLml0ZW0uaXRlbS10cm5zIHtcbiAgYm9yZGVyLWNvbG9yOiByZ2JhKDAsIDAsIDAsIDApO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDAsIDAsIDAsIDApO1xuICBjb2xvcjogd2hpdGU7XG59XG5cbi5iZ3JlZW4ge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiBncmVlbjtcbn1cblxuLyouYmdyZWQge1xuXHRiYWNrZ3JvdW5kLWNvbG9yOiByZWQ7XG59Ki9cbi5iZ2JsYW5rIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7XG59XG5cbi5jb250ZW51ZWdyZWVuIHtcbiAgYm9yZGVyLWJvdHRvbS1sZWZ0LXJhZGl1czogODBweCA4MHB4O1xuICBiYWNrZ3JvdW5kLWNvbG9yOiBncmVlbjtcbn1cblxuLmNvbnRlbnVlcmVkIHtcbiAgYm9yZGVyLWJvdHRvbS1sZWZ0LXJhZGl1czogODBweCA4MHB4O1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZWQ7XG59XG5cbi5jb250ZW51ZWdyZWVuMiB7XG4gIGJvcmRlci1ib3R0b20tcmlnaHQtcmFkaXVzOiA4MHB4IDgwcHg7XG4gIGJhY2tncm91bmQtY29sb3I6IGdyZWVuO1xufVxuXG4uY29udGVudWVyZWQyIHtcbiAgYm9yZGVyLWJvdHRvbS1yaWdodC1yYWRpdXM6IDgwcHggODBweDtcbiAgYmFja2dyb3VuZC1jb2xvcjogcmVkO1xufVxuXG4jb25lIHtcbiAgd2lkdGg6IDIwMHB4O1xufVxuXG4jdHdvIHtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIGxlZnQ6IDA7XG4gIHdpZHRoOiAxMDBweDtcbiAgaGVpZ2h0OiAxMDBweDtcbn1cblxuI3RocmVlIHtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIGxlZnQ6IDA7XG4gIHdpZHRoOiAxMDBweDtcbiAgaGVpZ2h0OiAxMDBweDtcbn1cblxuLnJlbW92ZWQge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB5ZWxsb3cgIWltcG9ydGFudDtcbn1cblxuLmFkZGVkIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogeWVsbG93Z3JlZW4gIWltcG9ydGFudDtcbn0iXX0= */"
 
 /***/ }),
 
@@ -136,7 +136,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let AddbottleceintPage = class AddbottleceintPage {
-    constructor(platform, ngZone, network, scan, modalCtrl, loadingCTRL, cd, upcv3Service, storage, hotspot, global, alertCTRL, router, events) {
+    constructor(platform, ngZone, network, scan, modalCtrl, loadingCTRL, cd, upcv3Service, storage, hotspot, global, alertCTRL, router, events, barcode) {
         this.platform = platform;
         this.ngZone = ngZone;
         this.network = network;
@@ -151,6 +151,8 @@ let AddbottleceintPage = class AddbottleceintPage {
         this.alertCTRL = alertCTRL;
         this.router = router;
         this.events = events;
+        this.barcode = barcode;
+        this.upcStatus = null;
         this.check = false;
         this.current_ssid = "NO WIFI";
         this.stored_ssid = "NO WIFI";
@@ -189,21 +191,29 @@ let AddbottleceintPage = class AddbottleceintPage {
         this.correspondancesRegistres = new _model_upcv3_correspondancesRegistres__WEBPACK_IMPORTED_MODULE_10__["CorrespondancesRegistres"]();
     }
     onAddBottleB1() {
-        console.log("on add bottle B1 :");
-        let bottle = { barcode: "inconnue", type: {}, style: 1 };
-        this.contenueAAjouterB1 = 0;
-        let bt = this.bottleTypedb.find((el) => el.id == this.currentBotlleTypeB1);
-        bottle.type = bt;
-        bottle.barcode = bottle.barcode + "" + bt.codeUpc;
-        this.aEcrir.b1.push(bottle.barcode + "" + bt.codeUpc);
-        this.bottlesB1.push(bottle);
-        this.bottlesB1.forEach((bottle) => {
-            if (bottle.style == 1)
-                this.contenueAAjouterB1 += bottle.type.contenue;
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+            let barcode = yield this.barcode.scan();
+            if (barcode.text.length < 10) {
+                console.log("on add bottle B1 :");
+                let bottle = { barcode: barcode.text, type: {}, style: 1 };
+                this.contenueAAjouterB1 = 0;
+                let bt = this.bottleTypedb.find((el) => el.id == this.currentBotlleTypeB1);
+                bottle.type = bt;
+                bottle.barcode = bottle.barcode + "" + bt.codeUpc;
+                this.aEcrir.b1.push(bottle.barcode + "" + bt.codeUpc);
+                this.bottlesB1.push(bottle);
+                this.bottlesB1.forEach((bottle) => {
+                    if (bottle.style == 1)
+                        this.contenueAAjouterB1 += bottle.type.contenue;
+                });
+                console.log("b1");
+                console.log(this.bottlesB1);
+                console.log(this.contenueAAjouterB1);
+            }
+            else {
+                alert("le codebar doit contenir 9 caracters au maximum ");
+            }
         });
-        console.log("b1");
-        console.log(this.bottlesB1);
-        console.log(this.contenueAAjouterB1);
     }
     onSynchro() { }
     cancelB1(id) {
@@ -245,22 +255,30 @@ let AddbottleceintPage = class AddbottleceintPage {
         console.log(bottle);
     }
     onAddBottleB2() {
-        console.log("on add botlle B2");
-        let bottle = { barcode: "inconnu", type: {}, style: 1 };
-        let bt = this.bottleTypedb.find((el) => el.id == this.currentBotlleTypeB2);
-        bottle.type = bt;
-        bottle.barcode = bottle.barcode + "" + bt.codeUpc;
-        this.aEcrir.b2.push(bottle.barcode + "" + bt.codeUpc);
-        this.contenueAAjouterB2 = 0;
-        this.bottlesB2.push(bottle);
-        this.bottlesB2.forEach((bottle) => {
-            if (bottle.style == 1) {
-                this.contenueAAjouterB2 += bottle.type.contenue;
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+            let barcode = yield this.barcode.scan();
+            if (barcode.text.length < 10) {
+                console.log("on add bottle B2 :");
+                let bottle = { barcode: barcode.text, type: {}, style: 1 };
+                let bt = this.bottleTypedb.find((el) => el.id == this.currentBotlleTypeB2);
+                bottle.type = bt;
+                bottle.barcode = bottle.barcode + "" + bt.codeUpc;
+                this.aEcrir.b2.push(bottle.barcode + "" + bt.codeUpc);
+                this.contenueAAjouterB2 = 0;
+                this.bottlesB2.push(bottle);
+                this.bottlesB2.forEach((bottle) => {
+                    if (bottle.style == 1) {
+                        this.contenueAAjouterB2 += bottle.type.contenue;
+                    }
+                });
+                console.log("b2");
+                console.log(this.bottlesB2);
+                console.log(this.contenueAAjouterB2);
+            }
+            else {
+                alert("le codebar doit contenir 9 caracters au maximum ");
             }
         });
-        console.log("b2");
-        console.log(this.bottlesB2);
-        console.log(this.contenueAAjouterB2);
     }
     //----vider b1 B2 ;:
     viderB1() {
@@ -297,6 +315,7 @@ let AddbottleceintPage = class AddbottleceintPage {
                     .onReadStatique(this.global.upcname, this.global.mode, "addbottleceint")
                     .then((res) => {
                     if (res == true) {
+                        this.upcStatus = this.global.upcmodbus.general.upcStatus;
                         this.isLoading = false;
                         console.log(">  lecture reussi ");
                         this.subscribeRefresh();
@@ -483,10 +502,12 @@ let AddbottleceintPage = class AddbottleceintPage {
     }
     ecrireLesBouteilles() {
         //b1
+        let counter1 = 0;
         let res = [];
         this.bottlesB1.forEach((el) => {
             if (el.style == 1 || el.style == 0)
                 res = res.concat(this.global.upcmodbus.client.getArray(5, el.barcode));
+            counter1++;
         });
         for (let i = res.length; i < 45; i++) {
             res.push(0);
@@ -494,18 +515,49 @@ let AddbottleceintPage = class AddbottleceintPage {
         console.log("bottle B1 register : ");
         console.log(res);
         //b1
+        let counter2 = 0;
         let res2 = [];
         this.bottlesB2.forEach((el) => {
             if (el.style == 1 || el.style == 0)
                 res2 = res2.concat(this.global.upcmodbus.client.getArray(5, el.barcode));
+            counter2++;
         });
         for (let i = res2.length; i < 45; i++) {
             res2.push(0);
         }
         console.log("bottle B1 register : ");
         console.log(res2);
-        // this.global.upcmodbus.client.writeMultipleRegisters(41124, res);
-        // this.global.upcmodbus.client.writeMultipleRegisters(41169, res2);
+        if (counter1 < 10 && counter2 < 10) {
+            this.global.upcmodbus.client
+                .writeMultipleRegisters(41169, res2)
+                .then(() => {
+                this.global.upcmodbus.client
+                    .writeMultipleRegisters(41124, res)
+                    .then((result) => {
+                    //ecriture reussi des codesBars :
+                    // ajouter les valeurs dans content :
+                    console.log("- contenu a ajouter B1 : ", this.contenueAAjouterB1);
+                    console.log("- contenu a ajouter B2 : ", this.contenueAAjouterB2);
+                    this.global.upcmodbus.client
+                        .setFloatInHoldingRegister(40384, 1000 * (this.contenueAAjouterB1 / 1.97))
+                        .then((result) => {
+                        this.global.upcmodbus.client
+                            .setFloatInHoldingRegister(40386, 1000 * (this.contenueAAjouterB2 / 1.97))
+                            .then((result) => {
+                            alert("synchronisation reussie !");
+                        })
+                            .catch((err) => { });
+                    })
+                        .catch((err) => { });
+                    this.tryToRead = true;
+                })
+                    .catch((err) => { });
+            })
+                .catch((err) => { });
+        }
+        else {
+            alert("Erreur : le nombre des bouteilles doit etre inferieur ou egale a 9 de chaque coté ");
+        }
     }
     changeRes(i) {
         this.ecrir(this.correspondancesRegistres.co2ResActive, i);
@@ -536,6 +588,17 @@ let AddbottleceintPage = class AddbottleceintPage {
             }
         }
     }
+    ondiffusionchnage() {
+        let x = this.upcStatus ? 0 : 1;
+        this.global.upcmodbus.client
+            .setIntInHoldingRegister(40011, 1, x)
+            .then((result) => {
+            this.upcStatus = x;
+        })
+            .catch((err) => {
+            alert("Erreur: changement de mode de diffusion echoué ");
+        });
+    }
     subscribeRefresh() {
         this.events.subscribe("loadParameters", ($event) => {
             this.statusB1 = "" + this.global.upcmodbus.reserves.co2Res1Status;
@@ -549,6 +612,8 @@ let AddbottleceintPage = class AddbottleceintPage {
             console.log("bottles en  b1");
             console.log(this.global.upcmodbus.reserves.bottlesB1);
             //lire les barcodes en B1 :
+            this.bottlesB1 = [];
+            this.contenueAAjouterB1 = 0;
             this.global.upcmodbus.reserves.bottlesB1.forEach((barcode) => {
                 if (barcode != "\u0000\u0000\u0000") {
                     this.aEcrir.b1.push(barcode);
@@ -569,6 +634,8 @@ let AddbottleceintPage = class AddbottleceintPage {
             //lire les barcodes en B2 :
             console.log("bottles en B2");
             console.log(this.global.upcmodbus.reserves.bottlesB2);
+            this.bottlesB2 = [];
+            this.contenueAAjouterB2 = 0;
             this.global.upcmodbus.reserves.bottlesB2
                 .filter((el) => el != "")
                 .forEach((barcode) => {
@@ -612,7 +679,8 @@ AddbottleceintPage.ctorParameters = () => [
     { type: _api_global_service__WEBPACK_IMPORTED_MODULE_8__["GlobalService"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["AlertController"] },
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_9__["Router"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["Events"] }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["Events"] },
+    { type: _ionic_native_barcode_scanner_ngx__WEBPACK_IMPORTED_MODULE_4__["BarcodeScanner"] }
 ];
 AddbottleceintPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -634,7 +702,8 @@ AddbottleceintPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         _api_global_service__WEBPACK_IMPORTED_MODULE_8__["GlobalService"],
         _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["AlertController"],
         _angular_router__WEBPACK_IMPORTED_MODULE_9__["Router"],
-        _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["Events"]])
+        _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["Events"],
+        _ionic_native_barcode_scanner_ngx__WEBPACK_IMPORTED_MODULE_4__["BarcodeScanner"]])
 ], AddbottleceintPage);
 
 

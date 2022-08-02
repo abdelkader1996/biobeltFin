@@ -36,6 +36,7 @@ declare let Ping: any;
   encapsulation: ViewEncapsulation.None,
 })
 export class AddbottleceintPage {
+  upcStatus = null;
   do;
   check = false;
   current_ssid = "NO WIFI";
@@ -83,7 +84,8 @@ export class AddbottleceintPage {
     private global: GlobalService,
     private alertCTRL: AlertController,
     private router: Router,
-    private events: Events
+    private events: Events,
+    private barcode: BarcodeScanner
   ) {
     this.global.checkMode();
   }
@@ -119,24 +121,31 @@ export class AddbottleceintPage {
     this.correspondancesRegistres = new CorrespondancesRegistres();
   }
 
-  onAddBottleB1() {
-    console.log("on add bottle B1 :");
-    let bottle = { barcode: "inconnue", type: {}, style: 1 };
+  async onAddBottleB1() {
+    let barcode = await this.barcode.scan();
+    if (barcode.text.length < 10) {
+      console.log("on add bottle B1 :");
+      let bottle = { barcode: barcode.text, type: {}, style: 1 };
 
-    this.contenueAAjouterB1 = 0;
-    let bt = this.bottleTypedb.find((el) => el.id == this.currentBotlleTypeB1);
-    bottle.type = bt;
-    bottle.barcode = bottle.barcode + "" + bt.codeUpc;
-    this.aEcrir.b1.push(bottle.barcode + "" + bt.codeUpc);
+      this.contenueAAjouterB1 = 0;
+      let bt = this.bottleTypedb.find(
+        (el) => el.id == this.currentBotlleTypeB1
+      );
+      bottle.type = bt;
+      bottle.barcode = bottle.barcode + "" + bt.codeUpc;
+      this.aEcrir.b1.push(bottle.barcode + "" + bt.codeUpc);
 
-    this.bottlesB1.push(bottle);
+      this.bottlesB1.push(bottle);
 
-    this.bottlesB1.forEach((bottle) => {
-      if (bottle.style == 1) this.contenueAAjouterB1 += bottle.type.contenue;
-    });
-    console.log("b1");
-    console.log(this.bottlesB1);
-    console.log(this.contenueAAjouterB1);
+      this.bottlesB1.forEach((bottle) => {
+        if (bottle.style == 1) this.contenueAAjouterB1 += bottle.type.contenue;
+      });
+      console.log("b1");
+      console.log(this.bottlesB1);
+      console.log(this.contenueAAjouterB1);
+    } else {
+      alert("le codebar doit contenir 9 caracters au maximum ");
+    }
   }
   onSynchro() {}
 
@@ -185,26 +194,34 @@ export class AddbottleceintPage {
 
     console.log(bottle);
   }
-  onAddBottleB2() {
-    console.log("on add botlle B2");
-    let bottle = { barcode: "inconnu", type: {}, style: 1 };
+  async onAddBottleB2() {
+    let barcode = await this.barcode.scan();
 
-    let bt = this.bottleTypedb.find((el) => el.id == this.currentBotlleTypeB2);
-    bottle.type = bt;
-    bottle.barcode = bottle.barcode + "" + bt.codeUpc;
+    if (barcode.text.length < 10) {
+      console.log("on add bottle B2 :");
+      let bottle = { barcode: barcode.text, type: {}, style: 1 };
 
-    this.aEcrir.b2.push(bottle.barcode + "" + bt.codeUpc);
+      let bt = this.bottleTypedb.find(
+        (el) => el.id == this.currentBotlleTypeB2
+      );
+      bottle.type = bt;
+      bottle.barcode = bottle.barcode + "" + bt.codeUpc;
 
-    this.contenueAAjouterB2 = 0;
-    this.bottlesB2.push(bottle);
-    this.bottlesB2.forEach((bottle) => {
-      if (bottle.style == 1) {
-        this.contenueAAjouterB2 += bottle.type.contenue;
-      }
-    });
-    console.log("b2");
-    console.log(this.bottlesB2);
-    console.log(this.contenueAAjouterB2);
+      this.aEcrir.b2.push(bottle.barcode + "" + bt.codeUpc);
+
+      this.contenueAAjouterB2 = 0;
+      this.bottlesB2.push(bottle);
+      this.bottlesB2.forEach((bottle) => {
+        if (bottle.style == 1) {
+          this.contenueAAjouterB2 += bottle.type.contenue;
+        }
+      });
+      console.log("b2");
+      console.log(this.bottlesB2);
+      console.log(this.contenueAAjouterB2);
+    } else {
+      alert("le codebar doit contenir 9 caracters au maximum ");
+    }
   }
 
   //----vider b1 B2 ;:
@@ -256,8 +273,10 @@ export class AddbottleceintPage {
           )
           .then((res) => {
             if (res == true) {
+              this.upcStatus = this.global.upcmodbus.general.upcStatus;
               this.isLoading = false;
               console.log(">  lecture reussi ");
+
               this.subscribeRefresh();
               this.events.publish("loadParameters");
               this.global.lectureStatiqueEnCours = false;
@@ -368,6 +387,7 @@ export class AddbottleceintPage {
       if (reserve == "B2") {
         this.global.onWriteEnable(
           this.correspondancesRegistres.co2Res2Status,
+
           parseInt(this.statusB2)
         );
       }
@@ -470,10 +490,12 @@ export class AddbottleceintPage {
 
   ecrireLesBouteilles() {
     //b1
+    let counter1 = 0;
     let res = [];
     this.bottlesB1.forEach((el) => {
       if (el.style == 1 || el.style == 0)
         res = res.concat(this.global.upcmodbus.client.getArray(5, el.barcode));
+      counter1++;
     });
     for (let i = res.length; i < 45; i++) {
       res.push(0);
@@ -482,21 +504,60 @@ export class AddbottleceintPage {
     console.log(res);
 
     //b1
+    let counter2 = 0;
     let res2 = [];
     this.bottlesB2.forEach((el) => {
       if (el.style == 1 || el.style == 0)
         res2 = res2.concat(
           this.global.upcmodbus.client.getArray(5, el.barcode)
         );
+      counter2++;
     });
     for (let i = res2.length; i < 45; i++) {
       res2.push(0);
     }
     console.log("bottle B1 register : ");
     console.log(res2);
+    if (counter1 < 10 && counter2 < 10) {
+      this.global.upcmodbus.client
+        .writeMultipleRegisters(41169, res2)
+        .then(() => {
+          this.global.upcmodbus.client
+            .writeMultipleRegisters(41124, res)
+            .then((result) => {
+              //ecriture reussi des codesBars :
+              // ajouter les valeurs dans content :
+              console.log("- contenu a ajouter B1 : ", this.contenueAAjouterB1);
+              console.log("- contenu a ajouter B2 : ", this.contenueAAjouterB2);
 
-    // this.global.upcmodbus.client.writeMultipleRegisters(41124, res);
-    // this.global.upcmodbus.client.writeMultipleRegisters(41169, res2);
+              this.global.upcmodbus.client
+                .setFloatInHoldingRegister(
+                  40384,
+                  1000 * (this.contenueAAjouterB1 / 1.97)
+                )
+                .then((result) => {
+                  this.global.upcmodbus.client
+                    .setFloatInHoldingRegister(
+                      40386,
+                      1000 * (this.contenueAAjouterB2 / 1.97)
+                    )
+                    .then((result) => {
+                      alert("synchronisation reussie !");
+                    })
+                    .catch((err) => {});
+                })
+                .catch((err) => {});
+
+              this.tryToRead = true;
+            })
+            .catch((err) => {});
+        })
+        .catch((err) => {});
+    } else {
+      alert(
+        "Erreur : le nombre des bouteilles doit etre inferieur ou egale a 9 de chaque coté "
+      );
+    }
   }
 
   changeRes(i) {
@@ -528,6 +589,18 @@ export class AddbottleceintPage {
     }
   }
 
+  ondiffusionchnage() {
+    let x = this.upcStatus ? 0 : 1;
+    this.global.upcmodbus.client
+      .setIntInHoldingRegister(40011, 1, x)
+      .then((result) => {
+        this.upcStatus = x;
+      })
+      .catch((err) => {
+        alert("Erreur: changement de mode de diffusion echoué ");
+      });
+  }
+
   subscribeRefresh() {
     this.events.subscribe("loadParameters", ($event) => {
       this.statusB1 = "" + this.global.upcmodbus.reserves.co2Res1Status;
@@ -545,6 +618,8 @@ export class AddbottleceintPage {
       console.log(this.global.upcmodbus.reserves.bottlesB1);
 
       //lire les barcodes en B1 :
+      this.bottlesB1 = [];
+      this.contenueAAjouterB1 = 0;
       this.global.upcmodbus.reserves.bottlesB1.forEach((barcode) => {
         if (barcode != "\u0000\u0000\u0000") {
           this.aEcrir.b1.push(barcode);
@@ -573,6 +648,8 @@ export class AddbottleceintPage {
       console.log("bottles en B2");
       console.log(this.global.upcmodbus.reserves.bottlesB2);
 
+      this.bottlesB2 = [];
+      this.contenueAAjouterB2 = 0;
       this.global.upcmodbus.reserves.bottlesB2
         .filter((el) => el != "")
         .forEach((barcode) => {
