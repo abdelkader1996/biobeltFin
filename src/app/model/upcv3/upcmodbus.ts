@@ -16,7 +16,7 @@ export class UPCModbus {
   static litterToKilograms: number = 0.001974;
 
   client: ModbusClient = null;
-
+  reserveType: number = 0;
   nameId: string = "";
   mode: number = 0;
   status: number = 0;
@@ -1194,7 +1194,11 @@ export class UPCModbus {
 
               //40376
               this.general.upcStatus = res3[0];
-
+              this.reserveType = this.client.registerToUint32([res3[6]]);
+              console.log(
+                "reserve type : ======================================="
+              );
+              console.log(this.reserveType);
               //40381
               this.reserves.co2Res1Status = this.client.registerToUint32([
                 res3[5],

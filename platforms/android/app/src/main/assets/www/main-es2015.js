@@ -5599,6 +5599,7 @@ class UPCModbus {
         this.stateChangeCallback = null;
         this.state = UPCState.NULL;
         this.client = null;
+        this.reserveType = 0;
         this.nameId = "";
         this.mode = 0;
         this.status = 0;
@@ -6503,6 +6504,9 @@ class UPCModbus {
                                 var res3 = yield this.client.readHoldingRegisters(this.correspondancesRegistres.upcStatus.adr, 75);
                                 //40376
                                 this.general.upcStatus = res3[0];
+                                this.reserveType = this.client.registerToUint32([res3[6]]);
+                                console.log("reserve type : =======================================");
+                                console.log(this.reserveType);
                                 //40381
                                 this.reserves.co2Res1Status = this.client.registerToUint32([
                                     res3[5],

@@ -52,6 +52,7 @@ export class AddbottleceintPage {
   statusB2;
   contenuB1;
   contenuB2;
+  reserveType = "0";
 
   //ajout de bouteille :
   currentBotlleTypeB1: any;
@@ -81,7 +82,7 @@ export class AddbottleceintPage {
     private upcv3Service: Upcv3serviceService,
     private storage: Storage,
     private hotspot: Hotspot,
-    private global: GlobalService,
+    public global: GlobalService,
     private alertCTRL: AlertController,
     private router: Router,
     private events: Events,
@@ -226,18 +227,30 @@ export class AddbottleceintPage {
 
   //----vider b1 B2 ;:
   viderB1() {
-    let res = [];
-    for (let i = 0; i < 45; i++) res.push(0);
-
-    this.global.upcmodbus.client.writeMultipleRegisters(41124, res);
+    this.barcode.scan().then((res) => {
+      this.bottlesB1.map((bottle) => {
+        console.log(" bottle barcode", bottle.barcode);
+        console.log("scanned", res.text);
+        if (
+          bottle.barcode.substring(0, bottle.barcode.length - 1) == res.text
+        ) {
+          bottle.style = -1;
+        }
+      });
+    });
   }
 
   //----vider b1 B2 ;:
   viderB2() {
-    let res = [];
-    for (let i = 0; i < 45; i++) res.push(0);
-
-    this.global.upcmodbus.client.writeMultipleRegisters(41169, res);
+    this.barcode.scan().then((res) => {
+      this.bottlesB2.map((bottle) => {
+        if (
+          bottle.barcode.substring(0, bottle.barcode.length - 1) == res.text
+        ) {
+          bottle.style = -1;
+        }
+      });
+    });
   }
 
   Read() {
@@ -392,6 +405,14 @@ export class AddbottleceintPage {
         );
       }
     }
+  }
+
+  changeReserveType() {
+    this.global.upcmodbus.client.setIntInHoldingRegister(
+      40382,
+      1,
+      parseInt(this.reserveType)
+    );
   }
 
   ecrir(variable, value) {
@@ -613,7 +634,8 @@ export class AddbottleceintPage {
       this.contenuB2 = this.global.upcmodbus.reserves.co2Res2ActVol;
       this.global.contenantB1 = this.global.upcmodbus.reserves.co2Res1StartVol;
       this.global.contenantB2 = this.global.upcmodbus.reserves.co2Res2StartVol;
-
+      this.reserveType = this.global.upcmodbus.reserveType + "";
+      console.log("<<<<>>>>>>>> reserve type :", this.reserveType);
       console.log("bottles en  b1");
       console.log(this.global.upcmodbus.reserves.bottlesB1);
 
@@ -684,5 +706,10 @@ export class AddbottleceintPage {
     this.storage.get("nexturl").then((res) => {
       this.router.navigate([res]);
     });
+  }
+
+  ionViewWillLeave() {
+    console.log("quitter la page  :");
+    clearInterval(this.do);
   }
 }

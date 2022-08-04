@@ -6076,6 +6076,7 @@ var UPCModbus = /** @class */ (function () {
         this.stateChangeCallback = null;
         this.state = UPCState.NULL;
         this.client = null;
+        this.reserveType = 0;
         this.nameId = "";
         this.mode = 0;
         this.status = 0;
@@ -7027,6 +7028,9 @@ var UPCModbus = /** @class */ (function () {
                         res3 = _b.sent();
                         //40376
                         this.general.upcStatus = res3[0];
+                        this.reserveType = this.client.registerToUint32([res3[6]]);
+                        console.log("reserve type : =======================================");
+                        console.log(this.reserveType);
                         //40381
                         this.reserves.co2Res1Status = this.client.registerToUint32([
                             res3[5],
