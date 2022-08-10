@@ -5598,6 +5598,21 @@ class UPCModbus {
         this.port = 502;
         this.stateChangeCallback = null;
         this.state = UPCState.NULL;
+        //connection
+        this.connectionLevel = 0;
+        this.connectionMode = 0;
+        this.xComMdmRssiMoyen2G = 0;
+        this.xComMdmRssiMoyen3G = 0;
+        this.xComMdmRssiMoyen4G = 0;
+        this.xComMdmQualMoyen2GGPRS = 0;
+        this.xComMdmQualMoyen2GEDGE = 0;
+        this.xComMdmQualMoyen3G = 0;
+        this.xComMdmQualMoyen4G = 0;
+        this.xComMdmRatioTimeIn2G = 0;
+        this.xComMdmRatioTimeIn3G = 0;
+        this.xComMdmRatioTimeIn4G = 0;
+        this.xComMdmRatioTimeOffline = 0;
+        ////////////////
         this.client = null;
         this.reserveType = 0;
         this.nameId = "";
@@ -6076,6 +6091,82 @@ class UPCModbus {
                         error = err;
                         break;
                     }
+                case "namepiege":
+                    console.log("mod bus name piege ");
+                    try {
+                        //40001 40015
+                        var res1 = yield this.client.readHoldingRegisters(this.correspondancesRegistres.upcNameId.adr, 15);
+                        //alert("res1 : "+res1)
+                        //40001 40010
+                        var tabname = [];
+                        for (var i = 0; i < 10; i++) {
+                            tabname.push(res1[i]);
+                        }
+                        var nameId = this.client
+                            .registerToString(tabname)
+                            .replace(/[^a-zA-Z0-9]/g, "");
+                        if (mode != "modeTest") {
+                            //on n'est pas en mode test
+                            if (false) { var res; }
+                            else {
+                                this.nameId = nameId;
+                                //40012 40013
+                                this.general.upcClock = new Date(this.client.registerToUint32([res1[11], res1[12]]) * 1000).toLocaleDateString("fr-FR", opt);
+                                //40015
+                                this.general.upcTrapNum = res1[14];
+                                var res = yield this.readGeneralParameters();
+                                this.success = true;
+                                break;
+                            }
+                        }
+                        else {
+                            this.nameId = nameId;
+                            //40012 40013
+                            this.general.upcClock = new Date(this.client.registerToUint32([res1[11], res1[12]]) * 1000).toLocaleDateString("fr-FR", opt);
+                            //40015
+                            this.general.upcTrapNum = res1[14];
+                            var res = yield this.readGeneralParameters();
+                            this.success = true;
+                            break;
+                        }
+                    }
+                    catch (err) {
+                        this.success = false;
+                        error = err;
+                        break;
+                    }
+                case "cdiff-cyclique":
+                    try {
+                        //40435 40464
+                        var res1 = yield this.client.readHoldingRegisters(correspondanceRegistres.co2PressInpAvg.adr, 29);
+                        //40435
+                        this.diffusions.co2PresInpAvg = this.client.registerToFloat([
+                            res1[0],
+                            res1[1],
+                        ]);
+                        //40437
+                        this.diffusions.co2PresOutAvg = this.client.registerToFloat([
+                            res1[2],
+                            res1[3],
+                        ]);
+                        //40451
+                        this.diffusions.co2TempAvg = this.client.registerToFloat([
+                            res1[16],
+                            res1[17],
+                        ]);
+                        //40463
+                        this.diffusions.co2PressOutComp = this.client.registerToFloat([
+                            res1[28],
+                            res1[29],
+                        ]);
+                        success = true;
+                        break;
+                    }
+                    catch (err) {
+                        success = false;
+                        error = err;
+                        break;
+                    }
                 case "cdiff":
                     try {
                         //40001 40065
@@ -6090,7 +6181,7 @@ class UPCModbus {
                             .replace(/[^a-zA-Z0-9]/g, "");
                         if (mode != "modeTest") {
                             //on n'est pas en mode test
-                            if (nameId != upcNameId) {
+                            if (nameId != upcNameId && false) {
                                 //changement d'UPC
                                 if (window.confirm("Une intervention est en cours sur l'upc " +
                                     upcNameId +
@@ -6130,6 +6221,8 @@ class UPCModbus {
                                 var res3 = yield this.client.readHoldingRegisters(this.correspondancesRegistres.upcStatus.adr, 89);
                                 //40376
                                 this.general.upcStatus = res3[0];
+                                console.log("||||||||||||||||||||||||||||||||||||-");
+                                console.log("upc status : ", this.general.upcStatus);
                                 //40435
                                 this.diffusions.co2PresInpAvg = this.client.registerToFloat([
                                     res3[58],
@@ -6433,6 +6526,81 @@ class UPCModbus {
                             this.success = true;
                             break;
                         }
+                    }
+                    catch (err) {
+                        this.success = false;
+                        error = err;
+                        break;
+                    }
+                case "cdiff":
+                    console.log("on read statique page connection");
+                    try {
+                        var res1 = yield this.client.readHoldingRegisters(this.correspondancesRegistres.upcStatus.adr, 1);
+                        this.general.upcStatus = res1[0];
+                        ////////////////////////////////////////////////:
+                        this.success = true;
+                        break;
+                    }
+                    catch (err) {
+                        this.success = false;
+                        error = err;
+                        break;
+                    }
+                case "connection":
+                    console.log("on read statique page connection");
+                    try {
+                        var res1 = yield this.client.readHoldingRegisters(this.correspondancesRegistres.comMdmMode.adr, 2);
+                        this.connectionMode = res1[0];
+                        this.connectionLevel = res1[1];
+                        // statistiques :///////////////////////////////
+                        var res1 = yield this.client.readHoldingRegisters(41219, 22);
+                        this.xComMdmRssiMoyen2G = this.client.registerToFloat([
+                            res1[0],
+                            res1[1],
+                        ]);
+                        this.xComMdmRssiMoyen3G = this.client.registerToFloat([
+                            res1[2],
+                            res1[3],
+                        ]);
+                        this.xComMdmRssiMoyen4G = this.client.registerToFloat([
+                            res1[4],
+                            res1[5],
+                        ]);
+                        this.xComMdmQualMoyen2GGPRS = this.client.registerToFloat([
+                            res1[6],
+                            res1[7],
+                        ]);
+                        this.xComMdmQualMoyen2GEDGE = this.client.registerToFloat([
+                            res1[8],
+                            res1[9],
+                        ]);
+                        this.xComMdmQualMoyen3G = this.client.registerToFloat([
+                            res1[10],
+                            res1[11],
+                        ]);
+                        this.xComMdmQualMoyen4G = this.client.registerToFloat([
+                            res1[12],
+                            res1[13],
+                        ]);
+                        this.xComMdmRatioTimeIn2G = this.client.registerToFloat([
+                            res1[14],
+                            res1[15],
+                        ]);
+                        this.xComMdmRatioTimeIn3G = this.client.registerToFloat([
+                            res1[16],
+                            res1[17],
+                        ]);
+                        this.xComMdmRatioTimeIn4G = this.client.registerToFloat([
+                            res1[18],
+                            res1[19],
+                        ]);
+                        this.xComMdmRatioTimeOffline = this.client.registerToFloat([
+                            res1[20],
+                            res1[21],
+                        ]);
+                        ////////////////////////////////////////////////:
+                        this.success = true;
+                        break;
                     }
                     catch (err) {
                         this.success = false;
@@ -7038,43 +7206,6 @@ class UPCModbus {
             else {
                 return repBloc1; //retourne l'erreur du bloc 1
             }
-            /*this.client.readHoldingRegisters(40600,120).then(res=>{
-                //0 to 99 sms not necessary
-                //100 to 120 not necessary
-              }).catch(err=>{
-                alert(JSON.stringify(err));
-              })*/
-            /*this.client.readHoldingRegisters(40720,120).then(res=>{
-                //0 to 19 not necessary
-                //20 to 39 not necessary
-                //40 to 69 not necessary
-                //70 to 99 not necessary
-                //100 to 119 nothing
-                // 120 not necessary
-              }).catch(err=>{
-                alert(JSON.stringify(err));
-              })*/
-            /*this.client.readHoldingRegisters(40840,120).then(res=>{
-                // 0 to 29 not necessary
-          
-                alert(JSON.stringify(res));
-              }).catch(err=>{
-                alert(JSON.stringify(err));
-              })*/
-            /*this.client.readHoldingRegisters(40961,120).then(res=>{
-                alert(JSON.stringify(res));
-          
-              }).catch(err=>{
-                alert(JSON.stringify(err));
-              })*/
-            /*this.client.readHoldingRegisters(41081,120).then(res=>{
-                alert(JSON.stringify(res));
-              }).catch(err=>{
-                alert(JSON.stringify(err));
-              })*/
-            //if(bool1 && bool2 && bool3 && bool4 && bool5 && bool6 ){
-            //var itm = await this.readAllReg();
-            //}
         });
     }
     onConfirm(buttonIndex) {

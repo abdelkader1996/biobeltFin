@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n      <ion-back-button defaultHref=\"home\"></ion-back-button>\n    </ion-buttons>\n    <ion-title>Etat de la connexion au réseau</ion-title>\n    <ion-buttons slot=\"end\" *ngIf=\"!global.isBBAM\">\n      <ion-button fill=\"clear\"> <ion-icon name=\"globe\" color=\"light\" (click)=\"onSynchroB1B2();\"></ion-icon>ADMIN</ion-button> \n     </ion-buttons>\n     <ion-buttons slot=\"end\" *ngIf=\"global.isBBAM\">\n      <ion-button fill=\"clear\"> <ion-icon name=\"wifi\" color=\"light\"></ion-icon>{{global.ssid}}</ion-button> \n     </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-refresher slot=\"fixed\" id=\"refresher\" (ionRefresh)=\"doRefresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n  <h3 style=\"text-align: center;\">Etat de la connexion au réseau </h3>\n\n  <ion-card>\n    <ion-card-header>\n      <ion-card-title style=\"text-align: center;\">Etat Instantané</ion-card-title>\n    </ion-card-header>\n    <ion-card-content>\n      <ion-grid>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"8\">Mode</ion-col>\n          <ion-col size=\"4\" *ngIf=\"!redBackground\">{{mode}}</ion-col>\n          <ion-col size=\"4\" *ngIf=\"redBackground\">-</ion-col>\n        </ion-row>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"2\">Niv.</ion-col>\n          <ion-col size=\"6\"><ion-range style=\"pointer-events: none;\" color=\"danger\" [value]=\"level\" max=\"100\"></ion-range></ion-col>\n          <ion-col size=\"4\" *ngIf=\"level < 500 && !redBackground\">{{level}}</ion-col><ion-col *ngIf=\"redBackground\" size=\"4\" >-</ion-col>\n          <ion-col size=\"4\" *ngIf=\"level >= 500 && !redBackground\">Non Connecté</ion-col><ion-col *ngIf=\"redBackground\" size=\"4\">-</ion-col>\n        </ion-row>\n        <!--<ion-row>\n          <ion-col size=\"10\">BER</ion-col>\n          <ion-col size=\"2\">{{ber}}</ion-col>\n        </ion-row> -->\n        \n      </ion-grid>\n    </ion-card-content>\n  </ion-card>\n  <ion-card>\n    <ion-card-header>\n      <ion-card-title style=\"text-align: center;\">Statistiques dernière 24 h</ion-card-title>\n    </ion-card-header>\n    <ion-card-content>\n      <ion-grid>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"2\">Mode</ion-col>\n          <ion-col size=\"2\">-</ion-col>\n          <ion-col size=\"2\">2G</ion-col>\n          <ion-col size=\"2\">3G</ion-col>\n          <ion-col size=\"2\">4G</ion-col>\n        </ion-row>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"2\">Durée</ion-col>\n          <ion-col *ngIf=\"!redBackground\" size=\"2\">{{dureTab[3]+\" %\"}}</ion-col><ion-col size=\"2\" *ngIf=\"redBackground\">-</ion-col>\n          <ion-col *ngIf=\"!redBackground\" size=\"2\">{{dureTab[0]+\" %\"}}</ion-col><ion-col size=\"2\" *ngIf=\"redBackground\">-</ion-col>\n          <ion-col *ngIf=\"!redBackground\" size=\"2\">{{dureTab[1]+\" %\"}}</ion-col><ion-col size=\"2\" *ngIf=\"redBackground\">-</ion-col>\n          <ion-col *ngIf=\"!redBackground\" size=\"2\">{{dureTab[2]+\" %\"}}</ion-col><ion-col size=\"2\" *ngIf=\"redBackground\">-</ion-col>\n        </ion-row>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"2\">Niveau</ion-col>\n          <ion-col size=\"2\">-</ion-col>\n          <ion-col size=\"2\" *ngFor=\"let l of levelTab\"><ion-label *ngIf=\"!redBackground\">{{l}}</ion-label><ion-label *ngIf=\"redBackground\">-</ion-label></ion-col>\n        </ion-row>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"2\">BER</ion-col>\n          <ion-col size=\"2\">-</ion-col>\n          <ion-col size=\"2\" *ngFor=\"let b of bertab\"><ion-label *ngIf=\"!redBackground\">{{b == 0 ? '-' : b}}</ion-label><ion-label *ngIf=\"redBackground\">-</ion-label></ion-col>\n\n        </ion-row>\n        \n      </ion-grid>\n    </ion-card-content>\n  </ion-card>\n</ion-content>\n<ion-footer>\n  <ion-button *ngIf=\"display\" style='float: right' fill='clear' (click)='goToNextPage()'>Suivant<ion-icon name='arrow-forward'></ion-icon></ion-button>\n</ion-footer>\n"
+module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n      <ion-back-button defaultHref=\"home\"></ion-back-button>\n    </ion-buttons>\n\n    <ion-buttons>\n      <ion-button fill=\"clear\">\n        <ion-icon name=\"wifi\" color=\"light\"></ion-icon> connecté a :\n        {{this.current_ssid}}</ion-button\n      >\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-refresher slot=\"fixed\" id=\"refresher\" (ionRefresh)=\"doRefresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n  <h3 style=\"text-align: center\">Etat de la connexion au réseau</h3>\n\n  <ion-card>\n    <ion-card-header>\n      <ion-card-title style=\"text-align: center\"\n        >Etat Instantané</ion-card-title\n      >\n    </ion-card-header>\n    <ion-card-content>\n      <ion-grid>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"8\">Mode</ion-col>\n          <ion-col size=\"4\" *ngIf=\"!redBackground\">{{mode}}</ion-col>\n          <ion-col size=\"4\" *ngIf=\"redBackground\">-</ion-col>\n        </ion-row>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"2\">Niv.</ion-col>\n          <ion-col size=\"6\"\n            ><ion-range\n              style=\"pointer-events: none\"\n              color=\"danger\"\n              [value]=\"level\"\n              max=\"100\"\n            ></ion-range\n          ></ion-col>\n          <ion-col size=\"4\" *ngIf=\"level < 500 && !redBackground\"\n            >{{level}}</ion-col\n          ><ion-col *ngIf=\"redBackground\" size=\"4\">-</ion-col>\n          <ion-col size=\"4\" *ngIf=\"level >= 500 && !redBackground\"\n            >Non Connecté</ion-col\n          ><ion-col *ngIf=\"redBackground\" size=\"4\">-</ion-col>\n        </ion-row>\n        <!--<ion-row>\n          <ion-col size=\"10\">BER</ion-col>\n          <ion-col size=\"2\">{{ber}}</ion-col>\n        </ion-row> -->\n      </ion-grid>\n    </ion-card-content>\n  </ion-card>\n  <ion-card>\n    <ion-card-header>\n      <ion-card-title style=\"text-align: center\"\n        >Statistiques dernière 24 h</ion-card-title\n      >\n    </ion-card-header>\n    <ion-card-content>\n      <ion-grid>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"2\">Mode</ion-col>\n          <ion-col size=\"2\">-</ion-col>\n          <ion-col size=\"2\">2G</ion-col>\n          <ion-col size=\"2\">3G</ion-col>\n          <ion-col size=\"2\">4G</ion-col>\n        </ion-row>\n\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"2\">Durée</ion-col>\n          <ion-col size=\"2\">{{xComMdmRatioTimeOffline+\" %\"}}</ion-col>\n          <ion-col size=\"2\">{{xComMdmRatioTimeIn2G+\" %\"}}</ion-col>\n          <ion-col size=\"2\">{{xComMdmRatioTimeIn3G+\" %\"}}</ion-col>\n          <ion-col size=\"2\">{{xComMdmRatioTimeIn4G+\" %\"}}</ion-col>\n        </ion-row>\n\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"2\">Niveau</ion-col>\n          <ion-col size=\"2\">{{xComMdmQualMoyen2GGPRS}}</ion-col>\n          <ion-col size=\"2\">{{xComMdmQualMoyen2GEDGE}}</ion-col>\n          <ion-col size=\"2\">{{xComMdmQualMoyen3G}}</ion-col>\n          <ion-col size=\"2\">{{xComMdmQualMoyen4G}}</ion-col>\n        </ion-row>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"2\">BER</ion-col>\n          <ion-col size=\"2\">-</ion-col>\n          <ion-col size=\"2\">{{xComMdmRssiMoyen2G}}</ion-col>\n          <ion-col size=\"2\">{{xComMdmRssiMoyen3G}}</ion-col>\n          <ion-col size=\"2\">{{xComMdmRssiMoyen4G}}</ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-card-content>\n  </ion-card>\n</ion-content>\n<ion-footer>\n  <ion-button\n    *ngIf=\"display\"\n    style=\"float: right\"\n    fill=\"clear\"\n    (click)=\"goToNextPage()\"\n    >Suivant<ion-icon name=\"arrow-forward\"></ion-icon\n  ></ion-button>\n</ion-footer>\n"
 
 /***/ }),
 
@@ -118,6 +118,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _api_global_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../api/global.service */ "./src/app/api/global.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
 /* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm2015/ionic-storage.js");
+/* harmony import */ var _model_upcv3_correspondancesRegistres__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../model/upcv3/correspondancesRegistres */ "./src/app/model/upcv3/correspondancesRegistres.ts");
+
 
 
 
@@ -126,7 +128,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let ConnectionPage = class ConnectionPage {
-    constructor(platform, global, loadingCTRL, hotspot, ngZone, cd, router, storage) {
+    constructor(platform, global, loadingCTRL, hotspot, ngZone, cd, router, storage, events) {
         this.platform = platform;
         this.global = global;
         this.loadingCTRL = loadingCTRL;
@@ -135,6 +137,14 @@ let ConnectionPage = class ConnectionPage {
         this.cd = cd;
         this.router = router;
         this.storage = storage;
+        this.events = events;
+        this.check = false;
+        this.current_ssid = "NO WIFI";
+        this.stored_ssid = "NO WIFI";
+        this.password_ssid = "";
+        this.connection_modbus = false;
+        this.isLoading = false;
+        this.tryToRead = false;
         this.mode = "";
         this.level = 0;
         this.ber = 0;
@@ -144,137 +154,216 @@ let ConnectionPage = class ConnectionPage {
         this.dureTab = [];
         this.redBackground = false;
         this.display = false;
+        this.xComMdmRssiMoyen2G = 0;
+        this.xComMdmRssiMoyen3G = 0;
+        this.xComMdmRssiMoyen4G = 0;
+        this.xComMdmQualMoyen2GGPRS = 0;
+        this.xComMdmQualMoyen2GEDGE = 0;
+        this.xComMdmQualMoyen3G = 0;
+        this.xComMdmQualMoyen4G = 0;
+        this.xComMdmRatioTimeIn2G = 0;
+        this.xComMdmRatioTimeIn3G = 0;
+        this.xComMdmRatioTimeIn4G = 0;
+        this.xComMdmRatioTimeOffline = 0;
         this.global.checkMode();
     }
     ionViewWillEnter() {
-        this.storage.set("connexionRequise", "UPC");
-        /*affichage bouton suivant*/
-        this.global.checkNextPage().then(res => {
-            if (res == true) {
-                this.display = true;
-            }
+        this.tryToRead = true;
+        this.global.connexionRequise = "UPC";
+        console.log(" - Connexion requise :" + this.global.connexionRequise);
+        console.log(" - Connexion  actuel  (avant on read statique) :" +
+            this.global.statutConnexion);
+        this.ConnecterUPC();
+        this.Read();
+        this.correspondancesRegistres = new _model_upcv3_correspondancesRegistres__WEBPACK_IMPORTED_MODULE_7__["CorrespondancesRegistres"]();
+    }
+    checkConnectionWifi() {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+            console.log("check wifi conx");
+            let wifi = yield WifiWizard2.getConnectedSSID();
+            console.log(wifi);
+            this.current_ssid = wifi;
         });
-        this.levelTab = [];
-        this.bertab = [];
-        this.dureTab = [];
-        this.platform.ready().then(() => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
-            //this.global.onConnectWiFi().then(async res=>{
-            this.readConnectionParams();
-            //})
-        }));
+    }
+    Read() {
+        this.do = setInterval(() => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+            console.log("======================== cycle ================================");
+            this.checkConnectionWifi();
+            // en cas de perte de connexion
+            if (this.current_ssid != this.stored_ssid) {
+                console.log("wifi diff >>>> ");
+                console.log("disconnect ");
+                let res = yield WifiWizard2.disconnect(this.current_ssid)
+                    .then((result) => {
+                    console.log("connect ");
+                    this.ConnecterUPC();
+                })
+                    .catch((err) => { });
+                console.log(res);
+                //connecter au wifi
+                console.log("reconnexion  >>>> ");
+            }
+            else if (this.global.upcmodbus.state != 1) {
+                this.ConnecterUPC();
+            }
+            if (this.global.upcmodbus.state == 1) {
+                console.log("Try to read >");
+                // lecture statique :
+                this.isLoading = true;
+                this.global.upcmodbus
+                    .onReadStatique(this.global.upcname, this.global.mode, "connection")
+                    .then((res) => {
+                    if (res == true) {
+                        this.tryToRead = false;
+                        this.isLoading = false;
+                        console.log(">  lecture reussi ");
+                        this.subscribeRefresh();
+                        this.events.publish("loadParameters");
+                        this.global.lectureStatiqueEnCours = false;
+                        this.global.displayLoading = false;
+                        // this.tryToRead = false;
+                    }
+                    else {
+                        console.log(">  lecture echouée  ");
+                        this.isLoading = false;
+                        this.tryToRead = true;
+                        this.global.statutConnexion = "Aucune";
+                        this.global.lectureStatiqueEnCours = false;
+                        this.global.displayLoading = false;
+                    }
+                })
+                    .catch((err) => {
+                    this.tryToRead = true;
+                    this.isLoading = false;
+                    console.log("acceuil::erreur lecture");
+                    console.log(err);
+                });
+                //fin de lecture statique :
+            }
+        }), 500);
+    }
+    subscribeRefresh() {
+        var d = new Date();
+        this.events.subscribe("loadParameters", ($event) => {
+            this.level = this.global.upcmodbus.connectionLevel;
+            this.mode = this.getMode(this.global.upcmodbus.connectionMode);
+            this.xComMdmRssiMoyen2G = this.global.upcmodbus.xComMdmRssiMoyen2G;
+            this.xComMdmRssiMoyen3G = this.global.upcmodbus.xComMdmRssiMoyen3G;
+            this.xComMdmRssiMoyen4G = this.global.upcmodbus.xComMdmRssiMoyen4G;
+            this.xComMdmQualMoyen2GGPRS =
+                this.global.upcmodbus.xComMdmQualMoyen2GGPRS;
+            this.xComMdmQualMoyen2GEDGE =
+                this.global.upcmodbus.xComMdmQualMoyen2GEDGE;
+            this.xComMdmQualMoyen3G = this.global.upcmodbus.xComMdmQualMoyen3G;
+            this.xComMdmQualMoyen4G = this.global.upcmodbus.xComMdmQualMoyen4G;
+            this.xComMdmRatioTimeIn2G = this.global.upcmodbus.xComMdmRatioTimeIn2G;
+            this.xComMdmRatioTimeIn3G = this.global.upcmodbus.xComMdmRatioTimeIn3G;
+            this.xComMdmRatioTimeIn4G = this.global.upcmodbus.xComMdmRatioTimeIn4G;
+            this.xComMdmRatioTimeOffline =
+                this.global.upcmodbus.xComMdmRatioTimeOffline;
+        });
+    }
+    ConnecterUPC() {
+        //connection a l 'UPC :
+        console.log("> try  connecter a l upc ");
+        if (this.global.mode != "modeTest") {
+            this.isLoading = true;
+            this.storage.get("ssid_upc").then((stored_ssid) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+                this.storage.get("password").then((password) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+                    this.stored_ssid = stored_ssid;
+                    this.password_ssid = password;
+                    //recuperer l ssid  +password
+                    console.log("acceuil , stored password" + password);
+                    console.log("acceuil , stored ssid" + stored_ssid);
+                    //si on est deja connecté a l upc :
+                    let wifi = yield WifiWizard2.getConnectedSSID();
+                    console.log("connected ssid: " + wifi);
+                    if (wifi != stored_ssid) {
+                        console.log("wifi diffrents :>>>>>>>>>");
+                        console.log("connecte wifi ");
+                        WifiWizard2.connect(stored_ssid, password)
+                            .then(() => {
+                            //connexion reussi a l UPC  :
+                            console.log("connexion wifi up reussie :");
+                            this.check = true;
+                            this.global.statutConnexion = "UPC";
+                            this.global
+                                .onConnectModbus()
+                                .then(() => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+                                console.log("accueil , connexion modbus reussie >> ");
+                                this.connection_modbus = true;
+                                this.isLoading = false;
+                                //on peut lire
+                                this.tryToRead = true;
+                            }))
+                                .catch((err) => {
+                                console.log("accueil + connexion modbus échouée  ");
+                                this.isLoading = false;
+                                this.connection_modbus = false;
+                            });
+                        })
+                            .catch((err) => {
+                            console.log("connexion impossible a l'UPC wifi");
+                            console.log(err);
+                        });
+                    }
+                    else {
+                        this.global
+                            .onConnectModbus()
+                            .then(() => {
+                            //on tente une connexion modbus pour déterminer si c'est un upc
+                            //connexion modbus réussie : c'est un upc
+                            console.log("accueil + connexion modbus reussie ");
+                            this.connection_modbus = true;
+                            this.isLoading = false;
+                        })
+                            .catch((err) => {
+                            console.log("accueil + connexion modbus échouée  ");
+                            this.isLoading = false;
+                            this.connection_modbus = false;
+                        });
+                    }
+                }));
+            }));
+        }
+    }
+    getMode(mode) {
+        switch (mode) {
+            case 0:
+                return "Non enregistré";
+                break;
+            case 1:
+                return "2G GPRS";
+                break;
+            case 2:
+                return "2G EDGE";
+                break;
+            case 3:
+                return "3G WCDMA";
+                break;
+            case 4:
+                return "3G HSDPA";
+                break;
+            case 5:
+                return "3G HSUPA";
+                break;
+            case 6:
+                return "3G HSDPA/HSUPA";
+                break;
+            case 7:
+                return "4G";
+                break;
+            default:
+                break;
+        }
     }
     doRefresh(event) {
         this.ionViewWillEnter();
         event.target.complete();
     }
-    readConnectionParams() {
-        //40414 40415 
-        //41225 41239
-        localStorage.setItem("currentssid", this.global.upcmodbus.communicationParameters.comGsmName);
-        /*this.global.upcmodbus.client.getStringFromHoldingRegister(40045,10).then(res=>{
-          this.redBackground = false;
-          localStorage.setItem("currentssid",res);
-          this.cd.detectChanges();
-        }).catch(err=>{
-          //localStorage.removeItem("isConnected");
-          this.redBackground = true;
-          this.cd.detectChanges();
-        
-          //this.ngOnInit();
-        })*/
-        this.levelTab.push(this.global.upcmodbus.communicationParameters.xComMdmRssuMoyen2G.toFixed(2));
-        this.levelTab.push(this.global.upcmodbus.communicationParameters.xComMdmRssuMoyen3G.toFixed(2));
-        this.levelTab.push(this.global.upcmodbus.communicationParameters.xComMdmRssuMoyen4G.toFixed(2));
-        this.bertab.push(this.global.upcmodbus.communicationParameters.xComMdmQualMoyen2GGPRS.toFixed(2));
-        this.bertab.push(this.global.upcmodbus.communicationParameters.xComMdmQualMoyen2GEDGE.toFixed(2));
-        this.bertab.push(this.global.upcmodbus.communicationParameters.xComMdmQualMoyen3G.toFixed(2));
-        this.bertab.push(this.global.upcmodbus.communicationParameters.xComMdmQualMoyen4G.toFixed(2));
-        this.dureTab.push(this.global.upcmodbus.communicationParameters.xComMdmRatioTimeIn2G.toFixed(2));
-        this.dureTab.push(this.global.upcmodbus.communicationParameters.xComMdmRatioTimeIn3G.toFixed(2));
-        this.dureTab.push(this.global.upcmodbus.communicationParameters.xComMdmRatioTimeIn4G.toFixed(2));
-        this.dureTab.push(this.global.upcmodbus.communicationParameters.xComMdmRatioTimeOffline.toFixed(2));
-        if (this.global.upcmodbus.communicationParameters.comMdmMode == 0) {
-            this.mode = 'Non enregistré';
-            this.ber = 0;
-        }
-        if (this.global.upcmodbus.communicationParameters.comMdmMode == 1) {
-            this.mode = '2G GPRS';
-            this.ber = this.bertab[0];
-        }
-        if (this.global.upcmodbus.communicationParameters.comMdmMode == 2) {
-            this.mode = '2G EDGE';
-            this.ber = this.bertab[1];
-        }
-        if (this.global.upcmodbus.communicationParameters.comMdmMode == 3) {
-            this.mode = '3G WCDMA';
-            this.ber = this.bertab[2];
-        }
-        if (this.global.upcmodbus.communicationParameters.comMdmMode == 4) {
-            this.mode = '3G HSDPA';
-            this.ber = this.bertab[2];
-        }
-        if (this.global.upcmodbus.communicationParameters.comMdmMode == 5) {
-            this.mode = '3G HSUPA';
-            this.ber = this.bertab[2];
-        }
-        if (this.global.upcmodbus.communicationParameters.comMdmMode == 6) {
-            this.mode = '3G HSDPA/HSUPA';
-            this.ber = this.bertab[2];
-        }
-        if (this.global.upcmodbus.communicationParameters.comMdmMode == 7) {
-            this.mode = '4G';
-            this.ber = this.bertab[3];
-        }
-        this.level = this.global.upcmodbus.communicationParameters.comGsmLevel;
-        /*this.global.interval =
-        setInterval(()=>{
-         
-            this.global.upcmodbus.client.readHoldingRegisters(40414,10).then(res=>{
-              var connect = res[0];
-              
-              if(connect == 0){
-                this.mode = 'Non enregistré';this.ber = 0;
-              } if(connect == 1) {
-                this.mode =  '2G GPRS'; this.ber = this.bertab[0];
-              } if(connect == 2){
-                this.mode =  '2G EDGE'; this.ber = this.bertab[1];
-              } if(connect == 3){
-                this.mode =  '3G WCDMA';this.ber = this.bertab[2];
-              } if(connect == 4) {
-                this.mode =  '3G HSDPA';this.ber = this.bertab[2];
-              } if(connect == 5) {
-                this.mode =  '3G HSUPA';this.ber = this.bertab[2];
-              } if(connect == 6) {
-                this.mode =  '3G HSDPA/HSUPA';this.ber = this.bertab[2];
-              } if(connect == 7) {
-                this.mode =  '4G';this.ber = this.bertab[3];
-              }
-              
-              
-              this.level = this.global.upcmodbus.client.registerToUint32([res[1]]);
-              if(this.level > 500) {
-                this.level = 0;
-              }
-              this.redBackground = false;
-              this.cd.detectChanges();
-              
-            }).catch(err=>{
-              this.redBackground = true;
-              this.cd.detectChanges();
-              //clearInterval(intervalconnect);
-            })
-            if(this.redBackground) {
-              clearInterval(this.global.interval);
-              this.ionViewWillEnter()
-            }
-        
-        
-          
-        },500)*/
-    }
     goToNextPage() {
         clearInterval(this.global.interval);
-        this.storage.get("nexturl").then(res => {
+        this.storage.get("nexturl").then((res) => {
             this.router.navigate([res]);
         });
     }
@@ -287,16 +376,24 @@ ConnectionPage.ctorParameters = () => [
     { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"] },
     { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"] },
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"] },
-    { type: _ionic_storage__WEBPACK_IMPORTED_MODULE_6__["Storage"] }
+    { type: _ionic_storage__WEBPACK_IMPORTED_MODULE_6__["Storage"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["Events"] }
 ];
 ConnectionPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-        selector: 'app-connection',
+        selector: "app-connection",
         template: __webpack_require__(/*! raw-loader!./connection.page.html */ "./node_modules/raw-loader/index.js!./src/app/connection/connection.page.html"),
         styles: [__webpack_require__(/*! ./connection.page.scss */ "./src/app/connection/connection.page.scss")]
     }),
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["Platform"], _api_global_service__WEBPACK_IMPORTED_MODULE_4__["GlobalService"], _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["LoadingController"], _ionic_native_hotspot_ngx__WEBPACK_IMPORTED_MODULE_3__["Hotspot"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"],
-        _ionic_storage__WEBPACK_IMPORTED_MODULE_6__["Storage"]])
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["Platform"],
+        _api_global_service__WEBPACK_IMPORTED_MODULE_4__["GlobalService"],
+        _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["LoadingController"],
+        _ionic_native_hotspot_ngx__WEBPACK_IMPORTED_MODULE_3__["Hotspot"],
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"],
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"],
+        _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"],
+        _ionic_storage__WEBPACK_IMPORTED_MODULE_6__["Storage"],
+        _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["Events"]])
 ], ConnectionPage);
 
 

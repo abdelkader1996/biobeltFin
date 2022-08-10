@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n      <ion-back-button defaultHref=\"home\"></ion-back-button>\n    </ion-buttons>\n    <ion-title>Contrôle diffusion CO2</ion-title>\n    <!--<ion-buttons slot=\"end\" *ngIf=\"!global.isBBAM\">\n      <ion-button fill=\"clear\"> <ion-icon name=\"globe\" color=\"light\" (click)=\"onSynchroB1B2();\"></ion-icon>ADMIN</ion-button> \n     </ion-buttons>\n     <ion-buttons slot=\"end\" *ngIf=\"global.isBBAM\">\n      <ion-button fill=\"clear\"> <ion-icon name=\"wifi\" color=\"light\"></ion-icon>{{global.ssid}}</ion-button> \n     </ion-buttons>-->\n  </ion-toolbar>\n</ion-header>\n\n<ion-content> \n  <h3 style=\"text-align: center;\">Débits et pression CO2 </h3>\n  <ion-grid style=\"padding-top: 5%;\">\n    <ion-row style=\"text-align: center;\">\n      <ion-col size=\"12\"><ion-button shape=\"round\" expand=\"block\" [color]=\"diffcolor\" disabled=\"true\">{{typediff}}</ion-button></ion-col>\n    </ion-row>\n    <ion-row style=\"text-align: center;\">\n      <ion-col size=\"3\"><ion-button shape=\"round\" size=\"small\" color=\"danger\" (click)=\"onDisableDiff();\">OFF</ion-button></ion-col>\n      <ion-col size=\"3\"><ion-button shape=\"round\" size=\"small\" color=\"primary\" (click)=\"onEnableDiff();\">{{textplaydiff}}</ion-button></ion-col>\n      <ion-col size=\"3\"><ion-button shape=\"round\" size=\"small\" color=\"tertiary\" (click)=\"startstop();\">{{textdiff}}</ion-button></ion-col>\n      \n      \n      <ion-col size=\"3\"><ion-button shape=\"round\" size=\"small\" color=\"warning\" (click)=\"onCheck();\">CHECK</ion-button></ion-col>\n    </ion-row>\n\n  </ion-grid>\n  <ion-card>\n    <ion-card-header>\n      <ion-card-title style=\"text-align: center;\">Paramètre</ion-card-title>\n    </ion-card-header>\n    <ion-card-content>\n      <ion-grid>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col>\n            Débit Max\n          </ion-col>\n          <ion-col>\n            <input *ngIf=\"!redBackground\"  type=\"number\" class=\"form-control form-control-sm\" step=\"0.1\"\n                    (click)=\"unsubscribeRefresh()\"\n                    (change)=\"changeFluxMax()\"\n                    [(ngModel)]=\"fluxmax\">\n            <ion-label *ngIf=\"redBackground\">-</ion-label>        \n          </ion-col>\n        </ion-row>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col>Intensité</ion-col>\n          <ion-col> <input *ngIf=\"!redBackground\"  type=\"number\" class=\"form-control form-control-sm\"\n            (click)=\"unsubscribeRefresh()\"  \n            (change)=\"changeIntensity();\"\n            [(ngModel)]=\"intensity\"><ion-label *ngIf=\"redBackground\">-</ion-label>  </ion-col>\n        </ion-row>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col >Bouteille active</ion-col>\n          <ion-col>\n            <select *ngIf=\"!redBackground\" class=\"custom-select custom-select-sm\"\n                \n            (ngModelChange)=\"changeResAct($event);\"\n            [(ngModel)]=\"resActive\">\n      <option value=\"0\">B0</option>\n      <option value=\"1\">B1</option>\n      <option value=\"2\">B2</option>\n      </select>\n      <ion-label *ngIf=\"redBackground\">-</ion-label>  \n          </ion-col>\n        </ion-row>\n      </ion-grid>\n      \n    </ion-card-content>\n  </ion-card>\n  <ion-card>\n    <ion-card-header>\n      <ion-card-title style=\"text-align: center;\">Mesures</ion-card-title>\n    </ion-card-header>\n    <ion-card-content>\n      <ion-grid>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"6\">\n            <ion-label *ngIf=\"!redBackground\" color=\"dark\">{{\"Intensité : \"+ intensity}}</ion-label>\n            <ion-label *ngIf=\"redBackground\">-</ion-label>  \n          </ion-col>\n          <ion-col size=\"6\">\n            <ion-label *ngIf=\"!redBackground\" color=\"dark\">{{\"Température : \"+temp.toFixed(2)+\" °C\"}}</ion-label>\n            <ion-label *ngIf=\"redBackground\">-</ion-label>  \n          </ion-col>\n        </ion-row>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"6\"></ion-col>\n          <ion-col size=\"3\"><ion-label color=\"dark\" style=\"font-weight :bolder\"> Réf</ion-label></ion-col>\n          <ion-col size=\"3\"><ion-label color=\"dark\" style=\"font-weight :bolder\">Mesure</ion-label></ion-col>\n        </ion-row>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"6\"><ion-label color=\"dark\">Débit (nl/min):</ion-label></ion-col>\n          <ion-col size=\"3\"><ion-label *ngIf=\"!redBackground\" color=\"dark\">{{debiRef.toFixed(3)}}</ion-label><ion-label *ngIf=\"redBackground\">-</ion-label>  </ion-col>\n          <ion-col size=\"3\" [ngClass]=\"{'bgsuccess':backgroundeb,'bgdanger':!backgroundeb, 'bgwarning':backgrounddangerdeb}\"><ion-label *ngIf=\"!redBackground\" color=\"dark\">{{debiMes.toFixed(3)}}</ion-label><ion-label *ngIf=\"redBackground\">-</ion-label>  </ion-col>\n        </ion-row>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"6\"><ion-label color=\"dark\">PE (Bars):</ion-label></ion-col>\n          <ion-col size=\"3\"><ion-label color=\"dark\"></ion-label></ion-col>\n          <ion-col size=\"3\"><ion-label *ngIf=\"!redBackground\" color=\"dark\">{{peMes.toFixed(3)}}</ion-label><ion-label *ngIf=\"redBackground\">-</ion-label>  </ion-col>\n\n        </ion-row>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"6\"><ion-label color=\"dark\">PS (Bars):</ion-label></ion-col>\n          <ion-col size=\"3\"></ion-col>\n          <ion-col size=\"3\"><ion-label *ngIf=\"!redBackground\" color=\"dark\">{{psMes.toFixed(3)}}</ion-label><ion-label *ngIf=\"redBackground\">-</ion-label>  </ion-col>\n        </ion-row>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"6\"><ion-label color=\"dark\">PS comp (Bars):</ion-label></ion-col>\n          <ion-col size=\"3\"><ion-label color=\"dark\"></ion-label></ion-col>\n          <ion-col size=\"3\"><ion-label *ngIf=\"!redBackground\" color=\"dark\">{{psCompMes.toFixed(3)}}</ion-label><ion-label *ngIf=\"redBackground\">-</ion-label>  </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-card-content>\n  </ion-card> \n  <ion-row>\n    <ion-col size=\"6\">\n      <ion-card>\n        <ion-card-title style=\"text-align: center;\">Offsets</ion-card-title>\n        <ion-card-content>\n          <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n            <ion-col size=\"6\">PE (bar)</ion-col>\n            <ion-col size=\"6\"><ion-input *ngIf=\"!redBackground\" type=\"tel\" [(ngModel)]=\"offsetPE\" (focusout)=\"changeoffsetPE();\"></ion-input><ion-label *ngIf=\"redBackground\">-</ion-label>  </ion-col>\n            <ion-col size=\"6\">PS (bar)</ion-col>\n            <ion-col size=\"6\"><ion-input *ngIf=\"!redBackground\" [(ngModel)]=\"offsetPS\" type=\"tel\" (focusout)=\"changeoffsetPS();\"></ion-input><ion-label *ngIf=\"redBackground\">-</ion-label>  </ion-col>\n            <ion-col size=\"6\">Debit (nl/min)</ion-col>\n            <ion-col size=\"6\"><ion-input *ngIf=\"!redBackground\" [(ngModel)]=\"offsetdeb\" type=\"tel\" (focusout)=\"changeoffsetdeb();\"></ion-input><ion-label *ngIf=\"redBackground\">-</ion-label>  </ion-col>\n          </ion-row>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n    <ion-col size=\"6\">\n      <ion-card>\n        <ion-card-title style=\"text-align: center;\">PID</ion-card-title>\n        <ion-card-content>\n          <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n            <ion-col size=\"6\">Prop</ion-col>\n            <ion-col size=\"6\"><ion-input *ngIf=\"!redBackground\" [(ngModel)]=\"pidprog\" type=\"tel\" (focusout)=\"changePID();\"></ion-input><ion-label *ngIf=\"redBackground\">-</ion-label>  </ion-col>\n            <ion-col size=\"6\">INT</ion-col>\n            <ion-col size=\"6\"><ion-input *ngIf=\"!redBackground\" [(ngModel)]=\"pidint\" type=\"tel\" (focusout)=\"changeINT();\"></ion-input><ion-label *ngIf=\"redBackground\">-</ion-label>  </ion-col>\n            <ion-col size=\"6\">DER</ion-col>\n            <ion-col size=\"6\"><ion-input *ngIf=\"!redBackground\" [(ngModel)]=\"pider\" type=\"tel\" (focusout)=\"changeDIR()\"></ion-input><ion-label *ngIf=\"redBackground\">-</ion-label>  </ion-col>\n          </ion-row>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n  </ion-row>\n</ion-content>\n<ion-footer>\n  <ion-button *ngIf=\"!global.displayLoading\" style=\"float: left\" fill=\"clear\" (click)=\"global.onReadStatiqueEnable()\">    \n    <ion-icon name=\"refresh\"></ion-icon>\n  </ion-button>\n  <ion-button *ngIf=\"global.displayLoading\" style=\"float: left;\" fill=\"clear\" color=\"primary\">\n    <ion-spinner></ion-spinner>\n  </ion-button>\n  <ion-button *ngIf=\"display\" style='float: right' fill='clear' (click)='goToNextPage()'>Suivant<ion-icon name='arrow-forward'></ion-icon></ion-button>\n</ion-footer>\n\n"
+module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n      <ion-back-button defaultHref=\"home\"></ion-back-button>\n    </ion-buttons>\n\n    <ion-buttons>\n      <ion-button fill=\"clear\">\n        <ion-icon name=\"wifi\" color=\"light\"></ion-icon> connecté a :\n        {{this.current_ssid}}</ion-button\n      >\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <h3 style=\"text-align: center\">Débits et pression CO2</h3>\n  <h4>{{upcStatus}}</h4>\n  <ion-grid style=\"padding-top: 5%\">\n    <ion-row style=\"text-align: center\">\n      <ion-col size=\"12\"\n        ><ion-button\n          shape=\"round\"\n          expand=\"block\"\n          [color]=\"diffcolor\"\n          disabled=\"true\"\n          >{{typediff}}</ion-button\n        ></ion-col\n      >\n    </ion-row>\n    <ion-row style=\"text-align: center\">\n      <ion-col size=\"3\"\n        ><ion-button shape=\"round\" size=\"small\" (click)=\"onDisableDiff();\"\n          >OFF</ion-button\n        ></ion-col\n      >\n      <ion-col size=\"3\"\n        ><ion-button shape=\"round\" size=\"small\" (click)=\"onEnableDiff();\"\n          >{{textplaydiff}}</ion-button\n        ></ion-col\n      >\n      <ion-col size=\"3\"\n        ><ion-button shape=\"round\" size=\"small\" (click)=\"startstop();\"\n          >{{textdiff}}</ion-button\n        ></ion-col\n      >\n\n      <ion-col size=\"3\"\n        ><ion-button shape=\"round\" size=\"small\" (click)=\"onCheck();\"\n          >CHECK</ion-button\n        ></ion-col\n      >\n    </ion-row>\n  </ion-grid>\n  <ion-card>\n    <ion-card-header>\n      <ion-card-title style=\"text-align: center\">Paramètre</ion-card-title>\n    </ion-card-header>\n    <ion-card-content>\n      <ion-grid>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col> Débit Max </ion-col>\n          <ion-col>\n            <input\n              *ngIf=\"!redBackground\"\n              type=\"number\"\n              class=\"form-control form-control-sm\"\n              step=\"0.1\"\n              (click)=\"unsubscribeRefresh()\"\n              (change)=\"changeFluxMax()\"\n              [(ngModel)]=\"fluxmax\"\n            />\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-col>\n        </ion-row>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col>Intensité</ion-col>\n          <ion-col>\n            <input\n              *ngIf=\"!redBackground\"\n              type=\"number\"\n              class=\"form-control form-control-sm\"\n              (click)=\"unsubscribeRefresh()\"\n              (change)=\"changeIntensity();\"\n              [(ngModel)]=\"intensity\"\n            /><ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-col>\n        </ion-row>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col>Bouteille active</ion-col>\n          <ion-col>\n            <select\n              *ngIf=\"!redBackground\"\n              class=\"custom-select custom-select-sm\"\n              (ngModelChange)=\"changeResAct($event);\"\n              [(ngModel)]=\"resActive\"\n            >\n              <option value=\"0\">B0</option>\n              <option value=\"1\">B1</option>\n              <option value=\"2\">B2</option>\n            </select>\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-card-content>\n  </ion-card>\n  <ion-card>\n    <ion-card-header>\n      <ion-card-title style=\"text-align: center\">Mesures</ion-card-title>\n    </ion-card-header>\n    <ion-card-content>\n      <ion-grid>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"6\">\n            <ion-label *ngIf=\"!redBackground\" color=\"dark\"\n              >{{\"Intensité : \"+ intensity}}</ion-label\n            >\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-col>\n          <ion-col size=\"6\">\n            <ion-label *ngIf=\"!redBackground\" color=\"dark\"\n              >{{\"Température : \"+temp.toFixed(2)+\" °C\"}}</ion-label\n            >\n            <ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-col>\n        </ion-row>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"6\"></ion-col>\n          <ion-col size=\"3\"\n            ><ion-label color=\"dark\" style=\"font-weight: bolder\">\n              Réf</ion-label\n            ></ion-col\n          >\n          <ion-col size=\"3\"\n            ><ion-label color=\"dark\" style=\"font-weight: bolder\"\n              >Mesure</ion-label\n            ></ion-col\n          >\n        </ion-row>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"6\"\n            ><ion-label color=\"dark\">Débit (nl/min):</ion-label></ion-col\n          >\n          <ion-col size=\"3\"\n            ><ion-label *ngIf=\"!redBackground\" color=\"dark\"\n              >{{debiRef.toFixed(3)}}</ion-label\n            ><ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-col>\n          <ion-col\n            size=\"3\"\n            [ngClass]=\"{'bgsuccess':backgroundeb,'bgdanger':!backgroundeb, 'bgwarning':backgrounddangerdeb}\"\n            ><ion-label *ngIf=\"!redBackground\" color=\"dark\"\n              >{{debiMes.toFixed(3)}}</ion-label\n            ><ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-col>\n        </ion-row>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"6\"\n            ><ion-label color=\"dark\">PE (Bars):</ion-label></ion-col\n          >\n          <ion-col size=\"3\"><ion-label color=\"dark\"></ion-label></ion-col>\n          <ion-col size=\"3\"\n            ><ion-label *ngIf=\"!redBackground\" color=\"dark\"\n              >{{peMes.toFixed(3)}}</ion-label\n            ><ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-col>\n        </ion-row>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"6\"\n            ><ion-label color=\"dark\">PS (Bars):</ion-label></ion-col\n          >\n          <ion-col size=\"3\"></ion-col>\n          <ion-col size=\"3\"\n            ><ion-label *ngIf=\"!redBackground\" color=\"dark\"\n              >{{psMes.toFixed(3)}}</ion-label\n            ><ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-col>\n        </ion-row>\n        <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n          <ion-col size=\"6\"\n            ><ion-label color=\"dark\">PS comp (Bars):</ion-label></ion-col\n          >\n          <ion-col size=\"3\"><ion-label color=\"dark\"></ion-label></ion-col>\n          <ion-col size=\"3\"\n            ><ion-label *ngIf=\"!redBackground\" color=\"dark\"\n              >{{psCompMes.toFixed(3)}}</ion-label\n            ><ion-label *ngIf=\"redBackground\">-</ion-label>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-card-content>\n  </ion-card>\n  <ion-row>\n    <ion-col size=\"6\">\n      <ion-card>\n        <ion-card-title style=\"text-align: center\">Offsets</ion-card-title>\n        <ion-card-content>\n          <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n            <ion-col size=\"6\">PE (bar)</ion-col>\n            <ion-col size=\"6\"\n              ><ion-input\n                *ngIf=\"!redBackground\"\n                type=\"tel\"\n                [(ngModel)]=\"offsetPE\"\n                (focusout)=\"changeoffsetPE();\"\n              ></ion-input\n              ><ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-col>\n            <ion-col size=\"6\">PS (bar)</ion-col>\n            <ion-col size=\"6\"\n              ><ion-input\n                *ngIf=\"!redBackground\"\n                [(ngModel)]=\"offsetPS\"\n                type=\"tel\"\n                (focusout)=\"changeoffsetPS();\"\n              ></ion-input\n              ><ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-col>\n            <ion-col size=\"6\">Debit (nl/min)</ion-col>\n            <ion-col size=\"6\"\n              ><ion-input\n                *ngIf=\"!redBackground\"\n                [(ngModel)]=\"offsetdeb\"\n                type=\"tel\"\n                (focusout)=\"changeoffsetdeb();\"\n              ></ion-input\n              ><ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-col>\n          </ion-row>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n    <ion-col size=\"6\">\n      <ion-card>\n        <ion-card-title style=\"text-align: center\">PID</ion-card-title>\n        <ion-card-content>\n          <ion-row [ngClass]=\"{'bgred' : redBackground}\">\n            <ion-col size=\"6\">Prop</ion-col>\n            <ion-col size=\"6\"\n              ><ion-input\n                *ngIf=\"!redBackground\"\n                [(ngModel)]=\"pidprog\"\n                type=\"tel\"\n                (focusout)=\"changePID();\"\n              ></ion-input\n              ><ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-col>\n            <ion-col size=\"6\">INT</ion-col>\n            <ion-col size=\"6\"\n              ><ion-input\n                *ngIf=\"!redBackground\"\n                [(ngModel)]=\"pidint\"\n                type=\"tel\"\n                (focusout)=\"changeINT();\"\n              ></ion-input\n              ><ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-col>\n            <ion-col size=\"6\">DER</ion-col>\n            <ion-col size=\"6\"\n              ><ion-input\n                *ngIf=\"!redBackground\"\n                [(ngModel)]=\"pider\"\n                type=\"tel\"\n                (focusout)=\"changeDIR()\"\n              ></ion-input\n              ><ion-label *ngIf=\"redBackground\">-</ion-label>\n            </ion-col>\n          </ion-row>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n  </ion-row>\n</ion-content>\n<ion-footer>\n  <ion-button\n    *ngIf=\"!global.displayLoading\"\n    style=\"float: left\"\n    fill=\"clear\"\n    (click)=\"global.onReadStatiqueEnable()\"\n  >\n    <ion-icon name=\"refresh\"></ion-icon>\n  </ion-button>\n  <ion-button\n    *ngIf=\"global.displayLoading\"\n    style=\"float: left\"\n    fill=\"clear\"\n    color=\"primary\"\n  >\n    <ion-spinner></ion-spinner>\n  </ion-button>\n  <ion-button\n    *ngIf=\"display\"\n    style=\"float: right\"\n    fill=\"clear\"\n    (click)=\"goToNextPage()\"\n    >Suivant<ion-icon name=\"arrow-forward\"></ion-icon\n  ></ion-button>\n</ion-footer>\n"
 
 /***/ }),
 
@@ -136,7 +136,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var CdiffPage = /** @class */ (function () {
-    //diffusion à l'arrêt start reload front detectchange 
+    //diffusion à l'arrêt start reload front detectchange
     function CdiffPage(global, platform, loadingCTRL, ngZone, hotspot, network, cd, router, storage, events) {
         this.global = global;
         this.platform = platform;
@@ -148,18 +148,26 @@ var CdiffPage = /** @class */ (function () {
         this.router = router;
         this.storage = storage;
         this.events = events;
+        this.check = false;
+        this.current_ssid = "NO WIFI";
+        this.stored_ssid = "NO WIFI";
+        this.password_ssid = "";
+        this.connection_modbus = false;
+        this.isLoading = false;
+        this.tryToRead = false;
+        this.upcStatus = 0;
         this.textdiff = "ADJUST";
         this.colordif = "light";
         this.textplaydiff = "DIFF";
         this.colorplayfiff = "light";
         this.colordis = "light";
         this.colorcheck = "light";
-        this.offsetPE = 0;
-        this.offsetPS = 0;
-        this.offsetdeb = 0;
-        this.pidprog = 0;
-        this.pidint = 0;
-        this.pider = 0;
+        this.offsetPE = "0";
+        this.offsetPS = "0";
+        this.offsetdeb = "0";
+        this.pidprog = "0";
+        this.pidint = "0";
+        this.pider = "0";
         this.fluxmax = 0;
         this.intensity = 0;
         this.resActive = 0;
@@ -167,9 +175,9 @@ var CdiffPage = /** @class */ (function () {
         this.debiRef = 0;
         this.peRef = 0;
         this.psRef = 0;
-        this.debiMes = 0;
-        this.peMes = 0;
-        this.psMes = 0;
+        this.debiMes = "0";
+        this.peMes = "0";
+        this.psMes = "0";
         this.psComp = 0;
         this.psCompMes = 0;
         this.backgroundeb = false;
@@ -182,19 +190,300 @@ var CdiffPage = /** @class */ (function () {
     }
     CdiffPage.prototype.ngOnInit = function () { };
     CdiffPage.prototype.ionViewWillEnter = function () {
-        var _this = this;
+        this.tryToRead = true;
+        console.log("=========================================================================");
+        console.log("========================== page  accueil :===============================");
+        console.log("=========================================================================");
         this.global.connexionRequise = "UPC";
-        /*affichage bouton suivant*/
-        this.global.checkNextPage().then(function (res) {
-            if (res == true) {
-                _this.display = true;
-            }
-        });
-        this.upc3s = JSON.parse(localStorage.getItem("upc3"));
+        console.log(" - Connexion requise :" + this.global.connexionRequise);
+        console.log(" - Connexion  actuel  (avant on read statique) :" +
+            this.global.statutConnexion);
+        this.ConnecterUPC();
+        this.Read();
         this.correspondancesRegistres = new _model_upcv3_correspondancesRegistres__WEBPACK_IMPORTED_MODULE_8__["CorrespondancesRegistres"]();
-        this.global.onReadStatiqueEnable().then(function () {
-            _this.subscribeRefresh();
+    };
+    CdiffPage.prototype.ConnecterUPC = function () {
+        var _this = this;
+        //connection a l 'UPC :
+        console.log("> try  connecter a l upc ");
+        if (this.global.mode != "modeTest") {
+            this.isLoading = true;
+            this.storage.get("ssid_upc").then(function (stored_ssid) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                var _this = this;
+                return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                    this.storage.get("password").then(function (password) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                        var wifi;
+                        var _this = this;
+                        return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    this.stored_ssid = stored_ssid;
+                                    this.password_ssid = password;
+                                    //recuperer l ssid  +password
+                                    console.log("acceuil , stored password" + password);
+                                    console.log("acceuil , stored ssid" + stored_ssid);
+                                    return [4 /*yield*/, WifiWizard2.getConnectedSSID()];
+                                case 1:
+                                    wifi = _a.sent();
+                                    console.log("connected ssid: " + wifi);
+                                    if (wifi != stored_ssid) {
+                                        console.log("wifi diffrents :>>>>>>>>>");
+                                        console.log("connecte wifi ");
+                                        WifiWizard2.connect(stored_ssid, password)
+                                            .then(function () {
+                                            //connexion reussi a l UPC  :
+                                            console.log("connexion wifi up reussie :");
+                                            _this.check = true;
+                                            _this.global.statutConnexion = "UPC";
+                                            _this.global
+                                                .onConnectModbus()
+                                                .then(function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                                                return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                                                    console.log("accueil , connexion modbus reussie >> ");
+                                                    this.connection_modbus = true;
+                                                    this.isLoading = false;
+                                                    //on peut lire
+                                                    this.tryToRead = true;
+                                                    return [2 /*return*/];
+                                                });
+                                            }); })
+                                                .catch(function (err) {
+                                                console.log("accueil + connexion modbus échouée  ");
+                                                _this.isLoading = false;
+                                                _this.connection_modbus = false;
+                                            });
+                                        })
+                                            .catch(function (err) {
+                                            console.log("connexion impossible a l'UPC wifi");
+                                            console.log(err);
+                                        });
+                                    }
+                                    else {
+                                        this.global
+                                            .onConnectModbus()
+                                            .then(function () {
+                                            //on tente une connexion modbus pour déterminer si c'est un upc
+                                            //connexion modbus réussie : c'est un upc
+                                            console.log("accueil + connexion modbus reussie ");
+                                            _this.connection_modbus = true;
+                                            _this.isLoading = false;
+                                        })
+                                            .catch(function (err) {
+                                            console.log("accueil + connexion modbus échouée  ");
+                                            _this.isLoading = false;
+                                            _this.connection_modbus = false;
+                                        });
+                                    }
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }); });
+                    return [2 /*return*/];
+                });
+            }); });
+        }
+    };
+    CdiffPage.prototype.checkConnectionWifi = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var wifi;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        console.log("check wifi conx");
+                        return [4 /*yield*/, WifiWizard2.getConnectedSSID()];
+                    case 1:
+                        wifi = _a.sent();
+                        console.log(wifi);
+                        this.current_ssid = wifi;
+                        return [2 /*return*/];
+                }
+            });
         });
+    };
+    CdiffPage.prototype.Read = function () {
+        var _this = this;
+        this.do = setInterval(function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+            var res;
+            var _this = this;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        console.log("======================== cycle ================================");
+                        this.checkConnectionWifi();
+                        if (!(this.current_ssid != this.stored_ssid)) return [3 /*break*/, 2];
+                        console.log("wifi diff >>>> ");
+                        console.log("disconnect ");
+                        return [4 /*yield*/, WifiWizard2.disconnect(this.current_ssid)
+                                .then(function (result) {
+                                console.log("connect ");
+                                _this.ConnecterUPC();
+                            })
+                                .catch(function (err) { })];
+                    case 1:
+                        res = _a.sent();
+                        console.log(res);
+                        //connecter au wifi
+                        console.log("reconnexion  >>>> ");
+                        _a.label = 2;
+                    case 2:
+                        if (this.global.upcmodbus.state == 1) {
+                            console.log("Try to read >");
+                            // lecture statique :
+                            this.isLoading = true;
+                            this.global.upcmodbus
+                                .onReadStatique(this.global.upcname, this.global.mode, "cdiff")
+                                .then(function (res) {
+                                if (res == true) {
+                                    _this.tryToRead = false;
+                                    _this.isLoading = false;
+                                    console.log(">  lecture reussi ");
+                                    _this.subscribeRefresh();
+                                    _this.events.publish("loadParameters");
+                                    _this.global.lectureStatiqueEnCours = false;
+                                    _this.global.displayLoading = false;
+                                    _this.tryToRead = false;
+                                }
+                                else {
+                                    console.log(">  lecture echouée  ");
+                                    _this.isLoading = false;
+                                    _this.tryToRead = true;
+                                    _this.global.statutConnexion = "Aucune";
+                                    _this.global.lectureStatiqueEnCours = false;
+                                    _this.global.displayLoading = false;
+                                }
+                            })
+                                .catch(function (err) {
+                                _this.tryToRead = true;
+                                _this.isLoading = false;
+                                console.log("acceuil::erreur lecture");
+                                console.log(err);
+                            });
+                            //fin de lecture statique :
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        }); }, 500);
+    };
+    CdiffPage.prototype.ecrir = function (variable, value) {
+        var _this = this;
+        console.log(" 1-apres ecriture this alarme  basse global  avant e criture:" +
+            this.global.upcmodbus.alarm.alrResLowEn);
+        if (variable.type == "int") {
+            this.isLoading = true;
+            this.global.upcmodbus.client
+                .setIntInHoldingRegister(variable.adr, variable.dim, value)
+                .then(function () {
+                console.log("accueil ::  ecriture reussie");
+                // lecture statique :
+                _this.global.upcmodbus
+                    .onReadStatique(_this.global.upcname, _this.global.mode, "cdiff")
+                    .then(function (res) {
+                    if (res == true) {
+                        _this.isLoading = false;
+                        console.log("accueil:  lecture reussi ");
+                        _this.subscribeRefresh();
+                        _this.events.publish("loadParameters");
+                        console.log(" 2 -apres ecriture this alarme  basse global :" +
+                            _this.global.upcmodbus.alarm.alrResLowEn);
+                        _this.global.lectureStatiqueEnCours = false;
+                        _this.global.displayLoading = false;
+                        _this.tryToRead = false;
+                    }
+                    else {
+                        _this.isLoading = false;
+                        _this.global.statutConnexion = "Aucune";
+                        _this.global.lectureStatiqueEnCours = false;
+                        _this.global.displayLoading = false;
+                    }
+                })
+                    .catch(function (err) {
+                    _this.isLoading = false;
+                    console.log("acceuil::erreur lecture");
+                    console.log(err);
+                });
+                //fin de lecture statique :
+            })
+                .catch(function () {
+                _this.isLoading = false;
+                console.log("num piege ::écriture impossible");
+            });
+        }
+        else if (variable.type == "float") {
+            console.log(":::::::::::::::::ecrir un flottant :::::::::::::");
+            this.isLoading = true;
+            this.global.upcmodbus.client
+                .setFloatInHoldingRegister(variable.adr, value)
+                .then(function () {
+                // lecture statique :
+                _this.global.upcmodbus
+                    .onReadStatique(_this.global.upcname, _this.global.mode, "cdiff")
+                    .then(function (res) {
+                    if (res == true) {
+                        _this.isLoading = false;
+                        console.log("accueil:  lecture reussi ");
+                        _this.subscribeRefresh();
+                        _this.events.publish("loadParameters");
+                        _this.global.lectureStatiqueEnCours = false;
+                        _this.global.displayLoading = false;
+                        _this.tryToRead = false;
+                    }
+                    else {
+                        _this.isLoading = false;
+                        _this.global.statutConnexion = "Aucune";
+                        _this.global.lectureStatiqueEnCours = false;
+                        _this.global.displayLoading = false;
+                    }
+                })
+                    .catch(function (err) {
+                    _this.isLoading = false;
+                    console.log("acceuil::erreur lecture");
+                    console.log(err);
+                });
+            })
+                .catch(function () {
+                alert("écriture impossible");
+                _this.isLoading = false;
+            });
+        }
+        else {
+            this.isLoading = true;
+            this.global.upcmodbus.client
+                .setStringArrayInHoldingResgisters(variable.adr, value)
+                .then(function () {
+                console.log("accueil ::  ecriture reussie");
+                // lecture statique :
+                _this.global.upcmodbus
+                    .onReadStatique(_this.global.upcname, _this.global.mode, "cdiff")
+                    .then(function (res) {
+                    if (res == true) {
+                        _this.isLoading = false;
+                        console.log("accueil:  lecture reussi ");
+                        _this.subscribeRefresh();
+                        _this.events.publish("loadParameters");
+                        _this.global.lectureStatiqueEnCours = false;
+                        _this.global.displayLoading = false;
+                        _this.tryToRead = false;
+                    }
+                    else {
+                        _this.isLoading = false;
+                        _this.global.statutConnexion = "Aucune";
+                        _this.global.lectureStatiqueEnCours = false;
+                        _this.global.displayLoading = false;
+                    }
+                })
+                    .catch(function (err) {
+                    _this.isLoading = false;
+                    console.log("acceuil::erreur lecture");
+                    console.log(err);
+                });
+                //fin de lecture statique :
+            })
+                .catch(function () {
+                _this.isLoading = false;
+                console.log("num piege ::écriture impossible");
+            });
+        }
     };
     CdiffPage.prototype.startstop = function () {
         this.onChangeDiff();
@@ -207,48 +496,27 @@ var CdiffPage = /** @class */ (function () {
         });
     };
     CdiffPage.prototype.onChangeDiff = function () {
-        var d = new Date();
-        this.global.logs.push(this.global.msToTime(d.getTime()) + " - appel on change diff");
-        this.global.onWriteEnable(this.correspondancesRegistres.upcMode, 2);
+        this.ecrir(this.correspondancesRegistres.upcMode, 2);
     };
     CdiffPage.prototype.onDisableDiff = function () {
-        var d = new Date();
-        this.global.logs.push(this.global.msToTime(d.getTime()) + " - appel on disable diff");
-        this.global.onWriteEnable(this.correspondancesRegistres.upcMode, 0);
+        this.ecrir(this.correspondancesRegistres.upcMode, 0);
     };
     CdiffPage.prototype.onEnableDiff = function () {
-        var d = new Date();
-        this.global.logs.push(this.global.msToTime(d.getTime()) + " - appel on enable diff");
-        this.global.onWriteEnable(this.correspondancesRegistres.upcMode, 1);
+        this.ecrir(this.correspondancesRegistres.upcMode, 1);
     };
     CdiffPage.prototype.onCheck = function () {
-        var _this = this;
-        var d = new Date();
-        this.global.logs.push(this.global.msToTime(d.getTime()) + " - appel on check");
-        this.global.onWriteEnable(this.correspondancesRegistres.upcMode, 3).then(function () {
-            _this.colorcheck = "primary";
-            _this.colordis = "light";
-            _this.colorplayfiff = "light";
-            _this.colordif = "light";
-            _this.typediff = "Mode CHECK Pressions";
-            _this.diffcolor = "warning";
-        });
+        this.ecrir(this.correspondancesRegistres.upcMode, 3);
     };
     CdiffPage.prototype.changeIntensity = function () {
-        var d = new Date();
-        this.global.logs.push(this.global.msToTime(d.getTime()) + " - appel on change intensity");
-        this.global.onWriteEnable(this.correspondancesRegistres.upcDiffLvlAdj, this.intensity);
+        this.ecrir(this.correspondancesRegistres.upcDiffLvlAdj, this.intensity);
     };
     CdiffPage.prototype.changeFluxMax = function () {
-        var d = new Date();
-        this.global.logs.push(this.global.msToTime(d.getTime()) + " - appel on change flux max");
-        this.global.onWriteEnable(this.correspondancesRegistres.co2FlowRefAdj, this.fluxmax);
+        console.log("flux max : ", this.fluxmax);
+        this.ecrir(this.correspondancesRegistres.co2FlowRefAdj, this.fluxmax);
     };
     CdiffPage.prototype.changeResAct = function () {
         this.resActive = this.resActive == 1 ? 2 : 1;
-        var d = new Date();
-        this.global.logs.push(this.global.msToTime(d.getTime()) + " - appel on change res act");
-        this.global.onWriteEnable(this.correspondancesRegistres.co2ResActAdj, this.resActive);
+        this.ecrir(this.correspondancesRegistres.co2ResActAdj, this.resActive);
     };
     CdiffPage.prototype.changePID = function () {
         var d = new Date();
@@ -290,6 +558,7 @@ var CdiffPage = /** @class */ (function () {
         var _this = this;
         this.events.subscribe("loadParameters", function ($event) {
             var status = _this.global.upcmodbus.general.upcStatus;
+            _this.upcStatus = _this.global.upcmodbus.general.upcStatus;
             if (status == 0) {
                 _this.colordis = "danger";
                 _this.colorcheck = "light";
@@ -322,12 +591,14 @@ var CdiffPage = /** @class */ (function () {
                 _this.typediff = "Diff. programmée ACTIF";
                 _this.diffcolor = "primary";
             }
-            _this.offsetPE = _this.global.upcmodbus.diffusions.co2PressInpOffs;
-            _this.offsetPS = _this.global.upcmodbus.diffusions.co2PressOutOffs;
-            _this.offsetdeb = _this.global.upcmodbus.diffusions.co2FlowOffs;
-            _this.pidprog = _this.global.upcmodbus.general.upcCo2PidProp;
-            _this.pidint = _this.global.upcmodbus.general.upcCo2PidInteg;
-            _this.pider = _this.global.upcmodbus.general.upcCo2PidDiff;
+            _this.offsetPE =
+                _this.global.upcmodbus.diffusions.co2PressInpOffs.toFixed(2);
+            _this.offsetPS =
+                _this.global.upcmodbus.diffusions.co2PressOutOffs.toFixed(2);
+            _this.offsetdeb = _this.global.upcmodbus.diffusions.co2FlowOffs.toFixed(2);
+            _this.pidprog = _this.global.upcmodbus.general.upcCo2PidProp.toFixed(2);
+            _this.pidint = _this.global.upcmodbus.general.upcCo2PidInteg.toFixed(2);
+            _this.pider = _this.global.upcmodbus.general.upcCo2PidDiff.toFixed(2);
             //40018
             _this.fluxmax = _this.global.upcmodbus.general.co2FlowRefAdj;
             //40065
@@ -337,27 +608,31 @@ var CdiffPage = /** @class */ (function () {
             _this.debiRef = (_this.fluxmax * _this.intensity) / 10;
             //this.global.interval = setInterval(async ()=>{
             //40416
-            //this.intensity = this.upc.client.registerToUint32(res[0]); 
-            //40435                    
-            _this.peMes = _this.global.upcmodbus.diffusions.co2PresInpAvg;
-            //40437                    
-            _this.psMes = _this.global.upcmodbus.diffusions.co2PresOutAvg;
-            //40439                     
-            _this.debiMes = _this.global.upcmodbus.diffusions.co2FlowAvg;
-            if (Math.abs(((_this.debiMes - _this.debiRef) / _this.debiRef) * 100) < 5) {
+            //this.intensity = this.upc.client.registerToUint32(res[0]);
+            //40435
+            _this.peMes = _this.global.upcmodbus.diffusions.co2PresInpAvg.toFixed(2);
+            //40437
+            _this.psMes = _this.global.upcmodbus.diffusions.co2PresOutAvg.toFixed(2);
+            //40439
+            _this.debiMes = _this.global.upcmodbus.diffusions.co2FlowAvg.toFixed(2);
+            if (Math.abs(((_this.global.upcmodbus.diffusions.co2FlowAvg - _this.debiRef) /
+                _this.debiRef) *
+                100) < 5) {
                 _this.backgroundeb = true;
                 _this.backgrounddangerdeb = false;
             }
-            else if (Math.abs(((_this.debiMes - _this.debiRef) / _this.debiRef) * 100) < 10) {
+            else if (Math.abs(((_this.global.upcmodbus.diffusions.co2FlowAvg - _this.debiRef) /
+                _this.debiRef) *
+                100) < 10) {
                 _this.backgrounddangerdeb = true;
             }
             else {
                 _this.backgroundeb = false;
                 _this.backgrounddangerdeb = false;
             }
-            //40451                    
+            //40451
             _this.temp = _this.global.upcmodbus.diffusions.co2TempAvg;
-            //40463                   
+            //40463
             _this.psCompMes = _this.global.upcmodbus.diffusions.co2PressOutComp;
         });
     };
@@ -378,7 +653,7 @@ var CdiffPage = /** @class */ (function () {
     ]; };
     CdiffPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-            selector: 'app-cdiff',
+            selector: "app-cdiff",
             template: __webpack_require__(/*! raw-loader!./cdiff.page.html */ "./node_modules/raw-loader/index.js!./src/app/cdiff/cdiff.page.html"),
             styles: [__webpack_require__(/*! ./cdiff.page.scss */ "./src/app/cdiff/cdiff.page.scss")]
         }),
