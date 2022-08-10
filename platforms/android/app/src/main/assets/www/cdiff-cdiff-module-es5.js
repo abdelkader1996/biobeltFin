@@ -162,12 +162,12 @@ var CdiffPage = /** @class */ (function () {
         this.colorplayfiff = "light";
         this.colordis = "light";
         this.colorcheck = "light";
-        this.offsetPE = "0";
-        this.offsetPS = "0";
-        this.offsetdeb = "0";
-        this.pidprog = "0";
-        this.pidint = "0";
-        this.pider = "0";
+        this.offsetPE = 0;
+        this.offsetPS = 0;
+        this.offsetdeb = 0;
+        this.pidprog = 0;
+        this.pidint = 0;
+        this.pider = 0;
         this.fluxmax = 0;
         this.intensity = 0;
         this.resActive = 0;
@@ -175,9 +175,9 @@ var CdiffPage = /** @class */ (function () {
         this.debiRef = 0;
         this.peRef = 0;
         this.psRef = 0;
-        this.debiMes = "0";
-        this.peMes = "0";
-        this.psMes = "0";
+        this.debiMes = 0;
+        this.peMes = 0;
+        this.psMes = 0;
         this.psComp = 0;
         this.psCompMes = 0;
         this.backgroundeb = false;
@@ -326,7 +326,7 @@ var CdiffPage = /** @class */ (function () {
                         console.log("reconnexion  >>>> ");
                         _a.label = 2;
                     case 2:
-                        if (this.global.upcmodbus.state == 1) {
+                        if (this.tryToRead && this.global.upcmodbus.state == 1) {
                             console.log("Try to read >");
                             // lecture statique :
                             this.isLoading = true;
@@ -354,6 +354,40 @@ var CdiffPage = /** @class */ (function () {
                             })
                                 .catch(function (err) {
                                 _this.tryToRead = true;
+                                _this.isLoading = false;
+                                console.log("acceuil::erreur lecture");
+                                console.log(err);
+                            });
+                            //fin de lecture statique :
+                        }
+                        if (this.global.upcmodbus.state == 1) {
+                            console.log("Try to read >");
+                            // lecture statique :
+                            this.isLoading = true;
+                            this.global.upcmodbus
+                                .onReadStatique(this.global.upcname, this.global.mode, "cdiff-cyclique")
+                                .then(function (res) {
+                                if (res == true) {
+                                    //this.tryToRead = false;
+                                    _this.isLoading = false;
+                                    console.log(">  lecture reussi ");
+                                    _this.subscribeRefreshCyclique();
+                                    _this.events.publish("loadParameters");
+                                    _this.global.lectureStatiqueEnCours = false;
+                                    _this.global.displayLoading = false;
+                                    // this.tryToRead = false;
+                                }
+                                else {
+                                    console.log(">  lecture echouée  ");
+                                    _this.isLoading = false;
+                                    // this.tryToRead = true;
+                                    _this.global.statutConnexion = "Aucune";
+                                    _this.global.lectureStatiqueEnCours = false;
+                                    _this.global.displayLoading = false;
+                                }
+                            })
+                                .catch(function (err) {
+                                // this.tryToRead = true;
                                 _this.isLoading = false;
                                 console.log("acceuil::erreur lecture");
                                 console.log(err);
@@ -554,6 +588,10 @@ var CdiffPage = /** @class */ (function () {
             _this.router.navigate([res]);
         });
     };
+    CdiffPage.prototype.ionViewWillLeave = function () {
+        console.log("quitter la page  :");
+        clearInterval(this.do);
+    };
     CdiffPage.prototype.subscribeRefresh = function () {
         var _this = this;
         this.events.subscribe("loadParameters", function ($event) {
@@ -591,14 +629,12 @@ var CdiffPage = /** @class */ (function () {
                 _this.typediff = "Diff. programmée ACTIF";
                 _this.diffcolor = "primary";
             }
-            _this.offsetPE =
-                _this.global.upcmodbus.diffusions.co2PressInpOffs.toFixed(2);
-            _this.offsetPS =
-                _this.global.upcmodbus.diffusions.co2PressOutOffs.toFixed(2);
-            _this.offsetdeb = _this.global.upcmodbus.diffusions.co2FlowOffs.toFixed(2);
-            _this.pidprog = _this.global.upcmodbus.general.upcCo2PidProp.toFixed(2);
-            _this.pidint = _this.global.upcmodbus.general.upcCo2PidInteg.toFixed(2);
-            _this.pider = _this.global.upcmodbus.general.upcCo2PidDiff.toFixed(2);
+            _this.offsetPE = _this.global.upcmodbus.diffusions.co2PressInpOffs;
+            _this.offsetPS = _this.global.upcmodbus.diffusions.co2PressOutOffs;
+            _this.offsetdeb = _this.global.upcmodbus.diffusions.co2FlowOffs;
+            _this.pidprog = _this.global.upcmodbus.general.upcCo2PidProp;
+            _this.pidint = _this.global.upcmodbus.general.upcCo2PidInteg;
+            _this.pider = _this.global.upcmodbus.general.upcCo2PidDiff;
             //40018
             _this.fluxmax = _this.global.upcmodbus.general.co2FlowRefAdj;
             //40065
@@ -610,20 +646,44 @@ var CdiffPage = /** @class */ (function () {
             //40416
             //this.intensity = this.upc.client.registerToUint32(res[0]);
             //40435
-            _this.peMes = _this.global.upcmodbus.diffusions.co2PresInpAvg.toFixed(2);
+            _this.peMes = _this.global.upcmodbus.diffusions.co2PresInpAvg;
             //40437
-            _this.psMes = _this.global.upcmodbus.diffusions.co2PresOutAvg.toFixed(2);
+            _this.psMes = _this.global.upcmodbus.diffusions.co2PresOutAvg;
             //40439
-            _this.debiMes = _this.global.upcmodbus.diffusions.co2FlowAvg.toFixed(2);
-            if (Math.abs(((_this.global.upcmodbus.diffusions.co2FlowAvg - _this.debiRef) /
-                _this.debiRef) *
-                100) < 5) {
+            _this.debiMes = _this.global.upcmodbus.diffusions.co2FlowAvg;
+            if (Math.abs(((_this.debiMes - _this.debiRef) / _this.debiRef) * 100) < 5) {
                 _this.backgroundeb = true;
                 _this.backgrounddangerdeb = false;
             }
-            else if (Math.abs(((_this.global.upcmodbus.diffusions.co2FlowAvg - _this.debiRef) /
-                _this.debiRef) *
-                100) < 10) {
+            else if (Math.abs(((_this.debiMes - _this.debiRef) / _this.debiRef) * 100) < 10) {
+                _this.backgrounddangerdeb = true;
+            }
+            else {
+                _this.backgroundeb = false;
+                _this.backgrounddangerdeb = false;
+            }
+            //40451
+            _this.temp = _this.global.upcmodbus.diffusions.co2TempAvg;
+            //40463
+            _this.psCompMes = _this.global.upcmodbus.diffusions.co2PressOutComp;
+        });
+    };
+    CdiffPage.prototype.subscribeRefreshCyclique = function () {
+        var _this = this;
+        this.events.subscribe("loadParameters", function ($event) {
+            console.log("subscribe refresh cyclique");
+            //this.intensity = this.upc.client.registerToUint32(res[0]);
+            //40435
+            _this.peMes = _this.global.upcmodbus.diffusions.co2PresInpAvg;
+            //40437
+            _this.psMes = _this.global.upcmodbus.diffusions.co2PresOutAvg;
+            //40439
+            _this.debiMes = _this.global.upcmodbus.diffusions.co2FlowAvg;
+            if (Math.abs(((_this.debiMes - _this.debiRef) / _this.debiRef) * 100) < 5) {
+                _this.backgroundeb = true;
+                _this.backgrounddangerdeb = false;
+            }
+            else if (Math.abs(((_this.debiMes - _this.debiRef) / _this.debiRef) * 100) < 10) {
                 _this.backgrounddangerdeb = true;
             }
             else {

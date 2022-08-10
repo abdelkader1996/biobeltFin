@@ -106,45 +106,6 @@ export class UPCModbus {
         success = true;
         break;
 
-      case "cdiff":
-        try {
-          //40435 40464
-          var res = await this.client.readHoldingRegisters(
-            correspondanceRegistres.co2PressInpAvg.adr,
-            29
-          );
-
-          //40435
-          this.diffusions.co2PresInpAvg = this.client.registerToFloat([
-            res[0],
-            res[1],
-          ]);
-          //40437
-          this.diffusions.co2PresOutAvg = this.client.registerToFloat([
-            res[2],
-            res[3],
-          ]);
-          //40451
-          this.diffusions.co2TempAvg = this.client.registerToFloat([
-            res[16],
-            res[17],
-          ]);
-          //40463
-          this.diffusions.co2PressOutComp = this.client.registerToFloat([
-            res[28],
-            res[29],
-          ]);
-
-          success = true;
-
-          break;
-        } catch (err) {
-          success = false;
-          error = err;
-
-          break;
-        }
-
       case "comunicationparam":
         success = true;
         break;
@@ -740,44 +701,6 @@ export class UPCModbus {
 
           break;
         }
-      case "cdiff-cyclique":
-        try {
-          //40435 40464
-          var res1 = await this.client.readHoldingRegisters(
-            correspondanceRegistres.co2PressInpAvg.adr,
-            29
-          );
-
-          //40435
-          this.diffusions.co2PresInpAvg = this.client.registerToFloat([
-            res1[0],
-            res1[1],
-          ]);
-          //40437
-          this.diffusions.co2PresOutAvg = this.client.registerToFloat([
-            res1[2],
-            res1[3],
-          ]);
-          //40451
-          this.diffusions.co2TempAvg = this.client.registerToFloat([
-            res1[16],
-            res1[17],
-          ]);
-          //40463
-          this.diffusions.co2PressOutComp = this.client.registerToFloat([
-            res1[28],
-            res1[29],
-          ]);
-
-          success = true;
-
-          break;
-        } catch (err) {
-          success = false;
-          error = err;
-
-          break;
-        }
 
       case "cdiff":
         try {
@@ -797,124 +720,10 @@ export class UPCModbus {
             .registerToString(tabname)
             .replace(/[^a-zA-Z0-9]/g, "");
 
-          if (mode != "modeTest") {
-            //on n'est pas en mode test
+          //on n'est pas en mode test
 
-            if (nameId != upcNameId && false) {
-              //changement d'UPC
-
-              if (
-                window.confirm(
-                  "Une intervention est en cours sur l'upc " +
-                    upcNameId +
-                    ". Voulez-vous néanmoins continuer sur l'upc " +
-                    nameId +
-                    "?"
-                )
-              ) {
-                if (
-                  window.confirm(
-                    "Voulez-vous terminer l'intervention ? (OK) ou l'abandonner ? (Annuler)"
-                  )
-                ) {
-                  return {
-                    success: true,
-                    object: "Terminer l'intervention en cours",
-                  };
-                } else {
-                  return {
-                    success: true,
-                    object: "Abandonner l'intervention en cours",
-                  };
-                }
-              } else {
-                alert(
-                  "Rapprochez-vous de l'upc " +
-                    upcNameId +
-                    " puis appuyez sur 'OK'."
-                );
-                return { success: true, object: "Se rapprocher de l'upc" };
-              }
-            } else {
-              this.general.co2FlowRefAdj = this.client.registerToFloat([
-                res1[17],
-                res1[18],
-              ]);
-
-              this.diffusions.upcDiffLvlAdj = res1[64];
-
-              //40150
-              var res2 = await this.client.readHoldingRegisters(
-                this.correspondancesRegistres.co2ResActAdj.adr,
-                1
-              );
-              this.reserves.co2ResActAdj = res2[0];
-
-              //40376 40464
-              var res3 = await this.client.readHoldingRegisters(
-                this.correspondancesRegistres.upcStatus.adr,
-                89
-              );
-
-              //40376
-              this.general.upcStatus = res3[0];
-
-              console.log("||||||||||||||||||||||||||||||||||||-");
-              console.log("upc status : ", this.general.upcStatus);
-
-              //40435
-              this.diffusions.co2PresInpAvg = this.client.registerToFloat([
-                res3[58],
-                res3[59],
-              ]);
-              //40437
-              this.diffusions.co2PresOutAvg = this.client.registerToFloat([
-                res3[60],
-                res3[61],
-              ]);
-
-              //40439 40440
-              this.diffusions.co2FlowAvg = this.client.registerToFloat([
-                res3[62],
-                res3[63],
-              ]);
-
-              //40451
-              this.diffusions.co2TempAvg = this.client.registerToFloat([
-                res3[75],
-                res3[76],
-              ]);
-
-              //40455 40456
-              this.diffusions.co2PressInpOffs = this.client.registerToFloat([
-                res3[79],
-                res3[80],
-              ]);
-
-              //40457 40458
-              this.diffusions.co2PressOutOffs = this.client.registerToFloat([
-                res3[81],
-                res3[82],
-              ]);
-
-              //40459 40460
-              this.diffusions.co2FlowOffs = this.client.registerToFloat([
-                res3[83],
-                res3[84],
-              ]);
-
-              //40463
-              this.diffusions.co2PressOutComp = this.client.registerToFloat([
-                res3[87],
-                res3[88],
-              ]);
-
-              this.success = true;
-
-              break;
-            }
+          if (false) {
           } else {
-            //on est en mode test
             this.general.co2FlowRefAdj = this.client.registerToFloat([
               res1[17],
               res1[18],
@@ -937,52 +746,91 @@ export class UPCModbus {
 
             //40376
             this.general.upcStatus = res3[0];
-            //40435
-            this.diffusions.co2PresInpAvg = this.client.registerToFloat([
-              res3[58],
-              res3[59],
-            ]);
-            //40437
-            this.diffusions.co2PresOutAvg = this.client.registerToFloat([
-              res3[60],
-              res3[61],
-            ]);
 
-            //40439 40440
+            console.log("||||||||||||||||||||||||||||||||||||-");
+            console.log("upc status : ", this.general.upcStatus);
+
+            //40451
+            this.diffusions.co2TempAvg = this.round(
+              this.client.registerToFloat([res3[75], res3[76]])
+            );
+
+            //40455 40456
+            this.diffusions.co2PressInpOffs = this.round(
+              this.client.registerToFloat([res3[79], res3[80]])
+            );
+
             this.diffusions.co2FlowAvg = this.client.registerToFloat([
               res3[63],
               res3[64],
             ]);
 
-            //40451
-            this.diffusions.co2TempAvg = this.client.registerToFloat([
-              res3[75],
-              res3[76],
-            ]);
-
-            //40455 40456
-            this.diffusions.co2PressInpOffs = this.client.registerToFloat([
-              res3[79],
-              res3[80],
-            ]);
-
             //40457 40458
-            this.diffusions.co2PressOutOffs = this.client.registerToFloat([
-              res3[81],
-              res3[82],
-            ]);
+            this.diffusions.co2PressOutOffs = this.round(
+              this.client.registerToFloat([res3[81], res3[82]])
+            );
 
             //40459 40460
-            this.diffusions.co2FlowOffs = this.client.registerToFloat([
-              res3[83],
-              res3[84],
-            ]);
+            this.diffusions.co2FlowOffs = this.round(
+              this.client.registerToFloat([res3[83], res3[84]])
+            );
 
             //40463
-            this.diffusions.co2PressOutComp = this.client.registerToFloat([
-              res3[87],
-              res3[88],
-            ]);
+            this.diffusions.co2PressOutComp = this.round(
+              this.client.registerToFloat([res3[87], res3[88]])
+            );
+
+            this.success = true;
+
+            break;
+          }
+        } catch (err) {
+          this.success = false;
+          error = err;
+
+          break;
+        }
+
+      case "cdiff-cyclique":
+        try {
+          if (false) {
+          } else {
+            console.log("lecture cycliqueeeee <<<<>>>>>");
+            //40376 40464
+            var res3 = await this.client.readHoldingRegisters(
+              this.correspondancesRegistres.upcStatus.adr,
+              89
+            );
+
+            //40376
+            this.general.upcStatus = res3[0];
+
+            console.log("||||||||||||||||||||||||||||||||||||-");
+            console.log("upc status : ", this.general.upcStatus);
+
+            //40435
+            this.diffusions.co2PresInpAvg = this.round(
+              this.client.registerToFloat([res3[59], res3[60]])
+            );
+            //40437
+            this.diffusions.co2PresOutAvg = this.round(
+              this.client.registerToFloat([res3[61], res3[62]])
+            );
+
+            //40439 40440
+            this.diffusions.co2FlowAvg = this.round(
+              this.client.registerToFloat([res3[63], res3[64]])
+            );
+
+            //40451
+            this.diffusions.co2TempAvg = this.round(
+              this.client.registerToFloat([res3[75], res3[76]])
+            );
+
+            //40463
+            this.diffusions.co2PressOutComp = this.round(
+              this.client.registerToFloat([res3[87], res3[88]])
+            );
 
             this.success = true;
 
@@ -1249,25 +1097,6 @@ export class UPCModbus {
 
             break;
           }
-        } catch (err) {
-          this.success = false;
-          error = err;
-
-          break;
-        }
-      case "cdiff":
-        console.log("on read statique page connection");
-        try {
-          var res1 = await this.client.readHoldingRegisters(
-            this.correspondancesRegistres.upcStatus.adr,
-            1
-          );
-          this.general.upcStatus = res1[0];
-
-          ////////////////////////////////////////////////:
-
-          this.success = true;
-          break;
         } catch (err) {
           this.success = false;
           error = err;
@@ -4021,6 +3850,10 @@ export class UPCModbus {
         },
       };
     });
+  }
+
+  round(x: number): number {
+    return Math.round(x * 10000) / 10000;
   }
 
   reset() {

@@ -37958,7 +37958,18 @@ var SynchroPage = /** @class */ (function () {
         this.sign = [];
         this.signOptions = ["+", "-"];
         this.intensityOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        this.frequencyOptions = ["Tous les jours", "Semaine", "Weekend", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
+        this.frequencyOptions = [
+            "Tous les jours",
+            "Semaine",
+            "Weekend",
+            "Lundi",
+            "Mardi",
+            "Mercredi",
+            "Jeudi",
+            "Vendredi",
+            "Samedi",
+            "Dimanche",
+        ];
         this.frequencyValue = ["7", "9", "8", "0", "1", "2", "3", "4", "5", "6"];
         this.colors = [];
         this.paDelay = [];
@@ -37989,7 +38000,8 @@ var SynchroPage = /** @class */ (function () {
         console.log("=========================================================================");
         this.global.connexionRequise = "UPC";
         console.log(" - Connexion requise :" + this.global.connexionRequise);
-        console.log(" - Connexion  actuel  (avant on read statique) :" + this.global.statutConnexion);
+        console.log(" - Connexion  actuel  (avant on read statique) :" +
+            this.global.statutConnexion);
         this.ConnecterUPC();
         this.Read();
         this.correspondancesRegistres = new _model_upcv3_correspondancesRegistres__WEBPACK_IMPORTED_MODULE_10__["CorrespondancesRegistres"]();
@@ -38012,7 +38024,7 @@ var SynchroPage = /** @class */ (function () {
                                 case 0:
                                     this.stored_ssid = stored_ssid;
                                     this.password_ssid = password;
-                                    //recuperer l ssid  +password 
+                                    //recuperer l ssid  +password
                                     console.log("acceuil , stored password" + password);
                                     console.log("acceuil , stored ssid" + stored_ssid);
                                     return [4 /*yield*/, WifiWizard2.getConnectedSSID()];
@@ -38021,36 +38033,45 @@ var SynchroPage = /** @class */ (function () {
                                     console.log("connected ssid: " + wifi);
                                     if (wifi != stored_ssid) {
                                         console.log("wifi diffrents :");
-                                        WifiWizard2.connect(stored_ssid, password).then(function () {
+                                        WifiWizard2.connect(stored_ssid, password)
+                                            .then(function () {
                                             //connexion reussi a l UPC  :
                                             console.log("connexion wifi up reussie :");
                                             _this.check = true;
                                             _this.global.statutConnexion = "UPC";
-                                            _this.global.onConnectModbus().then(function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                                            _this.global
+                                                .onConnectModbus()
+                                                .then(function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
                                                 return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                                                     console.log("accueil , connexion modbus reussie >> ");
                                                     this.connection_modbus = true;
                                                     this.isLoading = false;
-                                                    //on peut lire 
+                                                    //on peut lire
                                                     this.tryToRead = true;
                                                     return [2 /*return*/];
                                                 });
-                                            }); }).catch(function (err) {
+                                            }); })
+                                                .catch(function (err) {
                                                 console.log("accueil + connexion modbus échouée  ");
                                                 _this.isLoading = false;
                                                 _this.connection_modbus = false;
                                             });
-                                        }).catch(function () {
+                                        })
+                                            .catch(function () {
                                             console.log("connexion impossible a l'UPC");
                                         });
                                     }
                                     else {
-                                        this.global.onConnectModbus().then(function () {
+                                        this.global
+                                            .onConnectModbus()
+                                            .then(function () {
+                                            //on tente une connexion modbus pour déterminer si c'est un upc
                                             //connexion modbus réussie : c'est un upc
                                             console.log("accueil + connexion modbus reussie ");
                                             _this.connection_modbus = true;
                                             _this.isLoading = false;
-                                        }).catch(function (err) {
+                                        })
+                                            .catch(function (err) {
                                             console.log("accueil + connexion modbus échouée  ");
                                             _this.isLoading = false;
                                             _this.connection_modbus = false;
@@ -38084,18 +38105,20 @@ var SynchroPage = /** @class */ (function () {
         this.do = setInterval(function () {
             console.log("======================== cycle ================================");
             _this.checkConnectionWifi();
-            // en cas de perte de connexion 
+            // en cas de perte de connexion
             if (_this.current_ssid != _this.stored_ssid && _this.check) {
                 console.log("wifi diff >>>> ");
                 console.log("reconnexion  >>>> ");
-                //connecter au wifi 
+                //connecter au wifi
                 _this.ConnecterUPC();
             }
             if (_this.tryToRead) {
                 console.log("Try to read >");
                 // lecture statique :
                 _this.isLoading = true;
-                _this.global.upcmodbus.onReadStatique(_this.global.upcname, _this.global.mode, "synchro").then(function (res) {
+                _this.global.upcmodbus
+                    .onReadStatique(_this.global.upcname, _this.global.mode, "synchro")
+                    .then(function (res) {
                     if (res == true) {
                         _this.isLoading = false;
                         console.log(">  lecture reussi ");
@@ -38115,7 +38138,8 @@ var SynchroPage = /** @class */ (function () {
                         _this.global.lectureStatiqueEnCours = false;
                         _this.global.displayLoading = false;
                     }
-                }).catch(function (err) {
+                })
+                    .catch(function (err) {
                     _this.tryToRead = true;
                     _this.isLoading = false;
                     console.log("acceuil::erreur lecture");
@@ -38129,10 +38153,14 @@ var SynchroPage = /** @class */ (function () {
         var _this = this;
         if (variable.type == "int") {
             this.isLoading = true;
-            this.global.upcmodbus.client.setIntInHoldingRegister(variable.adr, variable.dim, value).then(function () {
+            this.global.upcmodbus.client
+                .setIntInHoldingRegister(variable.adr, variable.dim, value)
+                .then(function () {
                 console.log("accueil ::  ecriture reussie");
                 // lecture statique :
-                _this.global.upcmodbus.onReadStatique(_this.global.upcname, _this.global.mode, "synchro").then(function (res) {
+                _this.global.upcmodbus
+                    .onReadStatique(_this.global.upcname, _this.global.mode, "synchro")
+                    .then(function (res) {
                     if (res == true) {
                         _this.isLoading = false;
                         console.log("accueil:  lecture reussi ");
@@ -38148,23 +38176,29 @@ var SynchroPage = /** @class */ (function () {
                         _this.global.lectureStatiqueEnCours = false;
                         _this.global.displayLoading = false;
                     }
-                }).catch(function (err) {
+                })
+                    .catch(function (err) {
                     _this.isLoading = false;
                     console.log("acceuil::erreur lecture");
                     console.log(err);
                 });
                 //fin de lecture statique :
-            }).catch(function () {
+            })
+                .catch(function () {
                 _this.isLoading = false;
                 console.log("num piege ::écriture impossible");
             });
         }
         else {
             this.isLoading = true;
-            this.global.upcmodbus.client.setStringArrayInHoldingResgisters(variable.adr, value).then(function () {
+            this.global.upcmodbus.client
+                .setStringArrayInHoldingResgisters(variable.adr, value)
+                .then(function () {
                 console.log("accueil ::  ecriture reussie");
                 // lecture statique :
-                _this.global.upcmodbus.onReadStatique(_this.global.upcname, _this.global.mode, "synchro").then(function (res) {
+                _this.global.upcmodbus
+                    .onReadStatique(_this.global.upcname, _this.global.mode, "synchro")
+                    .then(function (res) {
                     if (res == true) {
                         _this.isLoading = false;
                         console.log("accueil:  lecture reussi ");
@@ -38180,13 +38214,15 @@ var SynchroPage = /** @class */ (function () {
                         _this.global.lectureStatiqueEnCours = false;
                         _this.global.displayLoading = false;
                     }
-                }).catch(function (err) {
+                })
+                    .catch(function (err) {
                     _this.isLoading = false;
                     console.log("acceuil::erreur lecture");
                     console.log(err);
                 });
                 //fin de lecture statique :
-            }).catch(function () {
+            })
+                .catch(function () {
                 _this.isLoading = false;
                 console.log("num piege ::écriture impossible");
             });
@@ -38195,15 +38231,19 @@ var SynchroPage = /** @class */ (function () {
     SynchroPage.prototype.onDiff = function () {
         var _this = this;
         this.ngZone.run(function () {
-            if (_this.colordif == 'light') {
-                _this.global.upcmodbus.client.setIntInHoldingRegister(40011, 1, 1).then(function (res) {
+            if (_this.colordif == "light") {
+                _this.global.upcmodbus.client
+                    .setIntInHoldingRegister(40011, 1, 1)
+                    .then(function (res) {
                     _this.global.upcmodbus.general.upcStatus = 7;
                     _this.colordif = "primary";
                     _this.cd.detectChanges();
                 });
             }
             else {
-                _this.global.upcmodbus.client.setIntInHoldingRegister(40011, 1, 0).then(function (res) {
+                _this.global.upcmodbus.client
+                    .setIntInHoldingRegister(40011, 1, 0)
+                    .then(function (res) {
                     _this.colordif = "light";
                     _this.global.upcmodbus.general.upcStatus = 0;
                     _this.cd.detectChanges();
@@ -38249,15 +38289,23 @@ var SynchroPage = /** @class */ (function () {
                         _this.typediff = "Mode CHECK Pressions";
                         _this.diffcolor = "warning";
                     }
+                    else if (status == 4) {
+                        _this.colorcheck = "primary";
+                        _this.colordis = "light";
+                        _this.colorplayfiff = "light";
+                        _this.colordif = "light";
+                        _this.typediff = "Diff. programmée ACTIF";
+                        _this.diffcolor = "warning";
+                    }
                     else {
                         _this.colorplayfiff = "primary";
                         _this.colordif = "light";
                         _this.colorcheck = "light";
                         _this.colordis = "light";
-                        _this.typediff = "Diff. programmée ACTIF";
+                        _this.typediff = "R1 et R2 vide";
                         _this.diffcolor = "primary";
                     }
-                    // 7 enable diff 0 disable 2 Adjust 
+                    // 7 enable diff 0 disable 2 Adjust
                     if (_this.global.upcmodbus.general.upcStatus == 7) {
                         _this.colordif = "primary";
                     }
@@ -38315,7 +38363,9 @@ var SynchroPage = /** @class */ (function () {
                     }
                     _this.currentDawnTime = _this.global.upcmodbus.diffHourSunrise;
                     _this.pAubeStart.push(_this.secondsToHoursMinutes(_this.currentDawnTime + _this.global.upcmodbus.diffCo2Sunrise.offset));
-                    _this.pAubeEnd.push(_this.secondsToHoursMinutes(_this.currentDawnTime + _this.global.upcmodbus.diffCo2Sunrise.offset + _this.global.upcmodbus.diffCo2Sunrise.duration));
+                    _this.pAubeEnd.push(_this.secondsToHoursMinutes(_this.currentDawnTime +
+                        _this.global.upcmodbus.diffCo2Sunrise.offset +
+                        _this.global.upcmodbus.diffCo2Sunrise.duration));
                     _this.pcDelay.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Sunset.offset));
                     _this.pcDuration.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.diffCo2Sunset.duration));
                     _this.intensity.push(_this.global.upcmodbus.diffCo2Sunset.intensity);
@@ -38327,7 +38377,9 @@ var SynchroPage = /** @class */ (function () {
                     }
                     _this.currentDuskTime = _this.global.upcmodbus.diffHourSunset;
                     _this.pCrepusculeStart.push(_this.secondsToHoursMinutes(_this.currentDuskTime + _this.global.upcmodbus.diffCo2Sunset.offset));
-                    _this.pCrepusculeEnd.push(_this.secondsToHoursMinutes(_this.currentDuskTime + _this.global.upcmodbus.diffCo2Sunset.offset + _this.global.upcmodbus.diffCo2Sunset.duration));
+                    _this.pCrepusculeEnd.push(_this.secondsToHoursMinutes(_this.currentDuskTime +
+                        _this.global.upcmodbus.diffCo2Sunset.offset +
+                        _this.global.upcmodbus.diffCo2Sunset.duration));
                 });
                 this.drawChartjs();
                 this.fillTab();
@@ -38376,11 +38428,11 @@ var SynchroPage = /** @class */ (function () {
         var hours = parseInt(splitted[0]) * 3600;
         var minutes = parseInt(splitted[1]) * 60;
         var res = hours + minutes;
-        return (res);
+        return res;
     };
     SynchroPage.prototype.positiveToNegative = function (pos) {
         var res = -Math.abs(pos);
-        return (res);
+        return res;
     };
     SynchroPage.prototype.convertDaysCode = function (dc) {
         var res;
@@ -38460,8 +38512,10 @@ var SynchroPage = /** @class */ (function () {
             var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.global.upcmodbus.client.readHoldingRegisters(40068, 100).then(function (res) {
-                            //programme 1 
+                    case 0: return [4 /*yield*/, this.global.upcmodbus.client
+                            .readHoldingRegisters(40068, 100)
+                            .then(function (res) {
+                            //programme 1
                             var tab = [res[4], res[5]];
                             _this.pStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.client.registerToUint32(tab)));
                             var tab = [res[6], res[7]];
@@ -38548,18 +38602,41 @@ var SynchroPage = /** @class */ (function () {
                             _this.paDuration.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.client.registerToUint32(tab)));
                             tab = [res[69]];
                             _this.intensity.push(_this.global.upcmodbus.client.registerToUint32(tab));
-                            //programme aube sign                      
-                            if (_this.global.upcmodbus.client.registerToUint32([res[64], res[65]]) >= 0) {
+                            //programme aube sign
+                            if (_this.global.upcmodbus.client.registerToUint32([res[64], res[65]]) >=
+                                0) {
                                 _this.sign.push("+");
-                                _this.currentDawnTime = _this.global.upcmodbus.client.registerToUint32([res[0], res[1]]);
-                                _this.pAubeStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.client.registerToUint32([res[0], res[1]]) + _this.global.upcmodbus.client.registerToUint32([res[64], res[65]])));
-                                _this.pAubeEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.client.registerToUint32([res[0], res[1]]) + _this.global.upcmodbus.client.registerToUint32([res[64], res[65]]) + _this.global.upcmodbus.client.registerToUint32([res[66], res[67]])));
+                                _this.currentDawnTime =
+                                    _this.global.upcmodbus.client.registerToUint32([res[0], res[1]]);
+                                _this.pAubeStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.client.registerToUint32([
+                                    res[0],
+                                    res[1],
+                                ]) +
+                                    _this.global.upcmodbus.client.registerToUint32([
+                                        res[64],
+                                        res[65],
+                                    ])));
+                                _this.pAubeEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.client.registerToUint32([
+                                    res[0],
+                                    res[1],
+                                ]) +
+                                    _this.global.upcmodbus.client.registerToUint32([
+                                        res[64],
+                                        res[65],
+                                    ]) +
+                                    _this.global.upcmodbus.client.registerToUint32([
+                                        res[66],
+                                        res[67],
+                                    ])));
                             }
                             else {
                                 _this.sign.push("-");
-                                _this.currentDawnTime = _this.global.upcmodbus.client.registerToUint32([res[0], res[1]]);
+                                _this.currentDawnTime =
+                                    _this.global.upcmodbus.client.registerToUint32([res[0], res[1]]);
                                 _this.pAubeStart[0] = _this.secondsToHoursMinutes(_this.currentDawnTime + _this.hoursMinutesToSeconds(_this.paDelay[0]));
-                                _this.pAubeEnd[0] = _this.secondsToHoursMinutes(_this.currentDawnTime + _this.hoursMinutesToSeconds(_this.paDelay[0]) + _this.hoursMinutesToSeconds(_this.paDuration[0]));
+                                _this.pAubeEnd[0] = _this.secondsToHoursMinutes(_this.currentDawnTime +
+                                    _this.hoursMinutesToSeconds(_this.paDelay[0]) +
+                                    _this.hoursMinutesToSeconds(_this.paDuration[0]));
                             }
                             //programme crepuscule
                             tab = [res[70], res[71]];
@@ -38569,24 +38646,57 @@ var SynchroPage = /** @class */ (function () {
                             tab = [res[75]];
                             _this.intensity.push(_this.global.upcmodbus.client.registerToUint32(tab));
                             //programme crepuscule sign
-                            if (_this.global.upcmodbus.client.registerToUint32([res[70], res[71]]) >= 0) {
+                            if (_this.global.upcmodbus.client.registerToUint32([res[70], res[71]]) >=
+                                0) {
                                 _this.sign.push("+");
-                                _this.currentDuskTime = _this.global.upcmodbus.client.registerToUint32([res[2], res[3]]);
-                                _this.pCrepusculeStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.client.registerToUint32([res[2], res[3]]) + _this.global.upcmodbus.client.registerToUint32([res[70], res[71]])));
-                                _this.pCrepusculeEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.client.registerToUint32([res[2], res[3]]) + _this.global.upcmodbus.client.registerToUint32([res[70], res[71]]) + _this.global.upcmodbus.client.registerToUint32([res[72], res[73]])));
+                                _this.currentDuskTime =
+                                    _this.global.upcmodbus.client.registerToUint32([res[2], res[3]]);
+                                _this.pCrepusculeStart.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.client.registerToUint32([
+                                    res[2],
+                                    res[3],
+                                ]) +
+                                    _this.global.upcmodbus.client.registerToUint32([
+                                        res[70],
+                                        res[71],
+                                    ])));
+                                _this.pCrepusculeEnd.push(_this.secondsToHoursMinutes(_this.global.upcmodbus.client.registerToUint32([
+                                    res[2],
+                                    res[3],
+                                ]) +
+                                    _this.global.upcmodbus.client.registerToUint32([
+                                        res[70],
+                                        res[71],
+                                    ]) +
+                                    _this.global.upcmodbus.client.registerToUint32([
+                                        res[72],
+                                        res[73],
+                                    ])));
                             }
                             else {
                                 _this.sign.push("-");
-                                _this.currentDuskTime = _this.global.upcmodbus.client.registerToUint32([res[2], res[3]]);
-                                _this.pCrepusculeStart[0] = _this.secondsToHoursMinutes(_this.global.upcmodbus.client.registerToUint32([res[2], res[3]]) + _this.global.upcmodbus.client.registerToUint32([res[70], res[71]]));
-                                _this.pCrepusculeEnd[0] = _this.secondsToHoursMinutes(_this.global.upcmodbus.client.registerToUint32([res[2], res[3]]) + _this.global.upcmodbus.client.registerToUint32([res[70], res[71]]) + _this.global.upcmodbus.client.registerToUint32([res[72], res[73]]));
+                                _this.currentDuskTime =
+                                    _this.global.upcmodbus.client.registerToUint32([res[2], res[3]]);
+                                _this.pCrepusculeStart[0] = _this.secondsToHoursMinutes(_this.global.upcmodbus.client.registerToUint32([res[2], res[3]]) +
+                                    _this.global.upcmodbus.client.registerToUint32([
+                                        res[70],
+                                        res[71],
+                                    ]));
+                                _this.pCrepusculeEnd[0] = _this.secondsToHoursMinutes(_this.global.upcmodbus.client.registerToUint32([res[2], res[3]]) +
+                                    _this.global.upcmodbus.client.registerToUint32([
+                                        res[70],
+                                        res[71],
+                                    ]) +
+                                    _this.global.upcmodbus.client.registerToUint32([
+                                        res[72],
+                                        res[73],
+                                    ]));
                             }
                             _this.drawChartjs();
                             setTimeout(function () {
                                 _this.finishRead = true;
                             }, 1000);
-                        }).catch(function (err) {
-                        })];
+                        })
+                            .catch(function (err) { })];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];
@@ -38595,16 +38705,17 @@ var SynchroPage = /** @class */ (function () {
         }); }, 5000);
     };
     /********
-     parameters :
-     - start
-     - duration
-     - frequency
-     - intensity
-     
-    ********/
+   parameters :
+   - start
+   - duration
+   - frequency
+   - intensity
+   
+  ********/
     SynchroPage.prototype.onEdit = function (variable, parameterToEdit, value) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                //set UPC params
                 switch (parameterToEdit) {
                     case "start":
                         this.ecrir(variable, this.hoursMinutesToSeconds(value));
@@ -38624,12 +38735,12 @@ var SynchroPage = /** @class */ (function () {
         });
     };
     /********
-     parameters :
-    - offset
-    - duration
-    - intensity
-    
-    ********/
+       parameters :
+      - offset
+      - duration
+      - intensity
+      
+      ********/
     SynchroPage.prototype.onEditSunrise = function (variable, parameterToEdit, value) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
@@ -38658,12 +38769,12 @@ var SynchroPage = /** @class */ (function () {
         });
     };
     /********
-     parameters :
-    - offset
-    - duration
-    - intensity
-    
-    ********/
+       parameters :
+      - offset
+      - duration
+      - intensity
+      
+      ********/
     SynchroPage.prototype.onEditSunset = function (variable, parameterToEdit, value) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             var _a;
@@ -38790,39 +38901,54 @@ var SynchroPage = /** @class */ (function () {
             [stringToIntStartProgrammes[8], stringToIntEndProgrammes[8]],
             [stringToIntStartProgrammes[9], stringToIntEndProgrammes[9]],
             [stringToIntpAS, stringToIntpAE],
-            [stringToIntpCS, stringToIntpCE]
+            [stringToIntpCS, stringToIntpCE],
         ];
-        var ctx = 'myChart';
+        var ctx = "myChart";
         var myChart = new chart_js__WEBPACK_IMPORTED_MODULE_7__["Chart"](ctx, {
-            type: 'horizontalBar',
+            type: "horizontalBar",
             data: {
-                labels: ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10", "Aube", "Crepuscule"],
+                labels: [
+                    "P1",
+                    "P2",
+                    "P3",
+                    "P4",
+                    "P5",
+                    "P6",
+                    "P7",
+                    "P8",
+                    "P9",
+                    "P10",
+                    "Aube",
+                    "Crepuscule",
+                ],
                 datasets: [
                     {
                         backgroundColor: barColors,
                         data: data,
                     },
-                ]
+                ],
             },
             options: {
                 legend: {
                     display: false,
                 },
                 /*title: {
-                  display: true,
-                  text: 'Aube Crépuscule'
-                },*/
+                    display: true,
+                    text: 'Aube Crépuscule'
+                  },*/
                 scales: {
-                    xAxes: [{
+                    xAxes: [
+                        {
                             ticks: {
                                 beginAtZero: true,
                                 max: 24,
-                                stepSize: 6
+                                stepSize: 6,
                             },
-                            position: 'top'
-                        }]
-                }
-            }
+                            position: "top",
+                        },
+                    ],
+                },
+            },
         });
     };
     SynchroPage.prototype.startstop = function () {
@@ -38843,7 +38969,9 @@ var SynchroPage = /** @class */ (function () {
         var _this = this;
         var d = new Date();
         this.global.logs.push(this.global.msToTime(d.getTime()) + " - appel on check");
-        this.global.onWriteEnable(this.correspondancesRegistres.upcMode, 3).then(function () {
+        this.global
+            .onWriteEnable(this.correspondancesRegistres.upcMode, 3)
+            .then(function () {
             _this.colorcheck = "primary";
             _this.colordis = "light";
             _this.colorplayfiff = "light";
@@ -38875,7 +39003,7 @@ var SynchroPage = /** @class */ (function () {
     ]; };
     SynchroPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-            selector: 'app-synchro',
+            selector: "app-synchro",
             template: __webpack_require__(/*! raw-loader!./synchro.page.html */ "./node_modules/raw-loader/index.js!./src/app/synchro/synchro.page.html"),
             styles: [__webpack_require__(/*! ./synchro.page.scss */ "./src/app/synchro/synchro.page.scss")]
         }),
@@ -38883,8 +39011,10 @@ var SynchroPage = /** @class */ (function () {
             _api_upcv3service_service__WEBPACK_IMPORTED_MODULE_2__["Upcv3serviceService"],
             _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["Platform"],
             _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"],
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"], _ionic_native_network_ngx__WEBPACK_IMPORTED_MODULE_4__["Network"],
-            _ionic_native_hotspot_ngx__WEBPACK_IMPORTED_MODULE_6__["Hotspot"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"],
+            _ionic_native_network_ngx__WEBPACK_IMPORTED_MODULE_4__["Network"],
+            _ionic_native_hotspot_ngx__WEBPACK_IMPORTED_MODULE_6__["Hotspot"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"],
             _api_global_service__WEBPACK_IMPORTED_MODULE_8__["GlobalService"],
             _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"],
             _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["Events"],

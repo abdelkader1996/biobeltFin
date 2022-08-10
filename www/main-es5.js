@@ -6137,87 +6137,42 @@ var UPCModbus = /** @class */ (function () {
     };
     UPCModbus.prototype.onReadCyclique = function (upcNameId, mode, page) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var success, error, correspondanceRegistres, _a, res, err_1;
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        correspondanceRegistres = new _correspondancesRegistres__WEBPACK_IMPORTED_MODULE_7__["CorrespondancesRegistres"]();
-                        _a = page;
-                        switch (_a) {
-                            case "interventionceinture": return [3 /*break*/, 1];
-                            case "namepiege": return [3 /*break*/, 2];
-                            case "cdiff": return [3 /*break*/, 3];
-                            case "comunicationparam": return [3 /*break*/, 6];
-                            case "addbottleceint": return [3 /*break*/, 7];
-                            case "synchro": return [3 /*break*/, 8];
-                            case "alarmparam": return [3 /*break*/, 9];
-                        }
-                        return [3 /*break*/, 10];
-                    case 1:
+            var success, error, correspondanceRegistres;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                correspondanceRegistres = new _correspondancesRegistres__WEBPACK_IMPORTED_MODULE_7__["CorrespondancesRegistres"]();
+                switch (page) {
+                    case "interventionceinture":
                         success = true;
-                        return [3 /*break*/, 10];
-                    case 2:
+                        break;
+                    case "namepiege":
                         success = true;
-                        return [3 /*break*/, 10];
-                    case 3:
-                        _b.trys.push([3, 5, , 6]);
-                        return [4 /*yield*/, this.client.readHoldingRegisters(correspondanceRegistres.co2PressInpAvg.adr, 29)];
-                    case 4:
-                        res = _b.sent();
-                        //40435
-                        this.diffusions.co2PresInpAvg = this.client.registerToFloat([
-                            res[0],
-                            res[1],
-                        ]);
-                        //40437
-                        this.diffusions.co2PresOutAvg = this.client.registerToFloat([
-                            res[2],
-                            res[3],
-                        ]);
-                        //40451
-                        this.diffusions.co2TempAvg = this.client.registerToFloat([
-                            res[16],
-                            res[17],
-                        ]);
-                        //40463
-                        this.diffusions.co2PressOutComp = this.client.registerToFloat([
-                            res[28],
-                            res[29],
-                        ]);
+                        break;
+                    case "comunicationparam":
                         success = true;
-                        return [3 /*break*/, 10];
-                    case 5:
-                        err_1 = _b.sent();
-                        success = false;
-                        error = err_1;
-                        return [3 /*break*/, 10];
-                    case 6:
+                        break;
+                    case "addbottleceint":
                         success = true;
-                        return [3 /*break*/, 10];
-                    case 7:
+                        break;
+                    case "synchro":
                         success = true;
-                        return [3 /*break*/, 10];
-                    case 8:
+                        break;
+                    case "alarmparam":
                         success = true;
-                        return [3 /*break*/, 10];
-                    case 9:
-                        success = true;
-                        return [3 /*break*/, 10];
-                    case 10:
-                        if (success == true) {
-                            return [2 /*return*/, true];
-                        }
-                        else {
-                            return [2 /*return*/, error];
-                        }
-                        return [2 /*return*/];
+                        break;
                 }
+                if (success == true) {
+                    return [2 /*return*/, true];
+                }
+                else {
+                    return [2 /*return*/, error];
+                }
+                return [2 /*return*/];
             });
         });
     };
     UPCModbus.prototype.onReadStatique = function (upcNameId, mode, page) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var success, error, correspondanceRegistres, opt, _a, res1, res2, res2, err_2, res1, tabname, i, nameId, res, res, res, err_3, res1, tabname, i, nameId, res, res, res, err_4, res1, tabname, i, nameId, res, res, res, err_5, res1, err_6, res1, tabname, i, nameId, res2, res3, res2, res3, err_7, res1, tabname, i, nameId, tabMdmName, i, tabMdmPass, i, tabssid, i, tabpassword, i, res2, taburl, i, tabapnuser, i, tabapnpass, i, res3, tabapn2, i, tabMdmName, i, tabMdmPass, i, tabssid, i, tabpassword, i, res2, taburl, i, tabapnuser, i, tabapnpass, i, res3, tabapn2, i, err_8, res1, err_9, res1, res1, err_10, res1, tabname, i, nameId, res2, res3, res4, tabB11, i, tabB12, i, tabB13, i, tabB14, i, tabB15, i, tabB16, i, tabB17, i, tabB18, i, tabB19, i, tabB21, i, tabB22, i, tabB23, i, tabB24, i, tabB25, i, tabB26, i, tabB27, i, tabB28, i, tabB29, i, res2, res3, res4, tabB11, i, tabB12, i, tabB13, i, tabB14, i, tabB15, i, tabB16, i, tabB17, i, tabB18, i, tabB19, i, tabB21, i, tabB22, i, tabB23, i, tabB24, i, tabB25, i, tabB26, i, tabB27, i, tabB28, i, tabB29, i, err_11, res1, tabname, i, nameId, res, res, res, err_12;
+            var success, error, correspondanceRegistres, opt, _a, res1, res2, res2, err_1, res1, tabname, i, nameId, res, res, res, err_2, res1, tabname, i, nameId, res, res, res, err_3, res1, tabname, i, nameId, res, res, res, err_4, res1, tabname, i, nameId, res2, res3, err_5, res3, err_6, res1, tabname, i, nameId, tabMdmName, i, tabMdmPass, i, tabssid, i, tabpassword, i, res2, taburl, i, tabapnuser, i, tabapnpass, i, res3, tabapn2, i, tabMdmName, i, tabMdmPass, i, tabssid, i, tabpassword, i, res2, taburl, i, tabapnuser, i, tabapnpass, i, res3, tabapn2, i, err_7, res1, res1, err_8, res1, tabname, i, nameId, res2, res3, res4, tabB11, i, tabB12, i, tabB13, i, tabB14, i, tabB15, i, tabB16, i, tabB17, i, tabB18, i, tabB19, i, tabB21, i, tabB22, i, tabB23, i, tabB24, i, tabB25, i, tabB26, i, tabB27, i, tabB28, i, tabB29, i, res2, res3, res4, tabB11, i, tabB12, i, tabB13, i, tabB14, i, tabB15, i, tabB16, i, tabB17, i, tabB18, i, tabB19, i, tabB21, i, tabB22, i, tabB23, i, tabB24, i, tabB25, i, tabB26, i, tabB27, i, tabB28, i, tabB29, i, err_9, res1, tabname, i, nameId, res, res, res, err_10;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -6238,15 +6193,14 @@ var UPCModbus = /** @class */ (function () {
                             case "interventionceinture": return [3 /*break*/, 6];
                             case "namepiege": return [3 /*break*/, 20];
                             case "namepiege": return [3 /*break*/, 35];
-                            case "cdiff-cyclique": return [3 /*break*/, 50];
-                            case "cdiff": return [3 /*break*/, 53];
-                            case "comunicationparam": return [3 /*break*/, 64];
-                            case "cdiff": return [3 /*break*/, 75];
-                            case "connection": return [3 /*break*/, 79];
-                            case "addbottleceint": return [3 /*break*/, 84];
-                            case "alarmparam": return [3 /*break*/, 97];
+                            case "cdiff": return [3 /*break*/, 50];
+                            case "cdiff-cyclique": return [3 /*break*/, 57];
+                            case "comunicationparam": return [3 /*break*/, 62];
+                            case "connection": return [3 /*break*/, 73];
+                            case "addbottleceint": return [3 /*break*/, 78];
+                            case "alarmparam": return [3 /*break*/, 91];
                         }
-                        return [3 /*break*/, 111];
+                        return [3 /*break*/, 105];
                     case 1:
                         _b.trys.push([1, 5, , 6]);
                         console.log("page programmation lire varibale modbus ");
@@ -6486,13 +6440,13 @@ var UPCModbus = /** @class */ (function () {
                         this.general.upcStatus = this.client.registerToUint32([res2[0]]);
                         //alert("success")
                         this.success = true;
-                        return [3 /*break*/, 111];
+                        return [3 /*break*/, 105];
                     case 5:
-                        err_2 = _b.sent();
+                        err_1 = _b.sent();
                         alert("catch lecture statique  page programmation");
                         success = false;
-                        error = err_2;
-                        return [3 /*break*/, 111];
+                        error = err_1;
+                        return [3 /*break*/, 105];
                     case 6:
                         _b.trys.push([6, 19, , 20]);
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcNameId.adr, 15)];
@@ -6521,7 +6475,7 @@ var UPCModbus = /** @class */ (function () {
                     case 9:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 111];
+                        return [3 /*break*/, 105];
                     case 10: return [3 /*break*/, 12];
                     case 11:
                         alert("Rapprochez-vous de l'upc " +
@@ -6539,7 +6493,7 @@ var UPCModbus = /** @class */ (function () {
                     case 14:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 111];
+                        return [3 /*break*/, 105];
                     case 15: return [3 /*break*/, 18];
                     case 16:
                         this.nameId = nameId;
@@ -6551,13 +6505,13 @@ var UPCModbus = /** @class */ (function () {
                     case 17:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 111];
+                        return [3 /*break*/, 105];
                     case 18: return [3 /*break*/, 20];
                     case 19:
-                        err_3 = _b.sent();
+                        err_2 = _b.sent();
                         this.success = false;
-                        error = err_3;
-                        return [3 /*break*/, 111];
+                        error = err_2;
+                        return [3 /*break*/, 105];
                     case 20:
                         console.log("mod bus name piege ");
                         _b.label = 21;
@@ -6589,7 +6543,7 @@ var UPCModbus = /** @class */ (function () {
                     case 24:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 111];
+                        return [3 /*break*/, 105];
                     case 25: return [3 /*break*/, 27];
                     case 26:
                         alert("Rapprochez-vous de l'upc " +
@@ -6607,7 +6561,7 @@ var UPCModbus = /** @class */ (function () {
                     case 29:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 111];
+                        return [3 /*break*/, 105];
                     case 30: return [3 /*break*/, 33];
                     case 31:
                         this.nameId = nameId;
@@ -6619,13 +6573,13 @@ var UPCModbus = /** @class */ (function () {
                     case 32:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 111];
+                        return [3 /*break*/, 105];
                     case 33: return [3 /*break*/, 35];
                     case 34:
-                        err_4 = _b.sent();
+                        err_3 = _b.sent();
                         this.success = false;
-                        error = err_4;
-                        return [3 /*break*/, 111];
+                        error = err_3;
+                        return [3 /*break*/, 105];
                     case 35:
                         console.log("mod bus name piege ");
                         _b.label = 36;
@@ -6657,7 +6611,7 @@ var UPCModbus = /** @class */ (function () {
                     case 39:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 111];
+                        return [3 /*break*/, 105];
                     case 40: return [3 /*break*/, 42];
                     case 41:
                         alert("Rapprochez-vous de l'upc " +
@@ -6675,7 +6629,7 @@ var UPCModbus = /** @class */ (function () {
                     case 44:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 111];
+                        return [3 /*break*/, 105];
                     case 45: return [3 /*break*/, 48];
                     case 46:
                         this.nameId = nameId;
@@ -6687,49 +6641,17 @@ var UPCModbus = /** @class */ (function () {
                     case 47:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 111];
+                        return [3 /*break*/, 105];
                     case 48: return [3 /*break*/, 50];
                     case 49:
-                        err_5 = _b.sent();
+                        err_4 = _b.sent();
                         this.success = false;
-                        error = err_5;
-                        return [3 /*break*/, 111];
+                        error = err_4;
+                        return [3 /*break*/, 105];
                     case 50:
-                        _b.trys.push([50, 52, , 53]);
-                        return [4 /*yield*/, this.client.readHoldingRegisters(correspondanceRegistres.co2PressInpAvg.adr, 29)];
-                    case 51:
-                        res1 = _b.sent();
-                        //40435
-                        this.diffusions.co2PresInpAvg = this.client.registerToFloat([
-                            res1[0],
-                            res1[1],
-                        ]);
-                        //40437
-                        this.diffusions.co2PresOutAvg = this.client.registerToFloat([
-                            res1[2],
-                            res1[3],
-                        ]);
-                        //40451
-                        this.diffusions.co2TempAvg = this.client.registerToFloat([
-                            res1[16],
-                            res1[17],
-                        ]);
-                        //40463
-                        this.diffusions.co2PressOutComp = this.client.registerToFloat([
-                            res1[28],
-                            res1[29],
-                        ]);
-                        success = true;
-                        return [3 /*break*/, 111];
-                    case 52:
-                        err_6 = _b.sent();
-                        success = false;
-                        error = err_6;
-                        return [3 /*break*/, 111];
-                    case 53:
-                        _b.trys.push([53, 63, , 64]);
+                        _b.trys.push([50, 56, , 57]);
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcNameId.adr, 65)];
-                    case 54:
+                    case 51:
                         res1 = _b.sent();
                         tabname = [];
                         for (i = 0; i < 10; i++) {
@@ -6738,162 +6660,82 @@ var UPCModbus = /** @class */ (function () {
                         nameId = this.client
                             .registerToString(tabname)
                             .replace(/[^a-zA-Z0-9]/g, "");
-                        if (!(mode != "modeTest")) return [3 /*break*/, 59];
-                        if (!(nameId != upcNameId && false)) return [3 /*break*/, 55];
-                        //changement d'UPC
-                        if (window.confirm("Une intervention est en cours sur l'upc " +
-                            upcNameId +
-                            ". Voulez-vous néanmoins continuer sur l'upc " +
-                            nameId +
-                            "?")) {
-                            if (window.confirm("Voulez-vous terminer l'intervention ? (OK) ou l'abandonner ? (Annuler)")) {
-                                return [2 /*return*/, {
-                                        success: true,
-                                        object: "Terminer l'intervention en cours",
-                                    }];
-                            }
-                            else {
-                                return [2 /*return*/, {
-                                        success: true,
-                                        object: "Abandonner l'intervention en cours",
-                                    }];
-                            }
-                        }
-                        else {
-                            alert("Rapprochez-vous de l'upc " +
-                                upcNameId +
-                                " puis appuyez sur 'OK'.");
-                            return [2 /*return*/, { success: true, object: "Se rapprocher de l'upc" }];
-                        }
-                        return [3 /*break*/, 58];
-                    case 55:
+                        if (true) return [3 /*break*/, 52];
+                        return [3 /*break*/, 55];
+                    case 52:
                         this.general.co2FlowRefAdj = this.client.registerToFloat([
                             res1[17],
                             res1[18],
                         ]);
                         this.diffusions.upcDiffLvlAdj = res1[64];
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.co2ResActAdj.adr, 1)];
-                    case 56:
+                    case 53:
                         res2 = _b.sent();
                         this.reserves.co2ResActAdj = res2[0];
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcStatus.adr, 89)];
+                    case 54:
+                        res3 = _b.sent();
+                        //40376
+                        this.general.upcStatus = res3[0];
+                        console.log("||||||||||||||||||||||||||||||||||||-");
+                        console.log("upc status : ", this.general.upcStatus);
+                        //40451
+                        this.diffusions.co2TempAvg = this.round(this.client.registerToFloat([res3[75], res3[76]]));
+                        //40455 40456
+                        this.diffusions.co2PressInpOffs = this.round(this.client.registerToFloat([res3[79], res3[80]]));
+                        this.diffusions.co2FlowAvg = this.client.registerToFloat([
+                            res3[63],
+                            res3[64],
+                        ]);
+                        //40457 40458
+                        this.diffusions.co2PressOutOffs = this.round(this.client.registerToFloat([res3[81], res3[82]]));
+                        //40459 40460
+                        this.diffusions.co2FlowOffs = this.round(this.client.registerToFloat([res3[83], res3[84]]));
+                        //40463
+                        this.diffusions.co2PressOutComp = this.round(this.client.registerToFloat([res3[87], res3[88]]));
+                        this.success = true;
+                        return [3 /*break*/, 105];
+                    case 55: return [3 /*break*/, 57];
+                    case 56:
+                        err_5 = _b.sent();
+                        this.success = false;
+                        error = err_5;
+                        return [3 /*break*/, 105];
                     case 57:
+                        _b.trys.push([57, 61, , 62]);
+                        if (true) return [3 /*break*/, 58];
+                        return [3 /*break*/, 60];
+                    case 58:
+                        console.log("lecture cycliqueeeee <<<<>>>>>");
+                        return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcStatus.adr, 89)];
+                    case 59:
                         res3 = _b.sent();
                         //40376
                         this.general.upcStatus = res3[0];
                         console.log("||||||||||||||||||||||||||||||||||||-");
                         console.log("upc status : ", this.general.upcStatus);
                         //40435
-                        this.diffusions.co2PresInpAvg = this.client.registerToFloat([
-                            res3[58],
-                            res3[59],
-                        ]);
+                        this.diffusions.co2PresInpAvg = this.round(this.client.registerToFloat([res3[59], res3[60]]));
                         //40437
-                        this.diffusions.co2PresOutAvg = this.client.registerToFloat([
-                            res3[60],
-                            res3[61],
-                        ]);
+                        this.diffusions.co2PresOutAvg = this.round(this.client.registerToFloat([res3[61], res3[62]]));
                         //40439 40440
-                        this.diffusions.co2FlowAvg = this.client.registerToFloat([
-                            res3[62],
-                            res3[63],
-                        ]);
+                        this.diffusions.co2FlowAvg = this.round(this.client.registerToFloat([res3[63], res3[64]]));
                         //40451
-                        this.diffusions.co2TempAvg = this.client.registerToFloat([
-                            res3[75],
-                            res3[76],
-                        ]);
-                        //40455 40456
-                        this.diffusions.co2PressInpOffs = this.client.registerToFloat([
-                            res3[79],
-                            res3[80],
-                        ]);
-                        //40457 40458
-                        this.diffusions.co2PressOutOffs = this.client.registerToFloat([
-                            res3[81],
-                            res3[82],
-                        ]);
-                        //40459 40460
-                        this.diffusions.co2FlowOffs = this.client.registerToFloat([
-                            res3[83],
-                            res3[84],
-                        ]);
+                        this.diffusions.co2TempAvg = this.round(this.client.registerToFloat([res3[75], res3[76]]));
                         //40463
-                        this.diffusions.co2PressOutComp = this.client.registerToFloat([
-                            res3[87],
-                            res3[88],
-                        ]);
+                        this.diffusions.co2PressOutComp = this.round(this.client.registerToFloat([res3[87], res3[88]]));
                         this.success = true;
-                        return [3 /*break*/, 111];
-                    case 58: return [3 /*break*/, 62];
-                    case 59:
-                        //on est en mode test
-                        this.general.co2FlowRefAdj = this.client.registerToFloat([
-                            res1[17],
-                            res1[18],
-                        ]);
-                        this.diffusions.upcDiffLvlAdj = res1[64];
-                        return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.co2ResActAdj.adr, 1)];
-                    case 60:
-                        res2 = _b.sent();
-                        this.reserves.co2ResActAdj = res2[0];
-                        return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcStatus.adr, 89)];
+                        return [3 /*break*/, 105];
+                    case 60: return [3 /*break*/, 62];
                     case 61:
-                        res3 = _b.sent();
-                        //40376
-                        this.general.upcStatus = res3[0];
-                        //40435
-                        this.diffusions.co2PresInpAvg = this.client.registerToFloat([
-                            res3[58],
-                            res3[59],
-                        ]);
-                        //40437
-                        this.diffusions.co2PresOutAvg = this.client.registerToFloat([
-                            res3[60],
-                            res3[61],
-                        ]);
-                        //40439 40440
-                        this.diffusions.co2FlowAvg = this.client.registerToFloat([
-                            res3[63],
-                            res3[64],
-                        ]);
-                        //40451
-                        this.diffusions.co2TempAvg = this.client.registerToFloat([
-                            res3[75],
-                            res3[76],
-                        ]);
-                        //40455 40456
-                        this.diffusions.co2PressInpOffs = this.client.registerToFloat([
-                            res3[79],
-                            res3[80],
-                        ]);
-                        //40457 40458
-                        this.diffusions.co2PressOutOffs = this.client.registerToFloat([
-                            res3[81],
-                            res3[82],
-                        ]);
-                        //40459 40460
-                        this.diffusions.co2FlowOffs = this.client.registerToFloat([
-                            res3[83],
-                            res3[84],
-                        ]);
-                        //40463
-                        this.diffusions.co2PressOutComp = this.client.registerToFloat([
-                            res3[87],
-                            res3[88],
-                        ]);
-                        this.success = true;
-                        return [3 /*break*/, 111];
-                    case 62: return [3 /*break*/, 64];
-                    case 63:
-                        err_7 = _b.sent();
+                        err_6 = _b.sent();
                         this.success = false;
-                        error = err_7;
-                        return [3 /*break*/, 111];
-                    case 64:
-                        _b.trys.push([64, 74, , 75]);
+                        error = err_6;
+                        return [3 /*break*/, 105];
+                    case 62:
+                        _b.trys.push([62, 72, , 73]);
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcNameId.adr, 64)];
-                    case 65:
+                    case 63:
                         res1 = _b.sent();
                         tabname = [];
                         for (i = 0; i < 10; i++) {
@@ -6902,8 +6744,8 @@ var UPCModbus = /** @class */ (function () {
                         nameId = this.client
                             .registerToString(tabname)
                             .replace(/[^a-zA-Z0-9]/g, "");
-                        if (!(mode != "modeTest")) return [3 /*break*/, 70];
-                        if (!(nameId != upcNameId && false)) return [3 /*break*/, 66];
+                        if (!(mode != "modeTest")) return [3 /*break*/, 68];
+                        if (!(nameId != upcNameId && false)) return [3 /*break*/, 64];
                         //changement d'UPC
                         if (window.confirm("Une intervention est en cours sur l'upc " +
                             upcNameId +
@@ -6929,8 +6771,8 @@ var UPCModbus = /** @class */ (function () {
                                 " puis appuyez sur 'OK'.");
                             return [2 /*return*/, { success: true, object: "Se rapprocher de l'upc" }];
                         }
-                        return [3 /*break*/, 69];
-                    case 66:
+                        return [3 /*break*/, 67];
+                    case 64:
                         //40022 40023
                         this.communicationParameters.comGsmIpAdr = this.int2ip(this.client.registerToUint32([res1[21], res1[22]]));
                         tabMdmName = [];
@@ -6965,7 +6807,7 @@ var UPCModbus = /** @class */ (function () {
                             .registerToString(tabpassword)
                             .replace(/[^a-zA-Z0-9-.-]/g, "");
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.comWebSrvUrl.adr, 46)];
-                    case 67:
+                    case 65:
                         res2 = _b.sent();
                         taburl = [];
                         for (i = 0; i < 14; i++) {
@@ -6995,7 +6837,7 @@ var UPCModbus = /** @class */ (function () {
                         this.communicationParameters.comWifiApCh =
                             this.client.registerToUint32([res2[45]]);
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.comMdmApnId2.adr, 51)];
-                    case 68:
+                    case 66:
                         res3 = _b.sent();
                         tabapn2 = [];
                         for (i = 0; i < 50; i++) {
@@ -7005,9 +6847,9 @@ var UPCModbus = /** @class */ (function () {
                             .registerToString(tabapn2)
                             .replace(/[^a-zA-Z0-9-.-]/g, "");
                         this.success = true;
-                        return [3 /*break*/, 111];
-                    case 69: return [3 /*break*/, 73];
-                    case 70:
+                        return [3 /*break*/, 105];
+                    case 67: return [3 /*break*/, 71];
+                    case 68:
                         //on est en mode test
                         //40022 40023
                         this.communicationParameters.comGsmIpAdr = this.int2ip(this.client.registerToUint32([res1[21], res1[22]]));
@@ -7037,7 +6879,7 @@ var UPCModbus = /** @class */ (function () {
                             .registerToString(tabpassword)
                             .replace(/[^a-zA-Z0-9-.-]/g, "");
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.comWebSrvUrl.adr, 46)];
-                    case 71:
+                    case 69:
                         res2 = _b.sent();
                         taburl = [];
                         for (i = 0; i < 14; i++) {
@@ -7064,7 +6906,7 @@ var UPCModbus = /** @class */ (function () {
                         this.communicationParameters.comWifiApCh =
                             this.client.registerToUint32([res2[45]]);
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.comMdmApnId2.adr, 51)];
-                    case 72:
+                    case 70:
                         res3 = _b.sent();
                         tabapn2 = [];
                         for (i = 0; i < 50; i++) {
@@ -7074,42 +6916,25 @@ var UPCModbus = /** @class */ (function () {
                             .registerToString(tabapn2)
                             .replace(/[^a-zA-Z0-9-.-]/g, "");
                         this.success = true;
-                        return [3 /*break*/, 111];
-                    case 73: return [3 /*break*/, 75];
+                        return [3 /*break*/, 105];
+                    case 71: return [3 /*break*/, 73];
+                    case 72:
+                        err_7 = _b.sent();
+                        this.success = false;
+                        error = err_7;
+                        return [3 /*break*/, 105];
+                    case 73:
+                        console.log("on read statique page connection");
+                        _b.label = 74;
                     case 74:
-                        err_8 = _b.sent();
-                        this.success = false;
-                        error = err_8;
-                        return [3 /*break*/, 111];
-                    case 75:
-                        console.log("on read statique page connection");
-                        _b.label = 76;
-                    case 76:
-                        _b.trys.push([76, 78, , 79]);
-                        return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcStatus.adr, 1)];
-                    case 77:
-                        res1 = _b.sent();
-                        this.general.upcStatus = res1[0];
-                        ////////////////////////////////////////////////:
-                        this.success = true;
-                        return [3 /*break*/, 111];
-                    case 78:
-                        err_9 = _b.sent();
-                        this.success = false;
-                        error = err_9;
-                        return [3 /*break*/, 111];
-                    case 79:
-                        console.log("on read statique page connection");
-                        _b.label = 80;
-                    case 80:
-                        _b.trys.push([80, 83, , 84]);
+                        _b.trys.push([74, 77, , 78]);
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.comMdmMode.adr, 2)];
-                    case 81:
+                    case 75:
                         res1 = _b.sent();
                         this.connectionMode = res1[0];
                         this.connectionLevel = res1[1];
                         return [4 /*yield*/, this.client.readHoldingRegisters(41219, 22)];
-                    case 82:
+                    case 76:
                         res1 = _b.sent();
                         this.xComMdmRssiMoyen2G = this.client.registerToFloat([
                             res1[0],
@@ -7157,16 +6982,16 @@ var UPCModbus = /** @class */ (function () {
                         ]);
                         ////////////////////////////////////////////////:
                         this.success = true;
-                        return [3 /*break*/, 111];
-                    case 83:
-                        err_10 = _b.sent();
+                        return [3 /*break*/, 105];
+                    case 77:
+                        err_8 = _b.sent();
                         this.success = false;
-                        error = err_10;
-                        return [3 /*break*/, 111];
-                    case 84:
-                        _b.trys.push([84, 96, , 97]);
+                        error = err_8;
+                        return [3 /*break*/, 105];
+                    case 78:
+                        _b.trys.push([78, 90, , 91]);
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcNameId.adr, 10)];
-                    case 85:
+                    case 79:
                         res1 = _b.sent();
                         tabname = [];
                         for (i = 0; i < 10; i++) {
@@ -7175,8 +7000,8 @@ var UPCModbus = /** @class */ (function () {
                         nameId = this.client
                             .registerToString(tabname)
                             .replace(/[^a-zA-Z0-9]/g, "");
-                        if (!(mode != "modeTest")) return [3 /*break*/, 91];
-                        if (!(nameId != upcNameId && false)) return [3 /*break*/, 86];
+                        if (!(mode != "modeTest")) return [3 /*break*/, 85];
+                        if (!(nameId != upcNameId && false)) return [3 /*break*/, 80];
                         //changement d'UPC
                         if (window.confirm("Une intervention est en cours sur l'upc " +
                             upcNameId +
@@ -7202,12 +7027,12 @@ var UPCModbus = /** @class */ (function () {
                                 " puis appuyez sur 'OK'.");
                             return [2 /*return*/, { success: true, object: "Se rapprocher de l'upc" }];
                         }
-                        return [3 /*break*/, 90];
-                    case 86:
+                        return [3 /*break*/, 84];
+                    case 80:
                         this.reserves.bottlesB1 = [];
                         this.reserves.bottlesB2 = [];
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.co2ResActive.adr, 16)];
-                    case 87:
+                    case 81:
                         res2 = _b.sent();
                         //40151
                         this.reserves.co2ResActive = this.client.registerToUint32([
@@ -7227,7 +7052,7 @@ var UPCModbus = /** @class */ (function () {
                                 0.001974 *
                                 100) / 100;
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcStatus.adr, 75)];
-                    case 88:
+                    case 82:
                         res3 = _b.sent();
                         //40376
                         this.general.upcStatus = res3[0];
@@ -7254,7 +7079,7 @@ var UPCModbus = /** @class */ (function () {
                                 0.001974 *
                                 100) / 100;
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.xCo2Res1CodesBarres.adr, 90)];
-                    case 89:
+                    case 83:
                         res4 = _b.sent();
                         tabB11 = [];
                         for (i = 0; i < 5; i++) {
@@ -7352,14 +7177,14 @@ var UPCModbus = /** @class */ (function () {
                         console.log("=================== bouteille en B2  =======================");
                         console.log(this.reserves.bottlesB2);
                         this.success = true;
-                        return [3 /*break*/, 111];
-                    case 90: return [3 /*break*/, 95];
-                    case 91:
+                        return [3 /*break*/, 105];
+                    case 84: return [3 /*break*/, 89];
+                    case 85:
                         //on est en mode test
                         this.reserves.bottlesB1 = [];
                         this.reserves.bottlesB2 = [];
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.co2ResActive.adr, 16)];
-                    case 92:
+                    case 86:
                         res2 = _b.sent();
                         //40151
                         this.reserves.co2ResActive = this.client.registerToUint32([
@@ -7376,7 +7201,7 @@ var UPCModbus = /** @class */ (function () {
                                 0.001974 *
                                 100) / 100;
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcStatus.adr, 75)];
-                    case 93:
+                    case 87:
                         res3 = _b.sent();
                         //40376
                         this.general.upcStatus = res3[0];
@@ -7399,7 +7224,7 @@ var UPCModbus = /** @class */ (function () {
                                 0.001974 *
                                 100) / 100;
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.xCo2Res1CodesBarres.adr, 90)];
-                    case 94:
+                    case 88:
                         res4 = _b.sent();
                         tabB11 = [];
                         for (i = 0; i < 5; i++) {
@@ -7492,17 +7317,17 @@ var UPCModbus = /** @class */ (function () {
                         }
                         this.reserves.bottlesB2.push(this.client.registerToString(tabB29));
                         this.success = true;
-                        return [3 /*break*/, 111];
-                    case 95: return [3 /*break*/, 97];
-                    case 96:
-                        err_11 = _b.sent();
+                        return [3 /*break*/, 105];
+                    case 89: return [3 /*break*/, 91];
+                    case 90:
+                        err_9 = _b.sent();
                         this.success = false;
-                        error = err_11;
-                        return [3 /*break*/, 111];
-                    case 97:
-                        _b.trys.push([97, 110, , 111]);
+                        error = err_9;
+                        return [3 /*break*/, 105];
+                    case 91:
+                        _b.trys.push([91, 104, , 105]);
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcNameId.adr, 66)];
-                    case 98:
+                    case 92:
                         res1 = _b.sent();
                         tabname = [];
                         for (i = 0; i < 10; i++) {
@@ -7511,59 +7336,59 @@ var UPCModbus = /** @class */ (function () {
                         nameId = this.client
                             .registerToString(tabname)
                             .replace(/[^a-zA-Z0-9]/g, "");
-                        if (!(mode != "modeTest")) return [3 /*break*/, 107];
-                        if (!(nameId != upcNameId && false)) return [3 /*break*/, 104];
+                        if (!(mode != "modeTest")) return [3 /*break*/, 101];
+                        if (!(nameId != upcNameId && false)) return [3 /*break*/, 98];
                         if (!window.confirm("Une intervention est en cours sur l'upc " +
                             upcNameId +
                             ". Voulez-vous néanmoins continuer sur l'upc " +
                             nameId +
-                            "?")) return [3 /*break*/, 102];
-                        if (!window.confirm("Voulez-vous terminer l'intervention ? (OK) ou l'abandonner ? (Annuler)")) return [3 /*break*/, 99];
+                            "?")) return [3 /*break*/, 96];
+                        if (!window.confirm("Voulez-vous terminer l'intervention ? (OK) ou l'abandonner ? (Annuler)")) return [3 /*break*/, 93];
                         return [2 /*return*/, {
                                 success: true,
                                 object: "Terminer l'intervention en cours",
                             }];
-                    case 99:
+                    case 93:
                         this.alarm.alrResLowEn = this.client.registerToUint32(res1[65]);
                         console.log("65 ::> " + res1[65]);
                         console.log("64 ::" + res1[64]);
                         console.log("66 ::" + res1[64]);
                         return [4 /*yield*/, this.readAlarmParameters()];
-                    case 100:
+                    case 94:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 111];
-                    case 101: return [3 /*break*/, 103];
-                    case 102:
+                        return [3 /*break*/, 105];
+                    case 95: return [3 /*break*/, 97];
+                    case 96:
                         alert("Rapprochez-vous de l'upc " +
                             upcNameId +
                             " puis appuyez sur 'OK'.");
                         return [2 /*return*/, { success: true, object: "Se rapprocher de l'upc" }];
-                    case 103: return [3 /*break*/, 106];
-                    case 104:
+                    case 97: return [3 /*break*/, 100];
+                    case 98:
                         this.nameId = nameId;
                         this.alarm.alrResLowEn = res1[65];
                         return [4 /*yield*/, this.readAlarmParameters()];
-                    case 105:
+                    case 99:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 111];
-                    case 106: return [3 /*break*/, 109];
-                    case 107:
+                        return [3 /*break*/, 105];
+                    case 100: return [3 /*break*/, 103];
+                    case 101:
                         this.nameId = nameId;
                         this.alarm.alrResLowEn = this.client.registerToUint32(res1[65]);
                         return [4 /*yield*/, this.readAlarmParameters()];
-                    case 108:
+                    case 102:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 111];
-                    case 109: return [3 /*break*/, 111];
-                    case 110:
-                        err_12 = _b.sent();
+                        return [3 /*break*/, 105];
+                    case 103: return [3 /*break*/, 105];
+                    case 104:
+                        err_10 = _b.sent();
                         this.success = false;
-                        error = err_12;
-                        return [3 /*break*/, 111];
-                    case 111:
+                        error = err_10;
+                        return [3 /*break*/, 105];
+                    case 105:
                         //alert(this.success)
                         if (this.success == true) {
                             return [2 /*return*/, true];
@@ -7785,7 +7610,7 @@ var UPCModbus = /** @class */ (function () {
     };
     UPCModbus.prototype.readBloc1 = function (upcNameId, mode) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var opt, res, tabname, i, nameId, tabMdmName, i, tabMdmPass, i, tabssid, i, tabpassword, i, tabMdmName, i, tabMdmPass, i, tabssid, i, tabpassword, i, d, t, err_13;
+            var opt, res, tabname, i, nameId, tabMdmName, i, tabMdmPass, i, tabssid, i, tabpassword, i, tabMdmName, i, tabMdmPass, i, tabssid, i, tabpassword, i, d, t, err_11;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -8241,8 +8066,8 @@ var UPCModbus = /** @class */ (function () {
                         }
                         return [3 /*break*/, 4];
                     case 3:
-                        err_13 = _a.sent();
-                        return [2 /*return*/, { success: false, object: err_13, bloc: 1 }];
+                        err_11 = _a.sent();
+                        return [2 /*return*/, { success: false, object: err_11, bloc: 1 }];
                     case 4: return [2 /*return*/];
                 }
             });
@@ -8421,7 +8246,7 @@ var UPCModbus = /** @class */ (function () {
     };
     UPCModbus.prototype.readBloc3 = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var res, taburl, i, tabapnuser, i, tabapnpass, i, tabResBottles, i, tabResBottles2, i, err_14;
+            var res, taburl, i, tabapnuser, i, tabapnpass, i, tabResBottles, i, tabResBottles2, i, err_12;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -8627,8 +8452,8 @@ var UPCModbus = /** @class */ (function () {
                         ]);
                         return [2 /*return*/, { success: true, object: res, bloc: 3 }];
                     case 2:
-                        err_14 = _a.sent();
-                        return [2 /*return*/, { success: false, object: err_14, bloc: 3 }];
+                        err_12 = _a.sent();
+                        return [2 /*return*/, { success: false, object: err_12, bloc: 3 }];
                     case 3: return [2 /*return*/];
                 }
             });
@@ -8636,7 +8461,7 @@ var UPCModbus = /** @class */ (function () {
     };
     UPCModbus.prototype.readBloc4 = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var res, tabuuid, i, err_15;
+            var res, tabuuid, i, err_13;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -8842,8 +8667,8 @@ var UPCModbus = /** @class */ (function () {
                         ]);
                         return [2 /*return*/, { success: true, object: res, bloc: 4 }];
                     case 2:
-                        err_15 = _a.sent();
-                        return [2 /*return*/, { success: false, object: err_15, bloc: 4 }];
+                        err_13 = _a.sent();
+                        return [2 /*return*/, { success: false, object: err_13, bloc: 4 }];
                     case 3: return [2 /*return*/];
                 }
             });
@@ -8851,7 +8676,7 @@ var UPCModbus = /** @class */ (function () {
     };
     UPCModbus.prototype.readBloc5 = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var res, tabapn2, i, err_16;
+            var res, tabapn2, i, err_14;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -8868,8 +8693,8 @@ var UPCModbus = /** @class */ (function () {
                             .replace(/[^a-zA-Z0-9]/g, "");
                         return [2 /*return*/, { success: true, object: res, bloc: 5 }];
                     case 2:
-                        err_16 = _a.sent();
-                        return [2 /*return*/, { success: false, object: err_16, bloc: 5 }];
+                        err_14 = _a.sent();
+                        return [2 /*return*/, { success: false, object: err_14, bloc: 5 }];
                     case 3: return [2 /*return*/];
                 }
             });
@@ -8877,7 +8702,7 @@ var UPCModbus = /** @class */ (function () {
     };
     UPCModbus.prototype.readBloc6 = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var res, tabB11, i, tabB12, i, tabB13, i, tabB14, i, tabB15, i, tabB16, i, tabB17, i, tabB18, i, tabB19, i, tabB21, i, tabB22, i, tabB23, i, tabB24, i, tabB25, i, tabB26, i, tabB27, i, tabB28, i, tabB29, i, err_17;
+            var res, tabB11, i, tabB12, i, tabB13, i, tabB14, i, tabB15, i, tabB16, i, tabB17, i, tabB18, i, tabB19, i, tabB21, i, tabB22, i, tabB23, i, tabB24, i, tabB25, i, tabB26, i, tabB27, i, tabB28, i, tabB29, i, err_15;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -9011,8 +8836,8 @@ var UPCModbus = /** @class */ (function () {
                             this.client.registerToFloat([res[115], res[116]]);
                         return [2 /*return*/, { success: true, object: res, bloc: 6 }];
                     case 2:
-                        err_17 = _a.sent();
-                        return [2 /*return*/, { success: false, object: err_17, bloc: 6 }];
+                        err_15 = _a.sent();
+                        return [2 /*return*/, { success: false, object: err_15, bloc: 6 }];
                     case 3: return [2 /*return*/];
                 }
             });
@@ -9562,6 +9387,9 @@ var UPCModbus = /** @class */ (function () {
                 },
             };
         });
+    };
+    UPCModbus.prototype.round = function (x) {
+        return Math.round(x * 10000) / 10000;
     };
     UPCModbus.prototype.reset = function () {
         return Promise.all([this.client.setIntInHoldingRegister(40011, 1, 0xffff)]);

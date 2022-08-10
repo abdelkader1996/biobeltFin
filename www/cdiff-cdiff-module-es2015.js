@@ -156,12 +156,12 @@ let CdiffPage = class CdiffPage {
         this.colorplayfiff = "light";
         this.colordis = "light";
         this.colorcheck = "light";
-        this.offsetPE = "0";
-        this.offsetPS = "0";
-        this.offsetdeb = "0";
-        this.pidprog = "0";
-        this.pidint = "0";
-        this.pider = "0";
+        this.offsetPE = 0;
+        this.offsetPS = 0;
+        this.offsetdeb = 0;
+        this.pidprog = 0;
+        this.pidint = 0;
+        this.pider = 0;
         this.fluxmax = 0;
         this.intensity = 0;
         this.resActive = 0;
@@ -169,9 +169,9 @@ let CdiffPage = class CdiffPage {
         this.debiRef = 0;
         this.peRef = 0;
         this.psRef = 0;
-        this.debiMes = "0";
-        this.peMes = "0";
-        this.psMes = "0";
+        this.debiMes = 0;
+        this.peMes = 0;
+        this.psMes = 0;
         this.psComp = 0;
         this.psCompMes = 0;
         this.backgroundeb = false;
@@ -286,7 +286,7 @@ let CdiffPage = class CdiffPage {
                 //connecter au wifi
                 console.log("reconnexion  >>>> ");
             }
-            if (this.global.upcmodbus.state == 1) {
+            if (this.tryToRead && this.global.upcmodbus.state == 1) {
                 console.log("Try to read >");
                 // lecture statique :
                 this.isLoading = true;
@@ -314,6 +314,40 @@ let CdiffPage = class CdiffPage {
                 })
                     .catch((err) => {
                     this.tryToRead = true;
+                    this.isLoading = false;
+                    console.log("acceuil::erreur lecture");
+                    console.log(err);
+                });
+                //fin de lecture statique :
+            }
+            if (this.global.upcmodbus.state == 1) {
+                console.log("Try to read >");
+                // lecture statique :
+                this.isLoading = true;
+                this.global.upcmodbus
+                    .onReadStatique(this.global.upcname, this.global.mode, "cdiff-cyclique")
+                    .then((res) => {
+                    if (res == true) {
+                        //this.tryToRead = false;
+                        this.isLoading = false;
+                        console.log(">  lecture reussi ");
+                        this.subscribeRefreshCyclique();
+                        this.events.publish("loadParameters");
+                        this.global.lectureStatiqueEnCours = false;
+                        this.global.displayLoading = false;
+                        // this.tryToRead = false;
+                    }
+                    else {
+                        console.log(">  lecture echouée  ");
+                        this.isLoading = false;
+                        // this.tryToRead = true;
+                        this.global.statutConnexion = "Aucune";
+                        this.global.lectureStatiqueEnCours = false;
+                        this.global.displayLoading = false;
+                    }
+                })
+                    .catch((err) => {
+                    // this.tryToRead = true;
                     this.isLoading = false;
                     console.log("acceuil::erreur lecture");
                     console.log(err);
@@ -508,6 +542,10 @@ let CdiffPage = class CdiffPage {
             this.router.navigate([res]);
         });
     }
+    ionViewWillLeave() {
+        console.log("quitter la page  :");
+        clearInterval(this.do);
+    }
     subscribeRefresh() {
         this.events.subscribe("loadParameters", ($event) => {
             var status = this.global.upcmodbus.general.upcStatus;
@@ -544,14 +582,12 @@ let CdiffPage = class CdiffPage {
                 this.typediff = "Diff. programmée ACTIF";
                 this.diffcolor = "primary";
             }
-            this.offsetPE =
-                this.global.upcmodbus.diffusions.co2PressInpOffs.toFixed(2);
-            this.offsetPS =
-                this.global.upcmodbus.diffusions.co2PressOutOffs.toFixed(2);
-            this.offsetdeb = this.global.upcmodbus.diffusions.co2FlowOffs.toFixed(2);
-            this.pidprog = this.global.upcmodbus.general.upcCo2PidProp.toFixed(2);
-            this.pidint = this.global.upcmodbus.general.upcCo2PidInteg.toFixed(2);
-            this.pider = this.global.upcmodbus.general.upcCo2PidDiff.toFixed(2);
+            this.offsetPE = this.global.upcmodbus.diffusions.co2PressInpOffs;
+            this.offsetPS = this.global.upcmodbus.diffusions.co2PressOutOffs;
+            this.offsetdeb = this.global.upcmodbus.diffusions.co2FlowOffs;
+            this.pidprog = this.global.upcmodbus.general.upcCo2PidProp;
+            this.pidint = this.global.upcmodbus.general.upcCo2PidInteg;
+            this.pider = this.global.upcmodbus.general.upcCo2PidDiff;
             //40018
             this.fluxmax = this.global.upcmodbus.general.co2FlowRefAdj;
             //40065
@@ -563,20 +599,43 @@ let CdiffPage = class CdiffPage {
             //40416
             //this.intensity = this.upc.client.registerToUint32(res[0]);
             //40435
-            this.peMes = this.global.upcmodbus.diffusions.co2PresInpAvg.toFixed(2);
+            this.peMes = this.global.upcmodbus.diffusions.co2PresInpAvg;
             //40437
-            this.psMes = this.global.upcmodbus.diffusions.co2PresOutAvg.toFixed(2);
+            this.psMes = this.global.upcmodbus.diffusions.co2PresOutAvg;
             //40439
-            this.debiMes = this.global.upcmodbus.diffusions.co2FlowAvg.toFixed(2);
-            if (Math.abs(((this.global.upcmodbus.diffusions.co2FlowAvg - this.debiRef) /
-                this.debiRef) *
-                100) < 5) {
+            this.debiMes = this.global.upcmodbus.diffusions.co2FlowAvg;
+            if (Math.abs(((this.debiMes - this.debiRef) / this.debiRef) * 100) < 5) {
                 this.backgroundeb = true;
                 this.backgrounddangerdeb = false;
             }
-            else if (Math.abs(((this.global.upcmodbus.diffusions.co2FlowAvg - this.debiRef) /
-                this.debiRef) *
-                100) < 10) {
+            else if (Math.abs(((this.debiMes - this.debiRef) / this.debiRef) * 100) < 10) {
+                this.backgrounddangerdeb = true;
+            }
+            else {
+                this.backgroundeb = false;
+                this.backgrounddangerdeb = false;
+            }
+            //40451
+            this.temp = this.global.upcmodbus.diffusions.co2TempAvg;
+            //40463
+            this.psCompMes = this.global.upcmodbus.diffusions.co2PressOutComp;
+        });
+    }
+    subscribeRefreshCyclique() {
+        this.events.subscribe("loadParameters", ($event) => {
+            console.log("subscribe refresh cyclique");
+            //this.intensity = this.upc.client.registerToUint32(res[0]);
+            //40435
+            this.peMes = this.global.upcmodbus.diffusions.co2PresInpAvg;
+            //40437
+            this.psMes = this.global.upcmodbus.diffusions.co2PresOutAvg;
+            //40439
+            this.debiMes = this.global.upcmodbus.diffusions.co2FlowAvg;
+            if (Math.abs(((this.debiMes - this.debiRef) / this.debiRef) * 100) < 5) {
+                this.backgroundeb = true;
+                this.backgrounddangerdeb = false;
+            }
+            else if (Math.abs(((this.debiMes - this.debiRef) / this.debiRef) * 100) < 10) {
                 this.backgrounddangerdeb = true;
             }
             else {

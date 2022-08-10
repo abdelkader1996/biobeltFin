@@ -37952,7 +37952,18 @@ let SynchroPage = class SynchroPage {
         this.sign = [];
         this.signOptions = ["+", "-"];
         this.intensityOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        this.frequencyOptions = ["Tous les jours", "Semaine", "Weekend", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
+        this.frequencyOptions = [
+            "Tous les jours",
+            "Semaine",
+            "Weekend",
+            "Lundi",
+            "Mardi",
+            "Mercredi",
+            "Jeudi",
+            "Vendredi",
+            "Samedi",
+            "Dimanche",
+        ];
         this.frequencyValue = ["7", "9", "8", "0", "1", "2", "3", "4", "5", "6"];
         this.colors = [];
         this.paDelay = [];
@@ -37983,7 +37994,8 @@ let SynchroPage = class SynchroPage {
         console.log("=========================================================================");
         this.global.connexionRequise = "UPC";
         console.log(" - Connexion requise :" + this.global.connexionRequise);
-        console.log(" - Connexion  actuel  (avant on read statique) :" + this.global.statutConnexion);
+        console.log(" - Connexion  actuel  (avant on read statique) :" +
+            this.global.statutConnexion);
         this.ConnecterUPC();
         this.Read();
         this.correspondancesRegistres = new _model_upcv3_correspondancesRegistres__WEBPACK_IMPORTED_MODULE_10__["CorrespondancesRegistres"]();
@@ -37998,7 +38010,7 @@ let SynchroPage = class SynchroPage {
                 this.storage.get("password").then((password) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
                     this.stored_ssid = stored_ssid;
                     this.password_ssid = password;
-                    //recuperer l ssid  +password 
+                    //recuperer l ssid  +password
                     console.log("acceuil , stored password" + password);
                     console.log("acceuil , stored ssid" + stored_ssid);
                     //si on est deja connecté a l upc :
@@ -38006,33 +38018,42 @@ let SynchroPage = class SynchroPage {
                     console.log("connected ssid: " + wifi);
                     if (wifi != stored_ssid) {
                         console.log("wifi diffrents :");
-                        WifiWizard2.connect(stored_ssid, password).then(() => {
+                        WifiWizard2.connect(stored_ssid, password)
+                            .then(() => {
                             //connexion reussi a l UPC  :
                             console.log("connexion wifi up reussie :");
                             this.check = true;
                             this.global.statutConnexion = "UPC";
-                            this.global.onConnectModbus().then(() => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+                            this.global
+                                .onConnectModbus()
+                                .then(() => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
                                 console.log("accueil , connexion modbus reussie >> ");
                                 this.connection_modbus = true;
                                 this.isLoading = false;
-                                //on peut lire 
+                                //on peut lire
                                 this.tryToRead = true;
-                            })).catch(err => {
+                            }))
+                                .catch((err) => {
                                 console.log("accueil + connexion modbus échouée  ");
                                 this.isLoading = false;
                                 this.connection_modbus = false;
                             });
-                        }).catch(() => {
+                        })
+                            .catch(() => {
                             console.log("connexion impossible a l'UPC");
                         });
                     }
                     else {
-                        this.global.onConnectModbus().then(() => {
+                        this.global
+                            .onConnectModbus()
+                            .then(() => {
+                            //on tente une connexion modbus pour déterminer si c'est un upc
                             //connexion modbus réussie : c'est un upc
                             console.log("accueil + connexion modbus reussie ");
                             this.connection_modbus = true;
                             this.isLoading = false;
-                        }).catch(err => {
+                        })
+                            .catch((err) => {
                             console.log("accueil + connexion modbus échouée  ");
                             this.isLoading = false;
                             this.connection_modbus = false;
@@ -38052,18 +38073,20 @@ let SynchroPage = class SynchroPage {
         this.do = setInterval(() => {
             console.log("======================== cycle ================================");
             this.checkConnectionWifi();
-            // en cas de perte de connexion 
+            // en cas de perte de connexion
             if (this.current_ssid != this.stored_ssid && this.check) {
                 console.log("wifi diff >>>> ");
                 console.log("reconnexion  >>>> ");
-                //connecter au wifi 
+                //connecter au wifi
                 this.ConnecterUPC();
             }
             if (this.tryToRead) {
                 console.log("Try to read >");
                 // lecture statique :
                 this.isLoading = true;
-                this.global.upcmodbus.onReadStatique(this.global.upcname, this.global.mode, "synchro").then(res => {
+                this.global.upcmodbus
+                    .onReadStatique(this.global.upcname, this.global.mode, "synchro")
+                    .then((res) => {
                     if (res == true) {
                         this.isLoading = false;
                         console.log(">  lecture reussi ");
@@ -38083,7 +38106,8 @@ let SynchroPage = class SynchroPage {
                         this.global.lectureStatiqueEnCours = false;
                         this.global.displayLoading = false;
                     }
-                }).catch(err => {
+                })
+                    .catch((err) => {
                     this.tryToRead = true;
                     this.isLoading = false;
                     console.log("acceuil::erreur lecture");
@@ -38096,10 +38120,14 @@ let SynchroPage = class SynchroPage {
     ecrir(variable, value) {
         if (variable.type == "int") {
             this.isLoading = true;
-            this.global.upcmodbus.client.setIntInHoldingRegister(variable.adr, variable.dim, value).then(() => {
+            this.global.upcmodbus.client
+                .setIntInHoldingRegister(variable.adr, variable.dim, value)
+                .then(() => {
                 console.log("accueil ::  ecriture reussie");
                 // lecture statique :
-                this.global.upcmodbus.onReadStatique(this.global.upcname, this.global.mode, "synchro").then(res => {
+                this.global.upcmodbus
+                    .onReadStatique(this.global.upcname, this.global.mode, "synchro")
+                    .then((res) => {
                     if (res == true) {
                         this.isLoading = false;
                         console.log("accueil:  lecture reussi ");
@@ -38115,23 +38143,29 @@ let SynchroPage = class SynchroPage {
                         this.global.lectureStatiqueEnCours = false;
                         this.global.displayLoading = false;
                     }
-                }).catch(err => {
+                })
+                    .catch((err) => {
                     this.isLoading = false;
                     console.log("acceuil::erreur lecture");
                     console.log(err);
                 });
                 //fin de lecture statique :
-            }).catch(() => {
+            })
+                .catch(() => {
                 this.isLoading = false;
                 console.log("num piege ::écriture impossible");
             });
         }
         else {
             this.isLoading = true;
-            this.global.upcmodbus.client.setStringArrayInHoldingResgisters(variable.adr, value).then(() => {
+            this.global.upcmodbus.client
+                .setStringArrayInHoldingResgisters(variable.adr, value)
+                .then(() => {
                 console.log("accueil ::  ecriture reussie");
                 // lecture statique :
-                this.global.upcmodbus.onReadStatique(this.global.upcname, this.global.mode, "synchro").then(res => {
+                this.global.upcmodbus
+                    .onReadStatique(this.global.upcname, this.global.mode, "synchro")
+                    .then((res) => {
                     if (res == true) {
                         this.isLoading = false;
                         console.log("accueil:  lecture reussi ");
@@ -38147,13 +38181,15 @@ let SynchroPage = class SynchroPage {
                         this.global.lectureStatiqueEnCours = false;
                         this.global.displayLoading = false;
                     }
-                }).catch(err => {
+                })
+                    .catch((err) => {
                     this.isLoading = false;
                     console.log("acceuil::erreur lecture");
                     console.log(err);
                 });
                 //fin de lecture statique :
-            }).catch(() => {
+            })
+                .catch(() => {
                 this.isLoading = false;
                 console.log("num piege ::écriture impossible");
             });
@@ -38161,15 +38197,19 @@ let SynchroPage = class SynchroPage {
     }
     onDiff() {
         this.ngZone.run(() => {
-            if (this.colordif == 'light') {
-                this.global.upcmodbus.client.setIntInHoldingRegister(40011, 1, 1).then(res => {
+            if (this.colordif == "light") {
+                this.global.upcmodbus.client
+                    .setIntInHoldingRegister(40011, 1, 1)
+                    .then((res) => {
                     this.global.upcmodbus.general.upcStatus = 7;
                     this.colordif = "primary";
                     this.cd.detectChanges();
                 });
             }
             else {
-                this.global.upcmodbus.client.setIntInHoldingRegister(40011, 1, 0).then(res => {
+                this.global.upcmodbus.client
+                    .setIntInHoldingRegister(40011, 1, 0)
+                    .then((res) => {
                     this.colordif = "light";
                     this.global.upcmodbus.general.upcStatus = 0;
                     this.cd.detectChanges();
@@ -38213,15 +38253,23 @@ let SynchroPage = class SynchroPage {
                     this.typediff = "Mode CHECK Pressions";
                     this.diffcolor = "warning";
                 }
+                else if (status == 4) {
+                    this.colorcheck = "primary";
+                    this.colordis = "light";
+                    this.colorplayfiff = "light";
+                    this.colordif = "light";
+                    this.typediff = "Diff. programmée ACTIF";
+                    this.diffcolor = "warning";
+                }
                 else {
                     this.colorplayfiff = "primary";
                     this.colordif = "light";
                     this.colorcheck = "light";
                     this.colordis = "light";
-                    this.typediff = "Diff. programmée ACTIF";
+                    this.typediff = "R1 et R2 vide";
                     this.diffcolor = "primary";
                 }
-                // 7 enable diff 0 disable 2 Adjust 
+                // 7 enable diff 0 disable 2 Adjust
                 if (this.global.upcmodbus.general.upcStatus == 7) {
                     this.colordif = "primary";
                 }
@@ -38279,7 +38327,9 @@ let SynchroPage = class SynchroPage {
                 }
                 this.currentDawnTime = this.global.upcmodbus.diffHourSunrise;
                 this.pAubeStart.push(this.secondsToHoursMinutes(this.currentDawnTime + this.global.upcmodbus.diffCo2Sunrise.offset));
-                this.pAubeEnd.push(this.secondsToHoursMinutes(this.currentDawnTime + this.global.upcmodbus.diffCo2Sunrise.offset + this.global.upcmodbus.diffCo2Sunrise.duration));
+                this.pAubeEnd.push(this.secondsToHoursMinutes(this.currentDawnTime +
+                    this.global.upcmodbus.diffCo2Sunrise.offset +
+                    this.global.upcmodbus.diffCo2Sunrise.duration));
                 this.pcDelay.push(this.secondsToHoursMinutes(this.global.upcmodbus.diffCo2Sunset.offset));
                 this.pcDuration.push(this.secondsToHoursMinutes(this.global.upcmodbus.diffCo2Sunset.duration));
                 this.intensity.push(this.global.upcmodbus.diffCo2Sunset.intensity);
@@ -38291,7 +38341,9 @@ let SynchroPage = class SynchroPage {
                 }
                 this.currentDuskTime = this.global.upcmodbus.diffHourSunset;
                 this.pCrepusculeStart.push(this.secondsToHoursMinutes(this.currentDuskTime + this.global.upcmodbus.diffCo2Sunset.offset));
-                this.pCrepusculeEnd.push(this.secondsToHoursMinutes(this.currentDuskTime + this.global.upcmodbus.diffCo2Sunset.offset + this.global.upcmodbus.diffCo2Sunset.duration));
+                this.pCrepusculeEnd.push(this.secondsToHoursMinutes(this.currentDuskTime +
+                    this.global.upcmodbus.diffCo2Sunset.offset +
+                    this.global.upcmodbus.diffCo2Sunset.duration));
             });
             this.drawChartjs();
             this.fillTab();
@@ -38338,11 +38390,11 @@ let SynchroPage = class SynchroPage {
         var hours = parseInt(splitted[0]) * 3600;
         var minutes = parseInt(splitted[1]) * 60;
         var res = hours + minutes;
-        return (res);
+        return res;
     }
     positiveToNegative(pos) {
         var res = -Math.abs(pos);
-        return (res);
+        return res;
     }
     convertDaysCode(dc) {
         var res;
@@ -38418,8 +38470,10 @@ let SynchroPage = class SynchroPage {
     }
     getUPCparams() {
         setTimeout(() => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
-            yield this.global.upcmodbus.client.readHoldingRegisters(40068, 100).then(res => {
-                //programme 1 
+            yield this.global.upcmodbus.client
+                .readHoldingRegisters(40068, 100)
+                .then((res) => {
+                //programme 1
                 var tab = [res[4], res[5]];
                 this.pStart.push(this.secondsToHoursMinutes(this.global.upcmodbus.client.registerToUint32(tab)));
                 var tab = [res[6], res[7]];
@@ -38506,18 +38560,41 @@ let SynchroPage = class SynchroPage {
                 this.paDuration.push(this.secondsToHoursMinutes(this.global.upcmodbus.client.registerToUint32(tab)));
                 tab = [res[69]];
                 this.intensity.push(this.global.upcmodbus.client.registerToUint32(tab));
-                //programme aube sign                      
-                if (this.global.upcmodbus.client.registerToUint32([res[64], res[65]]) >= 0) {
+                //programme aube sign
+                if (this.global.upcmodbus.client.registerToUint32([res[64], res[65]]) >=
+                    0) {
                     this.sign.push("+");
-                    this.currentDawnTime = this.global.upcmodbus.client.registerToUint32([res[0], res[1]]);
-                    this.pAubeStart.push(this.secondsToHoursMinutes(this.global.upcmodbus.client.registerToUint32([res[0], res[1]]) + this.global.upcmodbus.client.registerToUint32([res[64], res[65]])));
-                    this.pAubeEnd.push(this.secondsToHoursMinutes(this.global.upcmodbus.client.registerToUint32([res[0], res[1]]) + this.global.upcmodbus.client.registerToUint32([res[64], res[65]]) + this.global.upcmodbus.client.registerToUint32([res[66], res[67]])));
+                    this.currentDawnTime =
+                        this.global.upcmodbus.client.registerToUint32([res[0], res[1]]);
+                    this.pAubeStart.push(this.secondsToHoursMinutes(this.global.upcmodbus.client.registerToUint32([
+                        res[0],
+                        res[1],
+                    ]) +
+                        this.global.upcmodbus.client.registerToUint32([
+                            res[64],
+                            res[65],
+                        ])));
+                    this.pAubeEnd.push(this.secondsToHoursMinutes(this.global.upcmodbus.client.registerToUint32([
+                        res[0],
+                        res[1],
+                    ]) +
+                        this.global.upcmodbus.client.registerToUint32([
+                            res[64],
+                            res[65],
+                        ]) +
+                        this.global.upcmodbus.client.registerToUint32([
+                            res[66],
+                            res[67],
+                        ])));
                 }
                 else {
                     this.sign.push("-");
-                    this.currentDawnTime = this.global.upcmodbus.client.registerToUint32([res[0], res[1]]);
+                    this.currentDawnTime =
+                        this.global.upcmodbus.client.registerToUint32([res[0], res[1]]);
                     this.pAubeStart[0] = this.secondsToHoursMinutes(this.currentDawnTime + this.hoursMinutesToSeconds(this.paDelay[0]));
-                    this.pAubeEnd[0] = this.secondsToHoursMinutes(this.currentDawnTime + this.hoursMinutesToSeconds(this.paDelay[0]) + this.hoursMinutesToSeconds(this.paDuration[0]));
+                    this.pAubeEnd[0] = this.secondsToHoursMinutes(this.currentDawnTime +
+                        this.hoursMinutesToSeconds(this.paDelay[0]) +
+                        this.hoursMinutesToSeconds(this.paDuration[0]));
                 }
                 //programme crepuscule
                 tab = [res[70], res[71]];
@@ -38527,36 +38604,70 @@ let SynchroPage = class SynchroPage {
                 tab = [res[75]];
                 this.intensity.push(this.global.upcmodbus.client.registerToUint32(tab));
                 //programme crepuscule sign
-                if (this.global.upcmodbus.client.registerToUint32([res[70], res[71]]) >= 0) {
+                if (this.global.upcmodbus.client.registerToUint32([res[70], res[71]]) >=
+                    0) {
                     this.sign.push("+");
-                    this.currentDuskTime = this.global.upcmodbus.client.registerToUint32([res[2], res[3]]);
-                    this.pCrepusculeStart.push(this.secondsToHoursMinutes(this.global.upcmodbus.client.registerToUint32([res[2], res[3]]) + this.global.upcmodbus.client.registerToUint32([res[70], res[71]])));
-                    this.pCrepusculeEnd.push(this.secondsToHoursMinutes(this.global.upcmodbus.client.registerToUint32([res[2], res[3]]) + this.global.upcmodbus.client.registerToUint32([res[70], res[71]]) + this.global.upcmodbus.client.registerToUint32([res[72], res[73]])));
+                    this.currentDuskTime =
+                        this.global.upcmodbus.client.registerToUint32([res[2], res[3]]);
+                    this.pCrepusculeStart.push(this.secondsToHoursMinutes(this.global.upcmodbus.client.registerToUint32([
+                        res[2],
+                        res[3],
+                    ]) +
+                        this.global.upcmodbus.client.registerToUint32([
+                            res[70],
+                            res[71],
+                        ])));
+                    this.pCrepusculeEnd.push(this.secondsToHoursMinutes(this.global.upcmodbus.client.registerToUint32([
+                        res[2],
+                        res[3],
+                    ]) +
+                        this.global.upcmodbus.client.registerToUint32([
+                            res[70],
+                            res[71],
+                        ]) +
+                        this.global.upcmodbus.client.registerToUint32([
+                            res[72],
+                            res[73],
+                        ])));
                 }
                 else {
                     this.sign.push("-");
-                    this.currentDuskTime = this.global.upcmodbus.client.registerToUint32([res[2], res[3]]);
-                    this.pCrepusculeStart[0] = this.secondsToHoursMinutes(this.global.upcmodbus.client.registerToUint32([res[2], res[3]]) + this.global.upcmodbus.client.registerToUint32([res[70], res[71]]));
-                    this.pCrepusculeEnd[0] = this.secondsToHoursMinutes(this.global.upcmodbus.client.registerToUint32([res[2], res[3]]) + this.global.upcmodbus.client.registerToUint32([res[70], res[71]]) + this.global.upcmodbus.client.registerToUint32([res[72], res[73]]));
+                    this.currentDuskTime =
+                        this.global.upcmodbus.client.registerToUint32([res[2], res[3]]);
+                    this.pCrepusculeStart[0] = this.secondsToHoursMinutes(this.global.upcmodbus.client.registerToUint32([res[2], res[3]]) +
+                        this.global.upcmodbus.client.registerToUint32([
+                            res[70],
+                            res[71],
+                        ]));
+                    this.pCrepusculeEnd[0] = this.secondsToHoursMinutes(this.global.upcmodbus.client.registerToUint32([res[2], res[3]]) +
+                        this.global.upcmodbus.client.registerToUint32([
+                            res[70],
+                            res[71],
+                        ]) +
+                        this.global.upcmodbus.client.registerToUint32([
+                            res[72],
+                            res[73],
+                        ]));
                 }
                 this.drawChartjs();
                 setTimeout(() => {
                     this.finishRead = true;
                 }, 1000);
-            }).catch(err => {
-            });
+            })
+                .catch((err) => { });
         }), 5000);
     }
     /********
-     parameters :
-     - start
-     - duration
-     - frequency
-     - intensity
-     
-    ********/
+   parameters :
+   - start
+   - duration
+   - frequency
+   - intensity
+   
+  ********/
     onEdit(variable, parameterToEdit, value) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+            //set UPC params
             switch (parameterToEdit) {
                 case "start":
                     this.ecrir(variable, this.hoursMinutesToSeconds(value));
@@ -38574,12 +38685,12 @@ let SynchroPage = class SynchroPage {
         });
     }
     /********
-     parameters :
-    - offset
-    - duration
-    - intensity
-    
-    ********/
+       parameters :
+      - offset
+      - duration
+      - intensity
+      
+      ********/
     onEditSunrise(variable, parameterToEdit, value) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
             switch (parameterToEdit) {
@@ -38605,12 +38716,12 @@ let SynchroPage = class SynchroPage {
         });
     }
     /********
-     parameters :
-    - offset
-    - duration
-    - intensity
-    
-    ********/
+       parameters :
+      - offset
+      - duration
+      - intensity
+      
+      ********/
     onEditSunset(variable, parameterToEdit, value) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
             switch (parameterToEdit) {
@@ -38675,7 +38786,7 @@ let SynchroPage = class SynchroPage {
         var p7 = parseInt(parsedpCE[1], 10) / 60;
         var p8 = parseInt(parsedpCE[0]) + p7;
         stringToIntpCE = p8;
-        this.intensity.forEach(intensityElement => {
+        this.intensity.forEach((intensityElement) => {
             switch (intensityElement) {
                 case 0:
                     barColors.push("#ffffff00");
@@ -38724,39 +38835,54 @@ let SynchroPage = class SynchroPage {
             [stringToIntStartProgrammes[8], stringToIntEndProgrammes[8]],
             [stringToIntStartProgrammes[9], stringToIntEndProgrammes[9]],
             [stringToIntpAS, stringToIntpAE],
-            [stringToIntpCS, stringToIntpCE]
+            [stringToIntpCS, stringToIntpCE],
         ];
-        var ctx = 'myChart';
+        var ctx = "myChart";
         var myChart = new chart_js__WEBPACK_IMPORTED_MODULE_7__["Chart"](ctx, {
-            type: 'horizontalBar',
+            type: "horizontalBar",
             data: {
-                labels: ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10", "Aube", "Crepuscule"],
+                labels: [
+                    "P1",
+                    "P2",
+                    "P3",
+                    "P4",
+                    "P5",
+                    "P6",
+                    "P7",
+                    "P8",
+                    "P9",
+                    "P10",
+                    "Aube",
+                    "Crepuscule",
+                ],
                 datasets: [
                     {
                         backgroundColor: barColors,
                         data: data,
                     },
-                ]
+                ],
             },
             options: {
                 legend: {
                     display: false,
                 },
                 /*title: {
-                  display: true,
-                  text: 'Aube Crépuscule'
-                },*/
+                    display: true,
+                    text: 'Aube Crépuscule'
+                  },*/
                 scales: {
-                    xAxes: [{
+                    xAxes: [
+                        {
                             ticks: {
                                 beginAtZero: true,
                                 max: 24,
-                                stepSize: 6
+                                stepSize: 6,
                             },
-                            position: 'top'
-                        }]
-                }
-            }
+                            position: "top",
+                        },
+                    ],
+                },
+            },
         });
     }
     startstop() {
@@ -38776,7 +38902,9 @@ let SynchroPage = class SynchroPage {
     onCheck() {
         var d = new Date();
         this.global.logs.push(this.global.msToTime(d.getTime()) + " - appel on check");
-        this.global.onWriteEnable(this.correspondancesRegistres.upcMode, 3).then(() => {
+        this.global
+            .onWriteEnable(this.correspondancesRegistres.upcMode, 3)
+            .then(() => {
             this.colorcheck = "primary";
             this.colordis = "light";
             this.colorplayfiff = "light";
@@ -38787,7 +38915,7 @@ let SynchroPage = class SynchroPage {
     }
     goToNextPage() {
         clearInterval(this.global.interval);
-        this.storage.get("nexturl").then(res => {
+        this.storage.get("nexturl").then((res) => {
             this.router.navigate([res]);
         });
     }
@@ -38808,7 +38936,7 @@ SynchroPage.ctorParameters = () => [
 ];
 SynchroPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-        selector: 'app-synchro',
+        selector: "app-synchro",
         template: __webpack_require__(/*! raw-loader!./synchro.page.html */ "./node_modules/raw-loader/index.js!./src/app/synchro/synchro.page.html"),
         styles: [__webpack_require__(/*! ./synchro.page.scss */ "./src/app/synchro/synchro.page.scss")]
     }),
@@ -38816,8 +38944,10 @@ SynchroPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         _api_upcv3service_service__WEBPACK_IMPORTED_MODULE_2__["Upcv3serviceService"],
         _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["Platform"],
         _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"],
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"], _ionic_native_network_ngx__WEBPACK_IMPORTED_MODULE_4__["Network"],
-        _ionic_native_hotspot_ngx__WEBPACK_IMPORTED_MODULE_6__["Hotspot"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"],
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgZone"],
+        _ionic_native_network_ngx__WEBPACK_IMPORTED_MODULE_4__["Network"],
+        _ionic_native_hotspot_ngx__WEBPACK_IMPORTED_MODULE_6__["Hotspot"],
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"],
         _api_global_service__WEBPACK_IMPORTED_MODULE_8__["GlobalService"],
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"],
         _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["Events"],
