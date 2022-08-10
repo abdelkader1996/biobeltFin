@@ -639,156 +639,157 @@ let GlobalService = class GlobalService {
         this.password = "";
         this.appPagesModeIntervention = [
             {
-                title: "Logs",
-                url: "/debug"
-            },
-            {
                 title: "Intervention sur Ceinture",
                 url: "/interventionceinture",
-                icon: "hammer"
+                icon: "hammer",
             },
             {
                 title: "Paramètres Généraux UPC",
-                url: "/namepiege"
+                url: "/namepiege",
+            },
+            /*
+            {
+              title : "Initialisation / Echange boitier UPC",
+              url : "/initechangeboitierupc"
+            }
+            
+            ,
+            {
+              title : "Modification du nombre de pièges",
+              url : "/modifnbpieges"
             },
             {
-                title: "Initialisation / Echange boitier UPC",
-                url: "/initechangeboitierupc"
+              title : "Vérification débits pièges individuels",
+              url : "/verifpiegesindividuels"
+            }
+            
+            */ {
+                title: "Changement de bouteilles sur ceinture",
+                url: "/addbottleceint",
+                icon: "barcode",
+            },
+            /*
+            {
+              title: 'Réglage des détendeurs',
+              url: '/adjustment',
+              icon: 'return-right'
             },
             {
-                title: "Modification du nombre de pièges",
-                url: "/modifnbpieges"
-            },
-            {
-                title: "Vérification débits pièges individuels",
-                url: "/verifpiegesindividuels"
-            },
-            {
-                title: 'Changement de bouteilles sur ceinture',
-                url: '/addbottleceint',
-                icon: 'barcode'
-            },
-            {
-                title: 'Réglage des détendeurs',
-                url: '/adjustment',
-                icon: 'return-right'
-            },
-            {
-                title: "Contrôle débits Mini/Maxi",
-                url: "/controldiff",
-                icon: "infinite",
-            },
-            {
-                title: 'Programmation',
-                icon: 'sunny',
+              title : "Contrôle débits Mini/Maxi",
+              url : "/controldiff",
+              icon : "infinite",
+            }
+            
+            */ {
+                title: "Programmation",
+                icon: "sunny",
                 url: "/synchro",
             },
             {
                 title: "Etat de la Connexion",
                 icon: "globe",
-                url: "/connection"
+                url: "/connection",
             },
             {
                 title: "Contrôles débits et pressions CO2",
-                url: "/cdiff"
+                url: "/cdiff",
             },
+            /*
             {
-                title: "Mesure des pressions de sortie",
-                url: "/check",
-            },
-            {
+              title : "Mesure des pressions de sortie",
+              url : "/check",
+            }
+            
+            */ {
                 title: "Paramètre de Communication",
                 url: "/comunicationparam",
-                icon: "wifi"
+                icon: "wifi",
             },
             {
                 title: "Paramètre d'Alarme",
                 url: "/alarmparam",
-                icon: "alarm"
+                icon: "alarm",
             },
-            {
-                title: "Commentaires",
-                url: "/commentaires"
-            },
-            {
-                title: "Rapport de visite",
-                url: "/rapportvisite"
-            },
-            {
-                title: "Fin d'intervention",
-                url: "/finintervention"
-            }
         ];
         this.appPagesModeMvtBouteilles = [
             {
                 title: "Mouvements de bouteilles",
-                url: "/optionbottle"
-            }
+                url: "/optionbottle",
+            },
         ];
         this.appPagesModeTest = [
             {
-                title: "Logs",
-                url: "/debug"
+                title: "Intervention sur Ceinture",
+                url: "/interventionceinture",
+                icon: "hammer",
             },
             {
                 title: "Paramètres Généraux UPC",
-                url: "/namepiege"
+                url: "/namepiege",
+            },
+            /*
+            {
+              title : "Initialisation / Echange boitier UPC",
+              url : "/initechangeboitierupc"
+            }
+            
+            ,
+            {
+              title : "Modification du nombre de pièges",
+              url : "/modifnbpieges"
             },
             {
-                title: "Initialisation / Echange boitier UPC",
-                url: "/initechangeboitierupc"
+              title : "Vérification débits pièges individuels",
+              url : "/verifpiegesindividuels"
+            }
+            
+            */ {
+                title: "Changement de bouteilles sur ceinture",
+                url: "/addbottleceint",
+                icon: "barcode",
+            },
+            /*
+            {
+              title: 'Réglage des détendeurs',
+              url: '/adjustment',
+              icon: 'return-right'
             },
             {
-                title: "Modification du nombre de pièges",
-                url: "/modifnbpieges"
-            },
-            {
-                title: "Vérification débits pièges individuels",
-                url: "/verifpiegesindividuels"
-            },
-            {
-                title: 'Changement de bouteilles sur ceinture',
-                url: '/addbottleceint',
-                icon: 'barcode'
-            },
-            {
-                title: 'Réglage des détendeurs',
-                url: '/adjustment',
-                icon: 'return-right'
-            },
-            {
-                title: "Contrôle débits Mini/Maxi",
-                url: "/controldiff",
-                icon: "infinite",
-            },
-            {
-                title: 'Programmation',
-                icon: 'sunny',
+              title : "Contrôle débits Mini/Maxi",
+              url : "/controldiff",
+              icon : "infinite",
+            }
+            
+            */ {
+                title: "Programmation",
+                icon: "sunny",
                 url: "/synchro",
             },
             {
                 title: "Etat de la Connexion",
                 icon: "globe",
-                url: "/connection"
+                url: "/connection",
             },
             {
                 title: "Contrôles débits et pressions CO2",
-                url: "/cdiff"
+                url: "/cdiff",
             },
+            /*
             {
-                title: "Mesure des pressions de sortie",
-                url: "/check",
-            },
-            {
+              title : "Mesure des pressions de sortie",
+              url : "/check",
+            }
+            
+            */ {
                 title: "Paramètre de Communication",
                 url: "/comunicationparam",
-                icon: "wifi"
+                icon: "wifi",
             },
             {
                 title: "Paramètre d'Alarme",
                 url: "/alarmparam",
-                icon: "alarm"
-            }
+                icon: "alarm",
+            },
         ];
         this.pages = [];
         this.logs = [];
@@ -808,8 +809,8 @@ let GlobalService = class GlobalService {
         this.writeMultipleRegisters = false;
         this.codebarsB1 = []; //codebars formés avec le code upc et les caractères nuls
         this.codebarsB1SansCodeUpc = [];
-        this.stringsB1 = []; //strings créées avec le type de bouteille (affichées sur la page) 
-        this.contenusB1 = []; //contenus des bouteilles en B1 
+        this.stringsB1 = []; //strings créées avec le type de bouteille (affichées sur la page)
+        this.contenusB1 = []; //contenus des bouteilles en B1
         this.contenantB1 = 0;
         this.isAddedB1 = [];
         this.bottleInconnuesB1 = []; //bouteilles inconnues ajoutées depuis l'admin sans barcode
@@ -819,8 +820,8 @@ let GlobalService = class GlobalService {
         this.codebarsB2 = []; //codebars formés avec le code upc et les caractères nuls
         this.codebarsB2SansCodeUpc = [];
         this.contenantB2 = 0;
-        this.stringsB2 = []; //strings créées avec le type de bouteille (affichées sur la page) 
-        this.contenusB2 = []; //désignations des bouteilles en B2 
+        this.stringsB2 = []; //strings créées avec le type de bouteille (affichées sur la page)
+        this.contenusB2 = []; //désignations des bouteilles en B2
         this.isAddedB2 = [];
         this.bottleInconnuesB2 = []; //bouteilles inconnues ajoutées depuis l'admin sans barcode
         this.contenuAjouteEnB2 = 0;
@@ -846,18 +847,18 @@ let GlobalService = class GlobalService {
                 WifiWizard2.iOSDisconnectNetwork("BBAM").then((res) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
                     var loading = yield this.loadingCTRL.create({
                         message: "Synchronisation avec le Serveur en cours...",
-                        duration: 10000
+                        duration: 10000,
                     });
                     loading.present();
-                    this.upcv3Service.addBottleBelt(jsonB1, token).subscribe(res => {
+                    this.upcv3Service.addBottleBelt(jsonB1, token).subscribe((res) => {
                         loading.dismiss();
                     });
                 }));
             }
             else {
-                this.upcv3Service.addBottleBelt(jsonB1, token).subscribe(res => {
+                this.upcv3Service.addBottleBelt(jsonB1, token).subscribe((res) => {
                     alert(JSON.stringify(res));
-                }, err => {
+                }, (err) => {
                     JSON.stringify(err);
                 });
             }
@@ -866,13 +867,13 @@ let GlobalService = class GlobalService {
             var jsonB2 = JSON.parse(localStorage.getItem("bottleB2"));
             jsonB2.endate = new Date().toISOString().substr(0, 16);
             if (this.platform.is("ios")) {
-                WifiWizard2.iOSDisconnectNetwork(("BBAM")).then((res) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+                WifiWizard2.iOSDisconnectNetwork("BBAM").then((res) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
                     var loading = yield this.loadingCTRL.create({
                         message: "Synchronisation avec le Serveur en cours...",
-                        duration: 10000
+                        duration: 10000,
                     });
                     loading.present();
-                    this.upcv3Service.addBottleBelt(jsonB2, token).subscribe(res => {
+                    this.upcv3Service.addBottleBelt(jsonB2, token).subscribe((res) => {
                         loading.dismiss();
                     });
                 }));
@@ -881,10 +882,10 @@ let GlobalService = class GlobalService {
                 WifiWizard2.disconnect("BBAM").then((res) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
                     var loading = yield this.loadingCTRL.create({
                         message: "Synchronisation avec le Serveur en cours...",
-                        duration: 10000
+                        duration: 10000,
                     });
                     loading.present();
-                    this.upcv3Service.addBottleBelt(jsonB2, token).subscribe(res => {
+                    this.upcv3Service.addBottleBelt(jsonB2, token).subscribe((res) => {
                         loading.dismiss();
                     });
                 }));
@@ -893,19 +894,31 @@ let GlobalService = class GlobalService {
     }
     ConnectError() {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
-            let toast = yield this.toastCtrl.create({ message: "Veuillez vous connectez au WiFi de l'UPC", duration: 4000, position: "middle" });
+            let toast = yield this.toastCtrl.create({
+                message: "Veuillez vous connectez au WiFi de l'UPC",
+                duration: 4000,
+                position: "middle",
+            });
             toast.present();
         });
     }
     UpcReadWriteError() {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
-            let toast = yield this.toastCtrl.create({ message: "Echec lors de la communication avec l'UPC", duration: 4000, position: "middle" });
+            let toast = yield this.toastCtrl.create({
+                message: "Echec lors de la communication avec l'UPC",
+                duration: 4000,
+                position: "middle",
+            });
             toast.present();
         });
     }
     UpcErrorCoAuto() {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
-            let toast = yield this.toastCtrl.create({ message: "Erreur lors de la connexion automatique ! Veuillez vous connecter manuellement via les Réglages!", duration: 4000, position: "middle" });
+            let toast = yield this.toastCtrl.create({
+                message: "Erreur lors de la connexion automatique ! Veuillez vous connecter manuellement via les Réglages!",
+                duration: 4000,
+                position: "middle",
+            });
             toast.present();
         });
     }
@@ -959,7 +972,7 @@ let GlobalService = class GlobalService {
         ///
         this.onConnectEnCours = true;
         return new Promise((resolve, reject) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
-            //debug 
+            //debug
             this.currentssid = yield WifiWizard2.getConnectedSSID();
             //
             var d = new Date();
@@ -969,21 +982,27 @@ let GlobalService = class GlobalService {
             }
             if (this.connexionRequise == "UPC") {
                 var d = new Date();
-                let res = this.storage.get("ssid").then(res => {
+                let res = this.storage.get("ssid").then((res) => {
                     this.ssid = res;
                     var d = new Date();
-                    this.diagnostic.isWifiEnabled().then((res2) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
-                        if (res2 == true) { //WIFI activé
+                    this.diagnostic
+                        .isWifiEnabled()
+                        .then((res2) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+                        if (res2 == true) {
+                            //WIFI activé
                             var d = new Date();
                             res = yield WifiWizard2.getConnectedSSID();
                             var d2 = new Date();
                             //alert(this.msToTime(d2.getTime())+" - res : "+res)
                             this.currentssid = res;
                             var d = new Date();
-                            if (this.ssid == undefined || this.ssid == "") { //ssid vide 
+                            if (this.ssid == undefined || this.ssid == "") {
+                                //ssid vide
                                 var d = new Date();
                                 this.appelOnConnectModbus = true;
-                                this.onConnectModbus().then(() => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+                                this.onConnectModbus()
+                                    .then(() => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+                                    //on tente une connexion modbus pour déterminer si c'est un upc
                                     //connexion modbus réussie : c'est un upc
                                     var d = new Date();
                                     this.appelOnConnectModbus = false;
@@ -993,7 +1012,8 @@ let GlobalService = class GlobalService {
                                     }
                                     this.perteConnexion = false;
                                     resolve("");
-                                })).catch(err => {
+                                }))
+                                    .catch((err) => {
                                     var d = new Date();
                                     this.appelOnConnectModbus = false;
                                     if (!window.confirm("La connexion à l'UPC n'a pas pu être établie. Rapprochez-vous et raccordez-vous à l'UPC puis appuyez sur 'OK'.")) {
@@ -1007,17 +1027,21 @@ let GlobalService = class GlobalService {
                                     }
                                 });
                             }
-                            else { //ssid non vide  
+                            else {
+                                //ssid non vide
                                 var d = new Date();
-                                if (this.currentssid == this.ssid) { //le ssid du réseau auquel on est connecté est le même que celui de la ceinture sélectionnée
+                                if (this.currentssid == this.ssid) {
+                                    //le ssid du réseau auquel on est connecté est le même que celui de la ceinture sélectionnée
                                     var d = new Date();
                                     this.appelOnConnectModbus = true;
-                                    this.onConnectModbus().then(() => {
+                                    this.onConnectModbus()
+                                        .then(() => {
                                         this.appelOnConnectModbus = false;
                                         this.statutConnexion = "UPC";
                                         this.perteConnexion = false;
                                         resolve("");
-                                    }).catch(err => {
+                                    })
+                                        .catch((err) => {
                                         var d = new Date();
                                         this.appelOnConnectModbus = false;
                                         if (!window.confirm("La connexion à l'UPC n'a pas pu être établie. Rapprochez-vous et raccordez-vous à l'UPC puis appuyez sur 'OK'.")) {
@@ -1031,25 +1055,29 @@ let GlobalService = class GlobalService {
                                         }
                                     });
                                 }
-                                else { //le ssid du réseau auquel on est connecté est différent de celui de la ceinture sélectionnée
+                                else {
+                                    //le ssid du réseau auquel on est connecté est différent de celui de la ceinture sélectionnée
                                     var d = new Date();
-                                    //if(this.perteConnexion != true){                    
+                                    //if(this.perteConnexion != true){
                                     if (this.platform.is("android")) {
                                         this.logs.push(" - android");
                                         this.logs.push(" - ssid : " + this.ssid);
-                                        this.storage.get("password").then(res => {
+                                        this.storage.get("password").then((res) => {
                                             var password = res;
                                             var d = new Date();
                                             this.logs.push(" - appel wifiwizard2.connect()");
-                                            WifiWizard2.connect(this.ssid, password).then(() => {
+                                            WifiWizard2.connect(this.ssid, password)
+                                                .then(() => {
                                                 var d = new Date();
                                                 this.appelOnConnectModbus = true;
-                                                this.onConnectModbus().then(() => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+                                                this.onConnectModbus()
+                                                    .then(() => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
                                                     this.appelOnConnectModbus = false;
                                                     this.currentssid = this.ssid;
                                                     this.perteConnexion = false;
                                                     resolve("");
-                                                })).catch(err => {
+                                                }))
+                                                    .catch((err) => {
                                                     var d = new Date();
                                                     this.statutConnexion = "Aucune";
                                                     if (!window.confirm("La connexion à l'UPC n'a pas pu être établie. Rapprochez-vous et raccordez-vous à l'UPC puis appuyez sur 'OK'.")) {
@@ -1062,29 +1090,37 @@ let GlobalService = class GlobalService {
                                                         resolve("");
                                                     }
                                                 });
-                                            }).catch(() => { var d = new Date(); this.logs.push(" - fail connect"); });
+                                            })
+                                                .catch(() => {
+                                                var d = new Date();
+                                                this.logs.push(" - fail connect");
+                                            });
                                         });
                                     }
                                     else {
                                         if (this.platform.is("ios")) {
                                             this.logs.push(" - ios");
                                             this.logs.push(" - ssid : " + this.ssid);
-                                            this.storage.get("password").then(res => {
+                                            this.storage.get("password").then((res) => {
                                                 var password = res;
                                                 var d4 = new Date();
                                                 this.logs.push(" - password : " + password);
-                                                this.logs.push(" - appel wifiwizard2 iOSConnectNetwork : " + password);
-                                                WifiWizard2.iOSConnectNetwork(this.ssid, password).then(() => {
+                                                this.logs.push(" - appel wifiwizard2 iOSConnectNetwork : " +
+                                                    password);
+                                                WifiWizard2.iOSConnectNetwork(this.ssid, password)
+                                                    .then(() => {
                                                     var d = new Date();
                                                     this.logs.push(" - connected to upc wifi");
                                                     this.appelOnConnectModbus = true;
-                                                    this.onConnectModbus().then(() => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+                                                    this.onConnectModbus()
+                                                        .then(() => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
                                                         this.appelOnConnectModbus = false;
                                                         this.logs.push(" - connexion Modbus réussie");
                                                         this.currentssid = this.ssid;
                                                         this.perteConnexion = false;
                                                         resolve("");
-                                                    })).catch(err => {
+                                                    }))
+                                                        .catch((err) => {
                                                         var d = new Date();
                                                         this.statutConnexion = "Aucune";
                                                         this.logs.push(" - statut connexion : Aucune ");
@@ -1101,18 +1137,24 @@ let GlobalService = class GlobalService {
                                                             resolve("");
                                                         }
                                                     });
-                                                }).catch(err => { var d = new Date(); this.logs.push(" - fail connect :" + JSON.stringify(err)); });
+                                                })
+                                                    .catch((err) => {
+                                                    var d = new Date();
+                                                    this.logs.push(" - fail connect :" + JSON.stringify(err));
+                                                });
                                             });
                                         }
                                     }
-                                    //}                   
+                                    //}
                                 }
                             }
                         }
-                        else { //WIFI désactivé
+                        else {
+                            //WIFI désactivé
                             var d = new Date();
                             this.logs.push(" - wifi désactivé");
-                            if (this.ssid == undefined || this.ssid == "") { //ssid vide
+                            if (this.ssid == undefined || this.ssid == "") {
+                                //ssid vide
                                 var d = new Date();
                                 this.logs.push(" - ssid vide : " + this.ssid);
                                 this.logs.push(" - statut connexion : Aucune ");
@@ -1131,20 +1173,23 @@ let GlobalService = class GlobalService {
                                     resolve("");
                                 }
                             }
-                            else { //ssid non vide
+                            else {
+                                //ssid non vide
                                 var d = new Date();
                                 this.logs.push(" - ssid stocké non vide");
-                                this.storage.get("password").then(res => {
+                                this.storage.get("password").then((res) => {
                                     var password = res;
                                     if (this.platform.is("android")) {
                                         this.logs.push(" - ssid : " + this.ssid + " - password : " + password);
-                                        WifiWizard2.connect(this.ssid, password).then(res => {
+                                        WifiWizard2.connect(this.ssid, password)
+                                            .then((res) => {
                                             var d = new Date();
                                             this.logs.push(" - connexion au point d'accès réussie");
                                             this.currentssid = this.ssid;
                                             this.logs.push(" - current ssid : " + this.ssid);
                                             this.appelOnConnectModbus = true;
-                                            this.onConnectModbus().then(() => {
+                                            this.onConnectModbus()
+                                                .then(() => {
                                                 var d = new Date();
                                                 this.appelOnConnectModbus = false;
                                                 this.logs.push(" - connexion Modbus réussie");
@@ -1152,14 +1197,17 @@ let GlobalService = class GlobalService {
                                                 this.currentssid = this.ssid;
                                                 this.perteConnexion = false;
                                                 resolve("");
-                                            }).catch(err => {
+                                            })
+                                                .catch((err) => {
                                                 var d = new Date();
                                                 this.appelOnConnectModbus = false;
                                                 this.logs.push(" - connexion Modbus échouée");
                                                 setTimeout(() => {
                                                     var d2 = new Date();
-                                                    this.logs.push(this.msToTime(d2.getTime()) + " - Nouvelle tentative connexion modbus");
-                                                    this.onConnectModbus().then(() => {
+                                                    this.logs.push(this.msToTime(d2.getTime()) +
+                                                        " - Nouvelle tentative connexion modbus");
+                                                    this.onConnectModbus()
+                                                        .then(() => {
                                                         var d = new Date();
                                                         this.appelOnConnectModbus = false;
                                                         this.logs.push(" - connexion Modbus réussie");
@@ -1167,7 +1215,8 @@ let GlobalService = class GlobalService {
                                                         this.currentssid = this.ssid;
                                                         this.perteConnexion = false;
                                                         resolve("");
-                                                    }).catch(err => {
+                                                    })
+                                                        .catch((err) => {
                                                         var d = new Date();
                                                         this.appelOnConnectModbus = false;
                                                         this.logs.push(" - connexion Modbus échouée");
@@ -1186,10 +1235,13 @@ let GlobalService = class GlobalService {
                                                     });
                                                 }, 1000);
                                             });
-                                        }).catch(err => {
+                                        })
+                                            .catch((err) => {
+                                            //connexion au point d'accès échouée
                                             this.statutConnexion = "Aucune";
                                             var d = new Date();
-                                            this.logs.push(" - connexion au point d'accès échouée : " + JSON.stringify(err));
+                                            this.logs.push(" - connexion au point d'accès échouée : " +
+                                                JSON.stringify(err));
                                             this.statutConnexion = "Aucune";
                                             this.logs.push(" - statut connexion : Aucune ");
                                             this.logs.push(" - présentation alerte connexion upc : ");
@@ -1210,11 +1262,13 @@ let GlobalService = class GlobalService {
                                         if (this.platform.is("ios")) {
                                             this.storage.get("password").then((res) => {
                                                 var password = res;
-                                                WifiWizard2.iOSConnectNetwork(this.ssid, password).then(() => {
+                                                WifiWizard2.iOSConnectNetwork(this.ssid, password)
+                                                    .then(() => {
                                                     var d = new Date();
                                                     this.logs.push(" - connexion au point d'accès réussie");
                                                     this.appelOnConnectModbus = true;
-                                                    this.onConnectModbus().then(res => {
+                                                    this.onConnectModbus()
+                                                        .then((res) => {
                                                         var d = new Date();
                                                         this.appelOnConnectModbus = false;
                                                         this.logs.push(" - connexion Modbus réussie");
@@ -1222,7 +1276,8 @@ let GlobalService = class GlobalService {
                                                         this.currentssid = this.ssid;
                                                         this.perteConnexion = false;
                                                         resolve("");
-                                                    }).catch(err => {
+                                                    })
+                                                        .catch((err) => {
                                                         var d = new Date();
                                                         this.appelOnConnectModbus = false;
                                                         this.logs.push(" - connexion Modbus échouée");
@@ -1239,9 +1294,12 @@ let GlobalService = class GlobalService {
                                                             resolve("");
                                                         }
                                                     });
-                                                }).catch(err => {
+                                                })
+                                                    .catch((err) => {
+                                                    //connexion au point d'accès échouée
                                                     var d = new Date();
-                                                    this.logs.push(" - connexion au point d'accès échouée : " + JSON.stringify(err));
+                                                    this.logs.push(" - connexion au point d'accès échouée : " +
+                                                        JSON.stringify(err));
                                                     this.statutConnexion = "Aucune";
                                                     this.logs.push(" - statut connexion : Aucune ");
                                                     this.logs.push(" - présentation alerte connexion upc : ");
@@ -1263,23 +1321,32 @@ let GlobalService = class GlobalService {
                                 });
                             }
                         }
-                    })).catch((err) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+                    }))
+                        .catch((err) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
                         var d = new Date();
                         this.logs.push(" - Erreur fonction isWifiEnabled : " + JSON.stringify(err));
                         this.logs.push(" - wifi non connecté");
                         var pass = yield this.storage.get("password");
                         //if(this.perteConnexion == true){
                         this.logs.push(" - appel wifiwizard2.connect() - wifi non connecté");
-                        WifiWizard2.connect(this.ssid, pass).then(res => {
+                        WifiWizard2.connect(this.ssid, pass)
+                            .then((res) => {
                             var d10 = new Date();
-                            this.logs.push(this.msToTime(d10.getTime()) + " -connexion établie : " + res);
+                            this.logs.push(this.msToTime(d10.getTime()) +
+                                " -connexion établie : " +
+                                res);
                             resolve("");
-                        }).catch(err => {
+                        })
+                            .catch((err) => {
                             this.statutConnexion = "Aucune";
                             var d11 = new Date();
-                            this.logs.push(this.msToTime(d11.getTime()) + " -connexion échouée : " + err);
-                            this.logs.push(this.msToTime(d11.getTime()) + " - statut connexion : Aucune ");
-                            this.logs.push(this.msToTime(d11.getTime()) + " - présentation alerte connexion upc : ");
+                            this.logs.push(this.msToTime(d11.getTime()) +
+                                " -connexion échouée : " +
+                                err);
+                            this.logs.push(this.msToTime(d11.getTime()) +
+                                " - statut connexion : Aucune ");
+                            this.logs.push(this.msToTime(d11.getTime()) +
+                                " - présentation alerte connexion upc : ");
                             if (!window.confirm("La page a besoin d'être connecté à l'UPC. Connectez-vous à l'UPC puis appuyez sur 'OK'.")) {
                                 var d = new Date();
                                 this.logs.push(" - réponse utilisateur : annuler");
@@ -1293,7 +1360,7 @@ let GlobalService = class GlobalService {
                                 resolve("");
                             }
                         });
-                        //}          
+                        //}
                     }));
                 });
             }
@@ -1302,9 +1369,14 @@ let GlobalService = class GlobalService {
                 this.logs.push(" - connexion requise : serveur");
                 if (error.status == 403) {
                     this.logs.push(" - erreur 403");
-                    this.login().then(() => {
-                        resolve('retry');
-                    }).catch(() => { alert("login failed"); resolve(""); });
+                    this.login()
+                        .then(() => {
+                        resolve("retry");
+                    })
+                        .catch(() => {
+                        alert("login failed");
+                        resolve("");
+                    });
                 }
                 else {
                     if (window.confirm("Une connexion internet est requise pour cette page. Raccordez-vous à internet puis appuyez sur 'OK'.")) {
@@ -1330,17 +1402,21 @@ let GlobalService = class GlobalService {
             console.log(" - ecriture : " + this.ecritureEnCours);
             console.log(" - onConnect : " + this.onConnectEnCours);
             console.log(" - statut connexion : " + this.statutConnexion);
-            if (this.ecritureEnCours == true || this.lectureCycliqueEnCours == true || this.onConnectEnCours == true || this.statutConnexion != "UPC") {
+            if (this.ecritureEnCours == true ||
+                this.lectureCycliqueEnCours == true ||
+                this.onConnectEnCours == true ||
+                this.statutConnexion != "UPC") {
                 this.lectureStatiqueEnCours = false;
                 var d = new Date();
                 console.log(" -attente onReadStatique  ( il y a une opreation en cours :)");
-                this.onWait(50, 60000, "onReadStatiqueEnable").then(() => {
+                this.onWait(50, 60000, "onReadStatiqueEnable")
+                    .then(() => {
                     var d = new Date();
                     this.logs.push(" - fin d'attente onReadStatique ");
-                    //var d=new Date() 
-                    //this.logs.push( " - statut connexion = UPC")           
+                    //var d=new Date()
+                    //this.logs.push( " - statut connexion = UPC")
                     if (this.upcmodbus != undefined) {
-                        this.storage.get("upcname").then(res => {
+                        this.storage.get("upcname").then((res) => {
                             this.upcname = res;
                             var d = new Date();
                             this.logs.push(" - appel fonction onReadStatique");
@@ -1362,14 +1438,17 @@ let GlobalService = class GlobalService {
                                 this.contenusB2 = [];
                                 this.stringsB2 = [];
                             }
-                            this.upcmodbus.onReadStatique(this.upcname, this.mode, urlFinal).then(res => {
+                            this.upcmodbus
+                                .onReadStatique(this.upcname, this.mode, urlFinal)
+                                .then((res) => {
                                 if (res == true) {
                                     //var d=new Date()
                                     console.log(" - lecture réussie");
                                     this.events.publish("loadParameters");
                                     this.lectureStatiqueEnCours = false;
                                     var d = new Date();
-                                    console.log("durée lecture statique : " + (d.getTime() - this.startReadDate.getTime()));
+                                    console.log("durée lecture statique : " +
+                                        (d.getTime() - this.startReadDate.getTime()));
                                     this.displayLoading = false;
                                     resolve();
                                 }
@@ -1403,37 +1482,48 @@ let GlobalService = class GlobalService {
                                             else {
                                                 if (res.object.errCode != undefined) {
                                                     var d = new Date();
-                                                    console.log(" (onread sataique erreur)- " + res.object.errCode + " - bloc :" + res.object.bloc);
+                                                    console.log(" (onread sataique erreur)- " +
+                                                        res.object.errCode +
+                                                        " - bloc :" +
+                                                        res.object.bloc);
                                                     console.log(" - statut connexion : Aucune ");
                                                     this.statutConnexion = "Aucune";
                                                     //this.onConnect(res.object.errCode).then(res=>{
                                                     this.lectureStatiqueEnCours = false;
                                                     this.displayLoading = false;
                                                     resolve();
-                                                    //})    
+                                                    //})
                                                 }
                                                 else {
                                                     var d = new Date();
-                                                    console.log(" - " + JSON.stringify(res.object) + " - bloc :" + res.object.bloc);
+                                                    console.log(" - " +
+                                                        JSON.stringify(res.object) +
+                                                        " - bloc :" +
+                                                        res.object.bloc);
                                                     this.logs.push(" - statut connexion : Aucune ");
                                                     this.statutConnexion = "Aucune";
                                                     //this.onConnect(res.object.errCode).then(res=>{
                                                     this.lectureStatiqueEnCours = false;
                                                     this.displayLoading = false;
                                                     resolve();
-                                                    //})  
+                                                    //})
                                                 }
                                             }
                                         }
                                     }
                                 }
-                            }).catch(err => {
+                            })
+                                .catch((err) => {
                                 var d = new Date();
-                                console.log(" - catch onReadStatique modbus  : " + JSON.stringify(err) + "; on connect : " + this.onConnectEnCours);
+                                console.log(" - catch onReadStatique modbus  : " +
+                                    JSON.stringify(err) +
+                                    "; on connect : " +
+                                    this.onConnectEnCours);
                                 this.perteConnexion = true;
                                 this.statutConnexion = "Aucune";
                                 if (this.onConnectEnCours == false) {
-                                    this.onConnect("UPC").then(res => {
+                                    this.onConnect("UPC")
+                                        .then((res) => {
                                         this.lectureStatiqueEnCours = false;
                                         this.displayLoading = false;
                                         this.onConnectEnCours = false;
@@ -1441,7 +1531,8 @@ let GlobalService = class GlobalService {
                                         this.onReadStatiqueEnable().then(() => {
                                             resolve();
                                         });
-                                    }).catch(() => {
+                                    })
+                                        .catch(() => {
                                         this.lectureStatiqueEnCours = false;
                                         this.displayLoading = false;
                                         this.onConnectEnCours = false;
@@ -1461,7 +1552,8 @@ let GlobalService = class GlobalService {
                         this.displayLoading = false;
                         resolve();
                     }
-                }).catch(() => {
+                })
+                    .catch(() => {
                     alert("lecture impossible");
                     this.displayLoading = false;
                     reject();
@@ -1469,10 +1561,10 @@ let GlobalService = class GlobalService {
             }
             else {
                 /* pas de lecture cyclique en cours ni d'écriture ni de onConnect donc lecture statique possible */
-                //var d=new Date() 
-                //this.logs.push( " - statut connexion = UPC")           
+                //var d=new Date()
+                //this.logs.push( " - statut connexion = UPC")
                 if (this.upcmodbus != undefined) {
-                    this.storage.get("upcname").then(res => {
+                    this.storage.get("upcname").then((res) => {
                         this.upcname = res;
                         var d = new Date();
                         this.logs.push(" - appel fonction onReadStatique");
@@ -1481,14 +1573,17 @@ let GlobalService = class GlobalService {
                         const splittedUrl = url.split("/");
                         const urlFinal = splittedUrl[1];
                         this.logs.push(" - page : " + urlFinal);
-                        this.upcmodbus.onReadStatique(this.upcname, this.mode, urlFinal).then(res => {
+                        this.upcmodbus
+                            .onReadStatique(this.upcname, this.mode, urlFinal)
+                            .then((res) => {
                             if (res == true) {
                                 //var d=new Date()
                                 //this.logs.push( " - lecture réussie")
                                 this.events.publish("loadParameters");
                                 this.lectureStatiqueEnCours = false;
                                 var d = new Date();
-                                this.logs.push("durée lecture statique : " + (d.getTime() - this.startReadDate.getTime()));
+                                this.logs.push("durée lecture statique : " +
+                                    (d.getTime() - this.startReadDate.getTime()));
                                 this.displayLoading = false;
                                 resolve();
                             }
@@ -1522,44 +1617,56 @@ let GlobalService = class GlobalService {
                                         else {
                                             if (res.object.errCode != undefined) {
                                                 var d = new Date();
-                                                this.logs.push(" - " + res.object.errCode + " - bloc :" + res.object.bloc);
+                                                this.logs.push(" - " +
+                                                    res.object.errCode +
+                                                    " - bloc :" +
+                                                    res.object.bloc);
                                                 this.logs.push(" - statut connexion : Aucune ");
                                                 this.statutConnexion = "Aucune";
                                                 //this.onConnect(res.object.errCode).then(res=>{
                                                 this.lectureStatiqueEnCours = false;
                                                 this.displayLoading = false;
                                                 resolve();
-                                                //})    
+                                                //})
                                             }
                                             else {
                                                 var d = new Date();
-                                                this.logs.push(" - " + JSON.stringify(res.object) + " - bloc :" + res.object.bloc);
+                                                this.logs.push(" - " +
+                                                    JSON.stringify(res.object) +
+                                                    " - bloc :" +
+                                                    res.object.bloc);
                                                 this.logs.push(" - statut connexion : Aucune ");
                                                 this.statutConnexion = "Aucune";
                                                 //this.onConnect(res.object.errCode).then(res=>{
                                                 this.lectureStatiqueEnCours = false;
                                                 this.displayLoading = false;
                                                 resolve();
-                                                //})  
+                                                //})
                                             }
                                         }
                                     }
                                 }
                             }
-                        }).catch(err => {
+                        })
+                            .catch((err) => {
                             var d = new Date();
-                            this.logs.push(" - catch onReadStatique : " + JSON.stringify(err) + "; on connect : " + this.onConnectEnCours);
+                            this.logs.push(" - catch onReadStatique : " +
+                                JSON.stringify(err) +
+                                "; on connect : " +
+                                this.onConnectEnCours);
                             this.perteConnexion = true;
                             this.statutConnexion = "Aucune";
                             if (this.onConnectEnCours == false) {
-                                this.onConnect("UPC").then(res => {
+                                this.onConnect("UPC")
+                                    .then((res) => {
                                     this.lectureStatiqueEnCours = false;
                                     this.displayLoading = false;
                                     this.onConnectEnCours = false;
                                     this.statutConnexion = "UPC";
                                     this.onReadStatiqueEnable();
                                     resolve();
-                                }).catch(() => {
+                                })
+                                    .catch(() => {
                                     this.lectureStatiqueEnCours = false;
                                     this.displayLoading = false;
                                     this.onConnectEnCours = false;
@@ -1579,34 +1686,37 @@ let GlobalService = class GlobalService {
                     this.lectureStatiqueEnCours = false;
                     this.displayLoading = false;
                     resolve();
-                    //})   
+                    //})
                 }
             }
         }));
     }
     onReadCycliqueEnable() {
         return new Promise((resolve, reject) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
-            //var d=new Date()    
+            //var d=new Date()
             //this.logs.push( " - onReadModbusVariables")
             if (this.statutConnexion == "UPC") {
-                //var d=new Date() 
-                //this.logs.push( " - statut connexion = UPC")           
+                //var d=new Date()
+                //this.logs.push( " - statut connexion = UPC")
                 if (this.upcmodbus != undefined) {
-                    this.storage.get("upcname").then(res => {
+                    this.storage.get("upcname").then((res) => {
                         this.upcname = res;
                         //var d=new Date()
-                        //this.logs.push( " - appel fonction readAllReg cas 1 : "+res)  
+                        //this.logs.push( " - appel fonction readAllReg cas 1 : "+res)
                         const url = this.router.url;
                         const splittedUrl = url.split("/");
                         const urlFinal = splittedUrl[1];
-                        this.upcmodbus.onReadCyclique(this.upcname, this.mode, urlFinal).then(res => {
+                        this.upcmodbus
+                            .onReadCyclique(this.upcname, this.mode, urlFinal)
+                            .then((res) => {
                             if (res == true) {
                                 //var d=new Date()
                                 //this.logs.push( " - lecture réussie")
                                 this.events.publish("loadParameters");
                                 this.lectureCycliqueEnCours = false;
                                 var d = new Date();
-                                this.logs.push("durée lecture : " + (d.getTime() - this.startReadDate.getTime()));
+                                this.logs.push("durée lecture : " +
+                                    (d.getTime() - this.startReadDate.getTime()));
                                 resolve();
                             }
                             else {
@@ -1616,7 +1726,7 @@ let GlobalService = class GlobalService {
                                     this.logs.push(" - statut connexion : Aucune ");
                                     this.statutConnexion = "Aucune";
                                     if (this.onConnectEnCours == false) {
-                                        this.onConnect(res.object.errCode).then(res => {
+                                        this.onConnect(res.object.errCode).then((res) => {
                                             this.onConnectEnCours = false;
                                             resolve();
                                         });
@@ -1627,11 +1737,14 @@ let GlobalService = class GlobalService {
                                 }
                                 else {
                                     var d = new Date();
-                                    this.logs.push(" - " + JSON.stringify(res.object) + " - bloc :" + res.object.bloc);
+                                    this.logs.push(" - " +
+                                        JSON.stringify(res.object) +
+                                        " - bloc :" +
+                                        res.object.bloc);
                                     this.logs.push(" - statut connexion : Aucune ");
                                     this.statutConnexion = "Aucune";
                                     if (this.onConnectEnCours == false) {
-                                        this.onConnect(res.object.errCode).then(res => {
+                                        this.onConnect(res.object.errCode).then((res) => {
                                             this.onConnectEnCours = false;
                                             resolve();
                                         });
@@ -1641,11 +1754,12 @@ let GlobalService = class GlobalService {
                                     }
                                 }
                             }
-                        }).catch(err => {
+                        })
+                            .catch((err) => {
                             var d = new Date();
                             this.logs.push(" - catch onReadCyclique");
                             if (this.onConnectEnCours == false) {
-                                this.onConnect("UPC").then(res => {
+                                this.onConnect("UPC").then((res) => {
                                     this.onConnectEnCours = false;
                                     resolve();
                                 });
@@ -1701,25 +1815,34 @@ let GlobalService = class GlobalService {
             this.logs.push(" - onConnect : " + this.onConnectEnCours);
             this.logs.push(" - statut connexion : " + this.statutConnexion);
             this.ecritureEnCours = true;
-            if (this.statutConnexion != "UPC" || this.lectureCycliqueEnCours == true || this.lectureStatiqueEnCours == true || this.onConnectEnCours == true) {
+            if (this.statutConnexion != "UPC" ||
+                this.lectureCycliqueEnCours == true ||
+                this.lectureStatiqueEnCours == true ||
+                this.onConnectEnCours == true) {
                 this.ecritureEnCours = false;
                 var d = new Date();
                 this.logs.push(" - lecture en cours : " + this.lectureCycliqueEnCours);
-                this.onWait(50, 60000, "onWriteEnable").then(() => {
+                this.onWait(50, 60000, "onWriteEnable")
+                    .then(() => {
                     var d4 = new Date();
                     if (variable.type == "int") {
-                        this.upcmodbus.client.setIntInHoldingRegister(variable.adr, variable.dim, value).then(() => {
+                        this.upcmodbus.client
+                            .setIntInHoldingRegister(variable.adr, variable.dim, value)
+                            .then(() => {
                             var d = new Date();
                             this.logs.push(" - écriture réussie");
                             this.ecritureEnCours = false;
                             this.needToCheckFlags = false;
-                            this.onReadStatiqueEnable().then(() => {
+                            this.onReadStatiqueEnable()
+                                .then(() => {
                                 resolve();
-                            }).catch(() => {
+                            })
+                                .catch(() => {
                                 alert("lecture impossible");
                                 reject();
                             });
-                        }).catch(() => {
+                        })
+                            .catch(() => {
                             alert("écriture impossible");
                             reject();
                         });
@@ -1730,60 +1853,76 @@ let GlobalService = class GlobalService {
                         if (this.writeMultipleRegisters == true) {
                             var d = new Date();
                             this.logs.push(" - set string array in holding registers");
-                            this.upcmodbus.client.setStringArrayInHoldingResgisters(variable.adr, value).then(() => {
+                            this.upcmodbus.client
+                                .setStringArrayInHoldingResgisters(variable.adr, value)
+                                .then(() => {
                                 var d = new Date();
                                 this.logs.push(" - écriture réussie");
                                 this.writeMultipleRegisters = false;
                                 this.ecritureEnCours = false;
                                 this.needToCheckFlags = false;
-                                this.onReadStatiqueEnable().then(() => {
+                                this.onReadStatiqueEnable()
+                                    .then(() => {
                                     resolve();
-                                }).catch(() => {
+                                })
+                                    .catch(() => {
                                     alert("lecture impossible");
                                     reject();
                                 });
-                            }).catch(() => {
+                            })
+                                .catch(() => {
                                 this.writeMultipleRegisters = false;
                                 alert("écriture impossible");
                                 reject();
                             });
                         }
                         else {
-                            this.upcmodbus.client.setStringInHoldingRegister(variable.adr, value).then(() => {
+                            this.upcmodbus.client
+                                .setStringInHoldingRegister(variable.adr, value)
+                                .then(() => {
                                 var d = new Date();
                                 this.logs.push(" - écriture réussie");
                                 this.ecritureEnCours = false;
                                 this.needToCheckFlags = false;
-                                this.onReadStatiqueEnable().then(() => {
+                                this.onReadStatiqueEnable()
+                                    .then(() => {
                                     resolve();
-                                }).catch(() => {
+                                })
+                                    .catch(() => {
                                     alert("lecture impossible");
                                     reject();
                                 });
-                            }).catch(() => {
+                            })
+                                .catch(() => {
                                 alert("écriture impossible");
                                 reject();
                             });
                         }
                     }
                     if (variable.type == "float") {
-                        this.upcmodbus.client.setFloatInHoldingRegister(variable.adr, value).then(() => {
+                        this.upcmodbus.client
+                            .setFloatInHoldingRegister(variable.adr, value)
+                            .then(() => {
                             var d = new Date();
                             this.logs.push(" - écriture réussie");
                             this.ecritureEnCours = false;
                             this.needToCheckFlags = false;
-                            this.onReadStatiqueEnable().then(() => {
+                            this.onReadStatiqueEnable()
+                                .then(() => {
                                 resolve();
-                            }).catch(() => {
+                            })
+                                .catch(() => {
                                 alert("lecture impossible");
                                 reject();
                             });
-                        }).catch(() => {
+                        })
+                            .catch(() => {
                             alert("écriture impossible");
                             reject();
                         });
                     }
-                }).catch(() => {
+                })
+                    .catch(() => {
                     alert("écriture impossible");
                     reject();
                 });
@@ -1793,18 +1932,23 @@ let GlobalService = class GlobalService {
                 var d = new Date();
                 this.logs.push(" - pas de lecture en cours, écriture possible");
                 if (variable.type == "int") {
-                    this.upcmodbus.client.setIntInHoldingRegister(variable.adr, variable.dim, value).then(() => {
+                    this.upcmodbus.client
+                        .setIntInHoldingRegister(variable.adr, variable.dim, value)
+                        .then(() => {
                         var d = new Date();
                         this.logs.push(" - écriture réussie");
                         this.ecritureEnCours = false;
                         this.needToCheckFlags = false;
-                        this.onReadStatiqueEnable().then(() => {
+                        this.onReadStatiqueEnable()
+                            .then(() => {
                             resolve();
-                        }).catch(() => {
+                        })
+                            .catch(() => {
                             alert("lecture impossible");
                             reject();
                         });
-                    }).catch(() => {
+                    })
+                        .catch(() => {
                         alert("écriture impossible");
                         reject();
                     });
@@ -1815,55 +1959,70 @@ let GlobalService = class GlobalService {
                     if (this.writeMultipleRegisters == true) {
                         var d = new Date();
                         this.logs.push(" - set string array in holding registers");
-                        this.upcmodbus.client.setStringArrayInHoldingResgisters(variable.adr, value).then(() => {
+                        this.upcmodbus.client
+                            .setStringArrayInHoldingResgisters(variable.adr, value)
+                            .then(() => {
                             var d = new Date();
                             this.logs.push(" - écriture réussie");
                             this.writeMultipleRegisters = false;
                             this.ecritureEnCours = false;
                             this.needToCheckFlags = false;
-                            this.onReadStatiqueEnable().then(() => {
+                            this.onReadStatiqueEnable()
+                                .then(() => {
                                 resolve();
-                            }).catch(() => {
+                            })
+                                .catch(() => {
                                 alert("lecture impossible");
                                 reject();
                             });
-                        }).catch(() => {
+                        })
+                            .catch(() => {
                             this.writeMultipleRegisters = false;
                             alert("écriture impossible");
                             reject();
                         });
                     }
                     else {
-                        this.upcmodbus.client.setStringInHoldingRegister(variable.adr, value).then(() => {
+                        this.upcmodbus.client
+                            .setStringInHoldingRegister(variable.adr, value)
+                            .then(() => {
                             var d = new Date();
                             this.logs.push(" - écriture réussie");
                             this.ecritureEnCours = false;
                             this.needToCheckFlags = false;
-                            this.onReadStatiqueEnable().then(() => {
+                            this.onReadStatiqueEnable()
+                                .then(() => {
                                 resolve();
-                            }).catch(() => {
+                            })
+                                .catch(() => {
                                 alert("lecture impossible");
                                 reject();
                             });
-                        }).catch(() => {
+                        })
+                            .catch(() => {
                             alert("écriture impossible");
                             reject();
                         });
                     }
                 }
                 if (variable.type == "float") {
-                    this.upcmodbus.client.setFloatInHoldingRegister(variable.adr, value).then(() => {
+                    this.upcmodbus.client
+                        .setFloatInHoldingRegister(variable.adr, value)
+                        .then(() => {
                         var d = new Date();
                         this.logs.push(" - écriture réussie");
                         this.ecritureEnCours = false;
                         this.needToCheckFlags = false;
-                        this.onReadStatiqueEnable().then(() => {
+                        this.onReadStatiqueEnable()
+                            .then(() => {
                             resolve();
-                        }).catch(() => {
+                        })
+                            .catch(() => {
                             alert("lecture impossible");
                             reject();
                         });
-                    }).catch(() => {
+                    })
+                        .catch(() => {
                         alert("écriture impossible");
                         reject();
                     });
@@ -1881,9 +2040,20 @@ let GlobalService = class GlobalService {
                     this.logs.push(this.msToTime(dx.getTime()) + " - case on write");
                     this.intv = setInterval(() => {
                         var dy = new Date();
-                        this.logs.push(this.msToTime(dy.getTime()) + " - IN INTERVAL : lc : " + this.lectureCycliqueEnCours + " - e: " + this.ecritureEnCours + " - oc: " + this.onConnectEnCours + "stat : " + this.statutConnexion);
-                        //if(this.statutConnexion == "UPC" && this.lectureCycliqueEnCours != true && this.lectureStatiqueEnCours != true && this.onConnectEnCours != true){  
-                        if (this.statutConnexion == "UPC" && this.lectureCycliqueEnCours != true && this.ecritureEnCours != true && this.onConnectEnCours != true) {
+                        this.logs.push(this.msToTime(dy.getTime()) +
+                            " - IN INTERVAL : lc : " +
+                            this.lectureCycliqueEnCours +
+                            " - e: " +
+                            this.ecritureEnCours +
+                            " - oc: " +
+                            this.onConnectEnCours +
+                            "stat : " +
+                            this.statutConnexion);
+                        //if(this.statutConnexion == "UPC" && this.lectureCycliqueEnCours != true && this.lectureStatiqueEnCours != true && this.onConnectEnCours != true){
+                        if (this.statutConnexion == "UPC" &&
+                            this.lectureCycliqueEnCours != true &&
+                            this.ecritureEnCours != true &&
+                            this.onConnectEnCours != true) {
                             this.ecritureEnCours = true;
                             this.needToCheckFlags = false;
                             var d = new Date();
@@ -1894,7 +2064,10 @@ let GlobalService = class GlobalService {
                     }, loopDelay);
                     setTimeout(() => {
                         if (this.needToCheckFlags == true) {
-                            if (this.lectureCycliqueEnCours == true || this.lectureStatiqueEnCours == true || this.onConnectEnCours == true || this.ecritureEnCours == true) {
+                            if (this.lectureCycliqueEnCours == true ||
+                                this.lectureStatiqueEnCours == true ||
+                                this.onConnectEnCours == true ||
+                                this.ecritureEnCours == true) {
                                 this.needToCheckFlags = false;
                                 clearInterval(this.intv);
                                 var d = new Date();
@@ -1906,7 +2079,10 @@ let GlobalService = class GlobalService {
                     break;
                 case "onReadStatiqueEnable":
                     this.intv = setInterval(() => {
-                        if (this.statutConnexion == "UPC" && this.lectureCycliqueEnCours != true && this.ecritureEnCours != true && this.onConnectEnCours != true) {
+                        if (this.statutConnexion == "UPC" &&
+                            this.lectureCycliqueEnCours != true &&
+                            this.ecritureEnCours != true &&
+                            this.onConnectEnCours != true) {
                             this.lectureStatiqueEnCours = true;
                             this.needToCheckFlags = false;
                             var d = new Date();
@@ -1917,7 +2093,10 @@ let GlobalService = class GlobalService {
                     }, loopDelay);
                     setTimeout(() => {
                         if (this.needToCheckFlags == true) {
-                            if (this.lectureCycliqueEnCours == true || this.ecritureEnCours == true || this.onConnectEnCours == true || this.statutConnexion != "UPC") {
+                            if (this.lectureCycliqueEnCours == true ||
+                                this.ecritureEnCours == true ||
+                                this.onConnectEnCours == true ||
+                                this.statutConnexion != "UPC") {
                                 this.needToCheckFlags = false;
                                 clearInterval(this.intv);
                                 var d = new Date();
@@ -1938,7 +2117,10 @@ let GlobalService = class GlobalService {
             this.intv = setInterval(() => {
                 var dy = new Date();
                 this.logs.push(this.msToTime(dy.getTime()) + " - IN INTERVAL");
-                if (this.statutConnexion == "UPC" && this.lectureCycliqueEnCours != true && this.lectureStatiqueEnCours != true && this.onConnectEnCours != true) {
+                if (this.statutConnexion == "UPC" &&
+                    this.lectureCycliqueEnCours != true &&
+                    this.lectureStatiqueEnCours != true &&
+                    this.onConnectEnCours != true) {
                     this.global.ecritureEnCours = true;
                     this.needToCheckFlags = false;
                     var d = new Date();
@@ -1949,7 +2131,10 @@ let GlobalService = class GlobalService {
             }, loopDelay);
             setTimeout(() => {
                 if (this.needToCheckFlags == true) {
-                    if (this.lectureCycliqueEnCours == true || this.lectureStatiqueEnCours == true || this.onConnectEnCours == true || this.ecritureEnCours == true) {
+                    if (this.lectureCycliqueEnCours == true ||
+                        this.lectureStatiqueEnCours == true ||
+                        this.onConnectEnCours == true ||
+                        this.ecritureEnCours == true) {
                         this.needToCheckFlags = false;
                         clearInterval(this.intv);
                         var d = new Date();
@@ -1971,32 +2156,32 @@ let GlobalService = class GlobalService {
             this.upc3serv.login(user).subscribe((data) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
                 // Check state
                 if (data.result) {
-                    this.storage.set('token', data.result);
-                    this.storage.set('user', user.username);
-                    this.storage.set('pass', user.password);
-                    this.storage.set('remember', 1);
+                    this.storage.set("token", data.result);
+                    this.storage.set("user", user.username);
+                    this.storage.set("pass", user.password);
+                    this.storage.set("remember", 1);
                     this.token = data.result;
                     resolve("");
                 }
                 else {
                     /*// Check code
-                    switch (data.code) {
-                      case 'TOKEN_WRONG_IDENTIFIERS':
-                        let toast = await this.toastCtrl.create({
-                          message: 'Identifiants incorrects !',
-                          duration: 3000,
-                          position: 'top'
-                        });
-                        toast.present();
-                        break;
-                    }*/
+                        switch (data.code) {
+                          case 'TOKEN_WRONG_IDENTIFIERS':
+                            let toast = await this.toastCtrl.create({
+                              message: 'Identifiants incorrects !',
+                              duration: 3000,
+                              position: 'top'
+                            });
+                            toast.present();
+                            break;
+                        }*/
                     reject("");
                 }
             }), (err) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
                 let toast = yield this.toastCtrl.create({
-                    message: 'Impossible de se connecter à internet !',
+                    message: "Impossible de se connecter à internet !",
                     duration: 3000,
-                    position: 'bottom'
+                    position: "bottom",
                 });
                 toast.present();
             }));
@@ -2009,7 +2194,7 @@ let GlobalService = class GlobalService {
         return new Promise((resolve, reject) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
             if (this.upcmodbus != undefined) {
                 this.upcmodbus.client.close();
-                this.upcmodbus = new _model_upcv3_upcmodbus__WEBPACK_IMPORTED_MODULE_5__["UPCModbus"](state => {
+                this.upcmodbus = new _model_upcv3_upcmodbus__WEBPACK_IMPORTED_MODULE_5__["UPCModbus"]((state) => {
                     this.needToCheckState = true;
                     var d = new Date();
                     this.logs.push(" - state : " + state);
@@ -2049,7 +2234,7 @@ let GlobalService = class GlobalService {
                 });
             }
             else {
-                this.upcmodbus = new _model_upcv3_upcmodbus__WEBPACK_IMPORTED_MODULE_5__["UPCModbus"](state => {
+                this.upcmodbus = new _model_upcv3_upcmodbus__WEBPACK_IMPORTED_MODULE_5__["UPCModbus"]((state) => {
                     this.needToCheckState = true;
                     var d = new Date();
                     this.logs.push(" - state : " + state);
@@ -2116,7 +2301,7 @@ let GlobalService = class GlobalService {
                 yield this.storage.set("isCeintureSelected", false),
                 yield this.storage.set("isInterventionEnCours", false),
                 yield this.storage.set("isInterventionNotSaved", false),
-                yield this.storage.set("sequence", "")
+                yield this.storage.set("sequence", ""),
             ]);
             return arr;
         });
@@ -2130,9 +2315,9 @@ let GlobalService = class GlobalService {
         seconds = Math.floor((duration / 1000) % 60);
         minutes = Math.floor((duration / (1000 * 60)) % 60);
         hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-        hours = (hours < 10) ? "0" + hours : hours;
-        minutes = (minutes < 10) ? "0" + minutes : minutes;
-        seconds = (seconds < 10) ? "0" + seconds : seconds;
+        hours = hours < 10 ? "0" + hours : hours;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
         return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
     }
 };
@@ -2153,7 +2338,7 @@ GlobalService.ctorParameters = () => [
 ];
 GlobalService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
-        providedIn: 'root'
+        providedIn: "root",
     }),
     tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["Platform"],
         _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["LoadingController"],
@@ -6130,6 +6315,8 @@ class UPCModbus {
                             var res3 = yield this.client.readHoldingRegisters(this.correspondancesRegistres.upcStatus.adr, 89);
                             //40376
                             this.general.upcStatus = res3[0];
+                            var resx = yield this.client.readHoldingRegisters(this.correspondancesRegistres.upcCo2DiffLvl.adr, 1);
+                            this.diffusions.upcCo2DiffLvl = resx[0];
                             console.log("||||||||||||||||||||||||||||||||||||-");
                             console.log("upc status : ", this.general.upcStatus);
                             //40451

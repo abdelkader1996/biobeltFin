@@ -131,5 +131,5 @@
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
-    <preference name="android-targetSdkVersion" value="31" />
+    <preference name="android-targetSdkVersion" value="29" />
 </widget>

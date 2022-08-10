@@ -645,156 +645,157 @@ var GlobalService = /** @class */ (function () {
         this.password = "";
         this.appPagesModeIntervention = [
             {
-                title: "Logs",
-                url: "/debug"
-            },
-            {
                 title: "Intervention sur Ceinture",
                 url: "/interventionceinture",
-                icon: "hammer"
+                icon: "hammer",
             },
             {
                 title: "Paramètres Généraux UPC",
-                url: "/namepiege"
+                url: "/namepiege",
+            },
+            /*
+            {
+              title : "Initialisation / Echange boitier UPC",
+              url : "/initechangeboitierupc"
+            }
+            
+            ,
+            {
+              title : "Modification du nombre de pièges",
+              url : "/modifnbpieges"
             },
             {
-                title: "Initialisation / Echange boitier UPC",
-                url: "/initechangeboitierupc"
+              title : "Vérification débits pièges individuels",
+              url : "/verifpiegesindividuels"
+            }
+            
+            */ {
+                title: "Changement de bouteilles sur ceinture",
+                url: "/addbottleceint",
+                icon: "barcode",
+            },
+            /*
+            {
+              title: 'Réglage des détendeurs',
+              url: '/adjustment',
+              icon: 'return-right'
             },
             {
-                title: "Modification du nombre de pièges",
-                url: "/modifnbpieges"
-            },
-            {
-                title: "Vérification débits pièges individuels",
-                url: "/verifpiegesindividuels"
-            },
-            {
-                title: 'Changement de bouteilles sur ceinture',
-                url: '/addbottleceint',
-                icon: 'barcode'
-            },
-            {
-                title: 'Réglage des détendeurs',
-                url: '/adjustment',
-                icon: 'return-right'
-            },
-            {
-                title: "Contrôle débits Mini/Maxi",
-                url: "/controldiff",
-                icon: "infinite",
-            },
-            {
-                title: 'Programmation',
-                icon: 'sunny',
+              title : "Contrôle débits Mini/Maxi",
+              url : "/controldiff",
+              icon : "infinite",
+            }
+            
+            */ {
+                title: "Programmation",
+                icon: "sunny",
                 url: "/synchro",
             },
             {
                 title: "Etat de la Connexion",
                 icon: "globe",
-                url: "/connection"
+                url: "/connection",
             },
             {
                 title: "Contrôles débits et pressions CO2",
-                url: "/cdiff"
+                url: "/cdiff",
             },
+            /*
             {
-                title: "Mesure des pressions de sortie",
-                url: "/check",
-            },
-            {
+              title : "Mesure des pressions de sortie",
+              url : "/check",
+            }
+            
+            */ {
                 title: "Paramètre de Communication",
                 url: "/comunicationparam",
-                icon: "wifi"
+                icon: "wifi",
             },
             {
                 title: "Paramètre d'Alarme",
                 url: "/alarmparam",
-                icon: "alarm"
+                icon: "alarm",
             },
-            {
-                title: "Commentaires",
-                url: "/commentaires"
-            },
-            {
-                title: "Rapport de visite",
-                url: "/rapportvisite"
-            },
-            {
-                title: "Fin d'intervention",
-                url: "/finintervention"
-            }
         ];
         this.appPagesModeMvtBouteilles = [
             {
                 title: "Mouvements de bouteilles",
-                url: "/optionbottle"
-            }
+                url: "/optionbottle",
+            },
         ];
         this.appPagesModeTest = [
             {
-                title: "Logs",
-                url: "/debug"
+                title: "Intervention sur Ceinture",
+                url: "/interventionceinture",
+                icon: "hammer",
             },
             {
                 title: "Paramètres Généraux UPC",
-                url: "/namepiege"
+                url: "/namepiege",
+            },
+            /*
+            {
+              title : "Initialisation / Echange boitier UPC",
+              url : "/initechangeboitierupc"
+            }
+            
+            ,
+            {
+              title : "Modification du nombre de pièges",
+              url : "/modifnbpieges"
             },
             {
-                title: "Initialisation / Echange boitier UPC",
-                url: "/initechangeboitierupc"
+              title : "Vérification débits pièges individuels",
+              url : "/verifpiegesindividuels"
+            }
+            
+            */ {
+                title: "Changement de bouteilles sur ceinture",
+                url: "/addbottleceint",
+                icon: "barcode",
+            },
+            /*
+            {
+              title: 'Réglage des détendeurs',
+              url: '/adjustment',
+              icon: 'return-right'
             },
             {
-                title: "Modification du nombre de pièges",
-                url: "/modifnbpieges"
-            },
-            {
-                title: "Vérification débits pièges individuels",
-                url: "/verifpiegesindividuels"
-            },
-            {
-                title: 'Changement de bouteilles sur ceinture',
-                url: '/addbottleceint',
-                icon: 'barcode'
-            },
-            {
-                title: 'Réglage des détendeurs',
-                url: '/adjustment',
-                icon: 'return-right'
-            },
-            {
-                title: "Contrôle débits Mini/Maxi",
-                url: "/controldiff",
-                icon: "infinite",
-            },
-            {
-                title: 'Programmation',
-                icon: 'sunny',
+              title : "Contrôle débits Mini/Maxi",
+              url : "/controldiff",
+              icon : "infinite",
+            }
+            
+            */ {
+                title: "Programmation",
+                icon: "sunny",
                 url: "/synchro",
             },
             {
                 title: "Etat de la Connexion",
                 icon: "globe",
-                url: "/connection"
+                url: "/connection",
             },
             {
                 title: "Contrôles débits et pressions CO2",
-                url: "/cdiff"
+                url: "/cdiff",
             },
+            /*
             {
-                title: "Mesure des pressions de sortie",
-                url: "/check",
-            },
-            {
+              title : "Mesure des pressions de sortie",
+              url : "/check",
+            }
+            
+            */ {
                 title: "Paramètre de Communication",
                 url: "/comunicationparam",
-                icon: "wifi"
+                icon: "wifi",
             },
             {
                 title: "Paramètre d'Alarme",
                 url: "/alarmparam",
-                icon: "alarm"
-            }
+                icon: "alarm",
+            },
         ];
         this.pages = [];
         this.logs = [];
@@ -814,8 +815,8 @@ var GlobalService = /** @class */ (function () {
         this.writeMultipleRegisters = false;
         this.codebarsB1 = []; //codebars formés avec le code upc et les caractères nuls
         this.codebarsB1SansCodeUpc = [];
-        this.stringsB1 = []; //strings créées avec le type de bouteille (affichées sur la page) 
-        this.contenusB1 = []; //contenus des bouteilles en B1 
+        this.stringsB1 = []; //strings créées avec le type de bouteille (affichées sur la page)
+        this.contenusB1 = []; //contenus des bouteilles en B1
         this.contenantB1 = 0;
         this.isAddedB1 = [];
         this.bottleInconnuesB1 = []; //bouteilles inconnues ajoutées depuis l'admin sans barcode
@@ -825,8 +826,8 @@ var GlobalService = /** @class */ (function () {
         this.codebarsB2 = []; //codebars formés avec le code upc et les caractères nuls
         this.codebarsB2SansCodeUpc = [];
         this.contenantB2 = 0;
-        this.stringsB2 = []; //strings créées avec le type de bouteille (affichées sur la page) 
-        this.contenusB2 = []; //désignations des bouteilles en B2 
+        this.stringsB2 = []; //strings créées avec le type de bouteille (affichées sur la page)
+        this.contenusB2 = []; //désignations des bouteilles en B2
         this.isAddedB2 = [];
         this.bottleInconnuesB2 = []; //bouteilles inconnues ajoutées depuis l'admin sans barcode
         this.contenuAjouteEnB2 = 0;
@@ -856,7 +857,7 @@ var GlobalService = /** @class */ (function () {
                         switch (_a.label) {
                             case 0: return [4 /*yield*/, this.loadingCTRL.create({
                                     message: "Synchronisation avec le Serveur en cours...",
-                                    duration: 10000
+                                    duration: 10000,
                                 })];
                             case 1:
                                 loading = _a.sent();
@@ -881,13 +882,13 @@ var GlobalService = /** @class */ (function () {
             var jsonB2 = JSON.parse(localStorage.getItem("bottleB2"));
             jsonB2.endate = new Date().toISOString().substr(0, 16);
             if (this.platform.is("ios")) {
-                WifiWizard2.iOSDisconnectNetwork(("BBAM")).then(function (res) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                WifiWizard2.iOSDisconnectNetwork("BBAM").then(function (res) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
                     var loading;
                     return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                         switch (_a.label) {
                             case 0: return [4 /*yield*/, this.loadingCTRL.create({
                                     message: "Synchronisation avec le Serveur en cours...",
-                                    duration: 10000
+                                    duration: 10000,
                                 })];
                             case 1:
                                 loading = _a.sent();
@@ -907,7 +908,7 @@ var GlobalService = /** @class */ (function () {
                         switch (_a.label) {
                             case 0: return [4 /*yield*/, this.loadingCTRL.create({
                                     message: "Synchronisation avec le Serveur en cours...",
-                                    duration: 10000
+                                    duration: 10000,
                                 })];
                             case 1:
                                 loading = _a.sent();
@@ -927,7 +928,11 @@ var GlobalService = /** @class */ (function () {
             var toast;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.toastCtrl.create({ message: "Veuillez vous connectez au WiFi de l'UPC", duration: 4000, position: "middle" })];
+                    case 0: return [4 /*yield*/, this.toastCtrl.create({
+                            message: "Veuillez vous connectez au WiFi de l'UPC",
+                            duration: 4000,
+                            position: "middle",
+                        })];
                     case 1:
                         toast = _a.sent();
                         toast.present();
@@ -941,7 +946,11 @@ var GlobalService = /** @class */ (function () {
             var toast;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.toastCtrl.create({ message: "Echec lors de la communication avec l'UPC", duration: 4000, position: "middle" })];
+                    case 0: return [4 /*yield*/, this.toastCtrl.create({
+                            message: "Echec lors de la communication avec l'UPC",
+                            duration: 4000,
+                            position: "middle",
+                        })];
                     case 1:
                         toast = _a.sent();
                         toast.present();
@@ -955,7 +964,11 @@ var GlobalService = /** @class */ (function () {
             var toast;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.toastCtrl.create({ message: "Erreur lors de la connexion automatique ! Veuillez vous connecter manuellement via les Réglages!", duration: 4000, position: "middle" })];
+                    case 0: return [4 /*yield*/, this.toastCtrl.create({
+                            message: "Erreur lors de la connexion automatique ! Veuillez vous connecter manuellement via les Réglages!",
+                            duration: 4000,
+                            position: "middle",
+                        })];
                     case 1:
                         toast = _a.sent();
                         toast.present();
@@ -1027,13 +1040,11 @@ var GlobalService = /** @class */ (function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        //debug 
+                        //debug
                         _a = this;
-                        return [4 /*yield*/, WifiWizard2.getConnectedSSID()
-                            //
-                        ];
+                        return [4 /*yield*/, WifiWizard2.getConnectedSSID()];
                     case 1:
-                        //debug 
+                        //debug
                         _a.currentssid = _b.sent();
                         d = new Date();
                         if (this.connexionRequise == "Aucune") {
@@ -1045,7 +1056,9 @@ var GlobalService = /** @class */ (function () {
                             res = this.storage.get("ssid").then(function (res) {
                                 _this.ssid = res;
                                 var d = new Date();
-                                _this.diagnostic.isWifiEnabled().then(function (res2) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                                _this.diagnostic
+                                    .isWifiEnabled()
+                                    .then(function (res2) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
                                     var d, d2, d, d, d, d, d, d, d, d, d, d, d;
                                     var _this = this;
                                     return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
@@ -1060,10 +1073,11 @@ var GlobalService = /** @class */ (function () {
                                                 //alert(this.msToTime(d2.getTime())+" - res : "+res)
                                                 this.currentssid = res;
                                                 d = new Date();
-                                                if (this.ssid == undefined || this.ssid == "") { //ssid vide 
+                                                if (this.ssid == undefined || this.ssid == "") {
                                                     d = new Date();
                                                     this.appelOnConnectModbus = true;
-                                                    this.onConnectModbus().then(function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                                                    this.onConnectModbus()
+                                                        .then(function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
                                                         var d;
                                                         return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                                                             switch (_a.label) {
@@ -1071,7 +1085,7 @@ var GlobalService = /** @class */ (function () {
                                                                     d = new Date();
                                                                     this.appelOnConnectModbus = false;
                                                                     if (!(this.mode != "modeTest")) return [3 /*break*/, 2];
-                                                                    return [4 /*yield*/, this.storage.set("ssid", this.currentssid)]; //le ssid par défaut devient celui auquel on est connecté
+                                                                    return [4 /*yield*/, this.storage.set("ssid", this.currentssid)];
                                                                 case 1:
                                                                     _a.sent(); //le ssid par défaut devient celui auquel on est connecté
                                                                     this.ssid = this.currentssid;
@@ -1082,7 +1096,8 @@ var GlobalService = /** @class */ (function () {
                                                                     return [2 /*return*/];
                                                             }
                                                         });
-                                                    }); }).catch(function (err) {
+                                                    }); })
+                                                        .catch(function (err) {
                                                         var d = new Date();
                                                         _this.appelOnConnectModbus = false;
                                                         if (!window.confirm("La connexion à l'UPC n'a pas pu être établie. Rapprochez-vous et raccordez-vous à l'UPC puis appuyez sur 'OK'.")) {
@@ -1096,17 +1111,19 @@ var GlobalService = /** @class */ (function () {
                                                         }
                                                     });
                                                 }
-                                                else { //ssid non vide  
+                                                else {
                                                     d = new Date();
-                                                    if (this.currentssid == this.ssid) { //le ssid du réseau auquel on est connecté est le même que celui de la ceinture sélectionnée
+                                                    if (this.currentssid == this.ssid) {
                                                         d = new Date();
                                                         this.appelOnConnectModbus = true;
-                                                        this.onConnectModbus().then(function () {
+                                                        this.onConnectModbus()
+                                                            .then(function () {
                                                             _this.appelOnConnectModbus = false;
                                                             _this.statutConnexion = "UPC";
                                                             _this.perteConnexion = false;
                                                             resolve("");
-                                                        }).catch(function (err) {
+                                                        })
+                                                            .catch(function (err) {
                                                             var d = new Date();
                                                             _this.appelOnConnectModbus = false;
                                                             if (!window.confirm("La connexion à l'UPC n'a pas pu être établie. Rapprochez-vous et raccordez-vous à l'UPC puis appuyez sur 'OK'.")) {
@@ -1120,9 +1137,9 @@ var GlobalService = /** @class */ (function () {
                                                             }
                                                         });
                                                     }
-                                                    else { //le ssid du réseau auquel on est connecté est différent de celui de la ceinture sélectionnée
+                                                    else {
                                                         d = new Date();
-                                                        //if(this.perteConnexion != true){                    
+                                                        //if(this.perteConnexion != true){
                                                         if (this.platform.is("android")) {
                                                             this.logs.push(" - android");
                                                             this.logs.push(" - ssid : " + this.ssid);
@@ -1130,10 +1147,12 @@ var GlobalService = /** @class */ (function () {
                                                                 var password = res;
                                                                 var d = new Date();
                                                                 _this.logs.push(" - appel wifiwizard2.connect()");
-                                                                WifiWizard2.connect(_this.ssid, password).then(function () {
+                                                                WifiWizard2.connect(_this.ssid, password)
+                                                                    .then(function () {
                                                                     var d = new Date();
                                                                     _this.appelOnConnectModbus = true;
-                                                                    _this.onConnectModbus().then(function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                                                                    _this.onConnectModbus()
+                                                                        .then(function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
                                                                         return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                                                                             this.appelOnConnectModbus = false;
                                                                             this.currentssid = this.ssid;
@@ -1141,7 +1160,8 @@ var GlobalService = /** @class */ (function () {
                                                                             resolve("");
                                                                             return [2 /*return*/];
                                                                         });
-                                                                    }); }).catch(function (err) {
+                                                                    }); })
+                                                                        .catch(function (err) {
                                                                         var d = new Date();
                                                                         _this.statutConnexion = "Aucune";
                                                                         if (!window.confirm("La connexion à l'UPC n'a pas pu être établie. Rapprochez-vous et raccordez-vous à l'UPC puis appuyez sur 'OK'.")) {
@@ -1154,7 +1174,11 @@ var GlobalService = /** @class */ (function () {
                                                                             resolve("");
                                                                         }
                                                                     });
-                                                                }).catch(function () { var d = new Date(); _this.logs.push(" - fail connect"); });
+                                                                })
+                                                                    .catch(function () {
+                                                                    var d = new Date();
+                                                                    _this.logs.push(" - fail connect");
+                                                                });
                                                             });
                                                         }
                                                         else {
@@ -1165,12 +1189,15 @@ var GlobalService = /** @class */ (function () {
                                                                     var password = res;
                                                                     var d4 = new Date();
                                                                     _this.logs.push(" - password : " + password);
-                                                                    _this.logs.push(" - appel wifiwizard2 iOSConnectNetwork : " + password);
-                                                                    WifiWizard2.iOSConnectNetwork(_this.ssid, password).then(function () {
+                                                                    _this.logs.push(" - appel wifiwizard2 iOSConnectNetwork : " +
+                                                                        password);
+                                                                    WifiWizard2.iOSConnectNetwork(_this.ssid, password)
+                                                                        .then(function () {
                                                                         var d = new Date();
                                                                         _this.logs.push(" - connected to upc wifi");
                                                                         _this.appelOnConnectModbus = true;
-                                                                        _this.onConnectModbus().then(function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                                                                        _this.onConnectModbus()
+                                                                            .then(function () { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
                                                                             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                                                                                 this.appelOnConnectModbus = false;
                                                                                 this.logs.push(" - connexion Modbus réussie");
@@ -1179,7 +1206,8 @@ var GlobalService = /** @class */ (function () {
                                                                                 resolve("");
                                                                                 return [2 /*return*/];
                                                                             });
-                                                                        }); }).catch(function (err) {
+                                                                        }); })
+                                                                            .catch(function (err) {
                                                                             var d = new Date();
                                                                             _this.statutConnexion = "Aucune";
                                                                             _this.logs.push(" - statut connexion : Aucune ");
@@ -1196,18 +1224,22 @@ var GlobalService = /** @class */ (function () {
                                                                                 resolve("");
                                                                             }
                                                                         });
-                                                                    }).catch(function (err) { var d = new Date(); _this.logs.push(" - fail connect :" + JSON.stringify(err)); });
+                                                                    })
+                                                                        .catch(function (err) {
+                                                                        var d = new Date();
+                                                                        _this.logs.push(" - fail connect :" + JSON.stringify(err));
+                                                                    });
                                                                 });
                                                             }
                                                         }
-                                                        //}                   
+                                                        //}
                                                     }
                                                 }
                                                 return [3 /*break*/, 3];
                                             case 2:
                                                 d = new Date();
                                                 this.logs.push(" - wifi désactivé");
-                                                if (this.ssid == undefined || this.ssid == "") { //ssid vide
+                                                if (this.ssid == undefined || this.ssid == "") {
                                                     d = new Date();
                                                     this.logs.push(" - ssid vide : " + this.ssid);
                                                     this.logs.push(" - statut connexion : Aucune ");
@@ -1226,20 +1258,22 @@ var GlobalService = /** @class */ (function () {
                                                         resolve("");
                                                     }
                                                 }
-                                                else { //ssid non vide
+                                                else {
                                                     d = new Date();
                                                     this.logs.push(" - ssid stocké non vide");
                                                     this.storage.get("password").then(function (res) {
                                                         var password = res;
                                                         if (_this.platform.is("android")) {
                                                             _this.logs.push(" - ssid : " + _this.ssid + " - password : " + password);
-                                                            WifiWizard2.connect(_this.ssid, password).then(function (res) {
+                                                            WifiWizard2.connect(_this.ssid, password)
+                                                                .then(function (res) {
                                                                 var d = new Date();
                                                                 _this.logs.push(" - connexion au point d'accès réussie");
                                                                 _this.currentssid = _this.ssid;
                                                                 _this.logs.push(" - current ssid : " + _this.ssid);
                                                                 _this.appelOnConnectModbus = true;
-                                                                _this.onConnectModbus().then(function () {
+                                                                _this.onConnectModbus()
+                                                                    .then(function () {
                                                                     var d = new Date();
                                                                     _this.appelOnConnectModbus = false;
                                                                     _this.logs.push(" - connexion Modbus réussie");
@@ -1247,14 +1281,17 @@ var GlobalService = /** @class */ (function () {
                                                                     _this.currentssid = _this.ssid;
                                                                     _this.perteConnexion = false;
                                                                     resolve("");
-                                                                }).catch(function (err) {
+                                                                })
+                                                                    .catch(function (err) {
                                                                     var d = new Date();
                                                                     _this.appelOnConnectModbus = false;
                                                                     _this.logs.push(" - connexion Modbus échouée");
                                                                     setTimeout(function () {
                                                                         var d2 = new Date();
-                                                                        _this.logs.push(_this.msToTime(d2.getTime()) + " - Nouvelle tentative connexion modbus");
-                                                                        _this.onConnectModbus().then(function () {
+                                                                        _this.logs.push(_this.msToTime(d2.getTime()) +
+                                                                            " - Nouvelle tentative connexion modbus");
+                                                                        _this.onConnectModbus()
+                                                                            .then(function () {
                                                                             var d = new Date();
                                                                             _this.appelOnConnectModbus = false;
                                                                             _this.logs.push(" - connexion Modbus réussie");
@@ -1262,7 +1299,8 @@ var GlobalService = /** @class */ (function () {
                                                                             _this.currentssid = _this.ssid;
                                                                             _this.perteConnexion = false;
                                                                             resolve("");
-                                                                        }).catch(function (err) {
+                                                                        })
+                                                                            .catch(function (err) {
                                                                             var d = new Date();
                                                                             _this.appelOnConnectModbus = false;
                                                                             _this.logs.push(" - connexion Modbus échouée");
@@ -1281,10 +1319,13 @@ var GlobalService = /** @class */ (function () {
                                                                         });
                                                                     }, 1000);
                                                                 });
-                                                            }).catch(function (err) {
+                                                            })
+                                                                .catch(function (err) {
+                                                                //connexion au point d'accès échouée
                                                                 _this.statutConnexion = "Aucune";
                                                                 var d = new Date();
-                                                                _this.logs.push(" - connexion au point d'accès échouée : " + JSON.stringify(err));
+                                                                _this.logs.push(" - connexion au point d'accès échouée : " +
+                                                                    JSON.stringify(err));
                                                                 _this.statutConnexion = "Aucune";
                                                                 _this.logs.push(" - statut connexion : Aucune ");
                                                                 _this.logs.push(" - présentation alerte connexion upc : ");
@@ -1305,11 +1346,13 @@ var GlobalService = /** @class */ (function () {
                                                             if (_this.platform.is("ios")) {
                                                                 _this.storage.get("password").then(function (res) {
                                                                     var password = res;
-                                                                    WifiWizard2.iOSConnectNetwork(_this.ssid, password).then(function () {
+                                                                    WifiWizard2.iOSConnectNetwork(_this.ssid, password)
+                                                                        .then(function () {
                                                                         var d = new Date();
                                                                         _this.logs.push(" - connexion au point d'accès réussie");
                                                                         _this.appelOnConnectModbus = true;
-                                                                        _this.onConnectModbus().then(function (res) {
+                                                                        _this.onConnectModbus()
+                                                                            .then(function (res) {
                                                                             var d = new Date();
                                                                             _this.appelOnConnectModbus = false;
                                                                             _this.logs.push(" - connexion Modbus réussie");
@@ -1317,7 +1360,8 @@ var GlobalService = /** @class */ (function () {
                                                                             _this.currentssid = _this.ssid;
                                                                             _this.perteConnexion = false;
                                                                             resolve("");
-                                                                        }).catch(function (err) {
+                                                                        })
+                                                                            .catch(function (err) {
                                                                             var d = new Date();
                                                                             _this.appelOnConnectModbus = false;
                                                                             _this.logs.push(" - connexion Modbus échouée");
@@ -1334,9 +1378,12 @@ var GlobalService = /** @class */ (function () {
                                                                                 resolve("");
                                                                             }
                                                                         });
-                                                                    }).catch(function (err) {
+                                                                    })
+                                                                        .catch(function (err) {
+                                                                        //connexion au point d'accès échouée
                                                                         var d = new Date();
-                                                                        _this.logs.push(" - connexion au point d'accès échouée : " + JSON.stringify(err));
+                                                                        _this.logs.push(" - connexion au point d'accès échouée : " +
+                                                                            JSON.stringify(err));
                                                                         _this.statutConnexion = "Aucune";
                                                                         _this.logs.push(" - statut connexion : Aucune ");
                                                                         _this.logs.push(" - présentation alerte connexion upc : ");
@@ -1361,7 +1408,8 @@ var GlobalService = /** @class */ (function () {
                                             case 3: return [2 /*return*/];
                                         }
                                     });
-                                }); }).catch(function (err) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
+                                }); })
+                                    .catch(function (err) { return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this, void 0, void 0, function () {
                                     var d, pass;
                                     var _this = this;
                                     return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
@@ -1370,23 +1418,29 @@ var GlobalService = /** @class */ (function () {
                                                 d = new Date();
                                                 this.logs.push(" - Erreur fonction isWifiEnabled : " + JSON.stringify(err));
                                                 this.logs.push(" - wifi non connecté");
-                                                return [4 /*yield*/, this.storage.get("password")
-                                                    //if(this.perteConnexion == true){
-                                                ];
+                                                return [4 /*yield*/, this.storage.get("password")];
                                             case 1:
                                                 pass = _a.sent();
                                                 //if(this.perteConnexion == true){
                                                 this.logs.push(" - appel wifiwizard2.connect() - wifi non connecté");
-                                                WifiWizard2.connect(this.ssid, pass).then(function (res) {
+                                                WifiWizard2.connect(this.ssid, pass)
+                                                    .then(function (res) {
                                                     var d10 = new Date();
-                                                    _this.logs.push(_this.msToTime(d10.getTime()) + " -connexion établie : " + res);
+                                                    _this.logs.push(_this.msToTime(d10.getTime()) +
+                                                        " -connexion établie : " +
+                                                        res);
                                                     resolve("");
-                                                }).catch(function (err) {
+                                                })
+                                                    .catch(function (err) {
                                                     _this.statutConnexion = "Aucune";
                                                     var d11 = new Date();
-                                                    _this.logs.push(_this.msToTime(d11.getTime()) + " -connexion échouée : " + err);
-                                                    _this.logs.push(_this.msToTime(d11.getTime()) + " - statut connexion : Aucune ");
-                                                    _this.logs.push(_this.msToTime(d11.getTime()) + " - présentation alerte connexion upc : ");
+                                                    _this.logs.push(_this.msToTime(d11.getTime()) +
+                                                        " -connexion échouée : " +
+                                                        err);
+                                                    _this.logs.push(_this.msToTime(d11.getTime()) +
+                                                        " - statut connexion : Aucune ");
+                                                    _this.logs.push(_this.msToTime(d11.getTime()) +
+                                                        " - présentation alerte connexion upc : ");
                                                     if (!window.confirm("La page a besoin d'être connecté à l'UPC. Connectez-vous à l'UPC puis appuyez sur 'OK'.")) {
                                                         var d = new Date();
                                                         _this.logs.push(" - réponse utilisateur : annuler");
@@ -1411,9 +1465,14 @@ var GlobalService = /** @class */ (function () {
                             this.logs.push(" - connexion requise : serveur");
                             if (error.status == 403) {
                                 this.logs.push(" - erreur 403");
-                                this.login().then(function () {
-                                    resolve('retry');
-                                }).catch(function () { alert("login failed"); resolve(""); });
+                                this.login()
+                                    .then(function () {
+                                    resolve("retry");
+                                })
+                                    .catch(function () {
+                                    alert("login failed");
+                                    resolve("");
+                                });
                             }
                             else {
                                 if (window.confirm("Une connexion internet est requise pour cette page. Raccordez-vous à internet puis appuyez sur 'OK'.")) {
@@ -1446,15 +1505,19 @@ var GlobalService = /** @class */ (function () {
                 console.log(" - ecriture : " + this.ecritureEnCours);
                 console.log(" - onConnect : " + this.onConnectEnCours);
                 console.log(" - statut connexion : " + this.statutConnexion);
-                if (this.ecritureEnCours == true || this.lectureCycliqueEnCours == true || this.onConnectEnCours == true || this.statutConnexion != "UPC") {
+                if (this.ecritureEnCours == true ||
+                    this.lectureCycliqueEnCours == true ||
+                    this.onConnectEnCours == true ||
+                    this.statutConnexion != "UPC") {
                     this.lectureStatiqueEnCours = false;
                     d = new Date();
                     console.log(" -attente onReadStatique  ( il y a une opreation en cours :)");
-                    this.onWait(50, 60000, "onReadStatiqueEnable").then(function () {
+                    this.onWait(50, 60000, "onReadStatiqueEnable")
+                        .then(function () {
                         var d = new Date();
                         _this.logs.push(" - fin d'attente onReadStatique ");
-                        //var d=new Date() 
-                        //this.logs.push( " - statut connexion = UPC")           
+                        //var d=new Date()
+                        //this.logs.push( " - statut connexion = UPC")
                         if (_this.upcmodbus != undefined) {
                             _this.storage.get("upcname").then(function (res) {
                                 _this.upcname = res;
@@ -1478,14 +1541,17 @@ var GlobalService = /** @class */ (function () {
                                     _this.contenusB2 = [];
                                     _this.stringsB2 = [];
                                 }
-                                _this.upcmodbus.onReadStatique(_this.upcname, _this.mode, urlFinal).then(function (res) {
+                                _this.upcmodbus
+                                    .onReadStatique(_this.upcname, _this.mode, urlFinal)
+                                    .then(function (res) {
                                     if (res == true) {
                                         //var d=new Date()
                                         console.log(" - lecture réussie");
                                         _this.events.publish("loadParameters");
                                         _this.lectureStatiqueEnCours = false;
                                         var d = new Date();
-                                        console.log("durée lecture statique : " + (d.getTime() - _this.startReadDate.getTime()));
+                                        console.log("durée lecture statique : " +
+                                            (d.getTime() - _this.startReadDate.getTime()));
                                         _this.displayLoading = false;
                                         resolve();
                                     }
@@ -1519,37 +1585,48 @@ var GlobalService = /** @class */ (function () {
                                                 else {
                                                     if (res.object.errCode != undefined) {
                                                         var d = new Date();
-                                                        console.log(" (onread sataique erreur)- " + res.object.errCode + " - bloc :" + res.object.bloc);
+                                                        console.log(" (onread sataique erreur)- " +
+                                                            res.object.errCode +
+                                                            " - bloc :" +
+                                                            res.object.bloc);
                                                         console.log(" - statut connexion : Aucune ");
                                                         _this.statutConnexion = "Aucune";
                                                         //this.onConnect(res.object.errCode).then(res=>{
                                                         _this.lectureStatiqueEnCours = false;
                                                         _this.displayLoading = false;
                                                         resolve();
-                                                        //})    
+                                                        //})
                                                     }
                                                     else {
                                                         var d = new Date();
-                                                        console.log(" - " + JSON.stringify(res.object) + " - bloc :" + res.object.bloc);
+                                                        console.log(" - " +
+                                                            JSON.stringify(res.object) +
+                                                            " - bloc :" +
+                                                            res.object.bloc);
                                                         _this.logs.push(" - statut connexion : Aucune ");
                                                         _this.statutConnexion = "Aucune";
                                                         //this.onConnect(res.object.errCode).then(res=>{
                                                         _this.lectureStatiqueEnCours = false;
                                                         _this.displayLoading = false;
                                                         resolve();
-                                                        //})  
+                                                        //})
                                                     }
                                                 }
                                             }
                                         }
                                     }
-                                }).catch(function (err) {
+                                })
+                                    .catch(function (err) {
                                     var d = new Date();
-                                    console.log(" - catch onReadStatique modbus  : " + JSON.stringify(err) + "; on connect : " + _this.onConnectEnCours);
+                                    console.log(" - catch onReadStatique modbus  : " +
+                                        JSON.stringify(err) +
+                                        "; on connect : " +
+                                        _this.onConnectEnCours);
                                     _this.perteConnexion = true;
                                     _this.statutConnexion = "Aucune";
                                     if (_this.onConnectEnCours == false) {
-                                        _this.onConnect("UPC").then(function (res) {
+                                        _this.onConnect("UPC")
+                                            .then(function (res) {
                                             _this.lectureStatiqueEnCours = false;
                                             _this.displayLoading = false;
                                             _this.onConnectEnCours = false;
@@ -1557,7 +1634,8 @@ var GlobalService = /** @class */ (function () {
                                             _this.onReadStatiqueEnable().then(function () {
                                                 resolve();
                                             });
-                                        }).catch(function () {
+                                        })
+                                            .catch(function () {
                                             _this.lectureStatiqueEnCours = false;
                                             _this.displayLoading = false;
                                             _this.onConnectEnCours = false;
@@ -1577,7 +1655,8 @@ var GlobalService = /** @class */ (function () {
                             _this.displayLoading = false;
                             resolve();
                         }
-                    }).catch(function () {
+                    })
+                        .catch(function () {
                         alert("lecture impossible");
                         _this.displayLoading = false;
                         reject();
@@ -1585,8 +1664,8 @@ var GlobalService = /** @class */ (function () {
                 }
                 else {
                     /* pas de lecture cyclique en cours ni d'écriture ni de onConnect donc lecture statique possible */
-                    //var d=new Date() 
-                    //this.logs.push( " - statut connexion = UPC")           
+                    //var d=new Date()
+                    //this.logs.push( " - statut connexion = UPC")
                     if (this.upcmodbus != undefined) {
                         this.storage.get("upcname").then(function (res) {
                             _this.upcname = res;
@@ -1597,14 +1676,17 @@ var GlobalService = /** @class */ (function () {
                             var splittedUrl = url.split("/");
                             var urlFinal = splittedUrl[1];
                             _this.logs.push(" - page : " + urlFinal);
-                            _this.upcmodbus.onReadStatique(_this.upcname, _this.mode, urlFinal).then(function (res) {
+                            _this.upcmodbus
+                                .onReadStatique(_this.upcname, _this.mode, urlFinal)
+                                .then(function (res) {
                                 if (res == true) {
                                     //var d=new Date()
                                     //this.logs.push( " - lecture réussie")
                                     _this.events.publish("loadParameters");
                                     _this.lectureStatiqueEnCours = false;
                                     var d = new Date();
-                                    _this.logs.push("durée lecture statique : " + (d.getTime() - _this.startReadDate.getTime()));
+                                    _this.logs.push("durée lecture statique : " +
+                                        (d.getTime() - _this.startReadDate.getTime()));
                                     _this.displayLoading = false;
                                     resolve();
                                 }
@@ -1638,44 +1720,56 @@ var GlobalService = /** @class */ (function () {
                                             else {
                                                 if (res.object.errCode != undefined) {
                                                     var d = new Date();
-                                                    _this.logs.push(" - " + res.object.errCode + " - bloc :" + res.object.bloc);
+                                                    _this.logs.push(" - " +
+                                                        res.object.errCode +
+                                                        " - bloc :" +
+                                                        res.object.bloc);
                                                     _this.logs.push(" - statut connexion : Aucune ");
                                                     _this.statutConnexion = "Aucune";
                                                     //this.onConnect(res.object.errCode).then(res=>{
                                                     _this.lectureStatiqueEnCours = false;
                                                     _this.displayLoading = false;
                                                     resolve();
-                                                    //})    
+                                                    //})
                                                 }
                                                 else {
                                                     var d = new Date();
-                                                    _this.logs.push(" - " + JSON.stringify(res.object) + " - bloc :" + res.object.bloc);
+                                                    _this.logs.push(" - " +
+                                                        JSON.stringify(res.object) +
+                                                        " - bloc :" +
+                                                        res.object.bloc);
                                                     _this.logs.push(" - statut connexion : Aucune ");
                                                     _this.statutConnexion = "Aucune";
                                                     //this.onConnect(res.object.errCode).then(res=>{
                                                     _this.lectureStatiqueEnCours = false;
                                                     _this.displayLoading = false;
                                                     resolve();
-                                                    //})  
+                                                    //})
                                                 }
                                             }
                                         }
                                     }
                                 }
-                            }).catch(function (err) {
+                            })
+                                .catch(function (err) {
                                 var d = new Date();
-                                _this.logs.push(" - catch onReadStatique : " + JSON.stringify(err) + "; on connect : " + _this.onConnectEnCours);
+                                _this.logs.push(" - catch onReadStatique : " +
+                                    JSON.stringify(err) +
+                                    "; on connect : " +
+                                    _this.onConnectEnCours);
                                 _this.perteConnexion = true;
                                 _this.statutConnexion = "Aucune";
                                 if (_this.onConnectEnCours == false) {
-                                    _this.onConnect("UPC").then(function (res) {
+                                    _this.onConnect("UPC")
+                                        .then(function (res) {
                                         _this.lectureStatiqueEnCours = false;
                                         _this.displayLoading = false;
                                         _this.onConnectEnCours = false;
                                         _this.statutConnexion = "UPC";
                                         _this.onReadStatiqueEnable();
                                         resolve();
-                                    }).catch(function () {
+                                    })
+                                        .catch(function () {
                                         _this.lectureStatiqueEnCours = false;
                                         _this.displayLoading = false;
                                         _this.onConnectEnCours = false;
@@ -1695,7 +1789,7 @@ var GlobalService = /** @class */ (function () {
                         this.lectureStatiqueEnCours = false;
                         this.displayLoading = false;
                         resolve();
-                        //})   
+                        //})
                     }
                 }
                 return [2 /*return*/];
@@ -1708,27 +1802,30 @@ var GlobalService = /** @class */ (function () {
             var d, d;
             var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                //var d=new Date()    
+                //var d=new Date()
                 //this.logs.push( " - onReadModbusVariables")
                 if (this.statutConnexion == "UPC") {
-                    //var d=new Date() 
-                    //this.logs.push( " - statut connexion = UPC")           
+                    //var d=new Date()
+                    //this.logs.push( " - statut connexion = UPC")
                     if (this.upcmodbus != undefined) {
                         this.storage.get("upcname").then(function (res) {
                             _this.upcname = res;
                             //var d=new Date()
-                            //this.logs.push( " - appel fonction readAllReg cas 1 : "+res)  
+                            //this.logs.push( " - appel fonction readAllReg cas 1 : "+res)
                             var url = _this.router.url;
                             var splittedUrl = url.split("/");
                             var urlFinal = splittedUrl[1];
-                            _this.upcmodbus.onReadCyclique(_this.upcname, _this.mode, urlFinal).then(function (res) {
+                            _this.upcmodbus
+                                .onReadCyclique(_this.upcname, _this.mode, urlFinal)
+                                .then(function (res) {
                                 if (res == true) {
                                     //var d=new Date()
                                     //this.logs.push( " - lecture réussie")
                                     _this.events.publish("loadParameters");
                                     _this.lectureCycliqueEnCours = false;
                                     var d = new Date();
-                                    _this.logs.push("durée lecture : " + (d.getTime() - _this.startReadDate.getTime()));
+                                    _this.logs.push("durée lecture : " +
+                                        (d.getTime() - _this.startReadDate.getTime()));
                                     resolve();
                                 }
                                 else {
@@ -1749,7 +1846,10 @@ var GlobalService = /** @class */ (function () {
                                     }
                                     else {
                                         var d = new Date();
-                                        _this.logs.push(" - " + JSON.stringify(res.object) + " - bloc :" + res.object.bloc);
+                                        _this.logs.push(" - " +
+                                            JSON.stringify(res.object) +
+                                            " - bloc :" +
+                                            res.object.bloc);
                                         _this.logs.push(" - statut connexion : Aucune ");
                                         _this.statutConnexion = "Aucune";
                                         if (_this.onConnectEnCours == false) {
@@ -1763,7 +1863,8 @@ var GlobalService = /** @class */ (function () {
                                         }
                                     }
                                 }
-                            }).catch(function (err) {
+                            })
+                                .catch(function (err) {
                                 var d = new Date();
                                 _this.logs.push(" - catch onReadCyclique");
                                 if (_this.onConnectEnCours == false) {
@@ -1829,25 +1930,34 @@ var GlobalService = /** @class */ (function () {
                 this.logs.push(" - onConnect : " + this.onConnectEnCours);
                 this.logs.push(" - statut connexion : " + this.statutConnexion);
                 this.ecritureEnCours = true;
-                if (this.statutConnexion != "UPC" || this.lectureCycliqueEnCours == true || this.lectureStatiqueEnCours == true || this.onConnectEnCours == true) {
+                if (this.statutConnexion != "UPC" ||
+                    this.lectureCycliqueEnCours == true ||
+                    this.lectureStatiqueEnCours == true ||
+                    this.onConnectEnCours == true) {
                     this.ecritureEnCours = false;
                     d = new Date();
                     this.logs.push(" - lecture en cours : " + this.lectureCycliqueEnCours);
-                    this.onWait(50, 60000, "onWriteEnable").then(function () {
+                    this.onWait(50, 60000, "onWriteEnable")
+                        .then(function () {
                         var d4 = new Date();
                         if (variable.type == "int") {
-                            _this.upcmodbus.client.setIntInHoldingRegister(variable.adr, variable.dim, value).then(function () {
+                            _this.upcmodbus.client
+                                .setIntInHoldingRegister(variable.adr, variable.dim, value)
+                                .then(function () {
                                 var d = new Date();
                                 _this.logs.push(" - écriture réussie");
                                 _this.ecritureEnCours = false;
                                 _this.needToCheckFlags = false;
-                                _this.onReadStatiqueEnable().then(function () {
+                                _this.onReadStatiqueEnable()
+                                    .then(function () {
                                     resolve();
-                                }).catch(function () {
+                                })
+                                    .catch(function () {
                                     alert("lecture impossible");
                                     reject();
                                 });
-                            }).catch(function () {
+                            })
+                                .catch(function () {
                                 alert("écriture impossible");
                                 reject();
                             });
@@ -1858,60 +1968,76 @@ var GlobalService = /** @class */ (function () {
                             if (_this.writeMultipleRegisters == true) {
                                 var d = new Date();
                                 _this.logs.push(" - set string array in holding registers");
-                                _this.upcmodbus.client.setStringArrayInHoldingResgisters(variable.adr, value).then(function () {
+                                _this.upcmodbus.client
+                                    .setStringArrayInHoldingResgisters(variable.adr, value)
+                                    .then(function () {
                                     var d = new Date();
                                     _this.logs.push(" - écriture réussie");
                                     _this.writeMultipleRegisters = false;
                                     _this.ecritureEnCours = false;
                                     _this.needToCheckFlags = false;
-                                    _this.onReadStatiqueEnable().then(function () {
+                                    _this.onReadStatiqueEnable()
+                                        .then(function () {
                                         resolve();
-                                    }).catch(function () {
+                                    })
+                                        .catch(function () {
                                         alert("lecture impossible");
                                         reject();
                                     });
-                                }).catch(function () {
+                                })
+                                    .catch(function () {
                                     _this.writeMultipleRegisters = false;
                                     alert("écriture impossible");
                                     reject();
                                 });
                             }
                             else {
-                                _this.upcmodbus.client.setStringInHoldingRegister(variable.adr, value).then(function () {
+                                _this.upcmodbus.client
+                                    .setStringInHoldingRegister(variable.adr, value)
+                                    .then(function () {
                                     var d = new Date();
                                     _this.logs.push(" - écriture réussie");
                                     _this.ecritureEnCours = false;
                                     _this.needToCheckFlags = false;
-                                    _this.onReadStatiqueEnable().then(function () {
+                                    _this.onReadStatiqueEnable()
+                                        .then(function () {
                                         resolve();
-                                    }).catch(function () {
+                                    })
+                                        .catch(function () {
                                         alert("lecture impossible");
                                         reject();
                                     });
-                                }).catch(function () {
+                                })
+                                    .catch(function () {
                                     alert("écriture impossible");
                                     reject();
                                 });
                             }
                         }
                         if (variable.type == "float") {
-                            _this.upcmodbus.client.setFloatInHoldingRegister(variable.adr, value).then(function () {
+                            _this.upcmodbus.client
+                                .setFloatInHoldingRegister(variable.adr, value)
+                                .then(function () {
                                 var d = new Date();
                                 _this.logs.push(" - écriture réussie");
                                 _this.ecritureEnCours = false;
                                 _this.needToCheckFlags = false;
-                                _this.onReadStatiqueEnable().then(function () {
+                                _this.onReadStatiqueEnable()
+                                    .then(function () {
                                     resolve();
-                                }).catch(function () {
+                                })
+                                    .catch(function () {
                                     alert("lecture impossible");
                                     reject();
                                 });
-                            }).catch(function () {
+                            })
+                                .catch(function () {
                                 alert("écriture impossible");
                                 reject();
                             });
                         }
-                    }).catch(function () {
+                    })
+                        .catch(function () {
                         alert("écriture impossible");
                         reject();
                     });
@@ -1920,18 +2046,23 @@ var GlobalService = /** @class */ (function () {
                     d = new Date();
                     this.logs.push(" - pas de lecture en cours, écriture possible");
                     if (variable.type == "int") {
-                        this.upcmodbus.client.setIntInHoldingRegister(variable.adr, variable.dim, value).then(function () {
+                        this.upcmodbus.client
+                            .setIntInHoldingRegister(variable.adr, variable.dim, value)
+                            .then(function () {
                             var d = new Date();
                             _this.logs.push(" - écriture réussie");
                             _this.ecritureEnCours = false;
                             _this.needToCheckFlags = false;
-                            _this.onReadStatiqueEnable().then(function () {
+                            _this.onReadStatiqueEnable()
+                                .then(function () {
                                 resolve();
-                            }).catch(function () {
+                            })
+                                .catch(function () {
                                 alert("lecture impossible");
                                 reject();
                             });
-                        }).catch(function () {
+                        })
+                            .catch(function () {
                             alert("écriture impossible");
                             reject();
                         });
@@ -1942,55 +2073,70 @@ var GlobalService = /** @class */ (function () {
                         if (this.writeMultipleRegisters == true) {
                             d = new Date();
                             this.logs.push(" - set string array in holding registers");
-                            this.upcmodbus.client.setStringArrayInHoldingResgisters(variable.adr, value).then(function () {
+                            this.upcmodbus.client
+                                .setStringArrayInHoldingResgisters(variable.adr, value)
+                                .then(function () {
                                 var d = new Date();
                                 _this.logs.push(" - écriture réussie");
                                 _this.writeMultipleRegisters = false;
                                 _this.ecritureEnCours = false;
                                 _this.needToCheckFlags = false;
-                                _this.onReadStatiqueEnable().then(function () {
+                                _this.onReadStatiqueEnable()
+                                    .then(function () {
                                     resolve();
-                                }).catch(function () {
+                                })
+                                    .catch(function () {
                                     alert("lecture impossible");
                                     reject();
                                 });
-                            }).catch(function () {
+                            })
+                                .catch(function () {
                                 _this.writeMultipleRegisters = false;
                                 alert("écriture impossible");
                                 reject();
                             });
                         }
                         else {
-                            this.upcmodbus.client.setStringInHoldingRegister(variable.adr, value).then(function () {
+                            this.upcmodbus.client
+                                .setStringInHoldingRegister(variable.adr, value)
+                                .then(function () {
                                 var d = new Date();
                                 _this.logs.push(" - écriture réussie");
                                 _this.ecritureEnCours = false;
                                 _this.needToCheckFlags = false;
-                                _this.onReadStatiqueEnable().then(function () {
+                                _this.onReadStatiqueEnable()
+                                    .then(function () {
                                     resolve();
-                                }).catch(function () {
+                                })
+                                    .catch(function () {
                                     alert("lecture impossible");
                                     reject();
                                 });
-                            }).catch(function () {
+                            })
+                                .catch(function () {
                                 alert("écriture impossible");
                                 reject();
                             });
                         }
                     }
                     if (variable.type == "float") {
-                        this.upcmodbus.client.setFloatInHoldingRegister(variable.adr, value).then(function () {
+                        this.upcmodbus.client
+                            .setFloatInHoldingRegister(variable.adr, value)
+                            .then(function () {
                             var d = new Date();
                             _this.logs.push(" - écriture réussie");
                             _this.ecritureEnCours = false;
                             _this.needToCheckFlags = false;
-                            _this.onReadStatiqueEnable().then(function () {
+                            _this.onReadStatiqueEnable()
+                                .then(function () {
                                 resolve();
-                            }).catch(function () {
+                            })
+                                .catch(function () {
                                 alert("lecture impossible");
                                 reject();
                             });
-                        }).catch(function () {
+                        })
+                            .catch(function () {
                             alert("écriture impossible");
                             reject();
                         });
@@ -2013,9 +2159,20 @@ var GlobalService = /** @class */ (function () {
                         this.logs.push(this.msToTime(dx.getTime()) + " - case on write");
                         this.intv = setInterval(function () {
                             var dy = new Date();
-                            _this.logs.push(_this.msToTime(dy.getTime()) + " - IN INTERVAL : lc : " + _this.lectureCycliqueEnCours + " - e: " + _this.ecritureEnCours + " - oc: " + _this.onConnectEnCours + "stat : " + _this.statutConnexion);
-                            //if(this.statutConnexion == "UPC" && this.lectureCycliqueEnCours != true && this.lectureStatiqueEnCours != true && this.onConnectEnCours != true){  
-                            if (_this.statutConnexion == "UPC" && _this.lectureCycliqueEnCours != true && _this.ecritureEnCours != true && _this.onConnectEnCours != true) {
+                            _this.logs.push(_this.msToTime(dy.getTime()) +
+                                " - IN INTERVAL : lc : " +
+                                _this.lectureCycliqueEnCours +
+                                " - e: " +
+                                _this.ecritureEnCours +
+                                " - oc: " +
+                                _this.onConnectEnCours +
+                                "stat : " +
+                                _this.statutConnexion);
+                            //if(this.statutConnexion == "UPC" && this.lectureCycliqueEnCours != true && this.lectureStatiqueEnCours != true && this.onConnectEnCours != true){
+                            if (_this.statutConnexion == "UPC" &&
+                                _this.lectureCycliqueEnCours != true &&
+                                _this.ecritureEnCours != true &&
+                                _this.onConnectEnCours != true) {
                                 _this.ecritureEnCours = true;
                                 _this.needToCheckFlags = false;
                                 var d = new Date();
@@ -2026,7 +2183,10 @@ var GlobalService = /** @class */ (function () {
                         }, loopDelay);
                         setTimeout(function () {
                             if (_this.needToCheckFlags == true) {
-                                if (_this.lectureCycliqueEnCours == true || _this.lectureStatiqueEnCours == true || _this.onConnectEnCours == true || _this.ecritureEnCours == true) {
+                                if (_this.lectureCycliqueEnCours == true ||
+                                    _this.lectureStatiqueEnCours == true ||
+                                    _this.onConnectEnCours == true ||
+                                    _this.ecritureEnCours == true) {
                                     _this.needToCheckFlags = false;
                                     clearInterval(_this.intv);
                                     var d = new Date();
@@ -2038,7 +2198,10 @@ var GlobalService = /** @class */ (function () {
                         break;
                     case "onReadStatiqueEnable":
                         this.intv = setInterval(function () {
-                            if (_this.statutConnexion == "UPC" && _this.lectureCycliqueEnCours != true && _this.ecritureEnCours != true && _this.onConnectEnCours != true) {
+                            if (_this.statutConnexion == "UPC" &&
+                                _this.lectureCycliqueEnCours != true &&
+                                _this.ecritureEnCours != true &&
+                                _this.onConnectEnCours != true) {
                                 _this.lectureStatiqueEnCours = true;
                                 _this.needToCheckFlags = false;
                                 var d = new Date();
@@ -2049,7 +2212,10 @@ var GlobalService = /** @class */ (function () {
                         }, loopDelay);
                         setTimeout(function () {
                             if (_this.needToCheckFlags == true) {
-                                if (_this.lectureCycliqueEnCours == true || _this.ecritureEnCours == true || _this.onConnectEnCours == true || _this.statutConnexion != "UPC") {
+                                if (_this.lectureCycliqueEnCours == true ||
+                                    _this.ecritureEnCours == true ||
+                                    _this.onConnectEnCours == true ||
+                                    _this.statutConnexion != "UPC") {
                                     _this.needToCheckFlags = false;
                                     clearInterval(_this.intv);
                                     var d = new Date();
@@ -2075,7 +2241,10 @@ var GlobalService = /** @class */ (function () {
                 this.intv = setInterval(function () {
                     var dy = new Date();
                     _this.logs.push(_this.msToTime(dy.getTime()) + " - IN INTERVAL");
-                    if (_this.statutConnexion == "UPC" && _this.lectureCycliqueEnCours != true && _this.lectureStatiqueEnCours != true && _this.onConnectEnCours != true) {
+                    if (_this.statutConnexion == "UPC" &&
+                        _this.lectureCycliqueEnCours != true &&
+                        _this.lectureStatiqueEnCours != true &&
+                        _this.onConnectEnCours != true) {
                         _this.global.ecritureEnCours = true;
                         _this.needToCheckFlags = false;
                         var d = new Date();
@@ -2086,7 +2255,10 @@ var GlobalService = /** @class */ (function () {
                 }, loopDelay);
                 setTimeout(function () {
                     if (_this.needToCheckFlags == true) {
-                        if (_this.lectureCycliqueEnCours == true || _this.lectureStatiqueEnCours == true || _this.onConnectEnCours == true || _this.ecritureEnCours == true) {
+                        if (_this.lectureCycliqueEnCours == true ||
+                            _this.lectureStatiqueEnCours == true ||
+                            _this.onConnectEnCours == true ||
+                            _this.ecritureEnCours == true) {
                             _this.needToCheckFlags = false;
                             clearInterval(_this.intv);
                             var d = new Date();
@@ -2112,9 +2284,7 @@ var GlobalService = /** @class */ (function () {
                     case 1:
                         _a.username = _c.sent();
                         _b = this;
-                        return [4 /*yield*/, this.storage.get("pass")
-                            // Request
-                        ];
+                        return [4 /*yield*/, this.storage.get("pass")];
                     case 2:
                         _b.password = _c.sent();
                         user = new _model_user__WEBPACK_IMPORTED_MODULE_7__["User"]();
@@ -2124,25 +2294,25 @@ var GlobalService = /** @class */ (function () {
                             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                                 // Check state
                                 if (data.result) {
-                                    this.storage.set('token', data.result);
-                                    this.storage.set('user', user.username);
-                                    this.storage.set('pass', user.password);
-                                    this.storage.set('remember', 1);
+                                    this.storage.set("token", data.result);
+                                    this.storage.set("user", user.username);
+                                    this.storage.set("pass", user.password);
+                                    this.storage.set("remember", 1);
                                     this.token = data.result;
                                     resolve("");
                                 }
                                 else {
                                     /*// Check code
-                                    switch (data.code) {
-                                      case 'TOKEN_WRONG_IDENTIFIERS':
-                                        let toast = await this.toastCtrl.create({
-                                          message: 'Identifiants incorrects !',
-                                          duration: 3000,
-                                          position: 'top'
-                                        });
-                                        toast.present();
-                                        break;
-                                    }*/
+                                        switch (data.code) {
+                                          case 'TOKEN_WRONG_IDENTIFIERS':
+                                            let toast = await this.toastCtrl.create({
+                                              message: 'Identifiants incorrects !',
+                                              duration: 3000,
+                                              position: 'top'
+                                            });
+                                            toast.present();
+                                            break;
+                                        }*/
                                     reject("");
                                 }
                                 return [2 /*return*/];
@@ -2152,9 +2322,9 @@ var GlobalService = /** @class */ (function () {
                             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                                 switch (_a.label) {
                                     case 0: return [4 /*yield*/, this.toastCtrl.create({
-                                            message: 'Impossible de se connecter à internet !',
+                                            message: "Impossible de se connecter à internet !",
                                             duration: 3000,
-                                            position: 'bottom'
+                                            position: "bottom",
                                         })];
                                     case 1:
                                         toast = _a.sent();
@@ -2387,9 +2557,9 @@ var GlobalService = /** @class */ (function () {
         seconds = Math.floor((duration / 1000) % 60);
         minutes = Math.floor((duration / (1000 * 60)) % 60);
         hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-        hours = (hours < 10) ? "0" + hours : hours;
-        minutes = (minutes < 10) ? "0" + minutes : minutes;
-        seconds = (seconds < 10) ? "0" + seconds : seconds;
+        hours = hours < 10 ? "0" + hours : hours;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
         return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
     };
     GlobalService.ctorParameters = function () { return [
@@ -2409,7 +2579,7 @@ var GlobalService = /** @class */ (function () {
     ]; };
     GlobalService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
-            providedIn: 'root'
+            providedIn: "root",
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["Platform"],
             _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["LoadingController"],
@@ -6172,7 +6342,7 @@ var UPCModbus = /** @class */ (function () {
     };
     UPCModbus.prototype.onReadStatique = function (upcNameId, mode, page) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var success, error, correspondanceRegistres, opt, _a, res1, res2, res2, err_1, res1, tabname, i, nameId, res, res, res, err_2, res1, tabname, i, nameId, res, res, res, err_3, res1, tabname, i, nameId, res, res, res, err_4, res1, tabname, i, nameId, res2, res3, err_5, res3, err_6, res1, tabname, i, nameId, tabMdmName, i, tabMdmPass, i, tabssid, i, tabpassword, i, res2, taburl, i, tabapnuser, i, tabapnpass, i, res3, tabapn2, i, tabMdmName, i, tabMdmPass, i, tabssid, i, tabpassword, i, res2, taburl, i, tabapnuser, i, tabapnpass, i, res3, tabapn2, i, err_7, res1, res1, err_8, res1, tabname, i, nameId, res2, res3, res4, tabB11, i, tabB12, i, tabB13, i, tabB14, i, tabB15, i, tabB16, i, tabB17, i, tabB18, i, tabB19, i, tabB21, i, tabB22, i, tabB23, i, tabB24, i, tabB25, i, tabB26, i, tabB27, i, tabB28, i, tabB29, i, res2, res3, res4, tabB11, i, tabB12, i, tabB13, i, tabB14, i, tabB15, i, tabB16, i, tabB17, i, tabB18, i, tabB19, i, tabB21, i, tabB22, i, tabB23, i, tabB24, i, tabB25, i, tabB26, i, tabB27, i, tabB28, i, tabB29, i, err_9, res1, tabname, i, nameId, res, res, res, err_10;
+            var success, error, correspondanceRegistres, opt, _a, res1, res2, res2, err_1, res1, tabname, i, nameId, res, res, res, err_2, res1, tabname, i, nameId, res, res, res, err_3, res1, tabname, i, nameId, res, res, res, err_4, res1, tabname, i, nameId, res2, res3, resx, err_5, res3, err_6, res1, tabname, i, nameId, tabMdmName, i, tabMdmPass, i, tabssid, i, tabpassword, i, res2, taburl, i, tabapnuser, i, tabapnpass, i, res3, tabapn2, i, tabMdmName, i, tabMdmPass, i, tabssid, i, tabpassword, i, res2, taburl, i, tabapnuser, i, tabapnpass, i, res3, tabapn2, i, err_7, res1, res1, err_8, res1, tabname, i, nameId, res2, res3, res4, tabB11, i, tabB12, i, tabB13, i, tabB14, i, tabB15, i, tabB16, i, tabB17, i, tabB18, i, tabB19, i, tabB21, i, tabB22, i, tabB23, i, tabB24, i, tabB25, i, tabB26, i, tabB27, i, tabB28, i, tabB29, i, res2, res3, res4, tabB11, i, tabB12, i, tabB13, i, tabB14, i, tabB15, i, tabB16, i, tabB17, i, tabB18, i, tabB19, i, tabB21, i, tabB22, i, tabB23, i, tabB24, i, tabB25, i, tabB26, i, tabB27, i, tabB28, i, tabB29, i, err_9, res1, tabname, i, nameId, res, res, res, err_10;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -6194,13 +6364,13 @@ var UPCModbus = /** @class */ (function () {
                             case "namepiege": return [3 /*break*/, 20];
                             case "namepiege": return [3 /*break*/, 35];
                             case "cdiff": return [3 /*break*/, 50];
-                            case "cdiff-cyclique": return [3 /*break*/, 57];
-                            case "comunicationparam": return [3 /*break*/, 62];
-                            case "connection": return [3 /*break*/, 73];
-                            case "addbottleceint": return [3 /*break*/, 78];
-                            case "alarmparam": return [3 /*break*/, 91];
+                            case "cdiff-cyclique": return [3 /*break*/, 58];
+                            case "comunicationparam": return [3 /*break*/, 63];
+                            case "connection": return [3 /*break*/, 74];
+                            case "addbottleceint": return [3 /*break*/, 79];
+                            case "alarmparam": return [3 /*break*/, 92];
                         }
-                        return [3 /*break*/, 105];
+                        return [3 /*break*/, 106];
                     case 1:
                         _b.trys.push([1, 5, , 6]);
                         console.log("page programmation lire varibale modbus ");
@@ -6440,13 +6610,13 @@ var UPCModbus = /** @class */ (function () {
                         this.general.upcStatus = this.client.registerToUint32([res2[0]]);
                         //alert("success")
                         this.success = true;
-                        return [3 /*break*/, 105];
+                        return [3 /*break*/, 106];
                     case 5:
                         err_1 = _b.sent();
                         alert("catch lecture statique  page programmation");
                         success = false;
                         error = err_1;
-                        return [3 /*break*/, 105];
+                        return [3 /*break*/, 106];
                     case 6:
                         _b.trys.push([6, 19, , 20]);
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcNameId.adr, 15)];
@@ -6475,7 +6645,7 @@ var UPCModbus = /** @class */ (function () {
                     case 9:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 105];
+                        return [3 /*break*/, 106];
                     case 10: return [3 /*break*/, 12];
                     case 11:
                         alert("Rapprochez-vous de l'upc " +
@@ -6493,7 +6663,7 @@ var UPCModbus = /** @class */ (function () {
                     case 14:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 105];
+                        return [3 /*break*/, 106];
                     case 15: return [3 /*break*/, 18];
                     case 16:
                         this.nameId = nameId;
@@ -6505,13 +6675,13 @@ var UPCModbus = /** @class */ (function () {
                     case 17:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 105];
+                        return [3 /*break*/, 106];
                     case 18: return [3 /*break*/, 20];
                     case 19:
                         err_2 = _b.sent();
                         this.success = false;
                         error = err_2;
-                        return [3 /*break*/, 105];
+                        return [3 /*break*/, 106];
                     case 20:
                         console.log("mod bus name piege ");
                         _b.label = 21;
@@ -6543,7 +6713,7 @@ var UPCModbus = /** @class */ (function () {
                     case 24:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 105];
+                        return [3 /*break*/, 106];
                     case 25: return [3 /*break*/, 27];
                     case 26:
                         alert("Rapprochez-vous de l'upc " +
@@ -6561,7 +6731,7 @@ var UPCModbus = /** @class */ (function () {
                     case 29:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 105];
+                        return [3 /*break*/, 106];
                     case 30: return [3 /*break*/, 33];
                     case 31:
                         this.nameId = nameId;
@@ -6573,13 +6743,13 @@ var UPCModbus = /** @class */ (function () {
                     case 32:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 105];
+                        return [3 /*break*/, 106];
                     case 33: return [3 /*break*/, 35];
                     case 34:
                         err_3 = _b.sent();
                         this.success = false;
                         error = err_3;
-                        return [3 /*break*/, 105];
+                        return [3 /*break*/, 106];
                     case 35:
                         console.log("mod bus name piege ");
                         _b.label = 36;
@@ -6611,7 +6781,7 @@ var UPCModbus = /** @class */ (function () {
                     case 39:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 105];
+                        return [3 /*break*/, 106];
                     case 40: return [3 /*break*/, 42];
                     case 41:
                         alert("Rapprochez-vous de l'upc " +
@@ -6629,7 +6799,7 @@ var UPCModbus = /** @class */ (function () {
                     case 44:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 105];
+                        return [3 /*break*/, 106];
                     case 45: return [3 /*break*/, 48];
                     case 46:
                         this.nameId = nameId;
@@ -6641,15 +6811,15 @@ var UPCModbus = /** @class */ (function () {
                     case 47:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 105];
+                        return [3 /*break*/, 106];
                     case 48: return [3 /*break*/, 50];
                     case 49:
                         err_4 = _b.sent();
                         this.success = false;
                         error = err_4;
-                        return [3 /*break*/, 105];
+                        return [3 /*break*/, 106];
                     case 50:
-                        _b.trys.push([50, 56, , 57]);
+                        _b.trys.push([50, 57, , 58]);
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcNameId.adr, 65)];
                     case 51:
                         res1 = _b.sent();
@@ -6661,7 +6831,7 @@ var UPCModbus = /** @class */ (function () {
                             .registerToString(tabname)
                             .replace(/[^a-zA-Z0-9]/g, "");
                         if (true) return [3 /*break*/, 52];
-                        return [3 /*break*/, 55];
+                        return [3 /*break*/, 56];
                     case 52:
                         this.general.co2FlowRefAdj = this.client.registerToFloat([
                             res1[17],
@@ -6677,6 +6847,10 @@ var UPCModbus = /** @class */ (function () {
                         res3 = _b.sent();
                         //40376
                         this.general.upcStatus = res3[0];
+                        return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcCo2DiffLvl.adr, 1)];
+                    case 55:
+                        resx = _b.sent();
+                        this.diffusions.upcCo2DiffLvl = resx[0];
                         console.log("||||||||||||||||||||||||||||||||||||-");
                         console.log("upc status : ", this.general.upcStatus);
                         //40451
@@ -6694,21 +6868,21 @@ var UPCModbus = /** @class */ (function () {
                         //40463
                         this.diffusions.co2PressOutComp = this.round(this.client.registerToFloat([res3[87], res3[88]]));
                         this.success = true;
-                        return [3 /*break*/, 105];
-                    case 55: return [3 /*break*/, 57];
-                    case 56:
+                        return [3 /*break*/, 106];
+                    case 56: return [3 /*break*/, 58];
+                    case 57:
                         err_5 = _b.sent();
                         this.success = false;
                         error = err_5;
-                        return [3 /*break*/, 105];
-                    case 57:
-                        _b.trys.push([57, 61, , 62]);
-                        if (true) return [3 /*break*/, 58];
-                        return [3 /*break*/, 60];
+                        return [3 /*break*/, 106];
                     case 58:
+                        _b.trys.push([58, 62, , 63]);
+                        if (true) return [3 /*break*/, 59];
+                        return [3 /*break*/, 61];
+                    case 59:
                         console.log("lecture cycliqueeeee <<<<>>>>>");
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcStatus.adr, 89)];
-                    case 59:
+                    case 60:
                         res3 = _b.sent();
                         //40376
                         this.general.upcStatus = res3[0];
@@ -6725,17 +6899,17 @@ var UPCModbus = /** @class */ (function () {
                         //40463
                         this.diffusions.co2PressOutComp = this.round(this.client.registerToFloat([res3[87], res3[88]]));
                         this.success = true;
-                        return [3 /*break*/, 105];
-                    case 60: return [3 /*break*/, 62];
-                    case 61:
+                        return [3 /*break*/, 106];
+                    case 61: return [3 /*break*/, 63];
+                    case 62:
                         err_6 = _b.sent();
                         this.success = false;
                         error = err_6;
-                        return [3 /*break*/, 105];
-                    case 62:
-                        _b.trys.push([62, 72, , 73]);
-                        return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcNameId.adr, 64)];
+                        return [3 /*break*/, 106];
                     case 63:
+                        _b.trys.push([63, 73, , 74]);
+                        return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcNameId.adr, 64)];
+                    case 64:
                         res1 = _b.sent();
                         tabname = [];
                         for (i = 0; i < 10; i++) {
@@ -6744,8 +6918,8 @@ var UPCModbus = /** @class */ (function () {
                         nameId = this.client
                             .registerToString(tabname)
                             .replace(/[^a-zA-Z0-9]/g, "");
-                        if (!(mode != "modeTest")) return [3 /*break*/, 68];
-                        if (!(nameId != upcNameId && false)) return [3 /*break*/, 64];
+                        if (!(mode != "modeTest")) return [3 /*break*/, 69];
+                        if (!(nameId != upcNameId && false)) return [3 /*break*/, 65];
                         //changement d'UPC
                         if (window.confirm("Une intervention est en cours sur l'upc " +
                             upcNameId +
@@ -6771,8 +6945,8 @@ var UPCModbus = /** @class */ (function () {
                                 " puis appuyez sur 'OK'.");
                             return [2 /*return*/, { success: true, object: "Se rapprocher de l'upc" }];
                         }
-                        return [3 /*break*/, 67];
-                    case 64:
+                        return [3 /*break*/, 68];
+                    case 65:
                         //40022 40023
                         this.communicationParameters.comGsmIpAdr = this.int2ip(this.client.registerToUint32([res1[21], res1[22]]));
                         tabMdmName = [];
@@ -6807,7 +6981,7 @@ var UPCModbus = /** @class */ (function () {
                             .registerToString(tabpassword)
                             .replace(/[^a-zA-Z0-9-.-]/g, "");
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.comWebSrvUrl.adr, 46)];
-                    case 65:
+                    case 66:
                         res2 = _b.sent();
                         taburl = [];
                         for (i = 0; i < 14; i++) {
@@ -6837,7 +7011,7 @@ var UPCModbus = /** @class */ (function () {
                         this.communicationParameters.comWifiApCh =
                             this.client.registerToUint32([res2[45]]);
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.comMdmApnId2.adr, 51)];
-                    case 66:
+                    case 67:
                         res3 = _b.sent();
                         tabapn2 = [];
                         for (i = 0; i < 50; i++) {
@@ -6847,9 +7021,9 @@ var UPCModbus = /** @class */ (function () {
                             .registerToString(tabapn2)
                             .replace(/[^a-zA-Z0-9-.-]/g, "");
                         this.success = true;
-                        return [3 /*break*/, 105];
-                    case 67: return [3 /*break*/, 71];
-                    case 68:
+                        return [3 /*break*/, 106];
+                    case 68: return [3 /*break*/, 72];
+                    case 69:
                         //on est en mode test
                         //40022 40023
                         this.communicationParameters.comGsmIpAdr = this.int2ip(this.client.registerToUint32([res1[21], res1[22]]));
@@ -6879,7 +7053,7 @@ var UPCModbus = /** @class */ (function () {
                             .registerToString(tabpassword)
                             .replace(/[^a-zA-Z0-9-.-]/g, "");
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.comWebSrvUrl.adr, 46)];
-                    case 69:
+                    case 70:
                         res2 = _b.sent();
                         taburl = [];
                         for (i = 0; i < 14; i++) {
@@ -6906,7 +7080,7 @@ var UPCModbus = /** @class */ (function () {
                         this.communicationParameters.comWifiApCh =
                             this.client.registerToUint32([res2[45]]);
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.comMdmApnId2.adr, 51)];
-                    case 70:
+                    case 71:
                         res3 = _b.sent();
                         tabapn2 = [];
                         for (i = 0; i < 50; i++) {
@@ -6916,25 +7090,25 @@ var UPCModbus = /** @class */ (function () {
                             .registerToString(tabapn2)
                             .replace(/[^a-zA-Z0-9-.-]/g, "");
                         this.success = true;
-                        return [3 /*break*/, 105];
-                    case 71: return [3 /*break*/, 73];
-                    case 72:
+                        return [3 /*break*/, 106];
+                    case 72: return [3 /*break*/, 74];
+                    case 73:
                         err_7 = _b.sent();
                         this.success = false;
                         error = err_7;
-                        return [3 /*break*/, 105];
-                    case 73:
-                        console.log("on read statique page connection");
-                        _b.label = 74;
+                        return [3 /*break*/, 106];
                     case 74:
-                        _b.trys.push([74, 77, , 78]);
-                        return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.comMdmMode.adr, 2)];
+                        console.log("on read statique page connection");
+                        _b.label = 75;
                     case 75:
+                        _b.trys.push([75, 78, , 79]);
+                        return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.comMdmMode.adr, 2)];
+                    case 76:
                         res1 = _b.sent();
                         this.connectionMode = res1[0];
                         this.connectionLevel = res1[1];
                         return [4 /*yield*/, this.client.readHoldingRegisters(41219, 22)];
-                    case 76:
+                    case 77:
                         res1 = _b.sent();
                         this.xComMdmRssiMoyen2G = this.client.registerToFloat([
                             res1[0],
@@ -6982,16 +7156,16 @@ var UPCModbus = /** @class */ (function () {
                         ]);
                         ////////////////////////////////////////////////:
                         this.success = true;
-                        return [3 /*break*/, 105];
-                    case 77:
+                        return [3 /*break*/, 106];
+                    case 78:
                         err_8 = _b.sent();
                         this.success = false;
                         error = err_8;
-                        return [3 /*break*/, 105];
-                    case 78:
-                        _b.trys.push([78, 90, , 91]);
-                        return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcNameId.adr, 10)];
+                        return [3 /*break*/, 106];
                     case 79:
+                        _b.trys.push([79, 91, , 92]);
+                        return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcNameId.adr, 10)];
+                    case 80:
                         res1 = _b.sent();
                         tabname = [];
                         for (i = 0; i < 10; i++) {
@@ -7000,8 +7174,8 @@ var UPCModbus = /** @class */ (function () {
                         nameId = this.client
                             .registerToString(tabname)
                             .replace(/[^a-zA-Z0-9]/g, "");
-                        if (!(mode != "modeTest")) return [3 /*break*/, 85];
-                        if (!(nameId != upcNameId && false)) return [3 /*break*/, 80];
+                        if (!(mode != "modeTest")) return [3 /*break*/, 86];
+                        if (!(nameId != upcNameId && false)) return [3 /*break*/, 81];
                         //changement d'UPC
                         if (window.confirm("Une intervention est en cours sur l'upc " +
                             upcNameId +
@@ -7027,12 +7201,12 @@ var UPCModbus = /** @class */ (function () {
                                 " puis appuyez sur 'OK'.");
                             return [2 /*return*/, { success: true, object: "Se rapprocher de l'upc" }];
                         }
-                        return [3 /*break*/, 84];
-                    case 80:
+                        return [3 /*break*/, 85];
+                    case 81:
                         this.reserves.bottlesB1 = [];
                         this.reserves.bottlesB2 = [];
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.co2ResActive.adr, 16)];
-                    case 81:
+                    case 82:
                         res2 = _b.sent();
                         //40151
                         this.reserves.co2ResActive = this.client.registerToUint32([
@@ -7052,7 +7226,7 @@ var UPCModbus = /** @class */ (function () {
                                 0.001974 *
                                 100) / 100;
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcStatus.adr, 75)];
-                    case 82:
+                    case 83:
                         res3 = _b.sent();
                         //40376
                         this.general.upcStatus = res3[0];
@@ -7079,7 +7253,7 @@ var UPCModbus = /** @class */ (function () {
                                 0.001974 *
                                 100) / 100;
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.xCo2Res1CodesBarres.adr, 90)];
-                    case 83:
+                    case 84:
                         res4 = _b.sent();
                         tabB11 = [];
                         for (i = 0; i < 5; i++) {
@@ -7177,14 +7351,14 @@ var UPCModbus = /** @class */ (function () {
                         console.log("=================== bouteille en B2  =======================");
                         console.log(this.reserves.bottlesB2);
                         this.success = true;
-                        return [3 /*break*/, 105];
-                    case 84: return [3 /*break*/, 89];
-                    case 85:
+                        return [3 /*break*/, 106];
+                    case 85: return [3 /*break*/, 90];
+                    case 86:
                         //on est en mode test
                         this.reserves.bottlesB1 = [];
                         this.reserves.bottlesB2 = [];
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.co2ResActive.adr, 16)];
-                    case 86:
+                    case 87:
                         res2 = _b.sent();
                         //40151
                         this.reserves.co2ResActive = this.client.registerToUint32([
@@ -7201,7 +7375,7 @@ var UPCModbus = /** @class */ (function () {
                                 0.001974 *
                                 100) / 100;
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcStatus.adr, 75)];
-                    case 87:
+                    case 88:
                         res3 = _b.sent();
                         //40376
                         this.general.upcStatus = res3[0];
@@ -7224,7 +7398,7 @@ var UPCModbus = /** @class */ (function () {
                                 0.001974 *
                                 100) / 100;
                         return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.xCo2Res1CodesBarres.adr, 90)];
-                    case 88:
+                    case 89:
                         res4 = _b.sent();
                         tabB11 = [];
                         for (i = 0; i < 5; i++) {
@@ -7317,17 +7491,17 @@ var UPCModbus = /** @class */ (function () {
                         }
                         this.reserves.bottlesB2.push(this.client.registerToString(tabB29));
                         this.success = true;
-                        return [3 /*break*/, 105];
-                    case 89: return [3 /*break*/, 91];
-                    case 90:
+                        return [3 /*break*/, 106];
+                    case 90: return [3 /*break*/, 92];
+                    case 91:
                         err_9 = _b.sent();
                         this.success = false;
                         error = err_9;
-                        return [3 /*break*/, 105];
-                    case 91:
-                        _b.trys.push([91, 104, , 105]);
-                        return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcNameId.adr, 66)];
+                        return [3 /*break*/, 106];
                     case 92:
+                        _b.trys.push([92, 105, , 106]);
+                        return [4 /*yield*/, this.client.readHoldingRegisters(this.correspondancesRegistres.upcNameId.adr, 66)];
+                    case 93:
                         res1 = _b.sent();
                         tabname = [];
                         for (i = 0; i < 10; i++) {
@@ -7336,59 +7510,59 @@ var UPCModbus = /** @class */ (function () {
                         nameId = this.client
                             .registerToString(tabname)
                             .replace(/[^a-zA-Z0-9]/g, "");
-                        if (!(mode != "modeTest")) return [3 /*break*/, 101];
-                        if (!(nameId != upcNameId && false)) return [3 /*break*/, 98];
+                        if (!(mode != "modeTest")) return [3 /*break*/, 102];
+                        if (!(nameId != upcNameId && false)) return [3 /*break*/, 99];
                         if (!window.confirm("Une intervention est en cours sur l'upc " +
                             upcNameId +
                             ". Voulez-vous néanmoins continuer sur l'upc " +
                             nameId +
-                            "?")) return [3 /*break*/, 96];
-                        if (!window.confirm("Voulez-vous terminer l'intervention ? (OK) ou l'abandonner ? (Annuler)")) return [3 /*break*/, 93];
+                            "?")) return [3 /*break*/, 97];
+                        if (!window.confirm("Voulez-vous terminer l'intervention ? (OK) ou l'abandonner ? (Annuler)")) return [3 /*break*/, 94];
                         return [2 /*return*/, {
                                 success: true,
                                 object: "Terminer l'intervention en cours",
                             }];
-                    case 93:
+                    case 94:
                         this.alarm.alrResLowEn = this.client.registerToUint32(res1[65]);
                         console.log("65 ::> " + res1[65]);
                         console.log("64 ::" + res1[64]);
                         console.log("66 ::" + res1[64]);
                         return [4 /*yield*/, this.readAlarmParameters()];
-                    case 94:
+                    case 95:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 105];
-                    case 95: return [3 /*break*/, 97];
-                    case 96:
+                        return [3 /*break*/, 106];
+                    case 96: return [3 /*break*/, 98];
+                    case 97:
                         alert("Rapprochez-vous de l'upc " +
                             upcNameId +
                             " puis appuyez sur 'OK'.");
                         return [2 /*return*/, { success: true, object: "Se rapprocher de l'upc" }];
-                    case 97: return [3 /*break*/, 100];
-                    case 98:
+                    case 98: return [3 /*break*/, 101];
+                    case 99:
                         this.nameId = nameId;
                         this.alarm.alrResLowEn = res1[65];
                         return [4 /*yield*/, this.readAlarmParameters()];
-                    case 99:
+                    case 100:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 105];
-                    case 100: return [3 /*break*/, 103];
-                    case 101:
+                        return [3 /*break*/, 106];
+                    case 101: return [3 /*break*/, 104];
+                    case 102:
                         this.nameId = nameId;
                         this.alarm.alrResLowEn = this.client.registerToUint32(res1[65]);
                         return [4 /*yield*/, this.readAlarmParameters()];
-                    case 102:
+                    case 103:
                         res = _b.sent();
                         this.success = true;
-                        return [3 /*break*/, 105];
-                    case 103: return [3 /*break*/, 105];
-                    case 104:
+                        return [3 /*break*/, 106];
+                    case 104: return [3 /*break*/, 106];
+                    case 105:
                         err_10 = _b.sent();
                         this.success = false;
                         error = err_10;
-                        return [3 /*break*/, 105];
-                    case 105:
+                        return [3 /*break*/, 106];
+                    case 106:
                         //alert(this.success)
                         if (this.success == true) {
                             return [2 /*return*/, true];

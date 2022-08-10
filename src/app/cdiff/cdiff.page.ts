@@ -23,6 +23,7 @@ declare var WifiWizard2: any;
   styleUrls: ["./cdiff.page.scss"],
 })
 export class CdiffPage implements OnInit {
+  upcCo2DiffLvl = 0;
   do;
   check = false;
   current_ssid = "NO WIFI";
@@ -583,10 +584,12 @@ export class CdiffPage implements OnInit {
       //40065
       this.intensity = this.global.upcmodbus.diffusions.upcDiffLvlAdj;
 
+      this.upcCo2DiffLvl = this.global.upcmodbus.diffusions.upcCo2DiffLvl;
+
       //40150
       this.resActive = this.global.upcmodbus.reserves.co2ResActAdj;
 
-      this.debiRef = (this.fluxmax * this.intensity) / 10;
+      this.debiRef = (this.fluxmax * this.upcCo2DiffLvl) / 10;
       //this.global.interval = setInterval(async ()=>{
 
       //40416

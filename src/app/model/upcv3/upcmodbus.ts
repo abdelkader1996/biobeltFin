@@ -746,6 +746,11 @@ export class UPCModbus {
 
             //40376
             this.general.upcStatus = res3[0];
+            var resx = await this.client.readHoldingRegisters(
+              this.correspondancesRegistres.upcCo2DiffLvl.adr,
+              1
+            );
+            this.diffusions.upcCo2DiffLvl = resx[0];
 
             console.log("||||||||||||||||||||||||||||||||||||-");
             console.log("upc status : ", this.general.upcStatus);

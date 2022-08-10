@@ -36,10 +36,6 @@ export class GlobalService {
   public password = "";
   public appPagesModeIntervention = [
     {
-      title: "Logs",
-      url: "/debug",
-    },
-    {
       title: "Intervention sur Ceinture",
       url: "/interventionceinture",
       icon: "hammer",
@@ -48,7 +44,7 @@ export class GlobalService {
       title: "Paramètres Généraux UPC",
       url: "/namepiege",
     },
-    ,
+
     /*
     {
       title : "Initialisation / Echange boitier UPC",
@@ -70,7 +66,7 @@ export class GlobalService {
       url: "/addbottleceint",
       icon: "barcode",
     },
-    ,
+
     /*
     {
       title: 'Réglage des détendeurs',
@@ -97,7 +93,7 @@ export class GlobalService {
       title: "Contrôles débits et pressions CO2",
       url: "/cdiff",
     },
-    ,
+
     /*
     {
       title : "Mesure des pressions de sortie",
@@ -137,12 +133,7 @@ export class GlobalService {
     },
   ];
 
-  public appPagesModeTest = public;
-  appPagesModeIntervention = [
-    {
-      title: "Logs",
-      url: "/debug",
-    },
+  public appPagesModeTest = [
     {
       title: "Intervention sur Ceinture",
       url: "/interventionceinture",
@@ -152,7 +143,7 @@ export class GlobalService {
       title: "Paramètres Généraux UPC",
       url: "/namepiege",
     },
-    ,
+
     /*
     {
       title : "Initialisation / Echange boitier UPC",
@@ -174,7 +165,7 @@ export class GlobalService {
       url: "/addbottleceint",
       icon: "barcode",
     },
-    ,
+
     /*
     {
       title: 'Réglage des détendeurs',
@@ -201,7 +192,7 @@ export class GlobalService {
       title: "Contrôles débits et pressions CO2",
       url: "/cdiff",
     },
-    ,
+
     /*
     {
       title : "Mesure des pressions de sortie",

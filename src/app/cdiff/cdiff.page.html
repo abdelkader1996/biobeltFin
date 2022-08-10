@@ -55,7 +55,9 @@
   </ion-grid>
   <ion-card>
     <ion-card-header>
-      <ion-card-title style="text-align: center">Paramètre</ion-card-title>
+      <ion-card-title style="text-align: center"
+        >Paramètre en mode adjust</ion-card-title
+      >
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
@@ -115,7 +117,7 @@
         <ion-row [ngClass]="{'bgred' : redBackground}">
           <ion-col size="6">
             <ion-label *ngIf="!redBackground" color="dark"
-              >{{"Intensité : "+ intensity}}</ion-label
+              >{{"Intensité : "+ upcCo2DiffLvl}}</ion-label
             >
             <ion-label *ngIf="redBackground">-</ion-label>
           </ion-col>
